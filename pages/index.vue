@@ -51,14 +51,9 @@ export default {
 
           // or we can setup the video element externally and call deepAR.setVideoElement (see startExternalVideo function below)
 
-          deepAR.switchEffect(
-            0,
-            "slot",
-            "/effects/background_segmentation",
-            function () {
-              // effect loaded
-            }
-          );
+          deepAR.switchEffect(0, "slot", "/effects/lion", function () {
+            // effect loaded
+          });
         },
       });
 
