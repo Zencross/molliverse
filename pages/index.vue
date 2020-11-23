@@ -1,31 +1,51 @@
 <template>
   <div>
     <canvas class="deepar" id="deepar-canvas" oncontextmenu="event.preventDefault()"></canvas>
-    <div id="loader-wrapper">
-      <span class="loader"></span></span>
+    <div class="fixed bottom-0 z-20 w-full py-3 slick-background">
+      <VueSlickCarousel v-bind="settings">
+        <div @click="changeEffect('galaxy')">
+          <div class="thumb">
+            <img height="95px" width="95px" src="/thumbs/galaxy.png" />
+          </div>
+        </div>
+        <div @click="changeEffect('aviators')">
+          <div class="thumb">
+            <img  height="95px" width="95px" src="/thumbs/aviators.png" />
+          </div>
+        </div>
+        <div @click="changeEffect('beard')">
+          <div class="thumb">
+            <img  height="95px" width="95px" src="/thumbs/beard.png" />
+          </div>
+        </div>
+        <div @click="changeEffect('dalmatian')">
+          <div class="thumb">
+            <img  height="95px" width="95px" src="/thumbs/dalmatian.png" />
+          </div>
+        </div>
+        <div @click="changeEffect('flowers')">
+          <div class="thumb">
+            <img  height="95px" width="95px" src="/thumbs/flowers.png" />
+          </div>
+        </div>
+        <div @click="changeEffect('koala')">
+          <div class="thumb">
+            <img  height="95px" width="95px" src="/thumbs/koala.png" />
+          </div>
+        </div>
+        <div @click="changeEffect('lion')">
+          <div class="thumb">
+            <img  height="95px" width="95px" src="/thumbs/lion.png" />
+          </div>
+        </div>
+        <div @click="changeEffect('teddy_cigar')">
+          <div class="thumb">
+            <img  height="95px" width="95px" src="/thumbs/teddy_cigar.png" />
+          </div>
+        </div>
+      </VueSlickCarousel>
     </div>
-
-    <!-- <div class="effect-carousel">
-      <div><img class="thumb" src="/thumbs/galaxy.png"></div>
-      <div><img class="thumb" src="/thumbs/aviators.png"></div>
-      <div><img class="thumb" src="/thumbs/beard.png"></div>
-      <div><img class="thumb" src="/thumbs/dalmatian.png"></div>
-      <div><img class="thumb" src="/thumbs/flowers.png"></div>
-      <div><img class="thumb" src="/thumbs/koala.png"></div>
-      <div><img class="thumb" src="/thumbs/lion.png"></div>
-      <div><img class="thumb" src="/thumbs/teddy_cigar.png"></div>
-    </div> -->
-
-    <VueSlickCarousel class="slick" v-bind="settings">
-      <div class="thumb" @click="changeEffect('galaxy')"><img src="/thumbs/galaxy.png" /></div>
-      <div class="thumb" @click="changeEffect('aviators')"><img src="/thumbs/aviators.png" /></div>
-      <div class="thumb" @click="changeEffect('beard')"><img src="/thumbs/beard.png" /></div>
-      <div class="thumb" @click="changeEffect('dalmatian')"><img src="/thumbs/dalmatian.png" /></div>
-      <div class="thumb" @click="changeEffect('flowers')"><img src="/thumbs/flowers.png" /></div>
-      <div class="thumb" @click="changeEffect('koala')"><img src="/thumbs/koala.png" /></div>
-      <div class="thumb" @click="changeEffect('lion')"><img src="/thumbs/lion.png" /></div>
-      <div class="thumb" @click="changeEffect('teddy_cigar')"><img src="/thumbs/teddy_cigar.png" /></div>
-    </VueSlickCarousel>
+    
   </div>
 </template>
 
@@ -107,18 +127,11 @@ export default {
       };
 
       deepAR.onVideoStarted = function () {
-        var loaderWrapper = document.getElementById("loader-wrapper");
-        loaderWrapper.style.display = "none";
+        // var loaderWrapper = document.getElementById("loader-wrapper");
+        // loaderWrapper.style.display = "none";
       };
 
       deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin");
-
-      // if (window.innerWidth > window.innerHeight) {
-      //   var width = Math.floor(window.innerHeight * 0.66);
-      //   var carousel = document.getElementsByClassName("effect-carousel")[0];
-      //   carousel.style.width = width + "px";
-      //   carousel.style.marginLeft = (window.innerWidth - width) / 2 + "px";
-      // }
 
       this.deepARInstance = deepAR;
     },
@@ -208,43 +221,16 @@ canvas.deepar {
   display: block;
   margin: auto;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-#loader-wrapper {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  text-align: center;
-}
-
-.loader {
-  display: inline-block;
-  position: relative;
-  top: 42%;
-  z-index: 1000;
-
-  width: 90px;
-  height: 90px;
-  margin: auto;
-  background-color: #00f;
-
-  border-radius: 100%;
-  -webkit-animation: sk-scaleout 1.5s infinite ease-in-out;
-  animation: sk-scaleout 1.5s infinite ease-in-out;
-}
-
-.slick {
-  width: 100%;
-  height: 130px;
-  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
 }
 
 .thumb {
   display: flex;
   justify-content: center;
-  width: 186px;
+  align-items: center;
+}
+
+.slick-background {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 </style>
