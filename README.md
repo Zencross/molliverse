@@ -1,5 +1,7 @@
 # deepAR-vue
 
+An initial integration of DeepAR web SDK with NuxtJS.
+
 ## Build Setup
 
 ```bash
