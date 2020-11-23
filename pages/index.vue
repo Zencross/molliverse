@@ -1,12 +1,11 @@
 <template>
   <div>
-    <h1>Deep Ar in VueJs</h1>
     <canvas class="deepar" id="deepar-canvas" oncontextmenu="event.preventDefault()"></canvas>
     <div id="loader-wrapper">
       <span class="loader"></span></span>
     </div>
 
-    <div class="effect-carousel">
+    <!-- <div class="effect-carousel">
       <div><img class="thumb" src="/thumbs/galaxy.png"></div>
       <div><img class="thumb" src="/thumbs/aviators.png"></div>
       <div><img class="thumb" src="/thumbs/beard.png"></div>
@@ -15,17 +14,43 @@
       <div><img class="thumb" src="/thumbs/koala.png"></div>
       <div><img class="thumb" src="/thumbs/lion.png"></div>
       <div><img class="thumb" src="/thumbs/teddy_cigar.png"></div>
-    </div>
+    </div> -->
+
+    <VueSlickCarousel class="slick" v-bind="settings">
+      <div class="thumb" @click="changeEffect('galaxy')"><img src="/thumbs/galaxy.png" /></div>
+      <div class="thumb" @click="changeEffect('aviators')"><img src="/thumbs/aviators.png" /></div>
+      <div class="thumb" @click="changeEffect('beard')"><img src="/thumbs/beard.png" /></div>
+      <div class="thumb" @click="changeEffect('dalmatian')"><img src="/thumbs/dalmatian.png" /></div>
+      <div class="thumb" @click="changeEffect('flowers')"><img src="/thumbs/flowers.png" /></div>
+      <div class="thumb" @click="changeEffect('koala')"><img src="/thumbs/koala.png" /></div>
+      <div class="thumb" @click="changeEffect('lion')"><img src="/thumbs/lion.png" /></div>
+      <div class="thumb" @click="changeEffect('teddy_cigar')"><img src="/thumbs/teddy_cigar.png" /></div>
+    </VueSlickCarousel>
   </div>
 </template>
 
 <script>
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel.css";
+// optional style for arrows & dots
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
+
 export default {
+  components: { VueSlickCarousel },
   data() {
     return {
       canvasHeight: window.innerHeight,
       canvasWidth: window.innerWidth,
-      deepAR: null,
+      deepARInstance: null,
+      settings: {
+        arrows: true,
+        centerMode: true,
+        centerPadding: "20px",
+        focusOnSelect: true,
+        infinite: true,
+        slidesToShow: 3,
+        speed: 500,
+      },
     };
   },
   methods: {
@@ -45,7 +70,7 @@ export default {
         libPath: "/lib",
         segmentationInfoZip: "segmentation.zip",
         onInitialize: function () {
-          console.log(deepAR);
+          console.log("onInitialize callback", deepAR);
           // start video immediately after the initalization, mirror = true
           deepAR.startVideo(true);
 
@@ -88,11 +113,85 @@ export default {
 
       deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin");
 
-      if (window.innerWidth > window.innerHeight) {
-        var width = Math.floor(window.innerHeight * 0.66);
-        var carousel = document.getElementsByClassName("effect-carousel")[0];
-        carousel.style.width = width + "px";
-        carousel.style.marginLeft = (window.innerWidth - width) / 2 + "px";
+      // if (window.innerWidth > window.innerHeight) {
+      //   var width = Math.floor(window.innerHeight * 0.66);
+      //   var carousel = document.getElementsByClassName("effect-carousel")[0];
+      //   carousel.style.width = width + "px";
+      //   carousel.style.marginLeft = (window.innerWidth - width) / 2 + "px";
+      // }
+
+      this.deepARInstance = deepAR;
+    },
+    changeEffect(key) {
+      console.log(`${key} selected`);
+      switch (key) {
+        case "galaxy":
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/background_segmentation",
+            function () {}
+          );
+          break;
+        case "aviators":
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/aviators",
+            function () {}
+          );
+          break;
+        case "beard":
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/beard",
+            function () {}
+          );
+          break;
+        case "dalmatian":
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/dalmatian",
+            function () {}
+          );
+          break;
+        case "flowers":
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/flowers",
+            function () {}
+          );
+          break;
+        case "koala":
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/koala",
+            function () {}
+          );
+          break;
+        case "lion":
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/lion",
+            function () {}
+          );
+          break;
+        case "teddy_cigar":
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/teddycigar",
+            function () {}
+          );
+          break;
+        default:
+          // code block
+          console.log("effect not found");
       }
     },
   },
@@ -109,11 +208,6 @@ canvas.deepar {
   display: block;
   margin: auto;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-body {
-  margin: 0px;
-  padding: 0px;
 }
 
 #loader-wrapper {
@@ -142,62 +236,15 @@ body {
   animation: sk-scaleout 1.5s infinite ease-in-out;
 }
 
-@-webkit-keyframes sk-scaleout {
-  0% {
-    -webkit-transform: scale(0);
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    opacity: 0;
-  }
-}
-
-@keyframes sk-scaleout {
-  0% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-
-.effect-carousel {
-  display: flex;
-  justify-content: center;
+.slick {
   width: 100%;
   height: 130px;
-  position: fixed;
-  bottom: 0;
   background-color: rgba(255, 255, 255, 0.7);
 }
 
 .thumb {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  position: relative;
-  opacity: 0.8;
-  transition: all 300ms ease;
-  height: 100px;
-}
-
-.slick-center .thumb {
-  -moz-transform: scale(1.3);
-  -ms-transform: scale(1.3);
-  -o-transform: scale(1.3);
-  -webkit-transform: scale(1.3);
-  color: #e67e22;
-  opacity: 1;
-  transform: scale(1.3);
-}
-
-.slick-slide {
-  width: 130px;
+  display: flex;
+  justify-content: center;
+  width: 186px;
 }
 </style>
