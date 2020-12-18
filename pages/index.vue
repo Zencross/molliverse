@@ -1,46 +1,50 @@
 <template>
   <div>
-    <canvas class="deepar" id="deepar-canvas" oncontextmenu="event.preventDefault()"></canvas>
-    <div class="fixed bottom-0 z-20 w-full py-3 slick-background">
-      <VueSlickCarousel v-bind="settings">
-        <div @click="changeEffect('galaxy')">
-          <div class="thumb">
-            <img height="95px" width="95px" src="/thumbs/galaxy.png" />
+    <div v-if="photo" class="absolute top-0 z-30">
+      <img class="fixed top-0 right-0 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickClosePhotoPreview">
+      <img :src="photo" alt="photo">
+    </div>
+    <canvas class="deepar" id="deepar-canvas" ref="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    <div class="fixed bottom-0 z-20 w-full py-3 mb-10 slick-background">
+      <VueSlickCarousel @afterChange="onElementChange" v-bind="settings">
+        <div id="lion" class="focus:outline-none" :class="[activeEffectIcon==='lion'?'px-0':'px-2']" @click="capturePhoto('lion')">
+          <div class="flex items-center justify-center border-4 border-white rounded-full">
+            <img src="/thumbs/lion.png" />
           </div>
         </div>
-        <div @click="changeEffect('aviators')">
-          <div class="thumb">
-            <img  height="95px" width="95px" src="/thumbs/aviators.png" />
+        <div id="aviators" class="focus:outline-none" :class="[activeEffectIcon==='aviators'?'px-0':'px-2']" @click="capturePhoto('aviators')">
+          <div class="flex items-center justify-center border-4 border-white rounded-full">
+            <img src="/thumbs/aviators.png" />
           </div>
         </div>
-        <div @click="changeEffect('beard')">
-          <div class="thumb">
-            <img  height="95px" width="95px" src="/thumbs/beard.png" />
+        <div id="beard" class="focus:outline-none" :class="[activeEffectIcon==='beard'?'px-0':'px-2']" @click="capturePhoto('beard')">
+          <div class="flex items-center justify-center border-4 border-white rounded-full">
+            <img src="/thumbs/beard.png" />
           </div>
         </div>
-        <div @click="changeEffect('dalmatian')">
-          <div class="thumb">
-            <img  height="95px" width="95px" src="/thumbs/dalmatian.png" />
+        <div id="dalmatian" class="focus:outline-none" :class="[activeEffectIcon==='dalmatian'?'px-0':'px-2']" @click="capturePhoto('dalmatian')">
+          <div class="flex items-center justify-center border-4 border-white rounded-full">
+            <img src="/thumbs/dalmatian.png" />
           </div>
         </div>
-        <div @click="changeEffect('flowers')">
-          <div class="thumb">
-            <img  height="95px" width="95px" src="/thumbs/flowers.png" />
+        <div id="flowers" class="focus:outline-none" :class="[activeEffectIcon==='flowers'?'px-0':'px-2']" @click="capturePhoto('flowers')">
+          <div class="flex items-center justify-center border-4 border-white rounded-full">
+            <img src="/thumbs/flowers.png" />
           </div>
         </div>
-        <div @click="changeEffect('koala')">
-          <div class="thumb">
-            <img  height="95px" width="95px" src="/thumbs/koala.png" />
+        <div id="koala" class="focus:outline-none" :class="[activeEffectIcon==='koala'?'px-0':'px-2']" @click="capturePhoto('koala')">
+          <div class="flex items-center justify-center border-4 border-white rounded-full">
+            <img src="/thumbs/koala.png" />
           </div>
         </div>
-        <div @click="changeEffect('lion')">
-          <div class="thumb">
-            <img  height="95px" width="95px" src="/thumbs/lion.png" />
+        <div id="galaxy" class="focus:outline-none" :class="[activeEffectIcon==='background_segmentation'?'px-0':'px-2']" @click="capturePhoto('background_segmentation')">
+          <div class="flex items-center justify-center border-4 border-white rounded-full">
+            <img src="/thumbs/galaxy.png" />
           </div>
         </div>
-        <div @click="changeEffect('teddy_cigar')">
-          <div class="thumb">
-            <img  height="95px" width="95px" src="/thumbs/teddy_cigar.png" />
+        <div id="teddy_cigar" class="focus:outline-none" :class="[activeEffectIcon==='teddycigar'?'px-0':'px-2']" @click="capturePhoto('teddycigar')">
+          <div class="flex items-center justify-center border-4 border-white rounded-full">
+            <img src="/thumbs/teddy_cigar.png" />
           </div>
         </div>
       </VueSlickCarousel>
@@ -59,21 +63,44 @@ export default {
   components: { VueSlickCarousel },
   data() {
     return {
+      activeEffectIcon: 'lion',
       canvasHeight: window.innerHeight,
       canvasWidth: window.innerWidth,
       deepARInstance: null,
       settings: {
-        arrows: true,
+        arrows: false,
         centerMode: true,
-        centerPadding: "20px",
+        centerPadding: '15%',
         focusOnSelect: true,
         infinite: true,
         slidesToShow: 3,
-        speed: 500,
+        swipeToSlide: true,
+        speed: 150,
       },
+      photoTaken: null
     };
   },
+  computed:{
+    photo(){
+      return this.$store.state.photo
+    }
+  },
   methods: {
+    onClickClosePhotoPreview(){
+      this.$store.commit('setPhoto', null)
+    },
+    capturePhoto(key){
+      console.log(`${key} icon is pressed`);
+      //  If center icon is clicked
+      if(key === this.activeEffectIcon){
+        console.log(`${key} is at center, take screen shot`);
+        this.deepARInstance.takeScreenshot();
+      }
+    },
+    onElementChange(index){
+      console.log("change to ", index);
+      this.changeEffect(index)
+    },
     initialize() {
       // desktop, the width of the canvas is 0.66 * window height and on mobile it's fullscreen
       if (window.innerWidth > window.innerHeight) {
@@ -114,8 +141,9 @@ export default {
         console.log("camera permission denied");
       };
 
-      deepAR.onScreenshotTaken = function (photo) {
+      deepAR.onScreenshotTaken = (photo) => {
         console.log("screenshot taken");
+        this.$store.commit('setPhoto', photo)
       };
 
       deepAR.onImageVisibilityChanged = function (visible) {
@@ -138,68 +166,106 @@ export default {
     changeEffect(key) {
       console.log(`${key} selected`);
       switch (key) {
-        case "galaxy":
-          this.deepARInstance.switchEffect(
-            0,
-            "slot",
-            "/effects/background_segmentation",
-            function () {}
-          );
-          break;
-        case "aviators":
-          this.deepARInstance.switchEffect(
-            0,
-            "slot",
-            "/effects/aviators",
-            function () {}
-          );
-          break;
-        case "beard":
-          this.deepARInstance.switchEffect(
-            0,
-            "slot",
-            "/effects/beard",
-            function () {}
-          );
-          break;
-        case "dalmatian":
-          this.deepARInstance.switchEffect(
-            0,
-            "slot",
-            "/effects/dalmatian",
-            function () {}
-          );
-          break;
-        case "flowers":
-          this.deepARInstance.switchEffect(
-            0,
-            "slot",
-            "/effects/flowers",
-            function () {}
-          );
-          break;
-        case "koala":
-          this.deepARInstance.switchEffect(
-            0,
-            "slot",
-            "/effects/koala",
-            function () {}
-          );
-          break;
-        case "lion":
+        case 0:
+          // document.getElementById('aviators').style.paddingLeft = '0.5rem'
+          // document.getElementById('aviators').style.paddingRight = '0.5rem'
+
+          // document.getElementById('lion').style.paddingLeft = '0px'
+          // document.getElementById('lion').style.paddingRight = '0px'
+
+          this.activeEffectIcon = 'lion'
+
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/lion",
-            function () {}
+            function () {
+              console.log("changed effect to lion");
+            }
           );
           break;
-        case "teddy_cigar":
+        case 1:
+          // document.getElementById('lion').style.paddingLeft = '0.5rem'
+          // document.getElementById('lion').style.paddingRight = '0.5rem'
+
+          // document.getElementById('aviators').style.paddingLeft = '0px'
+          // document.getElementById('aviators').style.paddingRight = '0px'
+
+          this.activeEffectIcon = 'aviators'
+
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/aviators",
+            function () {
+              console.log("changed effect to aviators");
+            }
+          );
+          break;
+        case 2:
+          this.activeEffectIcon = 'beard'
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/beard",
+            function () {
+              console.log("changed effect to beard");
+            }
+          );
+          break;
+        case 3:
+          this.activeEffectIcon = 'dalmatian'
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/dalmatian",
+            function () {
+              console.log("changed effect to dalmation");
+            }
+          );
+          break;
+        case 4:
+          this.activeEffectIcon = 'flowers'
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/flowers",
+            function () {
+              console.log("changed effect to flowers");
+            }
+          );
+          break;
+        case 5:
+          this.activeEffectIcon = 'koala'
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/koala",
+            function () {
+              console.log("changed effect to koala");
+            }
+          );
+          break;
+        case 6:
+          this.activeEffectIcon = 'background_segmentation'
+          this.deepARInstance.switchEffect(
+            0,
+            "slot",
+            "/effects/background_segmentation",
+            function () {
+              console.log("changed effect to background_segmentation");
+            }
+          );
+          break;
+        case 7:
+          this.activeEffectIcon = 'teddycigar'
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/teddycigar",
-            function () {}
+            function () {
+              console.log("changed effect to teddycigar");
+            }
           );
           break;
         default:
@@ -231,6 +297,11 @@ canvas.deepar {
 }
 
 .slick-background {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: transparent
 }
+
+.center-circle {
+
+}
+
 </style>
