@@ -19,54 +19,14 @@
     <canvas class="deepar" id="deepar-canvas" ref="canvas" oncontextmenu="event.preventDefault()"></canvas>
     <div class="fixed bottom-0 z-20 w-full py-3 mb-10 slick-background">
       <VueSlickCarousel @afterChange="onElementChange" v-bind="settings">
-        <div id="lion" class="focus:outline-none longpress-prevent-default" :class="[activeEffectIcon==='lion'?'px-0':'px-2']" @click="capturePhoto('lion')" 
-        v-long-press="800" @long-press-start="onLongPressStart" @long-press-stop="onLongPressStop" >
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img src="/thumbs/lion.png" />
-          </div>
-        </div>
-        <div id="aviators" class="focus:outline-none" :class="[activeEffectIcon==='aviators'?'px-0':'px-2']" @click="capturePhoto('aviators')"
-        v-long-press="800" @long-press-start="onLongPressStart" @long-press-stop="onLongPressStop">
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img src="/thumbs/aviators.png" />
-          </div>
-        </div>
-        <div id="beard" class="focus:outline-none" :class="[activeEffectIcon==='beard'?'px-0':'px-2']" @click="capturePhoto('beard')"
-        v-long-press="800" @long-press-start="onLongPressStart" @long-press-stop="onLongPressStop">
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img src="/thumbs/beard.png" />
-          </div>
-        </div>
-        <div id="dalmatian" class="focus:outline-none" :class="[activeEffectIcon==='dalmatian'?'px-0':'px-2']" @click="capturePhoto('dalmatian')"
-        v-long-press="800" @long-press-start="onLongPressStart" @long-press-stop="onLongPressStop">
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img src="/thumbs/dalmatian.png" />
-          </div>
-        </div>
-        <div id="flowers" class="focus:outline-none" :class="[activeEffectIcon==='flowers'?'px-0':'px-2']" @click="capturePhoto('flowers')"
-        v-long-press="800" @long-press-start="onLongPressStart" @long-press-stop="onLongPressStop">
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img src="/thumbs/flowers.png" />
-          </div>
-        </div>
-        <div id="koala" class="focus:outline-none" :class="[activeEffectIcon==='koala'?'px-0':'px-2']" @click="capturePhoto('koala')"
-        v-long-press="800" @long-press-start="onLongPressStart" @long-press-stop="onLongPressStop">
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img src="/thumbs/koala.png" />
-          </div>
-        </div>
-        <div id="galaxy" class="focus:outline-none" :class="[activeEffectIcon==='background_segmentation'?'px-0':'px-2']" @click="capturePhoto('background_segmentation')"
-        v-long-press="800" @long-press-start="onLongPressStart" @long-press-stop="onLongPressStop">
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img src="/thumbs/galaxy.png" />
-          </div>
-        </div>
-        <div id="teddy_cigar" class="focus:outline-none" :class="[activeEffectIcon==='teddycigar'?'px-0':'px-2']" @click="capturePhoto('teddycigar')"
-        v-long-press="800" @long-press-start="onLongPressStart" @long-press-stop="onLongPressStop">
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img src="/thumbs/teddy_cigar.png" />
-          </div>
-        </div>
+        <effect-icon-button
+            v-for="effect in effectList"
+            :key="effect.id"
+            :icon="effect.name"
+            @click="capturePhoto(effect.name)"
+            @long-press-start="onLongPressStart"
+            @long-press-stop="onLongPressStop"
+        />
       </VueSlickCarousel>
     </div>
   </div>
@@ -78,14 +38,14 @@ import "vue-slick-carousel/dist/vue-slick-carousel.css";
 // optional style for arrows & dots
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import LongPress from 'vue-directive-long-press'
+import EffectIconButton from '../components/EffectIconButton'
 
 
 export default {
   directives: { 'long-press': LongPress },
-  components: { VueSlickCarousel },
+  components: { VueSlickCarousel, EffectIconButton },
   data() {
     return {
-      activeEffectIcon: 'lion',
       canvasHeight: window.innerHeight,
       canvasWidth: window.innerWidth,
       deepARInstance: null,
@@ -102,6 +62,17 @@ export default {
       photoTaken: null,
       showVideoPreview: false,
       mediaRecorder: null,
+      longPressActive: false,
+      effectList:[
+          {id:0, name:'lion'},
+          {id:1, name:'aviators'},
+          {id:2, name:'beard'},
+          {id:3, name:'dalmatian'},
+          {id:4, name:'flowers'},
+          {id:5, name:'koala'},
+          {id:6, name:'background_segmentation'},
+          {id:7, name:'teddycigar'}
+        ]
     };
   },
   computed:{
@@ -113,13 +84,15 @@ export default {
     }
   },
   methods: {
-    onLongPressStart(e){
-      console.log('onLongPressStart',e);
+    onLongPressStart(){
       //Apply start record CSS to button
+      console.log('onLongPressStart');
+      this.longPressActive = true
       this.initRecord()
     },
     onLongPressStop(){
       console.log('onLongPressStop');
+      this.longPressActive = false;
       if(this.mediaRecorder && this.mediaRecorder.state !== 'inactive')
       this.mediaRecorder.stop()
     },
@@ -156,15 +129,15 @@ export default {
       this.$store.commit('setVideo', null)
     },
     capturePhoto(key){
-      console.log(`${key} icon is pressed`);
+      console.log(`capturePhoto: ${key} icon is pressed`);
       //  If center icon is clicked
-      if(key === this.activeEffectIcon){
-        console.log(`${key} is at center, take screen shot`);
+      if(key === this.$store.state.activeEffectIcon){
+        console.log(`capturePhoto: ${key} is at center, take screen shot`);
         this.deepARInstance.takeScreenshot();
       }
     },
     onElementChange(index){
-      console.log("change to ", index);
+      console.log("onElementChange: change to ", index);
       this.changeEffect(index)
     },
     initialize() {
@@ -233,104 +206,90 @@ export default {
       console.log(`${key} selected`);
       switch (key) {
         case 0:
-          // document.getElementById('aviators').style.paddingLeft = '0.5rem'
-          // document.getElementById('aviators').style.paddingRight = '0.5rem'
-
-          // document.getElementById('lion').style.paddingLeft = '0px'
-          // document.getElementById('lion').style.paddingRight = '0px'
-
-          this.activeEffectIcon = 'lion'
-
+          this.$store.commit('setActiveEffectIcon','lion')
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/lion",
             function () {
-              console.log("changed effect to lion");
+              console.log("changeEffect: changed effect to lion");
             }
           );
           break;
         case 1:
-          // document.getElementById('lion').style.paddingLeft = '0.5rem'
-          // document.getElementById('lion').style.paddingRight = '0.5rem'
-
-          // document.getElementById('aviators').style.paddingLeft = '0px'
-          // document.getElementById('aviators').style.paddingRight = '0px'
-
-          this.activeEffectIcon = 'aviators'
-
+          this.$store.commit('setActiveEffectIcon','aviators')
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/aviators",
             function () {
-              console.log("changed effect to aviators");
+              console.log("changeEffect: changed effect to aviators");
             }
           );
           break;
         case 2:
-          this.activeEffectIcon = 'beard'
+          this.$store.commit('setActiveEffectIcon','beard')
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/beard",
             function () {
-              console.log("changed effect to beard");
+              console.log("changeEffect: changed effect to beard");
             }
           );
           break;
         case 3:
-          this.activeEffectIcon = 'dalmatian'
+          this.$store.commit('setActiveEffectIcon','dalmatian')
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/dalmatian",
             function () {
-              console.log("changed effect to dalmation");
+              console.log("changeEffect: changed effect to dalmation");
             }
           );
           break;
         case 4:
-          this.activeEffectIcon = 'flowers'
+          this.$store.commit('setActiveEffectIcon','flowers')
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/flowers",
             function () {
-              console.log("changed effect to flowers");
+              console.log("changeEffect: changed effect to flowers");
             }
           );
           break;
         case 5:
-          this.activeEffectIcon = 'koala'
+          this.$store.commit('setActiveEffectIcon','koala')
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/koala",
             function () {
-              console.log("changed effect to koala");
+              console.log("changeEffect: changed effect to koala");
             }
           );
           break;
         case 6:
-          this.activeEffectIcon = 'background_segmentation'
+          this.$store.commit('setActiveEffectIcon','background_segmentation')
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/background_segmentation",
             function () {
-              console.log("changed effect to background_segmentation");
+              console.log("changeEffect: changed effect to background_segmentation");
             }
           );
           break;
         case 7:
-          this.activeEffectIcon = 'teddycigar'
+          this.$store.commit('setActiveEffectIcon','teddycigar')
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/teddycigar",
             function () {
-              console.log("changed effect to teddycigar");
+              console.log("changeEffect: changed effect to teddycigar");
             }
           );
           break;
@@ -374,5 +333,9 @@ canvas.deepar {
   -webkit-user-select: none; /* disable selection/Copy of UIWebView */
   -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
 }   
+
+.longPressEffect {
+    @apply transform scale-150
+}
 
 </style>
