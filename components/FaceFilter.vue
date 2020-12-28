@@ -24,8 +24,8 @@
             :key="effect.id"
             :icon="effect.name"
             @click="capturePhoto(effect.name)"
-            @long-press-start="onLongPressStart"
-            @long-press-stop="onLongPressStop"
+            @long-press-start="onLongPressStart(effect.name)"
+            @long-press-stop="onLongPressStop(effect.name)"
         />
       </VueSlickCarousel>
     </div>
@@ -35,14 +35,10 @@
 <script>
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
-// optional style for arrows & dots
-import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
-import LongPress from 'vue-directive-long-press'
 import EffectIconButton from '../components/EffectIconButton'
 
 
 export default {
-  directives: { 'long-press': LongPress },
   components: { VueSlickCarousel, EffectIconButton },
   data() {
     return {
@@ -84,14 +80,22 @@ export default {
     }
   },
   methods: {
-    onLongPressStart(){
+    onLongPressStart(key){
+      if(key !== this.$store.state.activeEffectIcon){
+        console.log('long press espaced');
+        return
+      }
       //Apply start record CSS to button
-      console.log('onLongPressStart');
+      console.log('onLongPressStart',key);
       this.longPressActive = true
       this.initRecord()
     },
-    onLongPressStop(){
-      console.log('onLongPressStop');
+    onLongPressStop(key){
+      if(key !== this.$store.state.activeEffectIcon){
+        console.log('long press espaced');
+        return
+      }
+      console.log('onLongPressStop',key);
       this.longPressActive = false;
       if(this.mediaRecorder && this.mediaRecorder.state !== 'inactive')
       this.mediaRecorder.stop()
