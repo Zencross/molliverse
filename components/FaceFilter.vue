@@ -162,7 +162,7 @@ export default {
         canvasWidth: this.canvasWidth,
         canvasHeight: this.canvasHeight,
         licenseKey:
-          "b31c00ca5e518316fd9c2edc7a4ed4507f272498998f7c5ff91a42ddf3afe0bce83fb15abd1d8a43",
+          "01be09e7ddae25b7d583f63c72a618c45fc39352e7dcc328d6df0d056831c1ce9e3f5fa5601074ef"
         canvas: document.getElementById("deepar-canvas"),
         numberOfFaces: 1,
         libPath: "/lib",
