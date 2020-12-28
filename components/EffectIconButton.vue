@@ -1,8 +1,9 @@
 <template>
     <div class="flex items-center rounded-full focus:outline-none longpress-prevent-default" 
-            :class="[activeEffectIcon===icon?'border-8 border-white px-0':'px-2']"
+            :class="[activeEffectIcon===icon?'border-8 border-white px-0':'px-2',
+            longPressActive && activeEffectIcon===icon ?'animate-pulse':'animate-none']"
             @click="onClickHandler" 
-            v-long-press="300"
+            v-long-press="500"
             @long-press-start="onLongPressStartHandler"
             @long-press-stop="onLongPressStopHandler"
         >
