@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Photo preview -->
-    <div v-if="photo" class="absolute top-0 z-30">
+    <div v-if="showPhotoPreview" class="absolute top-0 z-30">
       <img class="fixed top-0 right-0 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickClosePhotoPreview">
       <img :src="photo" alt="photo">
     </div>
@@ -57,6 +57,7 @@ export default {
       },
       photoTaken: null,
       showVideoPreview: false,
+      showPhotoPreview: false,
       mediaRecorder: null,
       longPressActive: false,
       effectList:[
@@ -90,15 +91,15 @@ export default {
       this.longPressActive = true
       this.initRecord()
     },
-    onLongPressStop(key){
-      if(key !== this.$store.state.activeEffectIcon){
+    async onLongPressStop(key){
+      if(key !== this.$store.state.activeEffectIcon || !this.longPressActive){
         console.log('long press espaced');
         return
       }
       console.log('onLongPressStop',key);
       this.longPressActive = false;
       if(this.mediaRecorder && this.mediaRecorder.state !== 'inactive')
-      this.mediaRecorder.stop()
+      await this.mediaRecorder.stop()
     },
     initRecord(){
       console.log("initRecord..");
@@ -125,17 +126,24 @@ export default {
       this.mediaRecorder.start();
     },
     onClickClosePhotoPreview(){
+      console.log("close photo");
+      this.showPhotoPreview = false
       this.$store.commit('setPhoto', null)
     },
     onClickCloseVideoPreview(){
       console.log("close video");
       this.showVideoPreview = false;
+      //  TODO: Temp. work around
+      this.showPhotoPreview = false;
       this.$store.commit('setVideo', null)
     },
     capturePhoto(key){
+      if(this.$store.state.video){
+        return
+      }
       console.log(`capturePhoto: ${key} icon is pressed`);
       //  If center icon is clicked
-      if(key === this.$store.state.activeEffectIcon){
+      if(key === this.$store.state.activeEffectIcon && this.longPressActive === false){
         console.log(`capturePhoto: ${key} is at center, take screen shot`);
         this.deepARInstance.takeScreenshot();
       }
@@ -187,6 +195,7 @@ export default {
       deepAR.onScreenshotTaken = (photo) => {
         console.log("screenshot taken");
         this.$store.commit('setPhoto', photo)
+        this.showPhotoPreview = true
       };
 
       deepAR.onImageVisibilityChanged = function (visible) {

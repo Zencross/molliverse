@@ -1,14 +1,16 @@
 <template>
-    <div class="focus:outline-none longpress-prevent-default" 
-            :class="[activeEffectIcon===icon?'px-0':'px-2']"
+    <div class="flex items-center rounded-full focus:outline-none longpress-prevent-default" 
+            :class="[activeEffectIcon===icon?'border-8 border-white px-0':'px-2']"
             @click="onClickHandler" 
             v-long-press="300"
             @long-press-start="onLongPressStartHandler"
             @long-press-stop="onLongPressStopHandler"
         >
-          <div class="flex items-center justify-center border-4 border-white rounded-full">
-            <img :src="iconURL" />
-          </div>
+          <img 
+            :src="iconURL" 
+            class="flex items-center justify-center object-fill" 
+            :class="[activeEffectIcon===icon?'':'border-white rounded-full border-4']" 
+          />
         </div>
 </template>
 
@@ -22,7 +24,7 @@ export default {
     },
     data() {
         return {
-            
+            longPressActive: false
         }
     },
     computed:{
@@ -35,18 +37,34 @@ export default {
     },
     methods:{
         onClickHandler(){
+          if(!this.longPressActive)
             this.$emit('click')
         },
         onLongPressStartHandler(){
+            this.longPressActive = true;
+            console.log(`longPressActive is ${this.longPressActive} inside EffectButton`);
             this.$emit('long-press-start')
         },
         onLongPressStopHandler(){
+            this.longPressActive = false;
+            console.log(`longPressActive is ${this.longPressActive} inside EffectButton`);
             this.$emit('long-press-stop')
         }
     }
 }
 </script>
 
-<style lang="">
-    
+<style>
+@keyframes jiggle {
+  0% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+.button-class {
+  @apply animate-bounce
+}
 </style>
