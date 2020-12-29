@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <face-filter /> -->
     <splash/>
   </div>
 </template>
@@ -29,4 +28,14 @@ export default {
 </script>
 
 <style>
+.page-enter-active,
+.page-leave-active {
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  transition-duration: 300ms;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
 </style>
