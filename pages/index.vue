@@ -1,11 +1,13 @@
 <template>
   <div>
-    <face-filter />
+    <!-- <face-filter /> -->
+    <splash/>
   </div>
 </template>
 
 <script>
 import FaceFilter from '../components/FaceFilter'
+import Splash from '../components/Splash'
 
 export default {
   components: { FaceFilter },
