@@ -1,8 +1,10 @@
 <template>
-    <div class="flex flex-col items-center justify-start w-full bg-transparent montserrat-font">
-        <label for="input" class="w-4/5 mb-3 text-4xl label-color">{{labelText}}</label>
-        <input id="input" :type="inputType" class="w-4/5 py-3 pl-4 -ml-4 bg-gray-100 rounded-full input-color" :placeholder="placeHolder" >
-        <div>{{hint}}</div>
+    <div class="flex justify-center w-full bg-transparent montserrat-font">
+        <div class="flex flex-col w-4/5">
+            <label for="input" class="mb-3 text-3xl label-color">{{labelText}}</label>
+            <input id="input" :type="inputType" class="w-full py-3 pl-4 -ml-2 bg-gray-100 rounded-full input-color" :placeholder="placeHolder" >
+            <div class="mt-2 text-sm hint-color">{{hint}}</div>
+        </div>
     </div>
 </template>
 
@@ -43,7 +45,6 @@ export default {
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: red;
   opacity: 1; /* Firefox */
-  padding: 15px;
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
@@ -60,5 +61,9 @@ export default {
 
 .input-color {
     background-color: #EEF0FC;
+}
+
+.hint-color {
+    color: #796B6B
 }
 </style>
