@@ -23,7 +23,7 @@ export default {
             this.$router.push('/name')
         },
         onClickButton(){
-            
+            this.$router.push('/gender')
         }
     }
 }
