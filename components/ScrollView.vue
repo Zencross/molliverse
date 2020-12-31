@@ -40,6 +40,6 @@ export default {
 }
 
 .scroll-view-container{
-    max-height: 150px;
+    max-height: 200px;
 }
 </style>
