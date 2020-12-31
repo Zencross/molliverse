@@ -1,7 +1,7 @@
 <template>
-    <div class="container w-9/12 overflow-scroll">
-        <div class='montserrat-font text-lightgrey'>Select up to 3</div>
-        <div class="flex flex-col items-start my-3 ml-1 text-xl karla-font" v-for="item in items" :key="item.id">{{item.name}}
+    <div class="container w-9/12 overflow-scroll bg-white">
+        <div class='bg-white montserrat-font text-lightgrey'>Select up to 3</div>
+        <div class="flex flex-col items-start pt-3 pl-1 text-xl bg-white karla-font" v-for="item in items" :key="item.id">{{item.name}}
         </div>
     </div>
 </template>
