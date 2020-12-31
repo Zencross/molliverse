@@ -6,7 +6,7 @@
             <scroll-view :items="sexualOrientations" />
             <label class="inline-flex items-center mt-8">
                 <input type="checkbox" class="w-4 h-4 form-checkbox">
-                <span class="ml-2 text-sm montserrat-font text-lightgrey">Show my orientation on my profile</span>
+                <span class="pl-2 text-sm montserrat-font text-lightgrey">Show my orientation on my profile</span>
             </label>
             <gradient-button class="mt-10" @click="onClickContinueButton" />
         </div>
