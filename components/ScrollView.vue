@@ -1,13 +1,13 @@
 <template>
     <div class="w-9/12 overflow-scroll scroll-view-container">
         <div class='montserrat-font text-lightgrey'>Select up to 3</div>
-        <div 
-          class="flex flex-col items-start mt-3 ml-1 text-xl karla-font" 
+        <button 
+          class="flex flex-col items-start w-full pl-1 mt-3 text-xl karla-font" 
           v-for="item in items" 
           :key="item.id"
         >
             {{item.name}}
-        </div>
+        </button>
     </div>
 </template>
 
