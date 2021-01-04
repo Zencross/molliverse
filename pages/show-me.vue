@@ -28,9 +28,15 @@ export default {
         onClickBackButton(){
             this.$router.push('/sexual-orientation')
         },
-        onClickShowWoman(){},
-        onClickShowMan(){},
-        onClickShowAll(){},
+        onClickShowWoman(){
+            this.$store.commit('setShowMePreference','Woman')
+        },
+        onClickShowMan(){
+            this.$store.commit('setShowMePreference','Man')
+        },
+        onClickShowAll(){
+            this.$store.commit('setShowMePreference','Everyone')
+        },
         onClickContinueButton(){
             this.$router.push('/education')
         }

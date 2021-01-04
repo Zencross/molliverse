@@ -1,7 +1,7 @@
 <template>
     <div>
         <top-bar back @click="onClickBackButton" />
-        <input-field labelText="My Birthday is" placeHolder="MM/DD/YYYY" hint="Your Age will be public" class="mt-8"></input-field>
+        <input-field labelText="My Birthday is" @input="onInputBirthday" v-model="birthday" placeHolder="MM/DD/YYYY" hint="Your Age will be public" class="mt-8"></input-field>
         <gradient-button class="mt-24" @click="onClickButton" />
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     components:{ TopBar, InputField, GradientButton },
     data() {
         return {
-            
+            birthday:""
         }
     },
     methods:{
@@ -24,6 +24,10 @@ export default {
         },
         onClickButton(){
             this.$router.push('/gender')
+        },
+        onInputBirthday(){
+            console.log(this.birthday);
+            this.$store.commit('setBirthday', this.birthday)
         }
     }
 }

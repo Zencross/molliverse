@@ -1,7 +1,7 @@
 <template>
     <div>
         <top-bar back skip @click="onClickBackButton" @skip="onClickSkipButton" />
-        <input-field labelText="My University is" placeHolder="University name" hint="This is how it would appear in Bliss" class="mt-8"></input-field>
+        <input-field labelText="My University is" @input="onInputUniversity" v-model="university" placeHolder="University name" hint="This is how it would appear in Bliss" class="mt-8"></input-field>
         <gradient-button class="mt-24" @click="onClickButton" />
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     components:{ TopBar, InputField, GradientButton },
     data() {
         return {
-            
+            university: ""
         }
     },
     methods:{
@@ -27,6 +27,9 @@ export default {
         },
         onClickSkipButton(){
             this.$router.push('/passions')
+        },
+        onInputUniversity(){
+            this.$store.commit('setUniversity', this.university)
         }
     }
 }

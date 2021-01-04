@@ -2,7 +2,7 @@
     <div class="w-full bg-transparent montserrat-font">
         <div class="flex flex-col items-center w-full">
             <label for="input" class="w-4/5 mb-3 text-3xl text-grayish-red">{{labelText}}</label>
-            <input id="input" :type="inputType" class="w-10/12 py-3 pl-4 bg-gray-100 rounded-full input-color" :placeholder="placeHolder" >
+            <input id="input" :value="value" @input="$emit('input', $event.target.value)" :type="inputType" class="w-10/12 py-3 pl-4 bg-gray-100 rounded-full input-color focus:outline-none" :placeholder="placeHolder" >
             <div class="w-4/5 mt-2 text-sm text-lightgrey">{{hint}}</div>
         </div>
     </div>
@@ -11,6 +11,9 @@
 <script>
 export default {
     props:{
+        value:{
+            type: String
+        },
         labelText:{
             type: String,
             default: 'Label Text'
@@ -31,6 +34,8 @@ export default {
             type: Boolean,
             default: false
         }
+    },
+    methods:{
     }
 }
 </script>
