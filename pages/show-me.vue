@@ -3,9 +3,9 @@
         <top-bar back @click="onClickBackButton" />
         <div class="flex flex-col items-center w-full mt-8">
             <app-text class="w-4/5 mb-8" text="Show me" />
-            <app-button buttonText="WOMAN" @click="onClickWoman" borderBlack textBlack class="mb-8" />
-            <app-button buttonText="MAN" @click="onClickMan" borderBlack textBlack class="mb-8" />
-            <app-button buttonText="EVERYONE" @click="onClickOtherGender" borderBlack textBlack rightArrow class="mb-8" />
+            <app-button buttonText="WOMAN" @click="onClickShowWoman" borderBlack textBlack activeEffect class="mb-8" />
+            <app-button buttonText="MAN" @click="onClickShowMan" borderBlack textBlack activeEffect class="mb-8" />
+            <app-button buttonText="EVERYONE" @click="onClickShowAll" borderBlack textBlack activeEffect class="mb-8" />
             <gradient-button class="mt-12" @click="onClickContinueButton" />
         </div>
     </div>
@@ -28,9 +28,9 @@ export default {
         onClickBackButton(){
             this.$router.push('/sexual-orientation')
         },
-        onClickWoman(){},
-        onClickMan(){},
-        onClickOtherGender(){},
+        onClickShowWoman(){},
+        onClickShowMan(){},
+        onClickShowAll(){},
         onClickContinueButton(){
             this.$router.push('/education')
         }

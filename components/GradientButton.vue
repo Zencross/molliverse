@@ -36,6 +36,6 @@ export default {
 }
 
 .button-gradient {
-    background: linear-gradient(.25turn, #D464B4, 50%, #5AA9FC);
+    background: linear-gradient(.25turn, #632B75, 50%, #FD267D);
 }
 </style>

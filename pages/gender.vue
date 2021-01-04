@@ -3,8 +3,8 @@
         <top-bar back @click="onClickBackButton" />
         <div class="flex flex-col items-center w-full mt-8">
             <app-text class="w-4/5 mb-8" text="I am a" />
-            <app-button buttonText="WOMAN" @click="onClickWoman" borderBlack textBlack class="mb-8" />
-            <app-button buttonText="MAN" @click="onClickMan" borderBlack textBlack class="mb-8" />
+            <app-button buttonText="WOMAN" @click="onClickWoman" borderBlack textBlack activeEffect class="mb-8" />
+            <app-button buttonText="MAN" @click="onClickMan" borderBlack textBlack activeEffect class="mb-8" />
             <app-button buttonText="MORE" @click="onClickOtherGender" borderBlack textBlack rightArrow class="mb-8" />
             <label class="inline-flex items-center">
                 <input type="checkbox" class="w-4 h-4 form-checkbox">

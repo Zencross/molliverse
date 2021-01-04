@@ -1,13 +1,14 @@
 <template>
     <div class="flex justify-center w-full">
         <button 
-            class="flex items-center w-9/12 p-3 bg-transparent border rounded-full karla-font"
+            class="flex items-center w-9/12 p-3 bg-transparent border rounded-full focus:outline-none karla-font"
             :class="[
                 borderBlack?'border-black':'',
                 borderWhite?'border-white':'',
                 textBlack?'text-black':'',
                 textWhite?'text-white':'',
-                rightArrow?'justify-between':'justify-center'
+                rightArrow?'justify-between':'justify-center',
+                activeEffect?'focus:font-black':''
             ]"
             @click="onClickButton"
         >
@@ -39,11 +40,13 @@ export default {
         },
         rightArrow:{
             type: Boolean
+        },
+        activeEffect:{
+            type: Boolean
         }
     },
     data() {
         return {
-            
         }
     },
     computed:{},
