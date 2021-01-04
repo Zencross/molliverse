@@ -5,14 +5,15 @@
         <div class="w-4/5 text-sm montserrat-font text-lightgrey">Let everyone know what you’re passionate about, by adding it to your profile</div>
         <div class="w-4/5 mt-3 mb-6 overflow-scroll tag-container">
             <button 
-                class="px-2 my-1 mr-4 border border-gray-400 rounded-full montserrat-font text-lightgrey" 
-                @click="onClickTag(tag)"
                 v-for="tag in tags"
                 :key="tag.id"
+                class="px-2 my-1 mr-4 border border-gray-400 rounded-full montserrat-font text-lightgrey" 
+                :class="[existInPassionsArr(tag)?'bg-red-100 text-red':'']"
+                @click="onClickTag(tag)"
                 >
                 <div class="flex justify-between w-full">
                     <div>{{tag.name}}</div>
-                    <img v-if="existInPassionsArr(tag)" src="../static/img/tick-purple-24px.svg" alt="">
+                    <!-- <img v-if="existInPassionsArr(tag)" src="../static/img/tick-purple-24px.svg" alt=""> -->
                 </div>
                 </button>
         </div>
@@ -90,7 +91,7 @@ export default {
 }
 
 .tag-container {
-    max-height: 200px;
+    max-height: 250px;
 }
 
 .button-gradient {
