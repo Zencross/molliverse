@@ -3,7 +3,7 @@
         <top-bar back skip @click="onClickBackButton" @skip="onClickSkipButton" />
         <div class="w-4/5 mt-8 mb-3 text-3xl text-grayish-red montserrat-font">Passions</div>
         <div class="w-4/5 text-sm montserrat-font text-lightgrey">Let everyone know what you’re passionate about, by adding it to your profile</div>
-        <div class="w-4/5 mt-3 mb-6 overflow-scroll tag-container">
+        <div class="w-4/5 mt-3 mb-6 overflow-scroll tag-container disable-dbl-tap-zoom">
             <button 
                 v-for="tag in tags"
                 :key="tag.id"
@@ -96,5 +96,9 @@ export default {
 
 .button-gradient {
     background: linear-gradient(.25turn, #632B75, 50%, #FD267D);
+}
+
+.disable-dbl-tap-zoom {
+    touch-action: manipulation;
 }
 </style>
