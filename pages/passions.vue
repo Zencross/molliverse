@@ -8,7 +8,7 @@
                 v-for="tag in tags"
                 :key="tag.id"
                 class="px-2 my-1 mr-4 border border-gray-400 rounded-full montserrat-font text-lightgrey" 
-                :class="[existInPassionsArr(tag)?'bg-red-100 text-red':'']"
+                :class="[existInPassionsArr(tag)?'bg-red-100':'']"
                 @click="onClickTag(tag)"
                 >
                 <div class="flex justify-between w-full">
