@@ -1,13 +1,17 @@
 <template>
     <div class="w-9/12 overflow-scroll scroll-view-container">
         <div class='montserrat-font text-lightgrey'>Select up to 3</div>
-        <button 
+        <div 
           class="flex flex-col items-start w-full pl-1 mt-3 text-xl karla-font" 
           v-for="item in items" 
           :key="item.id"
+          @click="onClickItem(item)"
         >
-            {{item.name}}
-        </button>
+            <div class="flex">
+                <div>{{item.name}}</div>
+                <img v-if="" src="../static/img/tick-purple-24px.svg" alt="">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -23,7 +27,11 @@ export default {
             
         }
     },
-    methods:{}
+    methods:{
+        onClickItem(){
+            this.$emit('click')
+        }
+    }
 }
 </script>
 
