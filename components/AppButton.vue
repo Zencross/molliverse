@@ -8,7 +8,7 @@
                 textBlack?'text-black':'',
                 textWhite?'text-white':'',
                 rightArrow?'justify-between':'justify-center',
-                activeEffect?'focus:font-black':''
+                activeEffect?'focus:bg-gray-300':''
             ]"
             @click="onClickButton"
         >
@@ -64,4 +64,5 @@ export default {
 .karla-font{
     font-family: 'Karla', sans-serif;
 }
+
 </style>
