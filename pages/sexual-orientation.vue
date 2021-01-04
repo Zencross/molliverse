@@ -86,4 +86,8 @@ export default {
 .montserrat-font{
     font-family: 'Montserrat', sans-serif;
 }
+
+.scroll-view-container {
+    max-height: 200px;
+}
 </style>

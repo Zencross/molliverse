@@ -10,7 +10,8 @@ export const state = () => ({
     email: "",
     firstName: "",
     showMePreference: "",
-    university: ""
+    university: "",
+    passions:[]
 })
 
 export const mutations = {
@@ -66,7 +67,16 @@ export const mutations = {
     setUniversity(state, val){
         state.university = val
         console.log('VUEX: set university to', state.university);
-    }
+    },
+    addPassion(state, item){
+        state.passions.push(item)
+        console.log('VUEX: new user passions array', state.passions);
+    },
+    removePassion(state, item){
+        const filtered = state.passions.filter(s => s.name !== item)
+        state.passions = filtered
+        console.log('VUEX: new user passions array', state.passions);
+    },
 }
 
 export const actions = {}
