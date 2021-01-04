@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-center w-full">
-        <top-bar back @click="onClickBackButton" />
+        <top-bar back skip @click="onClickBackButton" @skip="onClickSkipButton" />
         <div class="flex flex-col items-center w-full mt-8 bg-white">
             <app-text class="w-4/5 mb-4" text="My Sexual orientation is" />
             <scroll-view :items="sexualOrientations" />
@@ -38,11 +38,14 @@ export default {
         onClickBackButton(){
             this.$router.push('/gender')
         },
+        onClickSkipButton(){
+            this.$router.push('/gender')
+        },
         onClickWoman(){},
         onClickMan(){},
         onClickOtherGender(){},
         onClickContinueButton(){
-            this.$router.push('/sexual-orientation')
+            this.$router.push('/show-me')
         }
     }
 }
