@@ -19,6 +19,7 @@
         </div>
         <button 
             class="flex items-center justify-center w-4/5 p-3 text-white rounded-full button-gradient montserrat-font disable-dbl-tap-zoom"
+            @click="onClickContinueButton"
         >
             <span class="text-lg font-bold disable-dbl-tap-zoom">CONTINUE {{numberOfPassionChosen}}/5</span>
         </button>
@@ -64,7 +65,12 @@ export default {
         onClickBackButton(){
             this.$router.push('/education')
         },
-        onClickSkipButton(){},
+        onClickSkipButton(){
+            this.$router.push('/gallery')
+        },
+        onClickContinueButton(){
+            this.$router.push('/gallery')
+        },
         onClickTag(tag){
             console.log('Clicked',tag.name);
             // append item in array, remove item if exist
