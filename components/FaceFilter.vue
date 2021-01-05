@@ -4,6 +4,11 @@
     <div v-if="showPhotoPreview" class="absolute top-0 z-30">
       <img class="fixed top-0 right-0 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickClosePhotoPreview">
       <img :src="photo" alt="photo">
+      <div class="fixed bottom-0 flex justify-center w-full mb-8">
+        <div class="p-2 bg-white rounded-full" @click="onClickTick">
+          <img class="w-16 h-16" src="../static/img/tick-purple-24px.svg" alt="">
+        </div>
+      </div>
     </div>
 
     <!-- Video preview -->
@@ -13,7 +18,12 @@
       autoplay 
       loop
     >
-    </video>        
+    </video>   
+    <div class="fixed bottom-0 z-40 flex justify-center w-full mb-8">
+        <div class="p-2 bg-white rounded-full" @click="onClickTick">
+          <img class="w-16 h-16" src="../static/img/tick-purple-24px.svg" alt="">
+        </div>
+    </div>     
     </div>
 
     <canvas class="deepar" id="deepar-canvas" ref="canvas" oncontextmenu="event.preventDefault()"></canvas>
@@ -81,9 +91,13 @@ export default {
     }
   },
   methods: {
+    onClickTick(){
+      this.$emit('confirm')
+    },
     onLongPressStart(key){
       if(key !== this.$store.state.activeEffectIcon){
-        console.log('long press espaced');
+        //  disable longpress for icon button that is not in the center
+        console.log(`onLongPressStart in FaceFilter: long press espaced, pressing ${key} but center (activeEffectIcon) is ${this.$store.state.activeEffectIcon}`);
         return
       }
       //Apply start record CSS to button
@@ -93,7 +107,7 @@ export default {
     },
     async onLongPressStop(key){
       if(key !== this.$store.state.activeEffectIcon || !this.longPressActive){
-        console.log('long press espaced');
+        console.log('onLongPressStop in FaceFilter: long press espaced');
         return
       }
       console.log('onLongPressStop',key);
@@ -121,6 +135,10 @@ export default {
         chunks = [];
         var videoURL = URL.createObjectURL(blob);
         this.$store.commit('setVideo', videoURL)
+
+        //  TODO: Delete this line if it goes wrong
+        this.$store.commit('setPhoto', null)
+        
         this.showVideoPreview = true
       };
       this.mediaRecorder.start();
@@ -133,8 +151,10 @@ export default {
     onClickCloseVideoPreview(){
       console.log("close video");
       this.showVideoPreview = false;
-      //  TODO: Temp. work around
+
+      //  TODO: Temp. work around to hide the photo
       this.showPhotoPreview = false;
+
       this.$store.commit('setVideo', null)
     },
     capturePhoto(key){
@@ -313,6 +333,7 @@ export default {
     },
   },
   mounted() {
+    if(!this.deepARInstance)
     this.initialize();
   },
 };

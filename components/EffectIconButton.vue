@@ -43,12 +43,12 @@ export default {
         },
         onLongPressStartHandler(){
             this.longPressActive = true;
-            console.log(`longPressActive is ${this.longPressActive} inside EffectButton`);
+            console.log(`longPressActive is ${this.longPressActive} inside EffectIconButton`);
             this.$emit('long-press-start')
         },
         onLongPressStopHandler(){
             this.longPressActive = false;
-            console.log(`longPressActive is ${this.longPressActive} inside EffectButton`);
+            console.log(`longPressActive is ${this.longPressActive} inside EffectIconButton`);
             this.$emit('long-press-stop')
         }
     }

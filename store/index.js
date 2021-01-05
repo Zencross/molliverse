@@ -1,5 +1,7 @@
 export const state = () => ({
     photo: null,
+    userProfileMedia:[],
+    currentMediaIndex:0,
     video: null,
     activeEffectIcon: 'lion',
     userSexualOrientations: [],
@@ -18,6 +20,22 @@ export const mutations = {
     setPhoto(state, val){
         state.photo = val
         console.log('VUEX: set photo to', state.photo);
+    },
+    addUserProfileMedia(state, index){
+        if(state.photo){
+            state.userProfileMedia.splice(index, 0, {type:"photo", src:state.photo})
+            console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
+        }else if(state.video){
+            state.userProfileMedia.splice(index, 0, {type:"video", src:state.video}),
+            console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
+        }
+    },
+    removeUserProfileMedia(state, val){
+
+    },
+    setCurrentMediaIndex(state, val){
+        state.currentMediaIndex = val
+        console.log("VUEX: set currentMediaIndex to", state.currentMediaIndex);
     },
     setVideo(state, val){
         state.video = val
