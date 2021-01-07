@@ -1,6 +1,16 @@
 export const state = () => ({
     photo: null,
-    userProfileMedia:[],
+    userProfileMedia:[
+        { id:0, type:"", src:null },
+        { id:1, type:"", src:null },
+        { id:2, type:"", src:null },
+        { id:3, type:"", src:null },
+        { id:4, type:"", src:null },
+        { id:5, type:"", src:null },
+        { id:6, type:"", src:null },
+        { id:7, type:"", src:null },
+        { id:8, type:"", src:null },
+    ],
     currentMediaIndex:0,
     video: null,
     activeEffectIcon: 'lion',
@@ -22,13 +32,17 @@ export const mutations = {
         console.log('VUEX: set photo to', state.photo);
     },
     addUserProfileMedia(state, index){
+        console.log('type of index is', typeof index, index);
         if(state.photo){
-            state.userProfileMedia.splice(index, 0, {type:"photo", src:state.photo})
+            state.userProfileMedia.splice(index, 1, {id:index, type:"photo", src:state.photo})
             console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
         }else if(state.video){
-            state.userProfileMedia.splice(index, 0, {type:"video", src:state.video}),
+            state.userProfileMedia.splice(index, 1, {id:index, type:"video", src:state.video}),
             console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
         }
+    },
+    setUserProfileMedia(state, val){
+        state.userProfileMedia = val
     },
     removeUserProfileMedia(state, val){
 
