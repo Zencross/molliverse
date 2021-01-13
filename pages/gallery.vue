@@ -60,8 +60,8 @@
                 </div>
             </div>
         </div> -->
-        <draggable v-model="userProfileMedia" group="people" @start="drag=true" @end="drag=false" @change="log" class="flex flex-wrap justify-around w-full my-2 grid-height">
-            <div v-for="ele in userProfileMedia" :key="ele.id" class="relative bg-darkgrey rounded-xl item row-height" @click="onClickBox(userProfileMedia.indexOf(ele))">
+        <draggable v-model="userProfileMedia" group="people" @start="drag=true" @end="drag=false" @change="log" class="flex flex-wrap justify-around w-full px-1 my-2 gallery-height">
+            <div v-for="ele in userProfileMedia" :key="ele.id" class="relative my-1 bg-darkgrey rounded-xl item cell-height" @click="onClickBox(userProfileMedia.indexOf(ele))">
                 <img v-if="isMediaPhoto(userProfileMedia.indexOf(ele))" :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl" alt="">
                 <video v-if="isMediaVideo(userProfileMedia.indexOf(ele))" autoplay loop :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl"></video>
                 <img class="absolute bottom-0 right-0 z-20 -mb-2 -mr-2" src="../static/img/plus-purple-30px.svg" alt="">
@@ -135,12 +135,12 @@ export default {
 </script>
 
 <style>
-.grid-height {
-    height: 55%;
+.gallery-height {
+    height: 58%;
 }
 
-.row-height {
-    height: 33%;
+.cell-height {
+    height: 30%;
 }
 
 .item {
