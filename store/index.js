@@ -39,10 +39,10 @@ export const mutations = {
     addUserProfileMedia(state, index){
         console.log('type of index is', typeof index, index);
         if(state.photo){
-            state.userProfileMedia.splice(index, 1, {id:index, type:"photo", src:state.photo})
+            state.userProfileMedia.splice(index, 1, { ...state.userProfileMedia[index], type:"photo", src:state.photo})
             console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
         }else if(state.video){
-            state.userProfileMedia.splice(index, 1, {id:index, type:"video", src:state.video}),
+            state.userProfileMedia.splice(index, 1, { ...state.userProfileMedia[index], type:"video", src:state.video}),
             console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
         }
     },
