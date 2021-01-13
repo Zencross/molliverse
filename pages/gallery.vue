@@ -2,7 +2,7 @@
     <div class="w-full h-screen">
         <top-bar back @click="onClickBackButton" />
         <div class="flex flex-col items-center w-full">
-            <div class="flex justify-center w-4/5 mt-4 mb-2 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Record a Video</div>
+            <div class="flex justify-center w-4/5 mt-4 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Record a Video</div>
             <div class="flex justify-center w-4/5 text-xs montserrat-font text-lightgrey disable-dbl-tap-zoom">Hold, drag and drop to order your videos</div>
         </div>
         <!-- <div class="flex flex-col items-center my-2 grid-height">
