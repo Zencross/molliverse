@@ -1,7 +1,7 @@
 <template>
     <div>
         <top-bar back @click="onClickBackButton" />
-        <input-field labelText="My first name is" v-model="firstName" @input="onInputFirstName" placeHolder="First Name" hint="This is how it would appear in Bliss" class="mt-8"></input-field>
+        <input-field labelText="My first name is" v-model="firstName" placeHolder="First Name" hint="This is how it would appear in Bliss" class="mt-8"></input-field>
         <gradient-button class="mt-24" @click="onClickButton" />
     </div>
 </template>
@@ -15,7 +15,16 @@ export default {
     components:{ TopBar, InputField, GradientButton },
     data() {
         return {
-            firstName: ""
+        }
+    },
+    computed: {
+        firstName: {
+            get () {
+                return this.$store.state.firstName
+            },
+            set (value) {
+                this.$store.commit('setFirstName', value)
+            }
         }
     },
     methods:{
@@ -24,10 +33,6 @@ export default {
         },
         onClickButton(){
             this.$router.push('/birthday')
-        },
-        onInputFirstName(){
-            console.log(this.firstName);
-            this.$store.commit('setFirstName', this.firstName)
         }
     }
 }
