@@ -336,6 +336,11 @@ export default {
     if(!this.deepARInstance)
     this.initialize();
   },
+  beforeDestroy(){
+    console.log('before Destory');
+    this.deepARInstance.stopVideo()
+    this.deepARInstance.shutdown()
+  }
 };
 </script>
 

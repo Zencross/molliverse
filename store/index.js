@@ -23,10 +23,15 @@ export const state = () => ({
     firstName: "",
     showMePreference: "",
     university: "",
-    passions:[]
+    passions:[],
+    deepARInstance: null
 })
 
 export const mutations = {
+    setDeepARInstance(state, val){
+        state.deepARInstance = val
+        console.log('VUEX: set deepARInstance to', state.deepARInstance);
+    },
     setPhoto(state, val){
         state.photo = val
         console.log('VUEX: set photo to', state.photo);
