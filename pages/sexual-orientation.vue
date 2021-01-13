@@ -66,7 +66,7 @@ export default {
             this.$router.push('/gender')
         },
         onClickSkipButton(){
-            this.$router.push('/gender')
+            this.$router.push('/show-me')
         },
         onClickItem(item){
             console.log('Clicked',item.name);
