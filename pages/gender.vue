@@ -7,7 +7,7 @@
             <app-button buttonText="MAN" @click="onClickMan" borderBlack textBlack activeEffect class="mb-8" />
             <app-button buttonText="MORE" @click="onClickOtherGender" borderBlack textBlack rightArrow class="mb-8" />
             <label class="inline-flex items-center">
-                <input type="checkbox" v-model="showGenderOnProfile" @change="onChangeShowGenderOnProfile" class="w-4 h-4 form-checkbox">
+                <input type="checkbox" v-model="showGenderOnProfile" class="w-4 h-4 form-checkbox">
                 <span class="ml-2 text-sm montserrat-font text-lightgrey">Show my gender on my profile</span>
             </label>
             <gradient-button class="mt-12" @click="onClickContinueButton" />
@@ -25,7 +25,16 @@ export default {
     components:{ TopBar, AppText, AppButton, GradientButton },
     data() {
         return {
-            showGenderOnProfile: false,
+        }
+    },
+    computed: {
+        showGenderOnProfile: {
+            get () {
+                return this.$store.state.showGenderOnProfile
+            },
+            set (value) {
+                this.$store.commit('setShowGenderOnProfile', value)
+            }
         }
     },
     methods:{
@@ -39,9 +48,6 @@ export default {
             this.$store.commit('setGender', 'Man')
         },
         onClickOtherGender(){},
-        onChangeShowGenderOnProfile(){
-            this.$store.commit('setShowGenderOnProfile', this.showGenderOnProfile)
-        },
         onClickContinueButton(){
             this.$router.push('/sexual-orientation')
         }

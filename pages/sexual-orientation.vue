@@ -18,7 +18,7 @@
                 </button>
             </div>
             <label class="inline-flex items-center mt-8">
-                <input type="checkbox" v-model="showSexualOrientationOnProfile" @change="onChangeShowSexualOrientationOnProfile" class="w-4 h-4 form-checkbox">
+                <input type="checkbox" v-model="showSexualOrientationOnProfile" class="w-4 h-4 form-checkbox">
                 <span class="pl-2 text-sm montserrat-font text-lightgrey">Show my orientation on my profile</span>
             </label>
             <gradient-button class="mt-10" @click="onClickContinueButton" />
@@ -44,10 +44,17 @@ export default {
                 { id:5, name:"Asexual" },
                 { id:6, name:"Others"},
             ],
-            showSexualOrientationOnProfile: false,
         }
     },
-    computed:{
+    computed: {
+        showSexualOrientationOnProfile: {
+            get () {
+                return this.$store.state.showSexualOrientationOnProfile
+            },
+            set (value) {
+                this.$store.commit('setShowSexualOrientationOnProfile', value)
+            }
+        }
     },
     methods:{
         existInUserSOArr(item){
@@ -69,9 +76,6 @@ export default {
             } else if(this.$store.state.userSexualOrientations.length < 3){
                 this.$store.commit('addSexualOrientation', item)
             }
-        },
-        onChangeShowSexualOrientationOnProfile(){
-            this.$store.commit('setShowSexualOrientationOnProfile', this.showSexualOrientationOnProfile)
         },
         onClickContinueButton(){
             this.$router.push('/show-me')
