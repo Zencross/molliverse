@@ -8,7 +8,7 @@
                 textBlack?'text-black':'',
                 textWhite?'text-white':'',
                 rightArrow?'justify-between':'justify-center',
-                activeEffect?'focus:bg-gray-300':''
+                activeEffect?'focus:bg-gray-300 hover:bg-gray-300':''
             ]"
             @click="onClickButton"
         >
