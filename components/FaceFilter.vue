@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Photo preview -->
-    <div v-if="showPhotoPreview" class="absolute top-0 z-30">
+    <div v-if="showPhotoPreview" class="absolute top-0 bottom-0 left-0 right-0 z-30">
       <img class="fixed top-0 right-0 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickClosePhotoPreview">
       <img :src="photo" alt="photo">
       <div class="fixed bottom-0 flex justify-center w-full mb-8">
@@ -12,7 +12,7 @@
     </div>
 
     <!-- Video preview -->
-    <div v-if="showVideoPreview" class="absolute top-0 z-30" >
+    <div v-if="showVideoPreview" class="absolute top-0 bottom-0 left-0 right-0 z-30" >
     <img class="fixed top-0 right-0 z-40 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickCloseVideoPreview">
     <video :src="video" 
       autoplay 
