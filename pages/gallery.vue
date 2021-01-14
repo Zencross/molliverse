@@ -1,4 +1,5 @@
 <template>
+    
     <div class="w-full h-screen">
         <top-bar back @click="onClickBackButton" />
         <div class="flex flex-col items-center w-full">
@@ -60,12 +61,15 @@
                 </div>
             </div>
         </div> -->
-        <draggable v-model="userProfileMedia" group="people" @start="drag=true" @end="drag=false" @change="log" class="flex flex-wrap justify-around w-full px-1 my-2 gallery-height">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+        <draggable v-model="userProfileMedia" group="people" @start="drag=true" @end="drag=false" @change="log" class="w-full px-1 my-2 gallery-height">
+            <transition-group tag="div" class="flex flex-wrap justify-around w-full h-full" name="flip-list">
             <div v-for="ele in userProfileMedia" :key="ele.id" class="relative my-1 bg-darkgrey rounded-xl item cell-height" @click="onClickBox(userProfileMedia.indexOf(ele))">
                 <img v-if="isMediaPhoto(userProfileMedia.indexOf(ele))" :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl" alt="">
                 <video v-if="isMediaVideo(userProfileMedia.indexOf(ele))" autoplay loop :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl"></video>
                 <img class="absolute bottom-0 right-0 z-20 -mb-2 -mr-2" src="../static/img/plus-purple-30px.svg" alt="">
             </div>
+            </transition-group>
         </draggable>
 
         <!-- <draggable v-model="myArray" group="people" @start="drag=true" @end="drag=false">
@@ -77,6 +81,7 @@
 </template>
 
 <script>
+
 import GradientButton from '~/components/GradientButton.vue'
 import TopBar from '~/components/TopBar.vue'
 import draggable from 'vuedraggable'
@@ -145,5 +150,9 @@ export default {
 
 .item {
   width: 30%;
+}
+
+.flip-list-move {
+  transition: transform 0.5s;
 }
 </style>
