@@ -10,7 +10,7 @@
             <transition-group tag="div" class="flex flex-wrap justify-around w-full h-full" name="flip-list">
             <div v-for="ele in userProfileMedia" :key="ele.id" class="relative my-1 bg-darkgrey rounded-xl item cell-height" @click="onClickBox(userProfileMedia.indexOf(ele))">
                 <img v-if="isMediaPhoto(userProfileMedia.indexOf(ele))" :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl" alt="">
-                <video v-if="isMediaVideo(userProfileMedia.indexOf(ele))" autoplay loop :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl"></video>
+                <video v-if="isMediaVideo(userProfileMedia.indexOf(ele))" autoplay playsinline loop :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl"></video>
                 <img class="absolute bottom-0 right-0 z-20 -mb-2 -mr-2" src="../static/img/plus-purple-30px.svg" alt="">
             </div>
             </transition-group>
