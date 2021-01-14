@@ -3,15 +3,15 @@
     <div class="w-full h-screen">
         <top-bar back @click="onClickBackButton" />
         <div class="flex flex-col items-center w-full">
-            <div class="flex justify-center w-4/5 mt-4 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Record a Video</div>
+            <div class="flex justify-center w-4/5 mt-2 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Record a Video</div>
             <div class="flex justify-center w-4/5 text-xs montserrat-font text-lightgrey disable-dbl-tap-zoom">Hold, drag and drop to order your videos</div>
         </div>
-        <draggable v-model="userProfileMedia" group="people" @start="drag=true" @end="drag=false" @change="log" class="w-full px-1 my-2 gallery-height">
-            <transition-group tag="div" class="flex flex-wrap justify-around w-full h-full" name="flip-list">
-            <div v-for="ele in userProfileMedia" :key="ele.id" class="relative my-1 bg-darkgrey rounded-xl item cell-height" @click="onClickBox(userProfileMedia.indexOf(ele))">
-                <img v-if="isMediaPhoto(userProfileMedia.indexOf(ele))" :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl" alt="">
-                <video v-if="isMediaVideo(userProfileMedia.indexOf(ele))" autoplay playsinline loop :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="w-full h-full rounded-xl"></video>
-                <img class="absolute bottom-0 right-0 z-20 -mb-2 -mr-2" src="../static/img/plus-purple-30px.svg" alt="">
+        <draggable v-model="userProfileMedia" group="people" @start="drag=true" @end="drag=false" @change="log" class="w-full px-1 my-2">
+            <transition-group tag="div" class="z-10 flex flex-wrap justify-around w-full h-full" name="flip-list">
+            <div v-for="ele in userProfileMedia" :key="ele.id" class="relative z-10 my-1 bg-darkgrey rounded-xl cell-width cell-aspect-ratio" @click="onClickBox(userProfileMedia.indexOf(ele))">
+                <img v-if="!ele.src" class="absolute bottom-0 right-0 z-30" src="../static/img/plus-purple-30px.svg" alt="">
+                <img v-if="isMediaPhoto(userProfileMedia.indexOf(ele))" :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="absolute top-0 left-0 z-20 w-full h-full rounded-xl" alt="">
+                <video v-if="isMediaVideo(userProfileMedia.indexOf(ele))" autoplay playsinline loop :src="getMediaSrc(userProfileMedia.indexOf(ele))" class="absolute top-0 left-0 z-20 rounded-xl"></video>
             </div>
             </transition-group>
         </draggable>
@@ -87,15 +87,26 @@ export default {
     height: 30%;
 }
 
-.item {
-  width: 30%;
+.cell-width {
+    width: 30%;
+}
+
+.cell-aspect-ratio {
+    overflow: hidden;
+    height: 0;
+    padding-top: 35.5%;
 }
 
 .flip-list-move {
-  transition: transform 0.5s;
+    transition: transform 0.5s;
 }
 
 video::-webkit-media-controls {
-  display: none;
+    display: none;
+}
+
+video {
+    width: 100%;
+    height: auto;
 }
 </style>
