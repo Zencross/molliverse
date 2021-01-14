@@ -94,4 +94,8 @@ export default {
 .flip-list-move {
   transition: transform 0.5s;
 }
+
+video::-webkit-media-controls {
+  display: none;
+}
 </style>
