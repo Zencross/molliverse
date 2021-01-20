@@ -9,13 +9,23 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "nuxt": "^2.14.6",
+    "swing": "^3.1.4",
+    "vue": "^2.6.12",
     "vue-directive-long-press": "^1.1.0",
     "vue-slick-carousel": "^1.0.6",
-    "vuedraggable": "^2.24.3"
+    "vuedraggable": "^2.24.3",
+    "vue-swing": "0.0.10",
+    "vue2-interact": "^0.0.3",
+    "vuetify": "^2.4.2"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^3.1.0"
+    "@nuxtjs/tailwindcss": "^3.1.0",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.0"
   }
 }
