@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import VueSwing from 'vue-Swing'
+import VueSwing from 'vue-swing'
 
 
 export default {
