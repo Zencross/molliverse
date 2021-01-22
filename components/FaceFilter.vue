@@ -14,11 +14,7 @@
     <!-- Video preview -->
     <div v-if="showVideoPreview" class="absolute top-0 bottom-0 left-0 right-0 z-30" >
     <img class="fixed top-0 right-0 z-40 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickCloseVideoPreview">
-    <video v-if="video" :src="video" type="video/webm"
-      autoplay 
-      loop
-    >
-    </video>   
+    <video v-if="video" :src="video" autoplay loop playsinline></video>   
     <div class="fixed bottom-0 z-40 flex justify-center w-full mb-8">
         <div class="p-2 bg-white rounded-full" @click="onClickVideoTick">
           <img class="w-16 h-16" src="../static/img/tick-purple-24px.svg" alt="">
