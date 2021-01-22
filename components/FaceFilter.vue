@@ -162,6 +162,7 @@ export default {
     },
     capturePhoto(key){
       if(this.$store.state.video){
+        console.log('video exists, capturePhoto is escaped');
         return
       }
       console.log(`capturePhoto: ${key} icon is pressed`);

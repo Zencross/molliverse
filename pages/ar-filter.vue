@@ -25,6 +25,7 @@ export default {
       if(this.$store.state.video)
       console.log("confirm video", this.$store.state.video);
       this.$store.commit("addVideoToUserProfileMedia",this.$store.state.currentMediaIndex)
+      this.$store.commit("setVideo",null)
       this.$store.commit('setActiveEffectIcon','lion')
       this.$router.push('/gallery')
     }
