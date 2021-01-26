@@ -198,11 +198,6 @@ export default {
           deepAR.startVideo(true);
 
           // or we can setup the video element externally and call deepAR.setVideoElement (see startExternalVideo function below)
-          this.$store.commit('setEffectLoadingTrue', 0)
-          deepAR.switchEffect(0, "slot", "/effects/lion",  () => {
-            // effect loaded
-            this.$store.commit('setEffectLoadingFalse', 0)
-          });
         },
       });
 
@@ -365,6 +360,12 @@ export default {
   mounted() {
     if(!this.deepARInstance)
     this.initialize();
+    console.log('initial effect loading (lion)');
+    this.$store.commit('setEffectLoadingTrue', 0)
+    this.deepARInstance.switchEffect(0, "slot", "/effects/lion",  () => {
+      // effect loaded
+      this.$store.commit('setEffectLoadingFalse', 0)
+    });
   },
   beforeDestroy(){
     console.log('before Destory');
