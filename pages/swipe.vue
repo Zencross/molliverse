@@ -2,9 +2,9 @@
     <div>
         <nav-menu/> 
         <!-- <profile/> -->
-        <!-- <swipe-buttons class=""/> -->
         <!-- <swipeable-cards/> -->
         <swing />
+        <swipe-buttons/>
        
         <!-- <div v-for="card in cards" :key="card.id">
             <img :src="card.url"/>
