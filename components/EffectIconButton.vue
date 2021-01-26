@@ -10,7 +10,10 @@
           <img 
             :src="iconURL" 
             class="flex items-center justify-center object-fill" 
-            :class="[activeEffectIcon===icon?'':'border-white rounded-full border-4',loading?'opacity-25':'']" 
+            :class="[
+              activeEffectIcon===icon?'':'border-white rounded-full border-4',
+              activeEffectIcon===loading?'opacity-25':''
+            ]" 
           />
         </div>
 </template>
@@ -22,7 +25,7 @@ export default {
     directives: { 'long-press': LongPress },
     props:{
       icon:{ type: String },
-      loading: { type: Boolean }
+      loading: { type: String }
     },
     data() {
         return {
