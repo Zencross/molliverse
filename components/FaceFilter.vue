@@ -69,7 +69,7 @@ export default {
       longPressActive: false,
       loadingEffect: '',
       effectList:[
-          {id:0, name:'lion', loading: true},
+          {id:0, name:'lion', loading: false},
           {id:1, name:'aviators', loading: false},
           {id:2, name:'beard', loading: false},
           {id:3, name:'dalmatian', loading: false},

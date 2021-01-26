@@ -7,21 +7,26 @@
             @long-press-start="onLongPressStartHandler"
             @long-press-stop="onLongPressStopHandler"
         >
-          <img 
+          <div class="relative">
+            <Spinner v-if="loading" class="absolute top-0 bottom-0 left-0 right-0" />
+            <img 
             :src="iconURL" 
             class="flex items-center justify-center object-fill" 
             :class="[
               activeEffectIcon===icon?'':'border-white rounded-full border-4',
-              loading?'opacity-25':''
+              loading?'opacity-50':''
             ]" 
-          />
+            />
+          </div>
         </div>
 </template>
 
 <script>
 import LongPress from 'vue-directive-long-press'
+import Spinner from './Spinner'
 
 export default {
+    components: { Spinner },
     directives: { 'long-press': LongPress },
     props:{
       icon:{ type: String },
