@@ -41,11 +41,11 @@ export const state = () => ({
 export const mutations = {
     setEffectLoadingTrue(state, index){
         state.effectList[index].loading = true
-        console.log(`VUEX: set effectList[${index}].loading to ${state.effectList[index.loading]}`);
+        console.log(`VUEX: set effectList[${index}].loading to ${state.effectList[index].loading}`);
     },
     setEffectLoadingFalse(state, index){
         state.effectList[index].loading = false
-        console.log(`VUEX: set effectList[${index}].loading to ${state.effectList[index.loading]}`);
+        console.log(`VUEX: set effectList[${index}].loading to ${state.effectList[index].loading}`);
     },
     setDeepARInstance(state, val){
         state.deepARInstance = val
