@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <nav-menu/>  -->
+        <nav-menu/> 
         <!-- <profile/> -->
         <!-- <swipe-buttons class=""/> -->
         <!-- <swipeable-cards/> -->
