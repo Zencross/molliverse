@@ -12,7 +12,7 @@
             class="flex items-center justify-center object-fill" 
             :class="[
               activeEffectIcon===icon?'':'border-white rounded-full border-4',
-              activeEffectIcon===loading?'opacity-25':''
+              loading?'opacity-25':''
             ]" 
           />
         </div>
@@ -25,7 +25,7 @@ export default {
     directives: { 'long-press': LongPress },
     props:{
       icon:{ type: String },
-      loading: { type: String }
+      loading:{ type: Boolean }
     },
     data() {
         return {
@@ -35,6 +35,12 @@ export default {
     computed:{
         activeEffectIcon(){
             return this.$store.state.activeEffectIcon;
+        },
+        isLoading(){
+            console.log(this.$store.state.activeEffectIcon + '|' + this.$store.state.loadingEffectIcon);
+            if(this.$store.state.activeEffectIcon === this.$store.state.loadingEffectIcon)
+            return true
+            
         },
         iconURL(){
             return `/thumbs/${this.icon}.png`

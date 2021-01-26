@@ -29,7 +29,7 @@
             v-for="effect in effectList"
             :key="effect.id"
             :icon="effect.name"
-            :loading="loadingEffect"
+            :loading="effect.loading"
             @click="capturePhoto(effect.name)"
             @long-press-start="onLongPressStart(effect.name)"
             @long-press-stop="onLongPressStop(effect.name)"
@@ -69,14 +69,14 @@ export default {
       longPressActive: false,
       loadingEffect: '',
       effectList:[
-          {id:0, name:'lion'},
-          {id:1, name:'aviators'},
-          {id:2, name:'beard'},
-          {id:3, name:'dalmatian'},
-          {id:4, name:'flowers'},
-          {id:5, name:'koala'},
-          {id:6, name:'background_segmentation'},
-          {id:7, name:'teddycigar'}
+          {id:0, name:'lion', loading: false},
+          {id:1, name:'aviators', loading: false},
+          {id:2, name:'beard', loading: false},
+          {id:3, name:'dalmatian', loading: false},
+          {id:4, name:'flowers', loading: false},
+          {id:5, name:'koala', loading: false},
+          {id:6, name:'background_segmentation', loading: false},
+          {id:7, name:'teddycigar', loading: false}
         ]
     };
   },
@@ -189,15 +189,16 @@ export default {
         numberOfFaces: 1,
         libPath: "/lib",
         segmentationInfoZip: "segmentation.zip",
-        onInitialize: function () {
+        onInitialize:  () => {
           console.log("onInitialize callback", deepAR);
           // start video immediately after the initalization, mirror = true
           deepAR.startVideo(true);
 
+          // this.effectList[0].loading = true
           // or we can setup the video element externally and call deepAR.setVideoElement (see startExternalVideo function below)
-
           deepAR.switchEffect(0, "slot", "/effects/lion", function () {
             // effect loaded
+            // this.effectList[0].loading = false
           });
         },
       });
@@ -243,112 +244,112 @@ export default {
         case 0:
           this.$store.commit('setActiveEffectIcon','lion')
           this.deepARInstance.clearEffect("slot")
-          this.loadingEffect = 'lion';
+          this.effectList[0].loading = true
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/lion",
             () => {
               console.log("changeEffect: changed effect to lion");
-              this.loadingEffect = '';
+              this.effectList[0].loading = false
             }
           );
           break;
         case 1:
           this.$store.commit('setActiveEffectIcon','aviators')
           this.deepARInstance.clearEffect("slot")
-          this.loadingEffect = 'aviators';
+          this.effectList[1].loading = true
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/aviators",
             () => {
               console.log("changeEffect: changed effect to aviators");
-              this.loadingEffect = '';
+              this.effectList[1].loading = false
             }
           );
           break;
         case 2:
           this.$store.commit('setActiveEffectIcon','beard')
           this.deepARInstance.clearEffect("slot")
-          this.loadingEffect = 'beard';
+          this.effectList[2].loading = true
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/beard",
             () => {
               console.log("changeEffect: changed effect to beard");
-              this.loadingEffect = '';
+              this.effectList[2].loading = false
             }
           );
           break;
         case 3:
           this.$store.commit('setActiveEffectIcon','dalmatian')
           this.deepARInstance.clearEffect("slot")
-          this.loadingEffect = 'dalmatian';
+          this.effectList[3].loading = true
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/dalmatian",
             () => {
               console.log("changeEffect: changed effect to dalmation");
-              this.loadingEffect = '';
+              this.effectList[3].loading = false
             }
           );
           break;
         case 4:
           this.$store.commit('setActiveEffectIcon','flowers')
           this.deepARInstance.clearEffect("slot")
-          this.loadingEffect = 'flowers';
+          this.effectList[4].loading = true
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/flowers",
             () => {
               console.log("changeEffect: changed effect to flowers");
-              this.loadingEffect = '';
+              this.effectList[4].loading = false
             }
           );
           break;
         case 5:
           this.$store.commit('setActiveEffectIcon','koala')
           this.deepARInstance.clearEffect("slot")
-          this.loadingEffect = 'koala';
+          this.effectList[5].loading = true
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/koala",
             () => {
               console.log("changeEffect: changed effect to koala");
-              this.loadingEffect = '';
+              this.effectList[5].loading = false
             }
           );
           break;
         case 6:
           this.$store.commit('setActiveEffectIcon','background_segmentation')
           this.deepARInstance.clearEffect("slot")
-          this.loadingEffect = 'background_segmentation';
+          this.effectList[6].loading = true
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/background_segmentation",
             () => {
               console.log("changeEffect: changed effect to background_segmentation");
-              this.loadingEffect = '';
+              this.effectList[6].loading = false
             }
           );
           break;
         case 7:
           this.$store.commit('setActiveEffectIcon','teddycigar')
           this.deepARInstance.clearEffect("slot")
-          this.loadingEffect = 'teddycigar';
+          this.effectList[7].loading = true
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/teddycigar",
             () => {
               console.log("changeEffect: changed effect to teddycigar");
-              this.loadingEffect = '';
+              this.effectList[7].loading = false
             }
           );
           break;

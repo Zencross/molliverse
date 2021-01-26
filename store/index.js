@@ -14,6 +14,7 @@ export const state = () => ({
     currentMediaIndex:0,
     video: null,
     activeEffectIcon: 'lion',
+    loadingEffectIcon: '',
     userSexualOrientations: [],
     gender: "",
     showGenderOnProfile: false,
@@ -67,6 +68,10 @@ export const mutations = {
     setActiveEffectIcon(state, val){
         state.activeEffectIcon = val
         console.log('VUEX: set activeEffectIcon to', state.activeEffectIcon);
+    },
+    setLoadingEffectIcon(state, val){
+        state.loadingEffectIcon = val
+        console.log('VUEX: set loadingEffectIcon to', state.loadingEffectIcon);
     },
     addSexualOrientation(state, item){
         state.userSexualOrientations.push(item)
