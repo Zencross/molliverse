@@ -195,9 +195,13 @@ export default {
         onInitialize:  () => {
           console.log("onInitialize callback", deepAR);
           // start video immediately after the initalization, mirror = true
-          deepAR.startVideo(true);
-
-          // or we can setup the video element externally and call deepAR.setVideoElement (see startExternalVideo function below)
+          deepAR.startVideo(true);        
+          console.log('initial effect loading (lion)');
+          this.$store.commit('setEffectLoadingTrue', 0)
+          this.deepARInstance.switchEffect(0, "slot", "/effects/lion",  () => {
+            // effect loaded
+            this.$store.commit('setEffectLoadingFalse', 0)
+          });
         },
       });
 
@@ -232,9 +236,10 @@ export default {
         // loaderWrapper.style.display = "none";
       };
 
-      deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin");
+      deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin")
 
       this.deepARInstance = deepAR;
+      console.log('initialize() ends.');
     },
     changeEffect(key) {
       console.log(`${key} selected`);
@@ -360,12 +365,6 @@ export default {
   mounted() {
     if(!this.deepARInstance)
     this.initialize();
-    console.log('initial effect loading (lion)');
-    this.$store.commit('setEffectLoadingTrue', 0)
-    this.deepARInstance.switchEffect(0, "slot", "/effects/lion",  () => {
-      // effect loaded
-      this.$store.commit('setEffectLoadingFalse', 0)
-    });
   },
   beforeDestroy(){
     console.log('before Destory');
