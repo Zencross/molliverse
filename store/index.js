@@ -25,10 +25,28 @@ export const state = () => ({
     showMePreference: "",
     university: "",
     passions:[],
-    deepARInstance: null
+    deepARInstance: null,
+    effectList:[
+        {id:0, name:'lion', loading: false},
+        {id:1, name:'aviators', loading: false},
+        {id:2, name:'beard', loading: false},
+        {id:3, name:'dalmatian', loading: false},
+        {id:4, name:'flowers', loading: false},
+        {id:5, name:'koala', loading: false},
+        {id:6, name:'background_segmentation', loading: false},
+        {id:7, name:'teddycigar', loading: false}
+    ]
 })
 
 export const mutations = {
+    setEffectLoadingTrue(state, index){
+        state.effectList[index].loading = true
+        console.log(`VUEX: set effectList[${index}].loading to ${state.effectList[index.loading]}`);
+    },
+    setEffectLoadingFalse(state, index){
+        state.effectList[index].loading = false
+        console.log(`VUEX: set effectList[${index}].loading to ${state.effectList[index.loading]}`);
+    },
     setDeepARInstance(state, val){
         state.deepARInstance = val
         console.log('VUEX: set deepARInstance to', state.deepARInstance);
