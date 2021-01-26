@@ -29,6 +29,7 @@
             v-for="effect in effectList"
             :key="effect.id"
             :icon="effect.name"
+            :loading="loadingEffect"
             @click="capturePhoto(effect.name)"
             @long-press-start="onLongPressStart(effect.name)"
             @long-press-stop="onLongPressStop(effect.name)"
@@ -66,6 +67,7 @@ export default {
       showPhotoPreview: false,
       mediaRecorder: null,
       longPressActive: false,
+      loadingEffect: false,
       effectList:[
           {id:0, name:'lion'},
           {id:1, name:'aviators'},
@@ -240,89 +242,113 @@ export default {
       switch (key) {
         case 0:
           this.$store.commit('setActiveEffectIcon','lion')
+          this.deepARInstance.clearEffect("slot")
+          this.loadingEffect = true;
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/lion",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to lion");
+              this.loadingEffect = false;
             }
           );
           break;
         case 1:
           this.$store.commit('setActiveEffectIcon','aviators')
+          this.deepARInstance.clearEffect("slot")
+          this.loadingEffect = true;
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/aviators",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to aviators");
+              this.loadingEffect = false;
             }
           );
           break;
         case 2:
           this.$store.commit('setActiveEffectIcon','beard')
+          this.deepARInstance.clearEffect("slot")
+          this.loadingEffect = true;
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/beard",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to beard");
+              this.loadingEffect = false;
             }
           );
           break;
         case 3:
           this.$store.commit('setActiveEffectIcon','dalmatian')
+          this.deepARInstance.clearEffect("slot")
+          this.loadingEffect = true;
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/dalmatian",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to dalmation");
+              this.loadingEffect = false;
             }
           );
           break;
         case 4:
           this.$store.commit('setActiveEffectIcon','flowers')
+          this.deepARInstance.clearEffect("slot")
+          this.loadingEffect = true;
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/flowers",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to flowers");
+              this.loadingEffect = false;
             }
           );
           break;
         case 5:
           this.$store.commit('setActiveEffectIcon','koala')
+          this.deepARInstance.clearEffect("slot")
+          this.loadingEffect = true;
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/koala",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to koala");
+              this.loadingEffect = false;
             }
           );
           break;
         case 6:
           this.$store.commit('setActiveEffectIcon','background_segmentation')
+          this.deepARInstance.clearEffect("slot")
+          this.loadingEffect = true;
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/background_segmentation",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to background_segmentation");
+              this.loadingEffect = false;
             }
           );
           break;
         case 7:
           this.$store.commit('setActiveEffectIcon','teddycigar')
+          this.deepARInstance.clearEffect("slot")
+          this.loadingEffect = true;
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/teddycigar",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to teddycigar");
+              this.loadingEffect = false;
             }
           );
           break;

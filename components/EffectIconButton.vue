@@ -10,7 +10,7 @@
           <img 
             :src="iconURL" 
             class="flex items-center justify-center object-fill" 
-            :class="[activeEffectIcon===icon?'':'border-white rounded-full border-4']" 
+            :class="[activeEffectIcon===icon?'':'border-white rounded-full border-4',loading?'opacity-25':'']" 
           />
         </div>
 </template>
@@ -21,7 +21,8 @@ import LongPress from 'vue-directive-long-press'
 export default {
     directives: { 'long-press': LongPress },
     props:{
-      icon:{ type: String }
+      icon:{ type: String },
+      loading: { type: Boolean }
     },
     data() {
         return {
@@ -67,5 +68,19 @@ export default {
 
 .button-class {
   @apply animate-bounce
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
