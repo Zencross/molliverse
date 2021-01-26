@@ -15,19 +15,17 @@ export default {
   },
   methods:{
     onClickConfirmPhoto(){
-      if(this.$store.state.photo)
+      this.$router.push('/gallery')
       console.log("confirm photo", this.$store.state.photo);
       this.$store.commit("addPhotoToUserProfileMedia",this.$store.state.currentMediaIndex)
       this.$store.commit('setActiveEffectIcon','lion')
-      this.$router.push('/gallery')
     },
     onClickConfirmVideo(){
-      if(this.$store.state.video)
+      this.$router.push('/gallery')
       console.log("confirm video", this.$store.state.video);
       this.$store.commit("addVideoToUserProfileMedia",this.$store.state.currentMediaIndex)
       this.$store.commit("setVideo",null)
       this.$store.commit('setActiveEffectIcon','lion')
-      this.$router.push('/gallery')
     }
   }
 }
