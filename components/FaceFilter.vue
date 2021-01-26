@@ -198,7 +198,7 @@ export default {
           deepAR.startVideo(true);        
           console.log('initial effect loading (lion)');
           this.$store.commit('setEffectLoadingTrue', 0)
-          this.deepARInstance.switchEffect(0, "slot", "/effects/lion",  () => {
+          deepAR.switchEffect(0, "slot", "/effects/lion",  () => {
             // effect loaded
             this.$store.commit('setEffectLoadingFalse', 0)
           });
