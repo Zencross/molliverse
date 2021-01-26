@@ -35,10 +35,15 @@ export const state = () => ({
         {id:5, name:'koala', loading: false},
         {id:6, name:'background_segmentation', loading: false},
         {id:7, name:'teddycigar', loading: false}
-    ]
+    ],
+    faceTrackingModelReady: false,
 })
 
 export const mutations = {
+    setFaceTrackingModelReady(state, val){
+        state.faceTrackingModelReady = val
+        console.log('VUEX: set faceTrackingModelReady to', state.faceTrackingModelReady);
+    },
     setEffectLoadingTrue(state, index){
         state.effectList[index].loading = true
         console.log(`VUEX: set effectList[${index}].loading to ${state.effectList[index].loading}`);

@@ -1,5 +1,13 @@
 <template>
   <div>
+
+    <div v-if="!faceTrackingModelReady" class="absolute top-0 bottom-0 left-0 right-0 z-40 bg-white opacity-75">
+      <div class="flex flex-col items-center justify-center w-full h-full text-2xl text-gray-900">
+        <div>Loading Face Detection Model...</div>
+        <div>Please wait for a few moments :)</div>
+      </div>
+    </div>
+
     <!-- Photo preview -->
     <div v-if="showPhotoPreview" class="absolute top-0 bottom-0 left-0 right-0 z-30">
       <img class="fixed top-0 right-0 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickClosePhotoPreview">
@@ -89,6 +97,9 @@ export default {
     },
     effectList(){
       return this.$store.state.effectList
+    },
+    faceTrackingModelReady(){
+      return this.$store.state.faceTrackingModelReady
     }
   },
   methods: {
@@ -236,7 +247,11 @@ export default {
         // loaderWrapper.style.display = "none";
       };
 
-      deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin")
+      //  The download of faceTracking model might be the reason why initial load is slow
+      deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin", ()=>{
+        console.log('face tracking model ready');
+        this.$store.commit('setFaceTrackingModelReady', true)
+      })
 
       this.deepARInstance = deepAR;
       console.log('initialize() ends.');
