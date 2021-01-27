@@ -1,16 +1,5 @@
 <template>
-    <!-- <div> -->
-        <!-- <div class="absolute bottom-0 left-0 right-0 flex pb-5 pl-16 md:ml-24">
-            <a href="#">
-                <img src="../assets/img/remove.png" class="w-2/5" v-on:click="remove">
-            </a>
-            <a href="#">
-                <img src="../assets/img/tick.png" class="w-2/5" v-on:click="swing">
-            </a>
-            <a href="#">
-                <img src="../assets/img/circle.png" class="w-2/5" v-on:click="add">
-            </a>
-        </div> -->
+    <div> 
         <div>
             <vue-swing
                 @throwout="onThrowout"
@@ -23,7 +12,19 @@
                 </div>
             </vue-swing>
         </div>
-    <!-- </div> -->
+
+         <div class="absolute bottom-0 left-0 right-0 flex pb-5 pl-16 md:ml-24">
+            <a href="#">
+                <img src="../assets/img/remove.png" class="w-2/5" v-on:click="remove">
+            </a>
+            <a href="#">
+                <img src="../assets/img/tick.png" class="w-2/5" v-on:click="swing">
+            </a>
+            <a href="#">
+                <img src="../assets/img/circle.png" class="w-2/5" v-on:click="add">
+            </a>
+        </div> 
+    </div>
 </template>
 
 <script>

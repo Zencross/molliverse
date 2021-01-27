@@ -4,7 +4,7 @@
         <!-- <profile/> -->
         <!-- <swipeable-cards/> -->
         <swing />
-        <swipe-buttons/>
+        <!-- <swipe-buttons/> -->
        
         <!-- <div v-for="card in cards" :key="card.id">
             <img :src="card.url"/>
