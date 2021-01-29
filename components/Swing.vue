@@ -75,14 +75,15 @@ export default {
     methods: {
         add() {
             // this.cards.push(`${this.cards.length + 1}`)
-            this.swipeRightProfiles.push(`${this.swipeRightProfiles.length + 1}`)
+            // this.swipeRightProfiles.push(`${this.swipeRightProfiles.length + 1}`)
             this.cards.pop()
-            console.log(this.swipeRightProfiles.length)
+            console.log(this.swipeRightProfiles.length + 'swipeRightProfiles')
         },
         remove() {
             this.swing()
             setTimeout(() => {
-                this.cards.pop()
+                // this.cards.pop()
+                this.cards.push(`${this.cards.length + 1}`)
             }, 100)
         },
         swing() {
@@ -91,23 +92,32 @@ export default {
                 Math.random() * 100 - 50,
                 Math.random() * 100 - 50
             )
-            console.log(this.cards.length)
+            console.log(this.cards.length + 'card Stack length')
         },
         onThrowout({ target, throwDirection }) {
-            // if (this.cards.length < 1) {
-                
-            // const newCards = [].slice.call(document.querySelector(cards));
-            //     this.cards.push(newCards);
-            // }
+            if (throwDirection == VueSwing.Direction.lEFT) {
+                this.cards.pop()
+                // this.cards.push(`${this.cards.length + 1}`)
+            } else if (throwDirection == VueSwing.Direction.RIGHT) {
+                this.swipeRightProfiles.push(`${this.swipeRightProfiles.length + 1}`)
+                this.cards.pop()
+            } else if (throwDirection == VueSwing.Direction.UP){
+                this.superLikeProfiles.push(`${this.superLikeProfiles.length + 1}`)
+                this.cards.pop()
+            }
+
+            console.log(this.swipeRightProfiles.length + "swipeRightProfiles")
+            console.log(this.superLikeProfiles.length + "superLikeProfiles")
+            console.log(this.cards.length + "cards stack")
+
             console.log(`Threw out ${target.textContent}`)
             console.log(`target ${target}`)
         },
         superLike() {
                 this.superLikeProfiles.push(`${this.superLikeProfiles.length + 1}`)
                 this.cards.pop()
-                console.log(this.superLikeProfiles.length)
+                console.log(this.superLikeProfiles.length + 'superLikeProfiles')
         }
-
     }
     
 }
