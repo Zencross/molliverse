@@ -45,8 +45,8 @@ export default {
                     // minThrowOutDistance: 250,
                     // maxThrowOutDistance: 300
                      minThrowOutDistance: 450,
-                    maxThrowOutDistance: 500
-                    // maxRotation: 100,
+                    maxThrowOutDistance: 500,
+                    // Rotation: 20,
 
                 },
                 cards: [
@@ -68,7 +68,13 @@ export default {
                     }
                 ],
                 swipeRightProfiles: [],
-                superLikeProfiles: []
+                superLikeProfiles: [],
+                throwOutConfidence: (xOffset, yOffset, element) => {
+                    const xConfidence = Math.min(Maths.abs(xOffset)/element.offsetWidth, 0.5);
+                    const yConfidence = Math.min(Maths.abs(yOffset)/element.offsetHeight, 0.5);
+
+                    return Math.max(xConfidence, yConfidence);
+                }
             }
          },
     
@@ -105,6 +111,8 @@ export default {
                 this.superLikeProfiles.push(`${this.superLikeProfiles.length + 1}`)
                 this.cards.pop()
             }
+
+            console.log(this.throwOutConfidence + ' this is throwout confidence')
 
             console.log(this.swipeRightProfiles.length + "swipeRightProfiles")
             console.log(this.superLikeProfiles.length + "superLikeProfiles")
