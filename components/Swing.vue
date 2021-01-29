@@ -18,10 +18,10 @@
                 <img src="../assets/img/remove.png" class="w-2/5" v-on:click="remove">
             </a>
             <a href="#">
-                <img src="../assets/img/tick.png" class="w-2/5" v-on:click="swing">
+                <img src="../assets/img/circle.png" class="w-2/5" v-on:click="superLike">
             </a>
             <a href="#">
-                <img src="../assets/img/circle.png" class="w-2/5" v-on:click="add">
+                <img src="../assets/img/tick.png" class="w-2/5" v-on:click="add">
             </a>
         </div> 
     </div>
@@ -38,12 +38,16 @@ export default {
                 config: {
                     allowedDirections: [
                         VueSwing.Direction.UP,
-                        VueSwing.Direction.DOWN,
+                        // VueSwing.Direction.DOWN,
                         VueSwing.Direction.LEFT,
                         VueSwing.Direction.RIGHT
                     ],
-                    minThrowOutDistance: 250,
-                    maxThrowOutDistance: 300
+                    // minThrowOutDistance: 250,
+                    // maxThrowOutDistance: 300
+                     minThrowOutDistance: 450,
+                    maxThrowOutDistance: 500
+                    // maxRotation: 100,
+
                 },
                 cards: [
                     {
@@ -62,13 +66,18 @@ export default {
                     "url": require('../assets/img/profile3.gif'),
                     "text": "I am text3"
                     }
-                ]
+                ],
+                swipeRightProfiles: [],
+                superLikeProfiles: []
             }
          },
     
     methods: {
         add() {
-            this.cards.push(`${this.cards.length + 1}`)
+            // this.cards.push(`${this.cards.length + 1}`)
+            this.swipeRightProfiles.push(`${this.swipeRightProfiles.length + 1}`)
+            this.cards.pop()
+            console.log(this.swipeRightProfiles.length)
         },
         remove() {
             this.swing()
@@ -91,8 +100,14 @@ export default {
             //     this.cards.push(newCards);
             // }
             console.log(`Threw out ${target.textContent}`)
-            
+            console.log(`target ${target}`)
+        },
+        superLike() {
+                this.superLikeProfiles.push(`${this.superLikeProfiles.length + 1}`)
+                this.cards.pop()
+                console.log(this.superLikeProfiles.length)
         }
+
     }
     
 }
