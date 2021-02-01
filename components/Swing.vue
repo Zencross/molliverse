@@ -12,16 +12,15 @@
                 </div>
             </vue-swing>
         </div>
-
-         <div class="flex bottom-0 absolute left-0 right-0 pb-5 pl-16 md:ml-24">
+         <div class="navMenu flex bottom-0 absolute pb-5 gap-16 md:gap-80">
             <a href="#">
-                <img src="../assets/img/remove.png" class="w-2/5" v-on:click="remove">
+                <img src="../assets/img/remove.png" class="w-3/4 md:w-1/2" v-on:click="remove">
             </a>
             <a href="#">
-                <img src="../assets/img/circle.png" class="w-2/5" v-on:click="superLike">
+                <img src="../assets/img/circle.png" class="w-3/4 md:w-1/2" v-on:click="superLike">
             </a>
             <a href="#">
-                <img src="../assets/img/tick.png" class="w-2/5" v-on:click="add">
+                <img src="../assets/img/tick.png" class="w-3/4 md:w-1/2" v-on:click="add">
             </a>
         </div> 
     </div>
@@ -88,8 +87,8 @@ export default {
         remove() {
             this.swing()
             setTimeout(() => {
-                // this.cards.pop()
-                this.cards.push(`${this.cards.length + 1}`)
+                this.cards.pop()
+                // this.cards.push(`${this.cards.length + 1}`)
             }, 100)
         },
         swing() {
@@ -143,15 +142,16 @@ body {
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-size: 72px;
-  height: 75vh;
+  height: 81vh;
   justify-content: center;
-  left: 1.5%;
+  left: 5.13%;
   position: absolute;
-  width: 97%;
+  width: 90%;
   object-fit: cover;
-  @media screen and (min-height: 800px) and (max-height: 1000px) {
-      height: 80vh;
-  };
+  /* height: 80%; */
+  /* @media screen and (min-height: 800px) and (max-height: 1000px) {
+      height: 85vh;
+  }; */
   margin-top: -6%;
   @media screen and (min-width: 410px) and (max-width: 415px) {
       margin-top: -4%;
@@ -159,9 +159,54 @@ body {
   @media screen and (min-width: 767px) {
       margin-top: 1%;
   }
+
+  @media screen and (max-height: 569px) {
+      height: 78vh;
+  }
  
+ @media screen and (min-height: 811px) and (max-height: 824px) {
+      height: 84vh;
+  }
 }
+
+.navMenu {
+    @media screen and (min-height: 660px) and (max-height: 824px) {
+        margin-left: 20px;
+    }
+    @media screen and (max-height: 659px) {
+        margin-left: 16px;
+    }
+   @media screen and (min-width: 767px) {
+        margin-left: 7rem;
+        justify-content: center;
+    }
+    }
 
 </style>
 
 
+/* 
+.card {
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 72px;
+  height: 75vh;
+  justify-content: center;
+  left: 5.13%;
+  position: absolute;
+  width: 90%;
+  object-fit: cover;
+  height: 80%;
+  /* @media screen and (min-height: 800px) and (max-height: 1000px) {
+      height: 85vh;
+  }; */
+  /* margin-top: -6%;
+  @media screen and (min-width: 410px) and (max-width: 415px) {
+      margin-top: -4%;
+  }
+  @media screen and (min-width: 767px) {
+      margin-top: 1%;
+  } */
+ 
+/* } */ 
