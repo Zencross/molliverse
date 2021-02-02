@@ -12,7 +12,11 @@
                 </div>
             </vue-swing>
         </div>
-         <div class="absolute bottom-0 flex gap-16 pb-5 navMenu md:gap-80">
+        <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()"/>
+    
+        <!-- <slot> -->
+   
+         <!-- <div class="absolute bottom-0 flex gap-16 pb-5 navMenu md:gap-80">
             <a href="#">
                 <img src="../assets/img/remove.png" class="w-3/4 md:w-1/2" v-on:click="remove">
             </a>
@@ -22,16 +26,17 @@
             <a href="#">
                 <img src="../assets/img/tick.png" class="w-3/4 md:w-1/2" v-on:click="add">
             </a>
-        </div> 
+        </div>  -->
     </div>
 </template>
 
 <script>
-import VueSwing from 'vue-swing'
+import VueSwing from 'vue-Swing'
+import SwipeButtons from './SwipeButtons.vue'
 
 
 export default {
-    components: { VueSwing },
+    components: { VueSwing, SwipeButtons },
     data(){
             return {
                 config: {
@@ -88,8 +93,10 @@ export default {
             this.swing()
             setTimeout(() => {
                 this.cards.pop()
-                // this.cards.push(`${this.cards.length + 1}`)
+                // this.cards.push(`${this.cards.length + 1}`)\
+                console.log('called function')
             }, 100)
+        
         },
         swing() {
             const cards = this.$refs.vueswing.cards

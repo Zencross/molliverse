@@ -1,24 +1,28 @@
 <template>
-       <div class="flex bottom-0 absolute left-0 right-0 pb-5 pl-16 md:ml-24"> <!--Buttons-->
+         <div class="navMenu flex bottom-0 absolute pb-5 gap-16 md:gap-80">
             <a href="#">
-                <img src="../assets/img/remove.png" class="w-2/5" v-on:click="this.$root.$refs.remove">
+                <!-- <img src="../assets/img/remove.png" class="w-3/4 md:w-1/2" v-on:click="remove()"> -->
+                <img src="../assets/img/remove.png" class="w-3/4 md:w-1/2" v-on:click="$emit('dislike')">
+
             </a>
             <a href="#">
-                <img src="../assets/img/circle.png" class="w-2/5" v-on:click="this.$root.$refs.add">
+                <!-- <img src="../assets/img/circle.png" class="w-3/4 md:w-1/2" v-on:click="superLike()"> -->
+                <img src="../assets/img/circle.png" class="w-3/4 md:w-1/2" v-on:click="$emit('like')">
             </a>
             <a href="#">
-                <img src="../assets/img/tick.png" class="w-2/5" v-on:click="this.$root.$refs.swing">
+                <!-- <img src="../assets/img/tick.png" class="w-3/4 md:w-1/2" v-on:click="add()"> -->
+                <img src="../assets/img/tick.png" class="w-3/4 md:w-1/2" v-on:click="$emit('superlike')">
             </a>
-        </div>
+        </div> 
 </template>
 
 <script>
-import Swing from './Swing.vue'
 
 export default {
+    components: {  },
     data () {
         return {}
-    }
+    },
 }
 </script>
 

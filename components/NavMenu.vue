@@ -28,6 +28,11 @@
 export default {
     data () {
         return {}
+    },
+    methodos: {
+        add1: function () {
+            this.add()
+        }
     }
     }
     
