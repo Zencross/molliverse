@@ -7,11 +7,11 @@
             </a>
             <a href="#">
                 <!-- <img src="../assets/img/circle.png" class="w-3/4 md:w-1/2" v-on:click="superLike()"> -->
-                <img src="../assets/img/circle.png" class="w-3/4 md:w-1/2" v-on:click="$emit('like')">
+                <img src="../assets/img/circle.png" class="w-3/4 md:w-1/2" v-on:click="$emit('superlike')">
             </a>
             <a href="#">
                 <!-- <img src="../assets/img/tick.png" class="w-3/4 md:w-1/2" v-on:click="add()"> -->
-                <img src="../assets/img/tick.png" class="w-3/4 md:w-1/2" v-on:click="$emit('superlike')">
+                <img src="../assets/img/tick.png" class="w-3/4 md:w-1/2" v-on:click="$emit('like')">
             </a>
         </div> 
 </template>

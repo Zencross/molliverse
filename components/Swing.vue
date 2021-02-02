@@ -12,7 +12,7 @@
                 </div>
             </vue-swing>
         </div>
-        <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()"/>
+        <!-- <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()"/> -->
     
         <!-- <slot> -->
    
@@ -83,21 +83,20 @@ export default {
          },
     
     methods: {
-        add() {
-            // this.cards.push(`${this.cards.length + 1}`)
-            // this.swipeRightProfiles.push(`${this.swipeRightProfiles.length + 1}`)
-            this.cards.pop()
-            console.log(this.swipeRightProfiles.length + 'swipeRightProfiles')
-        },
-        remove() {
-            this.swing()
-            setTimeout(() => {
-                this.cards.pop()
-                // this.cards.push(`${this.cards.length + 1}`)\
-                console.log('called function')
-            }, 100)
-        
-        },
+        // add() {
+        //     // this.cards.push(`${this.cards.length + 1}`)
+        //     // this.swipeRightProfiles.push(`${this.swipeRightProfiles.length + 1}`)
+        //     this.cards.pop()
+        //     console.log(this.swipeRightProfiles.length + 'swipeRightProfiles')
+        // },
+        // remove() {
+        //     this.swing()
+        //     setTimeout(() => {
+        //         this.cards.pop()
+        //         // this.cards.push(`${this.cards.length + 1}`)\
+        //     }, 100)
+        // },
+           
         swing() {
             const cards = this.$refs.vueswing.cards
             cards[cards.length - 1].throwOut(
@@ -126,13 +125,31 @@ export default {
 
             console.log(`Threw out ${target.textContent}`)
             console.log(`target ${target}`)
-        },
-        superLike() {
+        }
+        // superLike() {
+        //         this.superLikeProfiles.push(`${this.superLikeProfiles.length + 1}`)
+        //         this.cards.pop()
+        //         console.log(this.superLikeProfiles.length + 'superLikeProfiles')
+        // }
+    },
+    mounted() {
+            this.$root.$on('remove', () => {
+                setTimeout(() => {
+                    this.cards.pop()
+                    console.log('remove method in Swing main component')
+                }, 100)
+            }),
+            this.$root.$on('add', () => {
+                this.swipeRightProfiles.push(`${this.swipeRightProfiles.length + 1}`)
+                this.cards.pop()
+                console.log(this.swipeRightProfiles.length + 'swipeRightProfiles')
+            }),
+            this.$root.$on('superLike', () => {
                 this.superLikeProfiles.push(`${this.superLikeProfiles.length + 1}`)
                 this.cards.pop()
                 console.log(this.superLikeProfiles.length + 'superLikeProfiles')
+            })
         }
-    }
     
 }
 </script>
