@@ -12,7 +12,10 @@
                 </div>
             </vue-swing>
         </div>
-        <SwipeButtons v-on:dislike="remove()"/>
+        <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()"/>
+    
+        <!-- <slot> -->
+   
          <!-- <div class="navMenu flex bottom-0 absolute pb-5 gap-16 md:gap-80">
             <a href="#">
                 <img src="../assets/img/remove.png" class="w-3/4 md:w-1/2" v-on:click="remove">
