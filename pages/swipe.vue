@@ -4,8 +4,8 @@
         <!-- <profile/> -->
         <!-- <swipeable-cards/> -->
         <swing />
-        <!-- <swipe-buttons/> -->
-       
+        <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()"/>
+
         <!-- <div v-for="card in cards" :key="card.id">
             <img :src="card.url"/>
             <h1>{{ card.text }}</h1>
@@ -24,6 +24,17 @@ export default {
     components: { NavMenu, SwipeButtons, Profile, Swing },
     data() {
         return {
+        }
+    },
+    methods: {
+        remove() {
+            this.$root.$emit('remove')
+        },
+        add() {
+            this.$root.$emit('add')
+        },
+        superLike() {
+            this.$root.$emit('superLike')
         }
     }
 }
