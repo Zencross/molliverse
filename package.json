@@ -25,6 +25,7 @@
     "@nuxtjs/tailwindcss": "^3.1.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "node-sass": "^5.0.0",
-    "sass-loader": "^10.1.0"
+    "sass-loader": "^10.1.0",
+    "vuex-undo-redo": "^1.1.4"
   }
 }
