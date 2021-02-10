@@ -1,7 +1,7 @@
 <template>
     <div>
         <top-bar back @click="onClickBackButton" />
-        <input-field labelText="My Birthday is" v-model="birthday" placeHolder="MM/DD/YYYY" hint="Your Age will be public" class="mt-10"></input-field>
+        <input-field labelText="My Birthday is" v-model="birthday" placeHolder="DD/MM/YYYY" hint="Your Age will be public" class="mt-10"></input-field>
         <app-button buttonText="Continue" textWhite bgPhoneNum @click="onClickButton" class="absolute bottom-0 mb-8" />
     </div>
 </template>

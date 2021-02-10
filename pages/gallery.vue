@@ -4,8 +4,8 @@
         <top-bar back @click="onClickBackButton" />
         <div class="flex flex-col items-center w-full">
             <!-- <div class="flex justify-center w-4/5 mt-2 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Record a Video</div> -->
-            <div class="w-11/12 mt-2 text-3xl font-semibold text-dark">Record a video</div>
-            <div class="w-11/12 text-xs montserrat-font text-lightgrey disable-dbl-tap-zoom">Drag to re-order your videos</div>
+            <div class="w-11/12 mt-2 ml-2 text-3xl font-semibold text-dark">Record a video</div>
+            <div class="w-11/12 ml-2 text-xs montserrat-font text-lightgrey disable-dbl-tap-zoom">Drag to re-order your videos</div>
         </div>
         <draggable v-model="userProfileMedia" group="people" @start="drag=true" @end="drag=false" @change="log" class="w-full px-1 my-2">
             <transition-group tag="div" class="z-10 flex flex-wrap justify-around w-full h-full" name="flip-list">
