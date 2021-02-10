@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center w-full">
         <button 
-            class="flex items-center w-11/12 p-3 bg-transparent border rounded-md focus:outline-none lato-font"
+            class="flex items-center w-11/12 px-3 py-4 bg-transparent border rounded-lg focus:outline-none lato-font"
             :class="[
                 borderBlack?'border-black':'',
                 borderWhite?'border-white':'',
@@ -12,7 +12,8 @@
                 activeEffect?'focus:bg-gray-300 hover:bg-gray-300':'',
                 bgApple?'bg-white':'',
                 bgFB?'bg-FB':'',
-                bgPhoneNum?'bg-brandPurple':''
+                bgPhoneNum?'bg-brandPurple':'',
+                fontBold?'font-semibold':''
             ]"
             @click="onClickButton"
         >
@@ -58,6 +59,9 @@ export default {
             type: Boolean
         },
         borderNone:{
+            type: Boolean
+        },
+        fontBold:{
             type: Boolean
         }
     },

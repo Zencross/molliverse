@@ -1,9 +1,9 @@
 <template>
     <div class="w-full bg-transparent lato-font">
         <div class="flex flex-col items-center w-full">
-            <label for="input" class="w-11/12 mb-2 text-3xl font-bold text-dark">{{labelText}}</label>
+            <label for="input" class="w-11/12 mb-4 text-3xl font-semibold text-dark">{{labelText}}</label>
             <input id="input" :value="value" @input="$emit('input', $event.target.value)" :type="inputType" class="w-11/12 py-3 pl-4 text-lg border border-gray-300 rounded-md bg-lightgrey input-color focus:outline-none" :placeholder="placeHolder" >
-            <div class="w-11/12 mt-2 text-sm text-lightgrey">{{hint}}</div>
+            <div class="w-11/12 mt-3 text-sm text-lightgrey">{{hint}}</div>
         </div>
     </div>
 </template>

@@ -2,8 +2,9 @@
     <div class="flex flex-col items-center w-full">
         <top-bar back skip @click="onClickBackButton" @skip="onClickSkipButton" />
         <div class="flex flex-col items-center w-full mt-8 bg-white">
-            <app-text class="w-4/5 mb-4" text="My Sexual orientation is" />
-            <div class="w-9/12 overflow-scroll scroll-view-container">
+            <!-- <app-text class="w-4/5 mb-4" text="My Sexual orientation is" /> -->
+            <div class="w-11/12 mb-6 text-2xl font-semibold text-dark">My sexual orientation is:</div>
+            <div class="w-11/12 overflow-scroll scroll-view-container">
                 <div class='montserrat-font text-lightgrey'>Select up to 3</div>
                 <button 
                 class="flex flex-col items-start w-full pl-1 mt-3 text-xl karla-font focus:outline-none" 
@@ -21,7 +22,7 @@
                 <input type="checkbox" v-model="showSexualOrientationOnProfile" class="w-4 h-4 form-checkbox">
                 <span class="pl-2 text-sm montserrat-font text-lightgrey">Show my orientation on my profile</span>
             </label>
-            <gradient-button class="mt-10" @click="onClickContinueButton" />
+            <app-button buttonText="Continue" textWhite bgPhoneNum @click="onClickContinueButton" class="absolute bottom-0 mb-8" />
         </div>
     </div>
 </template>
@@ -30,10 +31,9 @@
 import AppText from '~/components/AppText.vue'
 import TopBar from '../components/TopBar'
 import AppButton from '../components/AppButton'
-import GradientButton from '../components/GradientButton.vue'
 
 export default {
-    components:{ TopBar, AppText, AppButton, GradientButton },
+    components:{ TopBar, AppText, AppButton },
     data() {
         return {
             sexualOrientations:[

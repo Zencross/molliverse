@@ -6,9 +6,8 @@
             v-model="firstName" 
             placeHolder="Enter your first name" 
             hint="This is how it would appear in Bliss" 
-            class="mt-16">
+            class="mt-10">
         </input-field>
-        <!-- <gradient-button class="mt-24" @click="onClickButton" /> -->
         <app-button buttonText="Continue" textWhite bgPhoneNum @click="onClickButton" class="absolute bottom-0 mb-8" />
     </div>
 </template>
@@ -16,11 +15,10 @@
 <script>
 import TopBar from '../components/TopBar'
 import InputField from '../components/InputField'
-import GradientButton from '../components/GradientButton.vue'
 import AppButton from '~/components/AppButton.vue'
 
 export default {
-    components:{ TopBar, InputField, GradientButton, AppButton },
+    components:{ TopBar, InputField, AppButton },
     data() {
         return {
         }
