@@ -1,8 +1,10 @@
 <template>
-    <div class="flex items-center justify-start w-full py-4 bg-white shadow-lg">
-        <img v-if="close" class="w-6 h-6 ml-4" src="../static/img/close-24px.svg" alt="close" @click="onClickButton">
-        <img v-if="back" class="w-6 h-6 ml-4" src="../static/img/arrow-back-24px.svg" alt="close" @click="onClickButton">
-        <div v-if="skip" class="absolute right-0 pr-4 montserrat-font" @click="onClickSkipButton">SKIP</div>
+    <div class="flex items-center justify-between w-full py-5 bg-white shadow-lg">
+        <img v-if="close" class="w-6 h-6 ml-4" src="/img/close-24px.svg" alt="close" @click="onClickButton">
+        <img v-if="back" class="w-6 h-6 ml-4" src="/img/arrow-back-24px.svg" alt="close" @click="onClickButton">
+        <img src="/img/top-bar-logo.svg" class="h-6" alt="">
+        <div v-if="skip" class="pr-4 montserrat-font" @click="onClickSkipButton">SKIP</div>
+        <div v-else class="w-6 h-6 mr-4"></div>
     </div>
 </template>
 
