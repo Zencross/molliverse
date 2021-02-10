@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import VueSwing from 'vue-Swing'
+import VueSwing from 'vue-swing'
 import SwipeButtons from './SwipeButtons.vue'
 
 
