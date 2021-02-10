@@ -1,11 +1,11 @@
 <template>
   <div>
 
-    <!-- <div v-if="!faceTrackingModelReady" class="absolute top-0 bottom-0 left-0 right-0 z-40 bg-white"> -->
-    <div class="absolute top-0 bottom-0 left-0 right-0 z-40 bg-gray-200">
+    <div v-if="!faceTrackingModelReady" class="absolute top-0 bottom-0 left-0 right-0 z-40 bg-white">
+    <!-- <div class="absolute top-0 bottom-0 left-0 right-0 z-40 bg-gray-200"> -->
       <div class="flex flex-col items-center justify-center w-full h-full text-2xl text-gray-900">
         <div class="lato-font">Loading Face Detection Model...</div>
-        <div class="lato-font">Please wait for a few moments :)</div>
+        <div class="lato-font">Please wait a few seconds :)</div>
       </div>
     </div>
 
