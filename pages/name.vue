@@ -35,7 +35,7 @@ export default {
     },
     methods:{
         onClickBackButton(){
-            this.$router.push('/email')
+            this.$router.push('/')
         },
         onClickButton(){
             this.$router.push('/birthday')

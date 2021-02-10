@@ -7,7 +7,8 @@
             <app-button buttonText="Man" @click="onClickShowWoman" borderBlack textBlack activeEffect fontBold class="mb-5" />
             <app-button buttonText="Woman" @click="onClickShowMan" borderBlack textBlack activeEffect fontBold class="mb-5" />
             <app-button buttonText="Everyone" @click="onClickShowAll" borderBlack textBlack activeEffect fontBold class="mb-5" />
-            <gradient-button class="mt-12" @click="onClickContinueButton" />
+            <!-- <gradient-button class="mt-12" @click="onClickContinueButton" /> -->
+            <app-button buttonText="Continue" textWhite bgPhoneNum @click="onClickContinueButton" class="absolute bottom-0 mb-8" />
         </div>
     </div>
 </template>
