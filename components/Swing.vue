@@ -33,6 +33,9 @@
 <script>
 import VueSwing from 'vue-swing'
 import SwipeButtons from './SwipeButtons.vue'
+import * as VuexUndoRedo from '../plugins/undoPlugin.js'
+import Vue from 'vue'
+Vue.use(VuexUndoRedo);
 
 
 export default {
@@ -136,7 +139,6 @@ export default {
             this.$root.$on('remove', () => {
                 setTimeout(() => {
                     this.cards.pop()
-                    console.log('remove method in Swing main component')
                 }, 100)
             }),
             this.$root.$on('add', () => {
@@ -148,6 +150,13 @@ export default {
                 this.superLikeProfiles.push(`${this.superLikeProfiles.length + 1}`)
                 this.cards.pop()
                 console.log(this.superLikeProfiles.length + 'superLikeProfiles')
+            }),
+            this.$root.$on('undo', () => {
+                console.log(undo() + ' undo function')
+                Vue.plugin.undo(this.cards);
+                
+                // console.log(this.cards.url + " this.cards.id") 
+                console.log("Function for undo")
             })
         }
     

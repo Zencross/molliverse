@@ -4,7 +4,7 @@
         <!-- <profile/> -->
         <!-- <swipeable-cards/> -->
         <swing />
-        <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()"/>
+        <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()" @undo="undo()"/>
 
         <!-- <div v-for="card in cards" :key="card.id">
             <img :src="card.url"/>
@@ -35,7 +35,11 @@ export default {
         },
         superLike() {
             this.$root.$emit('superLike')
+        },
+        undo() {
+            this.$root.$emit('undo')
         }
+
     }
 }
 </script>
