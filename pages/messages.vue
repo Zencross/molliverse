@@ -1,12 +1,16 @@
 <template>
-    <div class="overflow-scroll">
+    <div class="overflow-scroll" ontouchmove>
         <!-- Top Bar -->
         <div class="w-full border border-b-1">
             <div class="pt-6 pb-4 pl-4 text-2xl font-bold lato-font">Messages</div>
         </div>
 
         <!-- List -->
-        <div class="flex items-center py-4 border border-t-0 border-b-1" v-for="match in matches" :key="match.id">
+        <div class="flex items-center py-4 border border-t-0 border-b-1 list-action-listener" 
+            v-for="match in matches" 
+            :key="match.id"
+            @click="onClickItem(match)"
+        >
             <img :src="match.target.avatar" alt="" class="w-2/12 ml-4 rounded-full">
             <div class="flex flex-col justify-center w-full mx-4">
                 <div class="text-lg font-bold lato-font">{{match.target.name}}</div>
@@ -130,7 +134,12 @@ export default {
         }
     },
     computed: {},
-    methods: {}
+    methods: {
+        onClickItem(match){
+            console.log('item is clicked', match);
+            this.$router.push('/message')
+        }
+    }
 }
 </script>
 
@@ -139,5 +148,9 @@ export default {
 
 .lato-font{
     font-family: 'Lato', sans-serif;
+}
+
+.list-action-listener:hover {
+    @apply bg-gray-300
 }
 </style>
