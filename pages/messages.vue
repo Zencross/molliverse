@@ -146,9 +146,7 @@ export default {
       this.$store.commit("setMessageTargetAvatar", match.target.avatar);
 
       document.getElementById(match.id).style.backgroundColor = "#e2e8f0";
-      setTimeout(() => {
-        this.$router.push("/message");
-      }, 300);
+      this.$router.push("/message");
     }
   }
 };
