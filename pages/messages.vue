@@ -6,7 +6,7 @@
         </div>
 
         <!-- List -->
-        <div class="flex items-center py-4 border border-t-0 border-b-1 list-action-listener" 
+        <div class="flex items-center py-4 bg-white border border-t-0 border-b-1 list-action-listener" 
             v-for="match in matches" 
             :key="match.id"
             @click="onClickItem(match)"
