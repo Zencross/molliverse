@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="disable-text-selection">
         <!-- Top Bar -->
         <div class="w-full border border-t-0 border-b-1">
             <div class="pt-6 pb-4 pl-4 text-2xl font-bold lato-font">Messages</div>
@@ -152,5 +152,15 @@ export default {
 
 .lato-font{
     font-family: 'Lato', sans-serif;
+}
+
+.disable-text-selection {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 </style>
