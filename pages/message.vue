@@ -3,6 +3,7 @@
     <!-- Top Bar -->
     <div
       class="flex items-center justify-between w-full pt-2 pb-2 border border-t-0 border-b-1"
+      id="topBar"
     >
       <img
         src="/img/arrow-back-24px.svg"
@@ -52,7 +53,10 @@
     </div>
 
     <!-- Input Bar -->
-    <div class="sticky bottom-0 flex w-full pt-2 pb-6 bg-white justify-evenly">
+    <div
+      class="fixed bottom-0 flex w-full pt-2 pb-6 bg-white justify-evenly"
+      id="inputs"
+    >
       <img src="/img/plus-icon.svg" class="w-5 mx-2" alt="" />
       <input
         type="text"
@@ -63,7 +67,7 @@
       <div v-if="input" class="flex items-center">
         <img
           src="/img/send-24px.svg"
-          class="flex items-center justify-center w-8 mt-1 ml-1"
+          class="flex items-center justify-center w-8 mt-1 ml-1 mr-2"
           alt=""
         />
       </div>
@@ -110,11 +114,26 @@ export default {
     }
   },
   mounted() {
-    window.setInterval(function() {
+    var topBar = document.getElementById("topBar");
+    console.log("height of top bar", topBar.offsetHeight);
+
+    var inputs = document.getElementById("inputs");
+    console.log("height of inputs", inputs.offsetHeight);
+
+    console.log("inner height", window.innerHeight);
+
+    var messages = document.getElementById("messages");
+    messages.style.height =
+      window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
+
+    console.log("height of messages", messages.offsetHeight);
+
+    window.setTimeout(function() {
       var elem = document.getElementById("messages");
       console.log("elem", elem);
       elem.scrollTop = elem.scrollHeight;
-    }, 5000);
+    }, 10);
+
     //   Fetch latest messages
     this.messages = [
       {
@@ -232,6 +251,6 @@ export default {
 .messagesContainer {
   display: flex;
   flex-direction: column;
-  height: auto;
+  /* height: 200px; */
 }
 </style>
