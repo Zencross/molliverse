@@ -14,7 +14,7 @@
             <img :src="match.target.avatar" alt="" class="w-2/12 ml-4 rounded-full">
             <div class="flex flex-col justify-center w-full mx-4">
                 <div class="text-lg font-bold lato-font">{{match.target.name}}</div>
-                <div class="flex flex-wrap text-gray-600 lato-font">{{match.target.messages[0].content}}</div>
+                <div class="flex flex-wrap leading-tight text-gray-600 lato-font">{{match.target.messages[0].content}}</div>
             </div>
         </div>
     </div>
