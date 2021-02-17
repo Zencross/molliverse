@@ -1,5 +1,5 @@
 <template>
-    <div class="disable-text-selection">
+    <div class="select-none">
         <!-- Top Bar -->
         <div class="w-full border border-t-0 border-b-1">
             <div class="pt-6 pb-4 pl-4 text-2xl font-bold lato-font">Messages</div>
