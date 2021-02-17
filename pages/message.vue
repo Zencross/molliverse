@@ -2,7 +2,7 @@
   <div>
     <!-- Top Bar -->
     <div
-      class="flex items-center justify-between w-full pt-2 pb-2 border border-b-1"
+      class="flex items-center justify-between w-full pt-2 pb-2 border border-t-0 border-b-1"
     >
       <img
         src="/img/arrow-back-24px.svg"
@@ -10,7 +10,7 @@
         alt=""
         @click="onClickBack"
       />
-      <div class="flex items-center ml-6">
+      <div class="flex items-center ml-5">
         <img :src="messageTargetAvatar" alt="" class="w-2/12 rounded-full" />
         <div class="ml-2 text-lg font-semibold lato-font">
           {{ messageTargetName }}
