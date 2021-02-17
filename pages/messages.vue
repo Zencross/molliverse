@@ -6,11 +6,11 @@
         </div>
 
         <!-- List -->
-        <div class="flex items-center py-4 border border-t-0 border-b-1" v-for="message in messages" :key="message.id">
-            <img :src="message.by.icon" alt="" class="w-2/12 ml-4 rounded-full">
+        <div class="flex items-center py-4 border border-t-0 border-b-1" v-for="match in matches" :key="match.id">
+            <img :src="match.target.avatar" alt="" class="w-2/12 ml-4 rounded-full">
             <div class="flex flex-col justify-center w-full mx-4">
-                <div class="text-lg font-bold lato-font">{{message.by.name}}</div>
-                <div class="flex flex-wrap text-gray-600 lato-font">{{message.content}}</div>
+                <div class="text-lg font-bold lato-font">{{match.target.name}}</div>
+                <div class="flex flex-wrap text-gray-600 lato-font">{{match.target.messages[0].content}}</div>
             </div>
         </div>
     </div>
@@ -21,118 +21,110 @@ export default {
     components:{},
     data() {
         return {
-            messages:[
+            matches:[
                 {
                     id:1,
-                    by: {
-                        id:1,
+                    target: {
+                        id: 1,
                         name: "Michelle",
-                        icon: "https://i.pravatar.cc/300?img=40"
-                    },
-                    in: {
-                        createdAt:"",
-                        messages:[],
-                        name:""
-                    },
-                    content: "Hey there! I'm Michelle, Nice to meet you! xx"
+                        avatar: "https://i.pravatar.cc/300?img=40",
+                        messages: [
+                            {
+                                content: "Hey there! I'm Michelle, Nice to meet you! xx"
+                            }
+                        ]
+                    }
                 },
                 {
                     id:2,
-                    by: {
-                        id:1,
+                    target: {
+                        id: 1,
                         name: "Anna",
-                        icon: "https://i.pravatar.cc/300?img=38"
-                    },
-                    in: {
-                        createdAt:"",
-                        messages:[],
-                        name:""
-                    },
-                    content: "Hey there! I'm Anna, Nice to meet you! xx"
+                        avatar: "https://i.pravatar.cc/300?img=38",
+                        messages: [
+                            {
+                                content: "Hey there! I'm Anna, Nice to meet you! xx"
+                            }
+                        ]
+                    }
                 },
                 {
                     id:3,
-                    by: {
-                        id:1,
+                    target: {
+                        id: 1,
                         name: "Peter",
-                        icon: "https://i.pravatar.cc/300?img=57"
-                    },
-                    in: {
-                        createdAt:"",
-                        messages:[],
-                        name:""
-                    },
-                    content: "Hey there! I'm Peter, Nice to meet you! xx"
+                        avatar: "https://i.pravatar.cc/300?img=57",
+                        messages: [
+                            {
+                                content: "Hey there! I'm Peter, Nice to meet you! xx"
+                            }
+                        ]
+                    }
                 },
                 {
                     id:4,
-                    by: {
-                        id:1,
+                    target: {
+                        id: 1,
                         name: "Gary",
-                        icon: "https://i.pravatar.cc/300?img=55"
-                    },
-                    in: {
-                        createdAt:"",
-                        messages:[],
-                        name:""
-                    },
-                    content: "Hey there! I'm Michelle, Nice to meet you! xx"
+                        avatar: "https://i.pravatar.cc/300?img=55",
+                        messages: [
+                            {
+                                content: "Hey there! I'm Gary, Nice to meet you! xx"
+                            }
+                        ]
+                    }
                 },
                 {
                     id:5,
-                    by: {
-                        id:1,
+                    target: {
+                        id: 1,
                         name: "Rebecca",
-                        icon: "https://i.pravatar.cc/200?img=9"
-                    },
-                    in: {
-                        createdAt:"",
-                        messages:[],
-                        name:""
-                    },
-                    content: "Hey there! I'm Rebecca, Nice to meet you! xx"
+                        avatar: "https://i.pravatar.cc/300?img=9",
+                        messages: [
+                            {
+                                content: "Hey there! I'm Rebecca, Nice to meet you! xx"
+                            }
+                        ]
+                    }
                 },
                 {
                     id:6,
-                    by: {
-                        id:1,
+                    target: {
+                        id: 1,
                         name: "Jacob",
-                        icon: "https://i.pravatar.cc/200?img=12"
-                    },
-                    in: {
-                        createdAt:"",
-                        messages:[],
-                        name:""
-                    },
-                    content: "Hey there! I'm Jacob, Nice to meet you! xx"
+                        avatar: "https://i.pravatar.cc/300?img=12",
+                        messages: [
+                            {
+                                content: "Hey there! I'm Jacob, Nice to meet you! xx"
+                            }
+                        ]
+                    }
                 },
                 {
                     id:7,
-                    by: {
-                        id:1,
+                    target: {
+                        id: 1,
                         name: "Jacob",
-                        icon: "https://i.pravatar.cc/200?img=8"
-                    },
-                    in: {
-                        createdAt:"",
-                        messages:[],
-                        name:""
-                    },
-                    content: "Hey there! I'm Jacob, Nice to meet you! xx"
+                        avatar: "https://i.pravatar.cc/300?img=8",
+                        messages: [
+                            {
+                                content: "Hey there! I'm Jacob, Nice to meet you! xx"
+                            }
+                        ]
+                    }
                 },
                 {
                     id:8,
-                    by: {
-                        id:1,
+                    target: {
+                        id: 1,
                         name: "Taral",
-                        icon: "https://i.pravatar.cc/200?img=33"
-                    },
-                    in: {
-                        createdAt:"",
-                        messages:[],
-                        name:""
-                    },
-                    content: "Hey there! I'm Taral, Nice to meet you! xx"
+                        avatar: "https://i.pravatar.cc/300?img=33",
+                        messages: [
+                            {
+                                content: "Hey there! I'm Taral, Nice to meet you! xx"
+                            }
+                        ]
+                    }
                 }
             ]
         }
