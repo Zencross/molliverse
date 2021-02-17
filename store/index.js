@@ -37,9 +37,24 @@ export const state = () => ({
         {id:7, name:'teddycigar', loading: false}
     ],
     faceTrackingModelReady: false,
+    messageTargetId: null,
+    messageTargetName: "",
+    messageTargetAvatar: ""
 })
 
 export const mutations = {
+    setMessageTargetId(state, val){
+        state.messageTargetId = val
+        console.log("VUEX: set messageTargetId to",state.messageTargetId);
+    },
+    setMessageTargetName(state, val){
+        state.messageTargetName = val
+        console.log("VUEX: set messageTargetId to",state.messageTargetName);
+    },
+    setMessageTargetAvatar(state, val){
+        state.messageTargetAvatar = val
+        console.log("VUEX: set messageTargetId to",state.messageTargetAvatar);
+    },
     setFaceTrackingModelReady(state, val){
         state.faceTrackingModelReady = val
         console.log('VUEX: set faceTrackingModelReady to', state.faceTrackingModelReady);
