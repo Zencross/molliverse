@@ -2,7 +2,7 @@
   <div>
     <!-- Top Bar -->
     <div
-      class="flex items-center justify-between w-full pt-2 pb-2 border border-t-0 border-b-1"
+      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 border border-t-0 border-b-1"
       id="topBar"
     >
       <img
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Message Container -->
-    <div class="overflow-scroll messagesContainer" id="messages">
+    <div class="z-0 overflow-scroll messagesContainer" id="messages">
       <div
         v-for="message in messages"
         class="flex w-full px-2 my-2 lato-font"
