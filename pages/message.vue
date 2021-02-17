@@ -53,14 +53,24 @@
 
     <!-- Input Bar -->
     <div class="sticky bottom-0 flex w-full pt-2 pb-6 bg-white justify-evenly">
-      <img src="/img/plus-icon.svg" class="w-6 mx-2" alt="" />
+      <img src="/img/plus-icon.svg" class="w-5 mx-2" alt="" />
       <input
         type="text"
         class="w-9/12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
         placeholder="New Message"
+        v-model="input"
       />
-      <img src="/img/camera-icon.svg" class="w-8 ml-2" alt="" />
-      <img src="/img/record-icon.svg" class="w-8 mx-2" alt="" />
+      <div v-if="input" class="flex items-center">
+        <img
+          src="/img/send-24px.svg"
+          class="flex items-center justify-center w-8 mt-1 ml-1"
+          alt=""
+        />
+      </div>
+      <div v-else class="flex">
+        <img src="/img/camera-icon.svg" class="w-8 ml-2" alt="" />
+        <img src="/img/record-icon.svg" class="w-8 mx-2" alt="" />
+      </div>
     </div>
   </div>
 </template>
@@ -69,7 +79,8 @@
 export default {
   data() {
     return {
-      messages: []
+      messages: [],
+      input: ""
     };
   },
   computed: {
