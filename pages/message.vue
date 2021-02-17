@@ -6,7 +6,7 @@
     >
       <img
         src="/img/arrow-back-24px.svg"
-        class="pl-4"
+        class="w-12 pl-4"
         alt=""
         @click="onClickBack"
       />
@@ -16,9 +16,9 @@
           {{ messageTargetName }}
         </div>
       </div>
-      <div class="flex items-center justify-around mr-6">
-        <img src="/img/video-call.svg" class="mr-2" alt="" />
-        <img src="/img/phone-call.svg" alt="" />
+      <div class="flex items-center justify-around mr-4">
+        <img src="/img/video-call.svg" class="w-10 mr-2" alt="" />
+        <img src="/img/phone-call.svg" class="w-10" alt="" />
       </div>
     </div>
   </div>
