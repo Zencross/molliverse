@@ -52,7 +52,7 @@
     </div>
 
     <!-- Input Bar -->
-    <div class="sticky bottom-0 flex w-full py-4 bg-white justify-evenly">
+    <div class="sticky bottom-0 flex w-full pt-2 pb-6 bg-white justify-evenly">
       <img src="/img/plus-icon.svg" class="w-6 mx-2" alt="" />
       <input
         type="text"
