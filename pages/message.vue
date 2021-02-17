@@ -23,7 +23,7 @@
     </div>
 
     <!-- Message Container -->
-    <div class="overflow-scroll scrollingContainer ">
+    <div class="overflow-scroll messagesContainer" id="messages">
       <div
         v-for="message in messages"
         class="flex w-full px-2 my-2 lato-font"
@@ -52,7 +52,7 @@
     </div>
 
     <!-- Input Bar -->
-    <div class="fixed bottom-0 flex w-full py-4 bg-white justify-evenly">
+    <div class="sticky bottom-0 flex w-full py-4 bg-white justify-evenly">
       <img src="/img/plus-icon.svg" class="w-6 mx-2" alt="" />
       <input
         type="text"
@@ -99,11 +99,11 @@ export default {
     }
   },
   mounted() {
-    window.scrollTo(
-      0,
-      document.querySelector(".scrollingContainer").scrollHeight
-    );
-
+    window.setInterval(function() {
+      var elem = document.getElementById("messages");
+      console.log("elem", elem);
+      elem.scrollTop = elem.scrollHeight;
+    }, 5000);
     //   Fetch latest messages
     this.messages = [
       {
@@ -218,7 +218,7 @@ export default {
   @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-3 pb-2 pr-4;
 }
 
-.scrollingContainer {
+.messagesContainer {
   display: flex;
   flex-direction: column;
   height: auto;
