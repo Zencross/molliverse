@@ -10,6 +10,8 @@ export default {
     }
   },
 
+  target: "static",
+
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -18,7 +20,7 @@ export default {
     title: 'Bliss',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' },
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [

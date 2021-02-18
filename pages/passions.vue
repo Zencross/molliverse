@@ -1,13 +1,13 @@
 <template>
     <div class="flex flex-col items-center disable-dbl-tap-zoom">
         <top-bar back skip @click="onClickBackButton" @skip="onClickSkipButton" />
-        <div class="w-4/5 mt-8 mb-3 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Passions</div>
-        <div class="w-4/5 text-sm montserrat-font text-lightgrey disable-dbl-tap-zoom">Let everyone know what you’re passionate about, by adding it to your profile</div>
-        <div class="w-4/5 mt-3 mb-6 overflow-scroll tag-container disable-dbl-tap-zoom">
+        <div class="w-11/12 mt-6 mb-2 text-2xl font-semibold text-dark">My Passions</div>
+        <div class="w-11/12 text-sm montserrat-font text-lightgrey disable-dbl-tap-zoom">Let everyone know what you’re passionate about, by adding it to your profile</div>
+        <div class="w-11/12 mt-3 mb-6 overflow-scroll tag-container disable-dbl-tap-zoom">
             <button 
                 v-for="tag in tags"
                 :key="tag.id"
-                class="px-2 my-1 mr-4 border border-gray-400 rounded-full montserrat-font text-lightgrey disable-dbl-tap-zoom" 
+                class="px-2 my-1 mr-4 border border-gray-400 rounded-lg montserrat-font text-lightgrey disable-dbl-tap-zoom" 
                 :class="[existInPassionsArr(tag)?'bg-green-100':'']"
                 @click="onClickTag(tag)"
                 >
@@ -18,10 +18,10 @@
                 </button>
         </div>
         <button 
-            class="flex items-center justify-center w-4/5 p-3 text-white rounded-full button-gradient montserrat-font disable-dbl-tap-zoom"
+            class="flex items-center justify-center w-11/12 px-3 py-4 text-white rounded-lg lato-font bg-brandPurple disable-dbl-tap-zoom"
             @click="onClickContinueButton"
         >
-            <span class="text-lg font-bold disable-dbl-tap-zoom">CONTINUE {{numberOfPassionChosen}}/5</span>
+            <span class="disable-dbl-tap-zoom">Continue {{numberOfPassionChosen}}/5</span>
         </button>
     </div>
 </template>
@@ -91,6 +91,11 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+.lato-font{
+    font-family: 'Lato', sans-serif;
+}
 
 .montserrat-font{
     font-family: 'Montserrat', sans-serif;

@@ -1,21 +1,30 @@
 <template>
     <div>
         <top-bar back @click="onClickBackButton" />
-        <input-field labelText="My Birthday is" @input="onInputBirthday" v-model="birthday" placeHolder="MM/DD/YYYY" hint="Your Age will be public" class="mt-8"></input-field>
-        <gradient-button class="mt-24" @click="onClickButton" />
+        <input-field labelText="My Birthday is" v-model="birthday" placeHolder="DD/MM/YYYY" hint="Your Age will be public" class="mt-10"></input-field>
+        <app-button buttonText="Continue" textWhite bgPhoneNum @click="onClickButton" class="absolute bottom-0 mb-8" />
     </div>
 </template>
 
 <script>
 import TopBar from '../components/TopBar'
 import InputField from '../components/InputField'
-import GradientButton from '../components/GradientButton.vue'
+import AppButton from '~/components/AppButton.vue'
 
 export default {
-    components:{ TopBar, InputField, GradientButton },
+    components:{ TopBar, InputField, AppButton },
     data() {
         return {
-            birthday:""
+        }
+    },
+    computed:{
+        birthday: {
+            get () {
+                return this.$store.state.birthday
+            },
+            set (value) {
+                this.$store.commit('setBirthday', value)
+            }
         }
     },
     methods:{
@@ -24,10 +33,6 @@ export default {
         },
         onClickButton(){
             this.$router.push('/gender')
-        },
-        onInputBirthday(){
-            console.log(this.birthday);
-            this.$store.commit('setBirthday', this.birthday)
         }
     }
 }

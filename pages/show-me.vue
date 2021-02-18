@@ -2,11 +2,13 @@
     <div class="flex flex-col items-center w-full">
         <top-bar back @click="onClickBackButton" />
         <div class="flex flex-col items-center w-full mt-8">
-            <app-text class="w-4/5 mb-8" text="Show me" />
-            <app-button buttonText="WOMAN" @click="onClickShowWoman" borderBlack textBlack activeEffect class="mb-8" />
-            <app-button buttonText="MAN" @click="onClickShowMan" borderBlack textBlack activeEffect class="mb-8" />
-            <app-button buttonText="EVERYONE" @click="onClickShowAll" borderBlack textBlack activeEffect class="mb-8" />
-            <gradient-button class="mt-12" @click="onClickContinueButton" />
+            <!-- <app-text class="w-4/5 mb-8" text="Show me" /> -->
+            <div class="w-11/12 mb-6 text-3xl font-semibold text-dark">Show me</div>
+            <app-button buttonText="Man" @click="onClickShowWoman" borderBlack textBlack activeEffect fontBold class="mb-5" />
+            <app-button buttonText="Woman" @click="onClickShowMan" borderBlack textBlack activeEffect fontBold class="mb-5" />
+            <app-button buttonText="Everyone" @click="onClickShowAll" borderBlack textBlack activeEffect fontBold class="mb-5" />
+            <!-- <gradient-button class="mt-12" @click="onClickContinueButton" /> -->
+            <app-button buttonText="Continue" textWhite bgPhoneNum @click="onClickContinueButton" class="absolute bottom-0 mb-8" />
         </div>
     </div>
 </template>

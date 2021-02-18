@@ -1,16 +1,18 @@
 <template>
     <div class="flex flex-col items-center w-full">
         <top-bar back @click="onClickBackButton" />
-        <div class="flex flex-col items-center w-full mt-8">
-            <app-text class="w-4/5 mb-8" text="I am a" />
-            <app-button buttonText="WOMAN" @click="onClickWoman" borderBlack textBlack activeEffect class="mb-8" />
-            <app-button buttonText="MAN" @click="onClickMan" borderBlack textBlack activeEffect class="mb-8" />
-            <app-button buttonText="MORE" @click="onClickOtherGender" borderBlack textBlack rightArrow class="mb-8" />
+        <div class="flex flex-col items-center w-full mt-10">
+            <!-- <app-text class="w-4/5 mb-8" text="I am a" /> -->
+            <div class="w-11/12 mb-6 text-3xl font-semibold text-dark">I am a:</div>
+            <app-button buttonText="Man" @click="onClickWoman" borderBlack textBlack activeEffect font-bold class="mb-5" />
+            <app-button buttonText="Woman" @click="onClickMan" borderBlack textBlack activeEffect font-bold class="mb-5" />
+            <app-button buttonText="More options" @click="onClickOtherGender" borderBlack textBlack rightArrow font-bold class="mb-5" />
             <label class="inline-flex items-center">
-                <input type="checkbox" v-model="showGenderOnProfile" @change="onChangeShowGenderOnProfile" class="w-4 h-4 form-checkbox">
+                <input type="checkbox" v-model="showGenderOnProfile" class="w-4 h-4 form-checkbox">
                 <span class="ml-2 text-sm montserrat-font text-lightgrey">Show my gender on my profile</span>
             </label>
-            <gradient-button class="mt-12" @click="onClickContinueButton" />
+            <!-- <gradient-button class="mt-12" @click="onClickContinueButton" /> -->
+            <app-button buttonText="Continue" textWhite bgPhoneNum @click="onClickButton" class="absolute bottom-0 mb-8" />
         </div>
     </div>
 </template>
@@ -25,7 +27,16 @@ export default {
     components:{ TopBar, AppText, AppButton, GradientButton },
     data() {
         return {
-            showGenderOnProfile: false,
+        }
+    },
+    computed: {
+        showGenderOnProfile: {
+            get () {
+                return this.$store.state.showGenderOnProfile
+            },
+            set (value) {
+                this.$store.commit('setShowGenderOnProfile', value)
+            }
         }
     },
     methods:{
@@ -39,10 +50,7 @@ export default {
             this.$store.commit('setGender', 'Man')
         },
         onClickOtherGender(){},
-        onChangeShowGenderOnProfile(){
-            this.$store.commit('setShowGenderOnProfile', this.showGenderOnProfile)
-        },
-        onClickContinueButton(){
+        onClickButton(){
             this.$router.push('/sexual-orientation')
         }
     }

@@ -10,9 +10,9 @@
                 :key="card.id"
             > 
 
-            <div v-for="url in card.urls" :key="url">
+            <!-- <div v-for="url in card.urls" :key="url">
                         <img :src="url">
-            </div>
+            </div> -->
               
 
             </vue-swing>

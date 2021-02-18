@@ -1,14 +1,19 @@
 <template>
     <div class="flex justify-center w-full">
         <button 
-            class="flex items-center w-9/12 p-3 bg-transparent border rounded-full focus:outline-none karla-font"
+            class="flex items-center w-11/12 px-3 py-4 bg-transparent border rounded-lg focus:outline-none lato-font"
             :class="[
                 borderBlack?'border-black':'',
                 borderWhite?'border-white':'',
+                borderNone?'border-transparent':'',
                 textBlack?'text-black':'',
                 textWhite?'text-white':'',
                 rightArrow?'justify-between':'justify-center',
-                activeEffect?'focus:bg-gray-300':''
+                activeEffect?'focus:bg-gray-300 hover:bg-gray-300':'',
+                bgApple?'bg-white':'',
+                bgFB?'bg-FB':'',
+                bgPhoneNum?'bg-brandPurple':'',
+                fontBold?'font-semibold':''
             ]"
             @click="onClickButton"
         >
@@ -43,6 +48,21 @@ export default {
         },
         activeEffect:{
             type: Boolean
+        },
+        bgApple:{
+            type: Boolean
+        },
+        bgFB:{
+            type: Boolean
+        },
+        bgPhoneNum:{
+            type: Boolean
+        },
+        borderNone:{
+            type: Boolean
+        },
+        fontBold:{
+            type: Boolean
         }
     },
     data() {
@@ -60,6 +80,11 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+.lato-font{
+    font-family: 'Lato', sans-serif;
+}
 
 .karla-font{
     font-family: 'Karla', sans-serif;

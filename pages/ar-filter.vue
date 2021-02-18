@@ -1,6 +1,6 @@
 <template>
     <div>
-        <face-filter @confirm="onClickConfirm" />
+        <face-filter @confirmPhoto="onClickConfirmPhoto" @confirmVideo="onClickConfirmVideo" />
     </div>
 </template>
 
@@ -14,18 +14,18 @@ export default {
     }
   },
   methods:{
-    onClickConfirm(){
-      if(this.$store.state.photo)
-      console.log("confirm photo", this.$store.state.photo);
-
-      if(this.$store.state.video)
-      console.log("confirm video", this.$store.state.video);
-      
-      //put photo to array[0] & clean up photo
-      //put this.$store.state.photo to this.$store.state.userProfileMedia[this.$store.state.currentMediaIndex]
-      this.$store.commit("addUserProfileMedia",this.$store.state.currentMediaIndex)
-      this.$store.commit('setActiveEffectIcon','lion')
+    onClickConfirmPhoto(){
       this.$router.push('/gallery')
+      console.log("confirm photo", this.$store.state.photo);
+      this.$store.commit("addPhotoToUserProfileMedia",this.$store.state.currentMediaIndex)
+      this.$store.commit('setActiveEffectIcon','lion')
+    },
+    onClickConfirmVideo(){
+      this.$router.push('/gallery')
+      console.log("confirm video", this.$store.state.video);
+      this.$store.commit("addVideoToUserProfileMedia",this.$store.state.currentMediaIndex)
+      this.$store.commit("setVideo",null)
+      this.$store.commit('setActiveEffectIcon','lion')
     }
   }
 }

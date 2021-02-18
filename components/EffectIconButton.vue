@@ -7,21 +7,30 @@
             @long-press-start="onLongPressStartHandler"
             @long-press-stop="onLongPressStopHandler"
         >
-          <img 
+          <div class="relative">
+            <Spinner v-if="loading" class="absolute top-0 bottom-0 left-0 right-0" />
+            <img 
             :src="iconURL" 
             class="flex items-center justify-center object-fill" 
-            :class="[activeEffectIcon===icon?'':'border-white rounded-full border-4']" 
-          />
+            :class="[
+              activeEffectIcon===icon?'':'border-white rounded-full border-4',
+              loading?'opacity-50':''
+            ]" 
+            />
+          </div>
         </div>
 </template>
 
 <script>
 import LongPress from 'vue-directive-long-press'
+import Spinner from './Spinner'
 
 export default {
+    components: { Spinner },
     directives: { 'long-press': LongPress },
     props:{
-      icon:{ type: String }
+      icon:{ type: String },
+      loading:{ type: Boolean }
     },
     data() {
         return {
@@ -31,6 +40,12 @@ export default {
     computed:{
         activeEffectIcon(){
             return this.$store.state.activeEffectIcon;
+        },
+        isLoading(){
+            console.log(this.$store.state.activeEffectIcon + '|' + this.$store.state.loadingEffectIcon);
+            if(this.$store.state.activeEffectIcon === this.$store.state.loadingEffectIcon)
+            return true
+            
         },
         iconURL(){
             return `/thumbs/${this.icon}.png`
@@ -67,5 +82,19 @@ export default {
 
 .button-class {
   @apply animate-bounce
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>

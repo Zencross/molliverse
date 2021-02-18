@@ -1,12 +1,12 @@
 <template>
-    <div class="container absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center">
-        <img src="../static/img/bliss.svg" alt="Bliss" class="mb-16">
-        <nuxt-link to="email" class="w-full">
-          <app-button buttonText="Sign in with Apple" borderWhite textWhite class="mb-8" />
-          <app-button buttonText="Sign in with Facebook" borderWhite textWhite class="mb-8"/>
-          <app-button buttonText="Sign in with Phone number" borderWhite textWhite class="mb-10" />
+    <div class="container absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-between">
+        <img src="../static/img/bliss2.svg" alt="Bliss" class="w-9/12 mt-24">
+        <nuxt-link to="name" class="flex flex-col items-center justify-center w-full">
+          <app-button buttonText="Sign in with Apple" bgApple borderNone class="mb-4" />
+          <app-button buttonText="Sign in with Facebook" bgFB textWhite borderNone class="mb-4"/>
+          <app-button buttonText="Sign in with Phone number" bgPhoneNum textWhite borderNone class="mb-10" />
+          <div class="mb-10 text-white underline karla-font">Trouble Signing in?</div>
         </nuxt-link>
-        <div class="text-white underline karla-font">Trouble Signing in</div>
     </div>
 </template>
 

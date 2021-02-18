@@ -1,26 +1,31 @@
 <template>
   <div>
+
+    <div v-if="!faceTrackingModelReady" class="absolute top-0 bottom-0 left-0 right-0 z-40 bg-white">
+    <!-- <div class="absolute top-0 bottom-0 left-0 right-0 z-40 bg-gray-200"> -->
+      <div class="flex flex-col items-center justify-center w-full h-full text-2xl text-gray-900">
+        <div class="lato-font">Loading Face Detection Model...</div>
+        <div class="lato-font">Please wait a few seconds :)</div>
+      </div>
+    </div>
+
     <!-- Photo preview -->
-    <div v-if="showPhotoPreview" class="absolute top-0 z-30">
+    <div v-if="showPhotoPreview" class="absolute top-0 bottom-0 left-0 right-0 z-30">
       <img class="fixed top-0 right-0 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickClosePhotoPreview">
       <img :src="photo" alt="photo">
       <div class="fixed bottom-0 flex justify-center w-full mb-8">
-        <div class="p-2 bg-white rounded-full" @click="onClickTick">
+        <div class="p-2 bg-white rounded-full" @click="onClickPhotoTick">
           <img class="w-16 h-16" src="../static/img/tick-purple-24px.svg" alt="">
         </div>
       </div>
     </div>
 
     <!-- Video preview -->
-    <div v-if="showVideoPreview" class="absolute top-0 z-30" >
+    <div v-if="showVideoPreview" class="absolute top-0 bottom-0 left-0 right-0 z-30" >
     <img class="fixed top-0 right-0 z-40 w-16 h-16 p-3" src="~/assets/img/close-white-18dp.svg" alt="close" @click="onClickCloseVideoPreview">
-    <video :src="video" 
-      autoplay 
-      loop
-    >
-    </video>   
+    <video v-if="video" :src="video" autoplay loop playsinline></video>   
     <div class="fixed bottom-0 z-40 flex justify-center w-full mb-8">
-        <div class="p-2 bg-white rounded-full" @click="onClickTick">
+        <div class="p-2 bg-white rounded-full" @click="onClickVideoTick">
           <img class="w-16 h-16" src="../static/img/tick-purple-24px.svg" alt="">
         </div>
     </div>     
@@ -33,6 +38,7 @@
             v-for="effect in effectList"
             :key="effect.id"
             :icon="effect.name"
+            :loading="effect.loading"
             @click="capturePhoto(effect.name)"
             @long-press-start="onLongPressStart(effect.name)"
             @long-press-stop="onLongPressStop(effect.name)"
@@ -70,16 +76,17 @@ export default {
       showPhotoPreview: false,
       mediaRecorder: null,
       longPressActive: false,
-      effectList:[
-          {id:0, name:'lion'},
-          {id:1, name:'aviators'},
-          {id:2, name:'beard'},
-          {id:3, name:'dalmatian'},
-          {id:4, name:'flowers'},
-          {id:5, name:'koala'},
-          {id:6, name:'background_segmentation'},
-          {id:7, name:'teddycigar'}
-        ]
+      loadingEffect: '',
+      // effectList:[
+      //     {id:0, name:'lion', loading: false},
+      //     {id:1, name:'aviators', loading: false},
+      //     {id:2, name:'beard', loading: false},
+      //     {id:3, name:'dalmatian', loading: false},
+      //     {id:4, name:'flowers', loading: false},
+      //     {id:5, name:'koala', loading: false},
+      //     {id:6, name:'background_segmentation', loading: false},
+      //     {id:7, name:'teddycigar', loading: false}
+      // ]
     };
   },
   computed:{
@@ -88,11 +95,20 @@ export default {
     },
     video(){
       return this.$store.state.video
+    },
+    effectList(){
+      return this.$store.state.effectList
+    },
+    faceTrackingModelReady(){
+      return this.$store.state.faceTrackingModelReady
     }
   },
   methods: {
-    onClickTick(){
-      this.$emit('confirm')
+    onClickPhotoTick(){
+      this.$emit('confirmPhoto')
+    },
+    onClickVideoTick(){
+      this.$emit('confirmVideo')
     },
     onLongPressStart(key){
       if(key !== this.$store.state.activeEffectIcon){
@@ -159,6 +175,7 @@ export default {
     },
     capturePhoto(key){
       if(this.$store.state.video){
+        console.log('video exists, capturePhoto is escaped');
         return
       }
       console.log(`capturePhoto: ${key} icon is pressed`);
@@ -182,20 +199,20 @@ export default {
         canvasWidth: this.canvasWidth,
         canvasHeight: this.canvasHeight,
         licenseKey:
-          "d5087bc59940148b5bb1be4c81e4110fa431600f336ab10a92313c39e60389be6d7d566e9be287b2",
+          "88c4f4c1be1212822085641a5dda14f49a3971dbb5776fd7871c9c8cc739f387dac52316192fccde",
         canvas: document.getElementById("deepar-canvas"),
         numberOfFaces: 1,
         libPath: "/lib",
         segmentationInfoZip: "segmentation.zip",
-        onInitialize: function () {
+        onInitialize:  () => {
           console.log("onInitialize callback", deepAR);
           // start video immediately after the initalization, mirror = true
-          deepAR.startVideo(true);
-
-          // or we can setup the video element externally and call deepAR.setVideoElement (see startExternalVideo function below)
-
-          deepAR.switchEffect(0, "slot", "/effects/lion", function () {
+          deepAR.startVideo(true);        
+          console.log('initial effect loading (lion)');
+          this.$store.commit('setEffectLoadingTrue', 0)
+          deepAR.switchEffect(0, "slot", "/effects/lion",  () => {
             // effect loaded
+            this.$store.commit('setEffectLoadingFalse', 0)
           });
         },
       });
@@ -231,98 +248,127 @@ export default {
         // loaderWrapper.style.display = "none";
       };
 
-      deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin");
+      //  The download of faceTracking model might be the reason why initial load is slow
+      deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin", ()=>{
+        console.log('face tracking model ready');
+        this.$store.commit('setFaceTrackingModelReady', true)
+      })
 
       this.deepARInstance = deepAR;
+      console.log('initialize() ends.');
     },
     changeEffect(key) {
       console.log(`${key} selected`);
       switch (key) {
         case 0:
           this.$store.commit('setActiveEffectIcon','lion')
+          this.deepARInstance.clearEffect("slot")
+          this.$store.commit('setEffectLoadingTrue', 0)
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/lion",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to lion");
+              this.$store.commit('setEffectLoadingFalse', 0)
             }
           );
           break;
         case 1:
           this.$store.commit('setActiveEffectIcon','aviators')
+          this.deepARInstance.clearEffect("slot")
+          this.$store.commit('setEffectLoadingTrue', 1)
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/aviators",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to aviators");
+              this.$store.commit('setEffectLoadingFalse', 1)
             }
           );
           break;
         case 2:
           this.$store.commit('setActiveEffectIcon','beard')
+          this.deepARInstance.clearEffect("slot")
+          this.$store.commit('setEffectLoadingTrue', 2)
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/beard",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to beard");
+              this.$store.commit('setEffectLoadingFalse', 2)
             }
           );
           break;
         case 3:
           this.$store.commit('setActiveEffectIcon','dalmatian')
+          this.deepARInstance.clearEffect("slot")
+          this.$store.commit('setEffectLoadingTrue', 3)
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/dalmatian",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to dalmation");
+              this.$store.commit('setEffectLoadingFalse', 3)
             }
           );
           break;
         case 4:
           this.$store.commit('setActiveEffectIcon','flowers')
+          this.deepARInstance.clearEffect("slot")
+          this.$store.commit('setEffectLoadingTrue', 4)
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/flowers",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to flowers");
+              this.$store.commit('setEffectLoadingFalse', 4)
             }
           );
           break;
         case 5:
           this.$store.commit('setActiveEffectIcon','koala')
+          this.deepARInstance.clearEffect("slot")
+          this.$store.commit('setEffectLoadingTrue', 5)
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/koala",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to koala");
+              this.$store.commit('setEffectLoadingFalse', 5)
             }
           );
           break;
         case 6:
           this.$store.commit('setActiveEffectIcon','background_segmentation')
+          this.deepARInstance.clearEffect("slot")
+          this.$store.commit('setEffectLoadingTrue', 6)
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/background_segmentation",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to background_segmentation");
+              this.$store.commit('setEffectLoadingFalse', 6)
             }
           );
           break;
         case 7:
           this.$store.commit('setActiveEffectIcon','teddycigar')
+          this.deepARInstance.clearEffect("slot")
+          this.$store.commit('setEffectLoadingTrue', 7)
           this.deepARInstance.switchEffect(
             0,
             "slot",
             "/effects/teddycigar",
-            function () {
+            () => {
               console.log("changeEffect: changed effect to teddycigar");
+              this.$store.commit('setEffectLoadingFalse', 7)
             }
           );
           break;
@@ -336,10 +382,21 @@ export default {
     if(!this.deepARInstance)
     this.initialize();
   },
+  beforeDestroy(){
+    console.log('before Destory');
+    this.deepARInstance.stopVideo()
+    this.deepARInstance.shutdown()
+  }
 };
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+.lato-font{
+    font-family: 'Lato', sans-serif;
+}
+
 canvas.deepar {
   border: 0px none;
   background-color: black;
