@@ -1,5 +1,5 @@
 <template>
-         <div class="navMenu flex bottom-0 absolute pb-5 gap-16 md:gap-80">
+         <div class="navMenu flex bottom-0 fixed pb-5 gap-16 md:gap-80">
              <a href="#">
                  <img src="../assets/img/undo.png" class="w-3/4 md:w-1/2" v-on:click="$emit('undo')">
             </a>

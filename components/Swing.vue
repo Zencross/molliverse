@@ -3,43 +3,36 @@
         <div>
             <vue-swing
                 @throwout="onThrowout"
+                @dragmove="onDragmove"
                 :config="config"
                 ref="vueswing"
-            >
-                <div v-for="card in cards" :key="card.id">
-                    <img :src="card.url" class="card" >
+                v-for="card in cards" 
+                :key="card.id"
+            > 
 
-                </div>
+            <div v-for="url in card.urls" :key="url">
+                        <img :src="url">
+            </div>
+              
+
             </vue-swing>
-        </div>
-        <!-- <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()"/> -->
-    
-        <!-- <slot> -->
-   
-         <!-- <div class="navMenu flex bottom-0 absolute pb-5 gap-16 md:gap-80">
-            <a href="#">
-                <img src="../assets/img/remove.png" class="w-3/4 md:w-1/2" v-on:click="remove">
-            </a>
-            <a href="#">
-                <img src="../assets/img/circle.png" class="w-3/4 md:w-1/2" v-on:click="superLike">
-            </a>
-            <a href="#">
-                <img src="../assets/img/tick.png" class="w-3/4 md:w-1/2" v-on:click="add">
-            </a>
-        </div>  -->
+      
+        </div>  
     </div>
 </template>
 
 <script>
-import VueSwing from 'vue-Swing'
+import VueSwing from 'vue-swing'
 import SwipeButtons from './SwipeButtons.vue'
 import * as VuexUndoRedo from '../plugins/undoPlugin.js'
 import Vue from 'vue'
+import { Carousel, Slide } from 'vue-carousel';
+import CarouselSlide from './CarouselSlide.vue'
 Vue.use(VuexUndoRedo);
 
 
 export default {
-    components: { VueSwing, SwipeButtons },
+    components: { VueSwing, SwipeButtons, Carousel, Slide, CarouselSlide },
     data(){
             return {
                 config: {
@@ -51,31 +44,44 @@ export default {
                     ],
                     // minThrowOutDistance: 250,
                     // maxThrowOutDistance: 300
-                     minThrowOutDistance: 450,
-                    maxThrowOutDistance: 500,
+                     minThrowOutDistance: 0,
+                    maxThrowOutDistance: 0,
                     // Rotation: 20,
 
                 },
                 cards: [
                     {
-                    "id": 1,
-                    "url": require('../assets/img/profile1.gif'),
-                    "text": "I am text"
+                    id: 1,
+                    urls: [
+                        require('../assets/img/profile1.gif'),
+                        require('../assets/img/profile2.gif'),
+                    ],
+                    //  "url": require('../assets/img/profile1.gif'),
+                    text: "I am text"
                     }
                     ,
                     {
-                    "id": 2,
-                    "url": require('../assets/img/profile2.gif'),
-                    "text": "I am text2"
+                    id: 2,
+                    urls: [
+                        require('../assets/img/profile3.gif'),
+                        require('../assets/img/profile4.gif')
+                    ],
+                    //  "url": require('../assets/img/profile2.gif'),
+                    text: "I am text2"
                     },
                     {
-                    "id": 3,
-                    "url": require('../assets/img/profile3.gif'),
-                    "text": "I am text3"
+                    id: 3,
+                    urls: [
+                        require('../assets/img/profile5.gif'),
+                        require('../assets/img/profile6.gif')
+                    ],
+                    //  "url": require('../assets/img/profile3.gif'),
+                    text: "I am text3"
                     }
                 ],
                 swipeRightProfiles: [],
                 superLikeProfiles: [],
+                // element is considered to be thrown out when throwOutConfidence is == 1
                 throwOutConfidence: (xOffset, yOffset, element) => {
                     const xConfidence = Math.min(Maths.abs(xOffset)/element.offsetWidth, 0.5);
                     const yConfidence = Math.min(Maths.abs(yOffset)/element.offsetHeight, 0.5);
@@ -108,6 +114,14 @@ export default {
             )
             console.log(this.cards.length + 'card Stack length')
         },
+
+        onDragmove({ target, throwOutConfidence}) {
+            // if (throwOutConfidence < 1) {
+            //     target.initialState()
+                console.log('onDragmove is turnt UP')
+            // }
+        },
+
         onThrowout({ target, throwDirection }) {
             if (throwDirection == VueSwing.Direction.lEFT) {
                 this.cards.pop()
@@ -120,7 +134,7 @@ export default {
                 this.cards.pop()
             }
 
-            console.log(this.throwOutConfidence + ' this is throwout confidence')
+            // console.log(this.throwOutConfidence.xConfidence + ' this is throwout confidence')
 
             console.log(this.swipeRightProfiles.length + "swipeRightProfiles")
             console.log(this.superLikeProfiles.length + "superLikeProfiles")

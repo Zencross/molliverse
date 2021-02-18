@@ -12,12 +12,16 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "interact": "0.0.3",
+    "js": "^0.1.0",
     "nuxt": "^2.14.6",
     "swing": "^3.1.4",
     "vue": "^2.6.12",
+    "vue-carousel": "^0.18.0",
     "vue-directive-long-press": "^1.1.0",
     "vue-slick-carousel": "^1.0.6",
     "vue-swing": "0.0.10",
+    "vue-tinder": "^3.0.0-alpha.1",
     "vue2-interact": "^0.0.3",
     "vuetify": "^2.4.2"
   },
@@ -26,6 +30,7 @@
     "@nuxtjs/vuetify": "^1.11.2",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.0",
+    "typescript": "^4.1.5",
     "vuex-undo-redo": "^1.1.4"
   }
 }
