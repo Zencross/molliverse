@@ -8,7 +8,12 @@
     ></TopBar>
 
     <div class="flex flex-col items-center justify-center w-full p-8">
-      <img :src="userIcon" alt="icon" class="w-32 h-32 rounded-full" />
+      <img
+        :src="userIcon"
+        alt="icon"
+        class="w-32 h-32 rounded-full"
+        @click="onClickAddMedia"
+      />
       <div class="mt-3 text-2xl font-bold lato-font">
         {{ userName + ", " + userAge }}
       </div>
