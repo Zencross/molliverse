@@ -50,21 +50,21 @@
         Stand out with
       </div>
       <div class="text-4xl font-bold lato-font">Mollie Premium</div>
-      <div class="mt-3 text-xs">{{ "Unlimited swipes & rewinds!" }}</div>
-      <div class="text-xs">{{ "See who likes you & more!" }}</div>
-      <div class="text-xs">
+      <div class="mt-2 text-sm">{{ "Unlimited swipes & rewinds!" }}</div>
+      <div class="text-sm">{{ "See who likes you & more!" }}</div>
+      <div class="text-sm">
         {{ "You're 3 times more likely to get matched!" }}
       </div>
     </div>
 
-    <div class="flex flex-col items-center justify-center w-full mt-6">
+    <div class="flex flex-col items-center justify-center w-full my-6">
       <button
-        class="w-11/12 p-3 mb-2 font-bold border rounded-lg text-brandPurple border-brandPurple lato-font"
+        class="w-11/12 p-4 mb-2 font-bold border rounded-lg text-brandPurple border-brandPurple lato-font"
       >
         Give us feedback
       </button>
       <button
-        class="w-11/12 p-3 font-bold text-white border rounded-lg bg-brandPurple lato-font"
+        class="w-11/12 p-4 font-bold text-white border rounded-lg bg-brandPurple lato-font"
       >
         Get Mollie Premium
       </button>
