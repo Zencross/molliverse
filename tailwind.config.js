@@ -17,10 +17,6 @@ module.exports = {
       "grayish-red": "#796B6B",
       dark: '#333333',
       brandPurple: "#89287C"
-    }),
-    borderColor: theme => ({
-      ...theme("colors"),
-      brandPurple: "#89287C"
     })
   },
   variants: {},

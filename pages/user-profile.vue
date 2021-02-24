@@ -59,7 +59,7 @@
 
     <div class="flex flex-col items-center justify-center w-full my-4">
       <button
-        class="w-11/12 p-4 mb-2 font-bold border rounded-lg text-brandPurple border-brandPurple lato-font"
+        class="w-11/12 p-4 mb-2 font-bold border rounded-lg text-brandPurple border-brandPurple lato-font feedback-btn"
       >
         Give us feedback
       </button>
@@ -124,5 +124,11 @@ export default {
 
 .lato-font {
   font-family: "Lato", sans-serif;
+}
+
+.feedback-btn {
+  border: 1px;
+  border-style: solid;
+  border-color: #89287c;
 }
 </style>
