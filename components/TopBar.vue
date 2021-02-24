@@ -36,6 +36,7 @@
       alt="messager"
       @click="onClickMessager"
     />
+    <div v-if="!skip && !messager" class="w-6 h-6 mr-4"></div>
   </div>
 </template>
 
@@ -46,7 +47,11 @@ export default {
     back: Boolean,
     person: Boolean,
     skip: Boolean,
-    messager: Boolean
+    messager: Boolean,
+    rhsNothing: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {};
