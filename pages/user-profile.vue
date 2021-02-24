@@ -50,14 +50,14 @@
         Stand out with
       </div>
       <div class="text-4xl font-bold lato-font">Mollie Premium</div>
-      <div class="mt-2 text-sm">{{ "Unlimited swipes & rewinds!" }}</div>
+      <div class="mt-1 text-sm">{{ "Unlimited swipes & rewinds!" }}</div>
       <div class="text-sm">{{ "See who likes you & more!" }}</div>
       <div class="text-sm">
         {{ "You're 3 times more likely to get matched!" }}
       </div>
     </div>
 
-    <div class="flex flex-col items-center justify-center w-full my-6">
+    <div class="flex flex-col items-center justify-center w-full my-4">
       <button
         class="w-11/12 p-4 mb-2 font-bold border rounded-lg text-brandPurple border-brandPurple lato-font"
       >
