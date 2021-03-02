@@ -160,7 +160,7 @@ export default {
 .cell-aspect-ratio {
   overflow: hidden;
   height: 0;
-  padding-top: 35.5%;
+  padding-top: 37%;
 }
 
 .flip-list-move {
