@@ -40,7 +40,7 @@
           <img
             v-if="isMediaPhoto(userProfileMedia.indexOf(ele))"
             :src="getMediaSrc(userProfileMedia.indexOf(ele))"
-            class="absolute top-0 left-0 z-20 w-full h-full rounded-xl"
+            class="absolute top-0 left-0 z-20 object-cover w-full h-full rounded-xl"
             alt=""
           />
           <video
@@ -160,7 +160,7 @@ export default {
 .cell-aspect-ratio {
   overflow: hidden;
   height: 0;
-  padding-top: 37%;
+  padding-top: 35.5%;
 }
 
 .flip-list-move {
