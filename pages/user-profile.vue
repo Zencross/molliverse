@@ -11,7 +11,7 @@
       <img
         :src="userIcon"
         alt="icon"
-        class="w-32 h-32 rounded-full"
+        class="object-cover w-32 h-32 bg-gray-300 rounded-full"
         @click="onClickAddMedia"
       />
       <div class="mt-3 text-2xl font-bold lato-font">
