@@ -229,17 +229,6 @@ export default {
   font-family: "Lato", sans-serif;
 }
 
-.page-enter-active,
-.page-leave-active {
-  transition-property: opacity;
-  transition-timing-function: ease-in-out;
-  transition-duration: 300ms;
-}
-.page-enter,
-.page-leave-to {
-  opacity: 0;
-}
-
 .receive {
   @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-3 pb-2 pr-4;
 }

@@ -2,7 +2,12 @@
   <div class="select-none">
     <!-- Top Bar -->
     <div class="w-full border border-t-0 border-b-1">
-      <div class="pt-6 pb-4 pl-4 text-2xl font-bold lato-font">Messages</div>
+      <div
+        @click="onClickTitle"
+        class="pt-6 pb-4 pl-4 text-2xl font-bold lato-font"
+      >
+        Messages
+      </div>
     </div>
 
     <!-- List -->
@@ -147,6 +152,9 @@ export default {
 
       document.getElementById(match.id).style.backgroundColor = "#e2e8f0";
       this.$router.push("/message");
+    },
+    onClickTitle() {
+      this.$router.push("/user-profile");
     }
   }
 };

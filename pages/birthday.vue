@@ -18,10 +18,10 @@
           My Birthday is</label
         >
         <datepicker
-          class="w-11/12 px-4 py-3 mx-4 text-lg border border-gray-300 rounded-md bg-lightgrey input-color focus:outline-none"
+          class="w-11/12 mx-4 text-lg border border-gray-300 rounded-md bg-lightgrey input-color focus:outline-none"
           v-model="birthday"
           placeholder="Enter your birthday"
-          input-class="outline-none bg-lightgrey"
+          input-class="w-full px-4 py-3 outline-none bg-lightgrey"
         ></datepicker>
         <div class="w-11/12 mt-3 text-sm text-lightgrey">
           Your Age will be public
