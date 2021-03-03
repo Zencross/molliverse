@@ -59,11 +59,6 @@ export default {
   mounted() {
     console.log("in fullscreen ?", document.fullscreenElement);
     console.log("Support fullscreen ?", document.fullscreenEnabled);
-    if (document.fullscreenEnabled) {
-      alert("Support Full screen");
-    } else {
-      alert("Not Support Full screen");
-    }
   }
 };
 </script>
