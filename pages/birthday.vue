@@ -1,13 +1,34 @@
 <template>
   <div>
     <top-bar back @click="onClickBackButton" />
-    <input-field
+    <!-- <input-field
       labelText="My Birthday is"
       v-model="birthday"
       placeHolder="MM/DD/YYYY"
       hint="Your Age will be public"
       class="mt-10"
-    ></input-field>
+    ></input-field> -->
+
+    <div class="w-full mt-10 bg-transparent lato-font">
+      <div class="flex flex-col items-center w-full">
+        <label
+          for="input"
+          class="w-11/12 mb-4 text-3xl font-semibold text-dark"
+        >
+          My Birthday is</label
+        >
+        <datepicker
+          class="w-11/12 px-4 py-3 mx-4 text-lg border border-gray-300 rounded-md bg-lightgrey input-color focus:outline-none"
+          v-model="birthday"
+          placeholder="Enter your birthday"
+          input-class="outline-none bg-lightgrey"
+        ></datepicker>
+        <div class="w-11/12 mt-3 text-sm text-lightgrey">
+          Your Age will be public
+        </div>
+      </div>
+    </div>
+
     <app-button
       buttonText="Continue"
       textWhite
@@ -22,11 +43,14 @@
 import TopBar from "../components/TopBar";
 import InputField from "../components/InputField";
 import AppButton from "~/components/AppButton.vue";
+import Datepicker from "vuejs-datepicker";
 
 export default {
-  components: { TopBar, InputField, AppButton },
+  components: { TopBar, InputField, AppButton, Datepicker },
   data() {
-    return {};
+    return {
+      dateObject: new Date(2021, 3, 3)
+    };
   },
   computed: {
     birthday: {
