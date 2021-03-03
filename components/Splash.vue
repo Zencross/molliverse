@@ -67,6 +67,8 @@ export default {
         },
         false
       );
+    } else {
+      alert("Not CHrome");
     }
   }
 };
