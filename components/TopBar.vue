@@ -21,7 +21,8 @@
       alt="person"
       @click="onClickButton"
     />
-    <img src="/img/top-bar-logo.svg" class="h-6" alt="" />
+    <!-- <img src="/img/top-bar-logo.svg" class="h-6" alt="" /> -->
+    <img src="/img/mollie-color.png" class="h-8 mt-1" alt="" />
     <div
       v-if="skip"
       class="pt-1 pr-4 montserrat-font"
