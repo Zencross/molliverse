@@ -4,6 +4,7 @@
   >
     <!-- <img src="../static/img/bliss2.svg" alt="Bliss" class="w-9/12 mt-24"> -->
     <img
+      id="goFS"
       src="../static/img/mollie-white.png"
       alt="Bliss"
       class="w-7/12 mt-24"
@@ -53,6 +54,19 @@ export default {
     },
     innerWidth() {
       return window.innerWidth;
+    }
+  },
+  mounted() {
+    if (this.$ua.browser() === "Chrome") {
+      var goFS = document.getElementById("goFS");
+      goFS.addEventListener(
+        "click",
+        function() {
+          console.log("go FS !!!!");
+          document.body.requestFullscreen();
+        },
+        false
+      );
     }
   }
 };
