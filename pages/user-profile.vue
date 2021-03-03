@@ -7,7 +7,7 @@
       @clickMessager="onClickMessager"
     ></TopBar>
 
-    <div class="flex flex-col items-center justify-center w-full p-8">
+    <div class="flex flex-col items-center justify-center w-full pt-8 pb-6">
       <img
         :src="userIcon"
         alt="icon"
