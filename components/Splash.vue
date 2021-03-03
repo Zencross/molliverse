@@ -57,18 +57,12 @@ export default {
     }
   },
   mounted() {
-    if (this.$ua.browser() === "Chrome") {
-      var goFS = document.getElementById("goFS");
-      goFS.addEventListener(
-        "click",
-        function() {
-          console.log("go FS !!!!");
-          document.body.requestFullscreen();
-        },
-        false
-      );
+    console.log("in fullscreen ?", document.fullscreenElement);
+    console.log("Support fullscreen ?", document.fullscreenEnabled);
+    if (document.fullscreenEnabled) {
+      alert("Support Full screen");
     } else {
-      alert("Not CHrome");
+      alert("Not Support Full screen");
     }
   }
 };
