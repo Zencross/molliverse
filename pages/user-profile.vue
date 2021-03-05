@@ -74,6 +74,8 @@
 
 <script>
 import TopBar from "~/components/TopBar";
+import gql from "graphql-tag";
+
 export default {
   components: { TopBar },
   data() {
@@ -120,6 +122,34 @@ export default {
     },
     onClickEditInfo() {
       this.$router.push("/name");
+    }
+  },
+  async mounted() {
+    if (this.$store.state.firstName) {
+      try {
+        const results = await this.$apollo.query({
+          query: gql`
+            query($nickname: String!) {
+              getUser(nickname: $nickname) {
+                nickname
+              }
+            }
+          `,
+          variables: {
+            nickname: this.$store.state.firstName
+          }
+        });
+        console.log("getUser results:", results.data.getUser);
+        if (results.data.getUser) {
+          this.userExists = true;
+          console.log("user exists");
+        } else {
+          this.userExists = false;
+          console.log("user does not exist");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 };

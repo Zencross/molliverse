@@ -54,6 +54,18 @@ export default {
   ],
 
   apollo: {
+    defaultOptions: {
+      // See 'apollo' definition
+      // For example: default query options
+      query: {
+        loadingKey: "loading",
+        fetchPolicy: "network-only"
+      },
+      $query: {
+        loadingKey: "loading",
+        fetchPolicy: "network-only"
+      }
+    },
     clientConfigs: {
       default: {
         httpEndpoint: 'http://localhost:8080/graphql',
