@@ -84,9 +84,15 @@ export default {
       return this.$store.state.userProfileMedia[0].src;
     },
     userName() {
+      if (!this.$store.state.firstName) {
+        return "User";
+      }
       return this.$store.state.firstName;
     },
     userAge() {
+      if (!this.$store.state.birthday) {
+        return "Age";
+      }
       let dob = new Date(this.$store.state.birthday);
 
       //calculate month difference from current date in time

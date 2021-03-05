@@ -1,55 +1,83 @@
 <template>
-    <div class="flex flex-col items-center w-full">
-        <top-bar back @click="onClickBackButton" />
-        <div class="flex flex-col items-center w-full mt-8">
-            <!-- <app-text class="w-4/5 mb-8" text="Show me" /> -->
-            <div class="w-11/12 mb-6 text-3xl font-semibold text-dark">Show me</div>
-            <app-button buttonText="Man" @click="onClickShowWoman" borderBlack textBlack activeEffect fontBold class="mb-5" />
-            <app-button buttonText="Woman" @click="onClickShowMan" borderBlack textBlack activeEffect fontBold class="mb-5" />
-            <app-button buttonText="Everyone" @click="onClickShowAll" borderBlack textBlack activeEffect fontBold class="mb-5" />
-            <!-- <gradient-button class="mt-12" @click="onClickContinueButton" /> -->
-            <app-button buttonText="Continue" textWhite bgPhoneNum @click="onClickContinueButton" class="absolute bottom-0 mb-8" />
-        </div>
+  <div class="flex flex-col items-center w-full">
+    <top-bar back @click="onClickBackButton" />
+    <div class="flex flex-col items-center w-full mt-8">
+      <!-- <app-text class="w-4/5 mb-8" text="Show me" /> -->
+      <div class="w-11/12 mb-6 text-3xl font-semibold text-dark">Show me</div>
+      <app-button
+        buttonText="Man"
+        @click="onClickShowMan"
+        borderBlack
+        textBlack
+        activeEffect
+        fontBold
+        class="mb-5"
+      />
+      <app-button
+        buttonText="Woman"
+        @click="onClickShowWoman"
+        borderBlack
+        textBlack
+        activeEffect
+        fontBold
+        class="mb-5"
+      />
+      <app-button
+        buttonText="Everyone"
+        @click="onClickShowAll"
+        borderBlack
+        textBlack
+        activeEffect
+        fontBold
+        class="mb-5"
+      />
+      <!-- <gradient-button class="mt-12" @click="onClickContinueButton" /> -->
+      <app-button
+        buttonText="Continue"
+        textWhite
+        bgPhoneNum
+        @click="onClickContinueButton"
+        class="absolute bottom-0 mb-8"
+      />
     </div>
+  </div>
 </template>
 
 <script>
-import AppText from '~/components/AppText.vue'
-import TopBar from '../components/TopBar'
-import AppButton from '../components/AppButton'
-import GradientButton from '../components/GradientButton.vue'
+import AppText from "~/components/AppText.vue";
+import TopBar from "../components/TopBar";
+import AppButton from "../components/AppButton";
+import GradientButton from "../components/GradientButton.vue";
 
 export default {
-    components:{ TopBar, AppText, AppButton, GradientButton },
-    data() {
-        return {
-            
-        }
+  components: { TopBar, AppText, AppButton, GradientButton },
+  data() {
+    return {};
+  },
+  methods: {
+    onClickBackButton() {
+      this.$router.push("/sexual-orientation");
     },
-    methods:{
-        onClickBackButton(){
-            this.$router.push('/sexual-orientation')
-        },
-        onClickShowWoman(){
-            this.$store.commit('setShowMePreference','Woman')
-        },
-        onClickShowMan(){
-            this.$store.commit('setShowMePreference','Man')
-        },
-        onClickShowAll(){
-            this.$store.commit('setShowMePreference','Everyone')
-        },
-        onClickContinueButton(){
-            this.$router.push('/education')
-        }
+    onClickShowWoman() {
+      this.$store.commit("setShowMePreference", "Woman");
+    },
+    onClickShowMan() {
+      this.$store.commit("setShowMePreference", "Man");
+    },
+    onClickShowAll() {
+      this.$store.commit("setShowMePreference", "Everyone");
+    },
+    onClickContinueButton() {
+      this.$router.push("/education");
     }
-}
+  }
+};
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
-.montserrat-font{
-    font-family: 'Montserrat', sans-serif;
+.montserrat-font {
+  font-family: "Montserrat", sans-serif;
 }
 </style>

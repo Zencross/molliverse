@@ -1,3 +1,5 @@
+import gql from "graphql-tag";
+
 export const state = () => ({
     photo: null,
     userProfileMedia:[
@@ -163,4 +165,63 @@ export const mutations = {
     },
 }
 
-export const actions = {}
+export const actions = {
+    async addUser({ dispatch, commit, state }) {
+
+        let dob = new Date(state.birthday);
+        let month_diff = Date.now() - dob.getTime();
+        let age_dt = new Date(month_diff);
+        let year = age_dt.getUTCFullYear();
+        let age = Math.abs(year - 1970);
+
+        let userInput = [{
+            age:age,
+            email: "abc@abc.com",
+            gender: state.gender,
+            location: {
+                longitude: 114.177216,
+                latitude: 22.302711
+            },
+            name: state.firstName,
+            nickname: state.firstName,
+            passions: state.passions.map( e =>{ return {name: e.name} }),
+            phoneNumber: "98765432",
+            university: state.university
+        }]
+
+        console.log("addUser Input:", userInput);
+
+        try {
+            const results = await this.app.apolloProvider.defaultClient.mutate({
+              mutation: gql`
+                mutation($input: [AddUserInput!]!) {
+                  addUser(input: $input) {
+                    user {
+                      name
+                      nickname
+                      age
+                      gender
+                      location {
+                        longitude
+                        latitude
+                      }
+                      passions {
+                        name
+                      }
+                      phoneNumber
+                      email
+                    }
+                  }
+                }
+              `,
+              variables: {
+                input: userInput
+              }
+            });
+            console.log("addUser results", results);
+          } catch (e) {
+            console.error(e);
+          }
+    }
+
+}

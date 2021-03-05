@@ -138,6 +138,8 @@ export default {
       } else return false;
     },
     onClickFinsih() {
+      //  Create User Profile
+      this.$store.dispatch("addUser");
       this.$router.push("/user-profile");
     }
   }
