@@ -9,27 +9,27 @@
         @click="onClickShowMan"
         borderBlack
         textBlack
-        activeEffect
         fontBold
         class="mb-5"
+        :selected="btnManSelected"
       />
       <app-button
         buttonText="Woman"
         @click="onClickShowWoman"
         borderBlack
         textBlack
-        activeEffect
         fontBold
         class="mb-5"
+        :selected="btnWomanSelected"
       />
       <app-button
         buttonText="Everyone"
         @click="onClickShowAll"
         borderBlack
         textBlack
-        activeEffect
         fontBold
         class="mb-5"
+        :selected="btnEveryoneSelected"
       />
       <!-- <gradient-button class="mt-12" @click="onClickContinueButton" /> -->
       <app-button
@@ -52,23 +52,51 @@ import GradientButton from "../components/GradientButton.vue";
 export default {
   components: { TopBar, AppText, AppButton, GradientButton },
   data() {
-    return {};
+    return {
+      btnManSelected: false,
+      btnWomanSelected: false,
+      btnEveryoneSelected: false
+    };
   },
   methods: {
     onClickBackButton() {
       this.$router.push("/sexual-orientation");
     },
-    onClickShowWoman() {
-      this.$store.commit("setShowMePreference", "Woman");
-    },
     onClickShowMan() {
       this.$store.commit("setShowMePreference", "Man");
+      this.btnWomanSelected = false;
+      this.btnEveryoneSelected = false;
+      this.btnManSelected = true;
+    },
+    onClickShowWoman() {
+      this.$store.commit("setShowMePreference", "Woman");
+      this.btnEveryoneSelected = false;
+      this.btnManSelected = false;
+      this.btnWomanSelected = true;
     },
     onClickShowAll() {
       this.$store.commit("setShowMePreference", "Everyone");
+      this.btnManSelected = false;
+      this.btnWomanSelected = false;
+      this.btnEveryoneSelected = true;
     },
     onClickContinueButton() {
       this.$router.push("/education");
+    }
+  },
+  mounted() {
+    if (this.$store.state.showMePreference === "Man") {
+      this.btnWomanSelected = false;
+      this.btnEveryoneSelected = false;
+      this.btnManSelected = true;
+    } else if (this.$store.state.showMePreference === "Woman") {
+      this.btnManSelected = false;
+      this.btnEveryoneSelected = false;
+      this.btnWomanSelected = true;
+    } else if (this.$store.state.showMePreference === "Everyone") {
+      this.btnManSelected = false;
+      this.btnWomanSelected = false;
+      this.btnEveryoneSelected = true;
     }
   }
 };

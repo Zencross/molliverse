@@ -14,7 +14,8 @@
         bgFB ? 'bg-FB' : '',
         bgPhoneNum ? 'bg-brandPurple' : '',
         fontBold ? 'font-semibold' : '',
-        disabled ? 'opacity-50' : ''
+        disabled ? 'opacity-50' : '',
+        selected ? 'bg-selected text-white' : ''
       ]"
       @click="onClickButton"
       :disabled="disabled"
@@ -72,6 +73,10 @@ export default {
       type: Boolean
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    selected: {
       type: Boolean,
       default: false
     }

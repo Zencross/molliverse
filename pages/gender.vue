@@ -9,18 +9,18 @@
         @click="onClickMan"
         borderBlack
         textBlack
-        activeEffect
         font-bold
         class="mb-5"
+        :selected="btnManSelected"
       />
       <app-button
         buttonText="Woman"
         @click="onClickWoman"
         borderBlack
         textBlack
-        activeEffect
         font-bold
         class="mb-5"
+        :selected="btnWomanSelected"
       />
       <app-button
         buttonText="More options"
@@ -62,7 +62,10 @@ import GradientButton from "../components/GradientButton.vue";
 export default {
   components: { TopBar, AppText, AppButton, GradientButton },
   data() {
-    return {};
+    return {
+      btnManSelected: false,
+      btnWomanSelected: false
+    };
   },
   computed: {
     showGenderOnProfile: {
@@ -80,13 +83,29 @@ export default {
     },
     onClickWoman() {
       this.$store.commit("setGender", "Woman");
+      this.btnManSelected = false;
+      this.btnWomanSelected = true;
     },
     onClickMan() {
       this.$store.commit("setGender", "Man");
+      this.btnWomanSelected = false;
+      this.btnManSelected = true;
     },
     onClickOtherGender() {},
     onClickButton() {
       this.$router.push("/sexual-orientation");
+    }
+  },
+  mounted() {
+    if (this.$store.state.gender === "Man") {
+      this.btnWomanSelected = false;
+      this.btnManSelected = true;
+    } else if (this.$store.state.gender === "Woman") {
+      this.btnManSelected = false;
+      this.btnWomanSelected = true;
+    } else {
+      this.btnManSelected = false;
+      this.btnWomanSelected = false;
     }
   }
 };

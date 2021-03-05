@@ -9,7 +9,8 @@ module.exports = {
       darkgrey: "#C1C0C9",
       lightgrey: "#F6F6F6",
       FB: "#384FA2",
-      brandPurple: "#89287C"
+      brandPurple: "#89287C",
+      selected: "#333333"
     }),
     textColor: theme => ({
       ...theme("colors"),
