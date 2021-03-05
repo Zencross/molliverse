@@ -71,7 +71,7 @@ export default {
 }
 
 .container {
-  background-image: url("../static/img/splash-image-purple.svg");
+  background-image: url("../static/img/splash-image-dark-purple-3x.jpeg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
