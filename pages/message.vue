@@ -240,13 +240,13 @@ export default {
   opacity: 0;
 }
 
-.receive {
+/* .receive {
   @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-3 pb-2 pr-4;
-}
+} */
 
-.send {
+/* .send {
   @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-3 pb-2 pr-4;
-}
+} */
 
 .messagesContainer {
   display: flex;

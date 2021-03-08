@@ -1,3 +1,11 @@
 declare module 'vue2-interact';
 declare module 'vue-tinder';
 declare module 'vue-carousel';
+declare module 'hooper';
+declare module 'v-img';
+declare module '@splidejs/vue-splide'
+declare module '@eshengsky/vue-card-swipe'
+declare module 'interact.js'
+declare module 'vuescroll-carousel'
+declare module 'vue-virtual-scroller'
+declare module 'vue-slick-carousel'

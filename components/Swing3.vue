@@ -1,25 +1,18 @@
 <template>
   <vue-tinder key-name="id" :queue.sync="queue.url" :offset-y="10" @submit="onSubmit">
- 
-  <div
-    slot-scope="scope"
-    :style="{
-      'background-image': `url(https://cn.bing.com//th?id=OHR.${scope.data.id}_UHD.jpg&pid=hp&w=720&h=1280&rs=1&c=4&r=0)`
-    }"
-  />
-  <!-- <img slot="like" src="../assets/img/tick.png" />
-  <img slot="nope" src="../assets/img/remove.png" />
-  <img slot="super" src="../assets/img/circle.png" /> -->
-
- 
-                <!-- <div v-for="card in cards" :key="card.id">
-                    <img :src="card.url" class="card" >
-                </div> -->
+    <div
+      :style="{
+        'background-image': `url(https://cdn-0.idownloadblog.com/wp-content/uploads/2018/07/Apple-logo-black-and-white-768x895.png)`
+      }"
+    >
+    </div>
+    
  </vue-tinder> 
 </template>
 
 <script>
 import VueTinder from 'vue-tinder'
+import { Hooper, Slide } from 'hooper'
 
 export default {
   components: {
@@ -29,18 +22,18 @@ export default {
     queue: [
       {
             "id": 1,
-            "url": require('../assets/img/profile1.gif'),
+            "url": '../assets/img/profile1.gif',
             "text": "I am text"
             }
             ,
             {
             "id": 2,
-            "url": require('../assets/img/profile2.gif'),
+            "url": '../assets/img/profile2.gif',
             "text": "I am text2"
             },
             {
             "id": 3,
-            "url": require('../assets/img/profile3.gif'),
+            "url": '../assets/img/profile3.gif',
             "text": "I am text3"
             }
     ],

@@ -8,27 +8,12 @@
                 ref="vueswing" 
                 v-for="(card, index) in cards"
                 :key="index"
-            > 
+            >
 
-            <vuescroll-carousel :type="type"> 
-                <div v-for="(url, index) in card.urls" :key="index">
-                    <img class="image-fit" :src="url">
-                </div>
-       
-            </vuescroll-carousel>
-
-            <!-- <div v-for="card in cards" :key="card.id">
-                  <hooper class="card" :vertical="true" :itemsToShow="1" 
-                  :centerMode="true" 
-                         >
-                    <slide v-for="url in card.urls" :key="url" >
-                        <img v-img :src="url">
-                        
-                    </slide>
-              </hooper>
-            </div> -->
-              
-            
+          <vue-slick-carousel v-bind="settings">
+              <img :src="require('../assets/img/profile1.gif')">
+          </vue-slick-carousel>
+                    
 
 
             </vue-swing>
@@ -39,27 +24,21 @@
 
 <script>
 import VueSwing from 'vue-swing'
-// import SwipeButtons from './SwipeButtons.vue'
-// import * as VuexUndoRedo from '../plugins/undoPlugin.js'
 import Vue from 'vue'
-// import { Carousel } from 'vue-carousel';
-// import CarouselSlide from './CarouselSlide.vue'
-import { Hooper, Slide } from 'hooper';
-import 'hooper/dist/hooper.css';
-import VueImg from 'v-img';
-// import vuescroll from 'vuescroll'
-import vuescrollCarousel from 'vuescroll-carousel'
-// import Vuetify from 'vuetify'
+import VueSlickCarousel from 'vue-slick-carousel'
 
-Vue.use(VueImg);
 
-// Vue.use(VuexUndoRedo);
 
 
 export default {
-    components: { VueSwing, Hooper, Slide, vuescrollCarousel },
+    components: { VueSwing, VueSlickCarousel },
     data(){
             return {
+                settings: {
+                    arrows: true,
+                    dots: true,
+                    vertical: true
+                },
                 config: {
                     allowedDirections: [
                         // VueSwing.Direction.UP,
@@ -117,53 +96,9 @@ export default {
                     const yConfidence = Math.min(Maths.abs(yOffset)/element.offsetHeight, 0.5);
 
                     return Math.max(xConfidence, yConfidence);
-                },
-                ops: {
-                    vuescroll: {
-                        mode: 'native',
-                        sizeStrategy: 'percent',
-                        detectResize: true,
-                        /** Enable locking to the main axis if user moves only slightly on one of them at start */
-                        locking: true,
-                    },
-                    scrollPanel: {
-                        initialScrolY: true,
-                        // initialScrollX: false,
-                        // scrollingX: false,
-                        scrollingY: true,
-                        // speed: 300,
-                        // easing: undefined,
-                        // verticalNativeBarPos: 'right'
-                    },
-                    rail: {
-                        // background: '#01a99a',
-                        // opacity: 0,
-                        // size: '6px',
-                        // specifyBorderRadius: false,
-                        // gutterOfEnds: null,
-                        // gutterOfSide: '2px',
-                        // keepShow: false
-                    },
-                    bar: {
-                        // showDelay: 500,
-                        // onlyShowBarOnScroll: true,
-                        // keepShow: false,
-                        // background: '#c1c1c1',
-                        // opacity: 1,
-                        // hoverStyle: "false"，
-                        // specifyBorderRadius: false,
-                        // minSize: 0,
-                        // size: '6px',
-                        // disable: false
-                    }
-        }
+                }
             }
          },
-
-    props: {
-        type: String,
-        default: 'h'
-    },
     
     methods: {
         // add() {
@@ -222,31 +157,7 @@ export default {
         //         this.cards.pop()
         //         console.log(this.superLikeProfiles.length + 'superLikeProfiles')
         // }
-    },
-    mounted() {
-            this.$root.$on('remove', () => {
-                setTimeout(() => {
-                    this.cards.pop()
-                }, 100)
-            }),
-            this.$root.$on('add', () => {
-                this.swipeRightProfiles.push(`${this.swipeRightProfiles.length + 1}`)
-                this.cards.pop()
-                console.log(this.swipeRightProfiles.length + 'swipeRightProfiles')
-            }),
-            this.$root.$on('superLike', () => {
-                this.superLikeProfiles.push(`${this.superLikeProfiles.length + 1}`)
-                this.cards.pop()
-                console.log(this.superLikeProfiles.length + 'superLikeProfiles')
-            }),
-            this.$root.$on('undo', () => {
-                console.log(undo() + ' undo function')
-                Vue.plugin.undo(this.cards);
-                
-                // console.log(this.cards.url + " this.cards.id") 
-                console.log("Function for undo")
-            })
-        }
+    }
     
 }
 </script>
@@ -290,18 +201,6 @@ body {
   }
 }
 
-.navMenu {
-    @media screen and (min-height: 660px) and (max-height: 824px) {
-        margin-left: 20px;
-    }
-    @media screen and (max-height: 659px) {
-        margin-left: 16px;
-    }
-   @media screen and (min-width: 767px) {
-        margin-left: 7rem;
-        justify-content: center;
-    }
-    }
 
 .image-fit{
   height: 100%;
@@ -311,31 +210,9 @@ body {
   display: flex;
 }
 
+.scroller {
+    height: 100%;
+}
+
 </style>
 
-
-/* 
-.card {
-  align-items: center;
-  border-radius: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-size: 72px;
-  height: 75vh;
-  justify-content: center;
-  left: 5.13%;
-  position: absolute;
-  width: 90%;
-  object-fit: cover;
-  height: 80%;
-  /* @media screen and (min-height: 800px) and (max-height: 1000px) {
-      height: 85vh;
-  }; */
-  /* margin-top: -6%;
-  @media screen and (min-width: 410px) and (max-width: 415px) {
-      margin-top: -4%;
-  }
-  @media screen and (min-width: 767px) {
-      margin-top: 1%;
-  } */
- 
-/* } */ 

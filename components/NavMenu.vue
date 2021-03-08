@@ -1,7 +1,7 @@
 <template>
     <div> <!--Nav menu on swipe screen (Profile,Bliss,Message)-->
         <!-- <nav class="justify-between flex m-10 mb-8 text-black ">  -->
-            <nav class="nav-menu flex m-10 mb-8 text-black border-b-2 pb-3 ml-3 mx-3 justify-center"> 
+            <nav class="nav-menu fixed flex m-10 mb-8 text-black border-b-2 pb-3 ml-3 mx-3 justify-center"> 
             <div>
                 <a href="#">
                  <img src="../assets/img/ProfileIcon.png" class="navButton1and3 ">
@@ -10,7 +10,8 @@
 
             <div>
                 <a href="#">
-                    <img src="../assets/img/logo.png" class="navButton2">
+                    <img src="../assets/img/mollie-color.png" class="navButton2"
+                    >
                 </a>
             </div>
 
@@ -51,7 +52,8 @@ export default {
  }
 
 .navButton2 {
-    width: 33px;
+    height: 100%;
+    width: 83px;
     @media screen and (min-height: 548px) and (max-height: 641px) {
         width: 29px;
     }

@@ -3,10 +3,10 @@
         <nav-menu/> 
         <!-- <profile/> -->
         <!-- <swipeable-cards/> -->
-        <swing />
+        <!-- <swing/> -->
          <!-- <Vue2InteractDraggable/> -->
         <!-- <VueTinder/> -->
-        <!-- <Swing2/> -->
+        <Swing2/>
         <SwipeButtons v-on:dislike="remove()" @like="add()" @superlike="superLike()" @undo="undo()"/>
 
         <!-- <div v-for="card in cards" :key="card.id">
