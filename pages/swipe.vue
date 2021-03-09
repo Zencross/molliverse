@@ -150,14 +150,6 @@ export default {
   mounted() {
     this.checkMediaType(0);
 
-    document.addEventListener(
-      "touchmove",
-      function(e) {
-        e.preventDefault();
-      },
-      false
-    );
-
     var topBar = document.getElementById("topBar");
     var buttonGroup = document.getElementById("buttonGroup");
     document.getElementById("swipe").style.height =
