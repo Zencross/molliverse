@@ -14,7 +14,7 @@
       :interact-max-rotation="15"
       :interact-out-of-sight-x-coordinate="800"
       :interact-x-threshold="200"
-      :interact-lock-y-axis="true"
+      :interact-lock-swipe-down="true"
     >
       <div id="swipe" class="relative flex justify-center m-4">
         <!-- Hidden listeners for carousel -->
@@ -168,4 +168,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+body {
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
+}
+</style>
