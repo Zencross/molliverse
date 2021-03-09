@@ -5,6 +5,7 @@
       messager
       @click="onClickPersonIcon"
       @clickMessager="onClickMessager"
+      @clickLogo="onClickLogo"
     ></TopBar>
 
     <div class="flex flex-col items-center justify-center w-full pt-8 pb-6">
@@ -124,6 +125,9 @@ export default {
       this.$router.push("/name");
     },
     onClickName() {
+      this.$router.push("/swipe");
+    },
+    onClickLogo() {
       this.$router.push("/swipe");
     }
   },
