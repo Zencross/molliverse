@@ -14,7 +14,7 @@
         class="object-cover w-32 h-32 bg-gray-300 rounded-full"
         @click="onClickAddMedia"
       />
-      <div class="mt-3 text-2xl font-bold lato-font">
+      <div class="mt-3 text-2xl font-bold lato-font" @click="onClickName">
         {{ userName + ", " + userAge }}
       </div>
       <div class="text-sm lato-font">
@@ -122,6 +122,9 @@ export default {
     },
     onClickEditInfo() {
       this.$router.push("/name");
+    },
+    onClickName() {
+      this.$router.push("/swipe");
     }
   },
   async mounted() {

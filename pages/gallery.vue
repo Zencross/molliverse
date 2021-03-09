@@ -140,7 +140,7 @@ export default {
     onClickFinsih() {
       //  Create User Profile
       this.$store.dispatch("addUser");
-      this.$router.push("/user-profile");
+      this.$router.push("/swipe");
     }
   }
 };

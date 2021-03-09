@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 
 export const state = () => ({
+    user: null,
     photo: null,
     userProfileMedia:[
         { id:0, type:"", src:null },
@@ -45,6 +46,10 @@ export const state = () => ({
 })
 
 export const mutations = {
+    setUser(state, val){
+        state.user = val
+        console.log("VUEX: set user to", state.user);
+    },
     setMessageTargetId(state, val){
         state.messageTargetId = val
         console.log("VUEX: set messageTargetId to",state.messageTargetId);
