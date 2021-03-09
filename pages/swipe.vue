@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden">
+  <div class="overflow-hidden overscroll-none">
     <TopBar
       id="topBar"
       person
@@ -168,9 +168,4 @@ export default {
 };
 </script>
 
-<style>
-html {
-  margin: 0;
-  overscroll-behavior: none;
-}
-</style>
+<style></style>
