@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden overscroll-none">
+  <div class="fixed w-full h-full overflow-hidden overscroll-none">
     <TopBar
       id="topBar"
       person
