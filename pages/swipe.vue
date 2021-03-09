@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-x-hidden">
+  <div class="overflow-hidden">
     <TopBar
       id="topBar"
       person
@@ -13,7 +13,7 @@
       @draggedLeft="draggedLeft"
       :interact-max-rotation="15"
       :interact-out-of-sight-x-coordinate="800"
-      :interact-x-threshold="135"
+      :interact-x-threshold="200"
       :interact-lock-y-axis="true"
     >
       <div id="swipe" class="relative flex justify-center m-4">
@@ -168,4 +168,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+html {
+  margin: 0;
+  overscroll-behavior: none;
+}
+</style>
