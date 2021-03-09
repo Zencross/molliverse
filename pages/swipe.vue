@@ -36,7 +36,7 @@
         ></div>
       </div>
 
-      <div class="absolute top-0 h-full">
+      <div class="absolute top-0 w-full h-full">
         <img
           id="mediaImg"
           v-if="isMediaPhoto"
