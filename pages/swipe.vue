@@ -14,7 +14,7 @@
       :interact-max-rotation="15"
       :interact-out-of-sight-x-coordinate="800"
       :interact-x-threshold="200"
-      :interact-lock-swipe-down="true"
+      :interact-lock-y-axis="true"
     >
       <div id="swipe" class="relative flex justify-center m-4">
         <!-- Hidden listeners for carousel -->
