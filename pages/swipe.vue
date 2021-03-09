@@ -57,7 +57,7 @@
     </div>
 
     <div
-      class="absolute bottom-0 flex justify-between w-full h-12 px-4 mb-3"
+      class="absolute bottom-0 z-50 flex justify-between w-full h-12 px-4 mb-3"
       id="buttonGroup"
     >
       <button>
