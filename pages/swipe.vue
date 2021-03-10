@@ -81,19 +81,19 @@
     </div>
 
     <div
-      class="absolute bottom-0 z-50 flex justify-between w-full h-24 px-4 pt-4"
+      class="absolute bottom-0 z-50 flex justify-between w-full h-24 px-4 pt-4 disable-dbl-tap-zoom"
       id="buttonGroup"
     >
-      <button @click="decide('nope')">
+      <button @click="decide('nope')" class="disable-dbl-tap-zoom">
         <img src="/img/nope.svg" alt="" />
       </button>
-      <button @click="decide('rewind')">
+      <button @click="decide('rewind')" class="disable-dbl-tap-zoom">
         <img src="/img/undo.svg" alt="" />
       </button>
-      <button @click="decide('super')">
+      <button @click="decide('super')" class="disable-dbl-tap-zoom">
         <img src="/img/super-like.svg" alt="" />
       </button>
-      <button @click="decide('like')">
+      <button @click="decide('like')" class="disable-dbl-tap-zoom">
         <img src="/img/like.svg" alt="" />
       </button>
     </div>
@@ -235,8 +235,8 @@ body {
   overscroll-behavior: none;
 }
 
-.tinder-height {
-  /* height: 500px; */
+.disable-dbl-tap-zoom {
+  touch-action: manipulation;
 }
 
 .nope-pointer,
