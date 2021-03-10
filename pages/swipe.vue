@@ -77,6 +77,15 @@
           slot="rewind"
           src="/img/undo.svg"
         />
+
+        <div
+          class="absolute bottom-0 z-50 flex flex-col w-full pl-4 mb-20 text-white lato-font"
+        >
+          <div class="text-xl font-extrabold leading-tight">
+            Bob, 24
+          </div>
+          <div class="text-sm">Are you French? Because Eiffel for you.</div>
+        </div>
       </VueTinder>
     </div>
 
@@ -230,6 +239,12 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+.lato-font {
+  font-family: "Lato", sans-serif;
+}
+
 html,
 body {
   overscroll-behavior: none;
