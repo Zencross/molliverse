@@ -103,7 +103,15 @@ export default {
       isMediaPhoto: false,
       isMediaVideo: false,
       currentMediaIndex: 0,
-      queue: [{ id: 1 }]
+      queue: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 },
+        { id: 5 },
+        { id: 6 },
+        { id: 7 }
+      ]
     };
   },
   methods: {
