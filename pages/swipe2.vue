@@ -1,24 +1,76 @@
 <template>
   <div class="fixed w-full h-full">
-    <Vue2InteractDraggable
-      :interact-max-rotation="15"
-      :interact-out-of-sight-x-coordinate="800"
-      :interact-x-threshold="200"
-      :interact-lock-y-axis="true"
-      class="flex justify-center mt-20"
+    <VueTinder
+      ref="tinder"
+      key-name="id"
+      :queue.sync="queue"
+      class="w-10/12 h-48"
+      @submit="onSubmit"
     >
-      <div class="w-1/2 h-48 bg-red-500"></div>
-    </Vue2InteractDraggable>
+      <!-- <template slot-scope="scope"> -->
+      <img :src="imgSrc" alt="" />
+      <!-- </template> -->
+      <!-- <img class="like-pointer" slot="like" src="~img/like-txt.png" />
+      <img class="nope-pointer" slot="nope" src="~img/nope-txt.png" />
+      <img class="super-pointer" slot="super" src="~img/super-txt.png" />
+      <img class="down-pointer" slot="down" src="~img/down-txt.png" />
+      <img class="rewind-pointer" slot="rewind" src="~img/rewind-txt.png" /> -->
+    </VueTinder>
+    <div
+      class="absolute bottom-0 z-50 flex justify-between w-full h-12 px-4 mb-3"
+      id="buttonGroup"
+    >
+      <button @click="nope">
+        <img src="/img/nope.svg" alt="" />
+      </button>
+      <button>
+        <img src="/img/undo.svg" alt="" />
+      </button>
+      <button>
+        <img src="/img/super-like.svg" alt="" />
+      </button>
+      <button>
+        <img src="/img/like.svg" alt="" />
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import { Vue2InteractDraggable } from "vue2-interact";
+import VueTinder from "vue-tinder";
 
 export default {
-  components: { Vue2InteractDraggable },
+  components: { VueTinder },
   data() {
-    return {};
+    return {
+      queue: [{ id: 1, src: this.$store.state.userProfileMedia[0].src }]
+    };
+  },
+  computed: {
+    imgSrc() {
+      return this.$store.state.userProfileMedia[0].src;
+    }
+  },
+  methods: {
+    onSubmit(choice) {
+      console.log("user choice", choice);
+    },
+    like() {
+      // Swipe right
+      this.$refs["tinder"].decide("like");
+    },
+    nope() {
+      // Swipe left
+      this.$refs["tinder"].decide("nope");
+    },
+    superLike() {
+      // Swipe up
+      this.$refs["tinder"].decide("super");
+    },
+    down() {
+      // Swipe down
+      this.$refs["tinder"].decide("down");
+    }
   }
 };
 </script>

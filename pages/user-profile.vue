@@ -128,7 +128,7 @@ export default {
       this.$router.push("/swipe");
     },
     onClickLogo() {
-      this.$router.push("/swipe");
+      this.$router.push("/swipe2");
     }
   },
   async mounted() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed w-full h-full overflow-hidden overscroll-none">
+  <div class="overscroll-none">
     <TopBar
       id="topBar"
       person
@@ -8,76 +8,84 @@
       @clickMessager="onClickMessager"
     ></TopBar>
 
-    <Vue2InteractDraggable
-      @draggedRight="draggedRight"
-      @draggedLeft="draggedLeft"
-      :interact-max-rotation="15"
-      :interact-out-of-sight-x-coordinate="800"
-      :interact-x-threshold="200"
-      :interact-lock-y-axis="true"
-    >
-      <div id="swipe" class="relative flex justify-center m-4">
-        <div class="absolute z-30 flex w-full h-full">
-          <div
-            id="lastMedia"
-            class="z-30 w-1/2 h-full bg-transparent rounded-xl"
-            @click="onClickLastMedia"
-          ></div>
-          <div
-            id="nextMedia"
-            class="z-30 w-1/2 h-full bg-transparent rounded-xl"
-            @click="onClickNextMedia"
-          ></div>
+    <div class="flex justify-center mt-4">
+      <VueTinder
+        id="swipe"
+        ref="tinder"
+        key-name="id"
+        :queue.sync="queue"
+        class="w-11/12 h-64"
+        @submit="onSubmit"
+      >
+        <div class="relative flex justify-center h-full">
+          <div class="absolute z-30 flex w-full h-full">
+            <div
+              id="lastMedia"
+              class="z-30 w-1/2 h-full bg-transparent rounded-xl"
+              @click="onClickLastMedia"
+            ></div>
+            <div
+              id="nextMedia"
+              class="z-30 w-1/2 h-full bg-transparent rounded-xl"
+              @click="onClickNextMedia"
+            ></div>
+          </div>
+
+          <div class="absolute z-40 flex w-full px-2 mt-4 bg-transparent">
+            <div
+              v-for="media in userProfileMedia"
+              :key="media.id"
+              class="w-full h-1 mx-1 bg-white rounded-full opacity-50"
+              :class="[
+                userProfileMedia.indexOf(media) === currentMediaIndex
+                  ? 'opacity-100'
+                  : ''
+              ]"
+            ></div>
+          </div>
+
+          <div class="absolute top-0 w-full h-full">
+            <img
+              id="mediaImg"
+              v-if="isMediaPhoto"
+              :src="getMediaSrc"
+              class="object-cover w-full h-full rounded-xl"
+              alt="photo"
+            />
+            <video
+              id="mediaVideo"
+              v-if="isMediaVideo"
+              :src="getMediaSrc"
+              autoplay
+              playsinline
+              loop
+              class="object-cover w-full h-full rounded-xl"
+            ></video>
+          </div>
         </div>
 
-        <div class="absolute z-40 flex w-full px-2 mt-4 bg-transparent">
-          <div
-            v-for="media in userProfileMedia"
-            :key="media.id"
-            class="w-full h-1 mx-1 bg-white rounded-full opacity-50"
-            :class="[
-              userProfileMedia.indexOf(media) === currentMediaIndex
-                ? 'opacity-100'
-                : ''
-            ]"
-          ></div>
-        </div>
-
-        <div class="absolute top-0 w-full h-full">
-          <img
-            id="mediaImg"
-            v-if="isMediaPhoto"
-            :src="getMediaSrc()"
-            class="object-cover w-full h-full rounded-xl"
-            alt="photo"
-          />
-          <video
-            id="mediaVideo"
-            v-if="isMediaVideo"
-            :src="getMediaSrc()"
-            autoplay
-            playsinline
-            loop
-            class="object-cover w-full h-full rounded-xl"
-          ></video>
-        </div>
-      </div>
-    </Vue2InteractDraggable>
+        <img class="like-pointer" slot="like" src="/img/like-txt.png" />
+        <img class="nope-pointer" slot="nope" src="/img/nope-txt.png" />
+        <img class="super-pointer" slot="super" src="/img/super-txt.png" />
+        <!-- <img class="down-pointer" slot="down" src="/img/down-txt.png" />
+        <img class="rewind-pointer" slot="rewind" src="/img/rewind-txt.png" /> -->
+      </VueTinder>
+    </div>
 
     <div
-      class="absolute bottom-0 z-50 flex justify-between w-full h-12 px-4 mb-3"
+      class="absolute bottom-0 z-50 flex justify-between w-full h-24 px-4 pt-4"
       id="buttonGroup"
     >
-      <button>
+      <button @click="nope">
         <img src="/img/nope.svg" alt="" />
       </button>
       <button>
         <img src="/img/undo.svg" alt="" />
       </button>
-      <button>
+      <button @click="superLike">
         <img src="/img/super-like.svg" alt="" />
       </button>
-      <button>
+      <button @click="like">
         <img src="/img/like.svg" alt="" />
       </button>
     </div>
@@ -86,15 +94,16 @@
 
 <script>
 import TopBar from "~/components/TopBar";
-import { Vue2InteractDraggable } from "vue2-interact";
+import VueTinder from "vue-tinder";
 
 export default {
-  components: { TopBar, Vue2InteractDraggable },
+  components: { TopBar, VueTinder },
   data() {
     return {
       isMediaPhoto: false,
       isMediaVideo: false,
-      currentMediaIndex: 0
+      currentMediaIndex: 0,
+      queue: [{ id: 1 }]
     };
   },
   methods: {
@@ -103,9 +112,6 @@ export default {
     },
     onClickMessager() {
       this.$router.push("/messages");
-    },
-    getMediaSrc() {
-      return this.$store.state.userProfileMedia[this.currentMediaIndex].src;
     },
     onClickLastMedia() {
       console.log("last Media clicked");
@@ -134,16 +140,32 @@ export default {
         this.isMediaVideo = true;
       }
     },
-    draggedRight() {
-      console.log("dragged right");
+    onSubmit(choice) {
+      console.log("user choice", choice);
     },
-    draggedLeft() {
-      console.log("dragged left");
+    like() {
+      // Swipe right
+      this.$refs.tinder.decide("like");
+    },
+    nope() {
+      // Swipe left
+      this.$refs["tinder"].decide("nope");
+    },
+    superLike() {
+      // Swipe up
+      this.$refs["tinder"].decide("super");
+    },
+    down() {
+      // Swipe down
+      this.$refs["tinder"].decide("down");
     }
   },
   computed: {
     userProfileMedia() {
       return this.$store.state.userProfileMedia.filter(e => e.src !== null);
+    },
+    getMediaSrc() {
+      return this.$store.state.userProfileMedia[this.currentMediaIndex].src;
     }
   },
   mounted() {
@@ -171,5 +193,48 @@ export default {
 html,
 body {
   overscroll-behavior: none;
+}
+
+.tinder-height {
+  /* height: 500px; */
+}
+
+.nope-pointer,
+.like-pointer {
+  position: absolute;
+  z-index: 1;
+  top: 20px;
+  width: 64px;
+  height: 64px;
+}
+.nope-pointer {
+  right: 10px;
+}
+.like-pointer {
+  left: 10px;
+}
+.super-pointer,
+.down-pointer {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 112px;
+  height: 78px;
+}
+.super-pointer {
+  bottom: 40px;
+}
+.down-pointer {
+  top: 40px;
+}
+.rewind-pointer {
+  position: absolute;
+  z-index: 1;
+  top: 20px;
+  right: 10px;
+  width: 112px;
+  height: 78px;
 }
 </style>
