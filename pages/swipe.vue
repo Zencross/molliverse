@@ -64,19 +64,11 @@
           </div>
         </div>
 
-        <img class="opacity-75 like-pointer" slot="like" src="/img/like.svg" />
-        <img class="opacity-75 nope-pointer" slot="nope" src="/img/nope.svg" />
-        <img
-          class="opacity-75 super-pointer"
-          slot="super"
-          src="/img/super-like.svg"
-        />
+        <img class="like-pointer" slot="like" src="/img/like.svg" />
+        <img class="nope-pointer" slot="nope" src="/img/nope.svg" />
+        <img class="super-pointer" slot="super" src="/img/super-like.svg" />
         <!-- <img class="down-pointer" slot="down" src="/img/down-txt.png" /> -->
-        <img
-          class="opacity-75 rewind-pointer"
-          slot="rewind"
-          src="/img/undo.svg"
-        />
+        <img class="rewind-pointer" slot="rewind" src="/img/undo.svg" />
 
         <div
           class="absolute bottom-0 z-50 flex flex-col w-full pl-4 mb-20 text-white lato-font"
