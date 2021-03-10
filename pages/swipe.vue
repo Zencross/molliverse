@@ -250,7 +250,7 @@ body {
 .like-pointer {
   position: absolute;
   z-index: 1;
-  top: 20px;
+  top: 30px;
   width: 64px;
   height: 64px;
 }
@@ -279,7 +279,7 @@ body {
 .rewind-pointer {
   position: absolute;
   z-index: 1;
-  top: 20px;
+  top: 30px;
   right: 10px;
   width: 64px;
   height: 64px;
