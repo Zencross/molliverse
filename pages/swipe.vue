@@ -9,6 +9,7 @@
     ></TopBar>
 
     <Vue2InteractDraggable
+      v-show="false"
       @draggedRight="draggedRight"
       @draggedLeft="draggedLeft"
       :interact-max-rotation="15"
@@ -17,7 +18,6 @@
       :interact-lock-y-axis="true"
     >
       <div id="swipe" class="relative flex justify-center m-4">
-        <!-- Hidden listeners for carousel -->
         <div class="absolute z-30 flex w-full h-full">
           <div
             id="lastMedia"
@@ -63,6 +63,16 @@
           ></video>
         </div>
       </div>
+    </Vue2InteractDraggable>
+
+    <Vue2InteractDraggable
+      @draggedRight="draggedRight"
+      @draggedLeft="draggedLeft"
+      :interact-max-rotation="15"
+      :interact-out-of-sight-x-coordinate="800"
+      :interact-x-threshold="200"
+    >
+      <div class="w-1/2 h-48 bg-red-500"></div>
     </Vue2InteractDraggable>
 
     <div
