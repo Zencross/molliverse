@@ -9,7 +9,6 @@
     ></TopBar>
 
     <Vue2InteractDraggable
-      v-show="false"
       @draggedRight="draggedRight"
       @draggedLeft="draggedLeft"
       :interact-max-rotation="15"
@@ -63,16 +62,6 @@
           ></video>
         </div>
       </div>
-    </Vue2InteractDraggable>
-
-    <Vue2InteractDraggable
-      @draggedRight="draggedRight"
-      @draggedLeft="draggedLeft"
-      :interact-max-rotation="15"
-      :interact-out-of-sight-x-coordinate="800"
-      :interact-x-threshold="200"
-    >
-      <div class="w-1/2 h-48 bg-red-500"></div>
     </Vue2InteractDraggable>
 
     <div
