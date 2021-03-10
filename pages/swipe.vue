@@ -64,11 +64,19 @@
           </div>
         </div>
 
-        <img class="like-pointer" slot="like" src="/img/like-txt.png" />
-        <img class="nope-pointer" slot="nope" src="/img/nope-txt.png" />
-        <img class="super-pointer" slot="super" src="/img/super-txt.png" />
+        <img class="opacity-75 like-pointer" slot="like" src="/img/like.svg" />
+        <img class="opacity-75 nope-pointer" slot="nope" src="/img/nope.svg" />
+        <img
+          class="opacity-75 super-pointer"
+          slot="super"
+          src="/img/super-like.svg"
+        />
         <!-- <img class="down-pointer" slot="down" src="/img/down-txt.png" /> -->
-        <img class="rewind-pointer" slot="rewind" src="/img/rewind-txt.png" />
+        <img
+          class="opacity-75 rewind-pointer"
+          slot="rewind"
+          src="/img/undo.svg"
+        />
       </VueTinder>
     </div>
 
@@ -266,7 +274,7 @@ body {
   z-index: 1;
   top: 20px;
   right: 10px;
-  width: 112px;
-  height: 78px;
+  width: 64px;
+  height: 64px;
 }
 </style>
