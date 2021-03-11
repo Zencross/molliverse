@@ -145,12 +145,23 @@ export default {
         chunks.push(e.data);
       };
 
-      this.mediaRecorder.onstop = (e) => {
+      this.mediaRecorder.onstop = async (e) => {
         console.log("video onStop");
         var blob = new Blob(chunks, { 'type' : 'video/mp4' }); // other types are available such as 'video/webm' for instance, see the doc for more info
         chunks = [];
-        var videoURL = URL.createObjectURL(blob);
-        this.$store.commit('setVideo', videoURL)
+        
+        const blobToBase64 = blob => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          return new Promise(resolve => {
+            reader.onloadend = () => {
+              resolve(reader.result);
+            };
+          });
+        };
+
+        const videoBase64 = await blobToBase64(blob)
+        this.$store.commit('setVideo', videoBase64)
 
         //  TODO: Delete this line if it goes wrong
         this.$store.commit('setPhoto', null)
