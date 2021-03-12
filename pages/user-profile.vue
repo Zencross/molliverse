@@ -10,6 +10,17 @@
 
     <div class="flex flex-col items-center justify-center w-full pt-8 pb-6">
       <img
+        v-if="IconIsImage"
+        :src="userIcon"
+        alt="icon"
+        class="object-cover w-32 h-32 bg-gray-300 rounded-full"
+        @click="onClickAddMedia"
+      />
+      <video
+        v-else
+        autoplay
+        loop
+        playsinline
         :src="userIcon"
         alt="icon"
         class="object-cover w-32 h-32 bg-gray-300 rounded-full"
@@ -83,6 +94,10 @@ export default {
     return {};
   },
   computed: {
+    IconIsImage() {
+      if (this.$store.state.userProfileMedia[0].type === "Image") return true;
+      else return false;
+    },
     userIcon() {
       return this.$store.state.userProfileMedia[0].url;
     },
