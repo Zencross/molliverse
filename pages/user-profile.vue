@@ -77,8 +77,10 @@
       </button>
       <button
         class="w-11/12 p-4 font-bold text-white border rounded-lg bg-brandPurple lato-font"
+        @click="onClickLogout"
       >
-        Get Mollie Premium
+        <!-- Get Mollie Premium -->
+        Log Out
       </button>
     </div>
   </div>
@@ -95,37 +97,34 @@ export default {
   },
   computed: {
     IconIsImage() {
-      if (this.$store.state.userProfileMedia[0].type === "Image") return true;
+      if (this.$store.state.user.media[0].type === "Image") return true;
       else return false;
     },
     userIcon() {
-      return this.$store.state.userProfileMedia[0].url;
+      return this.$store.state.user.media[0].url;
     },
     userName() {
-      if (!this.$store.state.firstName) {
-        return "User";
-      }
-      return this.$store.state.firstName;
+      return this.$store.state.user.nickname;
     },
     userAge() {
-      if (!this.$store.state.birthday) {
-        return "Age";
-      }
-      let dob = new Date(this.$store.state.birthday);
+      // if (!this.$store.state.birthday) {
+      //   return "Age";
+      // }
+      // let dob = new Date(this.$store.state.birthday);
 
-      //calculate month difference from current date in time
-      var month_diff = Date.now() - dob.getTime();
+      // //calculate month difference from current date in time
+      // var month_diff = Date.now() - dob.getTime();
 
-      //convert the calculated difference in date format
-      var age_dt = new Date(month_diff);
+      // //convert the calculated difference in date format
+      // var age_dt = new Date(month_diff);
 
-      //extract year from date
-      var year = age_dt.getUTCFullYear();
+      // //extract year from date
+      // var year = age_dt.getUTCFullYear();
 
-      //now calculate the age of the user
-      var age = Math.abs(year - 1970);
+      // //now calculate the age of the user
+      // var age = Math.abs(year - 1970);
 
-      return age;
+      return this.$store.state.user.age;
     }
   },
   methods: {
@@ -144,6 +143,10 @@ export default {
     },
     onClickLogo() {
       this.$router.push("/swipe");
+    },
+    onClickLogout() {
+      this.$store.commit("setUser", null);
+      this.$router.push("/login");
     }
   },
   async mounted() {

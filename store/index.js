@@ -277,7 +277,8 @@ export const actions = {
                 input: userInput
               }
             });
-            console.log("addUser results", results);
+            console.log("addUser results", results.data.addUser);
+            commit('setUser',results.data.addUser)
           } catch (e) {
             console.error(e);
           }
