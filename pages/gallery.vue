@@ -31,7 +31,6 @@
           class="relative z-10 my-1 bg-darkgrey rounded-xl cell-width cell-aspect-ratio"
           @click="onClickBox(userProfileMedia.indexOf(ele))"
         >
-          <h1 class="absolute top-0 z-50">{{ ele.index }}</h1>
           <img
             v-if="!ele.url"
             class="absolute bottom-0 right-0 z-30"
