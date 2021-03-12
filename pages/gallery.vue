@@ -144,12 +144,12 @@ export default {
     },
     async onClickFinsih() {
       //  Create User Profile
-      // await this.$store.dispatch("createUserProfile");
-      // console.log(
-      //   "--------------------createUserProfile finished--------------------"
-      // );
-      // await this.$store.dispatch("addUser");
-      // console.log("--------------------addUser finished--------------------");
+      await this.$store.dispatch("createUserProfile");
+      console.log(
+        "--------------------createUserProfile finished--------------------"
+      );
+      await this.$store.dispatch("addUser");
+      console.log("--------------------addUser finished--------------------");
       this.$router.push("/swipe");
     }
   }

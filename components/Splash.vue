@@ -11,7 +11,7 @@
     />
 
     <nuxt-link
-      to="name"
+      to="login"
       class="flex flex-col items-center justify-center w-full"
     >
       <app-button
