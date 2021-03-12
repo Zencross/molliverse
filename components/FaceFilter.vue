@@ -147,7 +147,7 @@ export default {
 
       this.mediaRecorder.onstop = async (e) => {
         console.log("video onStop");
-        var blob = new Blob(chunks, { 'type' : 'video/mp4' }); // other types are available such as 'video/webm' for instance, see the doc for more info
+        var blob = new Blob(chunks, { 'type' : 'video/webm;codecs=vp8' }); 
         chunks = [];
         
         const blobToBase64 = blob => {
