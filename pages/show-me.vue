@@ -85,15 +85,25 @@ export default {
     }
   },
   mounted() {
-    if (this.$store.state.showMePreference === "Man") {
+    if (
+      this.$store.state.showMePreference.length === 1 &&
+      this.$store.state.showMePreference[0] === "Man"
+    ) {
       this.btnWomanSelected = false;
       this.btnEveryoneSelected = false;
       this.btnManSelected = true;
-    } else if (this.$store.state.showMePreference === "Woman") {
+    } else if (
+      this.$store.state.showMePreference.length === 1 &&
+      this.$store.state.showMePreference[0] === "Woman"
+    ) {
       this.btnManSelected = false;
       this.btnEveryoneSelected = false;
       this.btnWomanSelected = true;
-    } else if (this.$store.state.showMePreference === "Everyone") {
+    } else if (
+      this.$store.state.showMePreference.length > 1 &&
+      this.$store.state.showMePreference[0] === "Man" &&
+      this.$store.state.showMePreference[1] === "Woman"
+    ) {
       this.btnManSelected = false;
       this.btnWomanSelected = false;
       this.btnEveryoneSelected = true;

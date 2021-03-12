@@ -10,6 +10,11 @@ export default {
     }
   },
 
+  publicRuntimeConfig: {
+    imageUploadAPI: process.env.IMAGE_UPLOAD_API,
+    videoUploadAPI: process.env.VIDEO_UPLOAD_API
+  },
+
   target: "static",
 
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
@@ -51,6 +56,7 @@ export default {
   modules: [
     'nuxt-user-agent',
     '@nuxtjs/apollo',
+    '@nuxtjs/axios'
   ],
 
   apollo: {
@@ -68,9 +74,13 @@ export default {
     },
     clientConfigs: {
       default: {
-        httpEndpoint: 'http://localhost:8080/graphql',
+        httpEndpoint: process.env.API_URL || 'http://localhost:8080/graphql',
       }
     }
+  },
+
+  axios: {
+    // proxy: true
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     userIcon() {
-      return this.$store.state.userProfileMedia[0].src;
+      return this.$store.state.userProfileMedia[0].url;
     },
     userName() {
       if (!this.$store.state.firstName) {

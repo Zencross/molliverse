@@ -1,5 +1,5 @@
 <template>
-  <div class="overscroll-none">
+  <div class="select-none overscroll-none">
     <TopBar
       id="topBar"
       person
@@ -85,16 +85,28 @@
       class="absolute bottom-0 z-50 flex justify-between w-full h-24 px-4 pt-4 disable-dbl-tap-zoom"
       id="buttonGroup"
     >
-      <button @click="decide('nope')" class="disable-dbl-tap-zoom">
+      <button
+        @click="decide('nope')"
+        class="disable-dbl-tap-zoom focus:outline-none active:scale-50"
+      >
         <img src="/img/nope.svg" alt="" />
       </button>
-      <button @click="decide('rewind')" class="disable-dbl-tap-zoom">
+      <button
+        @click="decide('rewind')"
+        class="disable-dbl-tap-zoom focus:outline-none"
+      >
         <img src="/img/undo.svg" alt="" />
       </button>
-      <button @click="decide('super')" class="disable-dbl-tap-zoom">
+      <button
+        @click="decide('super')"
+        class="disable-dbl-tap-zoom focus:outline-none"
+      >
         <img src="/img/super-like.svg" alt="" />
       </button>
-      <button @click="decide('like')" class="disable-dbl-tap-zoom">
+      <button
+        @click="decide('like')"
+        class="disable-dbl-tap-zoom focus:outline-none"
+      >
         <img src="/img/like.svg" alt="" />
       </button>
     </div>
@@ -158,11 +170,11 @@ export default {
       }
     },
     checkMediaType(index) {
-      if (this.$store.state.userProfileMedia[index].type === "photo") {
+      if (this.$store.state.userProfileMedia[index].type === "Image") {
         console.log(`media at index ${index} is a photo`);
         this.isMediaPhoto = true;
         this.isMediaVideo = false;
-      } else if (this.$store.state.userProfileMedia[index].type === "video") {
+      } else if (this.$store.state.userProfileMedia[index].type === "Video") {
         console.log(`media at index ${index} is a video`);
         this.isMediaPhoto = false;
         this.isMediaVideo = true;
@@ -203,10 +215,10 @@ export default {
   },
   computed: {
     userProfileMedia() {
-      return this.$store.state.userProfileMedia.filter(e => e.src !== null);
+      return this.$store.state.userProfileMedia.filter(e => e.url !== null);
     },
     getMediaSrc() {
-      return this.$store.state.userProfileMedia[this.currentMediaIndex].src;
+      return this.$store.state.userProfileMedia[this.currentMediaIndex].url;
     }
   },
   mounted() {

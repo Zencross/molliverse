@@ -27,12 +27,13 @@
       >
         <div
           v-for="ele in userProfileMedia"
-          :key="ele.id"
+          :key="ele.index"
           class="relative z-10 my-1 bg-darkgrey rounded-xl cell-width cell-aspect-ratio"
           @click="onClickBox(userProfileMedia.indexOf(ele))"
         >
+          <h1 class="absolute top-0 z-50">{{ ele.index }}</h1>
           <img
-            v-if="!ele.src"
+            v-if="!ele.url"
             class="absolute bottom-0 right-0 z-30"
             src="../static/img/plus-purple-30px.svg"
             alt=""
@@ -98,8 +99,13 @@ export default {
       }
     }
   },
+  mounted() {},
   methods: {
-    log() {
+    log(arg) {
+      console.log("drag detected", arg);
+      // const indexOfMediaMoved = arg.oldIndex;
+      // const newIndex = arg.newIndex;
+      this.$store.commit("updateUserProfileMediaIndex");
       console.log("user Media array", this.userProfileMedia);
     },
     onClickBackButton() {
@@ -111,12 +117,12 @@ export default {
       this.$router.push("/ar-filter");
     },
     getMediaSrc(id) {
-      return this.$store.state.userProfileMedia[id].src;
+      return this.$store.state.userProfileMedia[id].url;
     },
     isMediaPhoto(id) {
       if (
         this.$store.state.userProfileMedia[id] &&
-        this.$store.state.userProfileMedia[id].type === "photo"
+        this.$store.state.userProfileMedia[id].type === "Image"
       ) {
         console.log(
           `media at index ${id} is`,
@@ -128,7 +134,7 @@ export default {
     isMediaVideo(id) {
       if (
         this.$store.state.userProfileMedia[id] &&
-        this.$store.state.userProfileMedia[id].type === "video"
+        this.$store.state.userProfileMedia[id].type === "Video"
       ) {
         console.log(
           `media at index ${id} is`,
@@ -137,9 +143,14 @@ export default {
         return true;
       } else return false;
     },
-    onClickFinsih() {
+    async onClickFinsih() {
       //  Create User Profile
-      this.$store.dispatch("addUser");
+      await this.$store.dispatch("createUserProfile");
+      console.log(
+        "--------------------createUserProfile finished--------------------"
+      );
+      await this.$store.dispatch("addUser");
+      console.log("--------------------addUser finished--------------------");
       this.$router.push("/swipe");
     }
   }

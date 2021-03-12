@@ -4,15 +4,15 @@ export const state = () => ({
     user: null,
     photo: null,
     userProfileMedia:[
-        { id:0, type:"", src:null },
-        { id:1, type:"", src:null },
-        { id:2, type:"", src:null },
-        { id:3, type:"", src:null },
-        { id:4, type:"", src:null },
-        { id:5, type:"", src:null },
-        { id:6, type:"", src:null },
-        { id:7, type:"", src:null },
-        { id:8, type:"", src:null },
+        { index:0, type:"", url:null },
+        { index:1, type:"", url:null },
+        { index:2, type:"", url:null },
+        { index:3, type:"", url:null },
+        { index:4, type:"", url:null },
+        { index:5, type:"", url:null },
+        { index:6, type:"", url:null },
+        { index:7, type:"", url:null },
+        { index:8, type:"", url:null },
     ],
     currentMediaIndex:0,
     video: null,
@@ -25,7 +25,7 @@ export const state = () => ({
     birthday: "",
     email: "",
     firstName: "",
-    showMePreference: "",
+    showMePreference: [],
     university: "",
     passions:[],
     deepARInstance: null,
@@ -85,19 +85,26 @@ export const mutations = {
     addPhotoToUserProfileMedia(state, index){
         console.log('type of index is', typeof index, index);
         if(state.photo){
-            state.userProfileMedia.splice(index, 1, { ...state.userProfileMedia[index], type:"photo", src:state.photo})
+            state.userProfileMedia.splice(index, 1, { ...state.userProfileMedia[index], type:"Image", url:state.photo})
             console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
         }
     },
     addVideoToUserProfileMedia(state, index){
         console.log('type of index is', typeof index, index);
         if(state.video){
-            state.userProfileMedia.splice(index, 1, { ...state.userProfileMedia[index], type:"video", src:state.video}),
+            state.userProfileMedia.splice(index, 1, { ...state.userProfileMedia[index], type:"Video", url:state.video}),
             console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
         }
     },
     setUserProfileMedia(state, val){
         state.userProfileMedia = val
+    },
+    updateUserProfileMediaIndex(state){
+        let arr = state.userProfileMedia
+        for (let i = 0; i < 9; i++) {
+            arr[i].index = i
+        }
+        state.userProfileMedia = arr
     },
     removeUserProfileMedia(state, val){
 
@@ -152,7 +159,12 @@ export const mutations = {
         console.log('VUEX: set firstName to', state.firstName);
     },
     setShowMePreference(state, val){
-        state.showMePreference = val
+        if(val === "Man"){
+            state.showMePreference = ['Man']
+        }else if(val === "Woman"){
+            state.showMePreference = ['Woman']
+        }else if(val === "Everyone")
+            state.showMePreference = ['Man','Woman']
         console.log('VUEX: set showMePreference to', state.showMePreference);
     },
     setUniversity(state, val){
@@ -171,6 +183,33 @@ export const mutations = {
 }
 
 export const actions = {
+    async createUserProfile({dispatch, commit, state}){
+        const userProfileMediaWithURL = await Promise.all(state.userProfileMedia.map( async e => {
+            console.log("turn", e.index);
+            if(!e.url){ 
+                console.log("The object is NULL, skipping this one"); 
+                return {...e}
+            }
+            if(e.type==="Image"){
+                console.log("photo detected");
+                this.$axios.setHeader('Content-Type', 'application/json')
+                const result = await this.$axios.$post(this.app.$config.imageUploadAPI, {"image": e.url})
+                console.log("upload photo result", result);
+                return {...e , url:result.url}
+            }else if(e.type==="Video"){
+                console.log("video detected");
+                this.$axios.setHeader('Content-Type', 'application/json')
+                const result = await this.$axios.$post(this.app.$config.videoUploadAPI, {"video": e.url})
+                console.log("upload video result", result);
+                return {...e , url:result.url}
+            }
+        })
+        )
+        console.log("old userProfileMedia array", state.userProfileMedia);
+        console.log("Iteration finished. Here's the new media array with url", userProfileMediaWithURL);
+        commit('setUserProfileMedia', userProfileMediaWithURL)
+        console.log("new userProfileMedia array", state.userProfileMedia);
+    },
     async addUser({ dispatch, commit, state }) {
 
         let dob = new Date(state.birthday);
@@ -191,7 +230,12 @@ export const actions = {
             nickname: state.firstName,
             passions: state.passions.map( e =>{ return {name: e.name} }),
             phoneNumber: "98765432",
-            university: state.university
+            university: state.university,
+            media: state.userProfileMedia,
+            isGenderPublic: state.showGenderOnProfile,
+            isOrientationPublic: state.showSexualOrientationOnProfile,
+            orientation: state.userSexualOrientations.map(e=>{return e.name}),
+            showGender: state.showMePreference
         }]
 
         console.log("addUser Input:", userInput);
@@ -215,6 +259,16 @@ export const actions = {
                       }
                       phoneNumber
                       email
+                      university
+                      media {
+                          index
+                          type
+                          url
+                      }
+                      isGenderPublic
+                      isOrientationPublic
+                      orientation
+                      showGender
                     }
                   }
                 }
