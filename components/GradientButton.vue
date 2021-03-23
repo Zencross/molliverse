@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center w-full">
         <button @click="onClickButton" class="flex items-center justify-center w-4/5 p-3 text-white rounded-full button-gradient montserrat-font">
-            <span class="text-lg font-bold">{{ buttonText }}</span>
+            <span class="text-lg font-bold flex">{{ buttonText }}</span>
         </button>
     </div>
 </template>
