@@ -1,20 +1,5 @@
 <template>
    <div class="grid justify-items-stretch ">
-    <!-- <div class="fixed mb-40 heading text-center">
-        <h3> Looks like you guys want to play a game :) <br /> Here are some game suggestions! </h3>
-    </div> -->
-    
-    <!-- <div class="ae bg-red-700"  v-for="(x, index) in noOfOptions" :key="index">
-        <button class="text-white rounded-full button-gradient montserrat-font"> 
-             <span class="text-xs font-bold">{{ options[index] }}</span>
-        </button>
-    </div> -->
-     <!-- <div class="grid grid-cols-2 bg-red-700"  v-for="(x, index) in noOfOptions" :key="index">
-        <div class="flex-1 text-white text-xs font-bold rounded-full button-gradient montserrat-font"> 
-             <span class="flex-1">{{ options[index] }}</span>
-        </div>
-    </div> -->
-    
     <table class="fixed bottom-0 mb-10 text-center  w-full container pt-2">
         <div class="heading">
             <h3> Looks like you guys want to play a game :) <br /> Here are some game suggestions! </h3>
@@ -64,32 +49,13 @@ export default {
             default: () => ['green','#632B75','blue','#FD267D']
         }
     },
-    // var randomItem = myArray[Math.floor(Math.random()*myArray.length)];
-
 
     computed: {
         btnStyle() {
             return {
-                'font-family': this.questionsFont,
-                // 'background': this.questionColor[Math.floor(Math.random() * (this.questionColor.length ))]
+                'font-family': this.questionsFont
             }
-        },
-        // btnColor() {
-        //     return {
-        //         'background': this.questionColor[Math.floor(Math.random() * (this.questionColor.length ))]
-        //     }
-        // }
-    },
-    data () {
-       return {
-        //    options: [
-        //        "Would you rather",
-        //        "Never have I ever",
-        //        "Two truths & one lie",
-        //        "20 Questions",
-        //        "Yes or No"
-        //    ]
-       }
+        }
     }
 }
 </script>
@@ -126,7 +92,6 @@ export default {
         @media screen and (min-width: 768px) {
             height: 4rem;
         };
-        /* font-family: 'montserrat-font'; */
     }
 
     .noThanks {
@@ -135,28 +100,15 @@ export default {
         text-decoration-line: underline;
         text-decoration-color: gray;
         line-height: 50px;
-        /* outline-style: none */
     }
-
 
     .no-focusborder:focus {
         outline-style: none;
-        /* box-shadow: none; */
-        /* border-color: transparent; */
-        /* background-color: black; */
-        /* color: white; */
     } 
 
     .container {
-        /* border-top-style: solid; */
-        /* border-top-width: 7px; */
-        /* border-color: red; */
-        /* border-top-width: 7px; */
-        /* border-radius: 50px; */
         border-radius: 30px 30px;
         border-collapse: separate;
-        /* box-shadow: 0px 0px 5px 5px; */
         box-shadow: inset 0px 5px 3px -4px gray
-
     }
 </style>  
