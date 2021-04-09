@@ -133,10 +133,10 @@ export default {
       this.$router.push("/messages");
     },
     onClickAddMedia() {
-      this.$router.push("/gallery");
+      //this.$router.push("/gallery");
     },
     onClickEditInfo() {
-      this.$router.push("/name");
+      //this.$router.push("/name");
     },
     onClickName() {
       this.$router.push("/swipe");
@@ -145,8 +145,9 @@ export default {
       this.$router.push("/swipe");
     },
     onClickLogout() {
-      this.$store.commit("setUser", null);
       this.$router.push("/login");
+      //  TODO: call action that cleans user data & form data
+      this.$store.dispatch("clearOnboardingFormStates");
     }
   },
   async mounted() {
