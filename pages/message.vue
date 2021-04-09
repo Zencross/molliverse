@@ -29,12 +29,16 @@
         v-for="message in messages"
         class="flex w-full px-2 my-2 lato-font"
         :class="[
-          message.by.id === messageTargetId ? 'justify-start' : 'justify-end'
+          message.by.nickname === messageTargetName
+            ? 'justify-end'
+            : 'justify-start'
         ]"
       >
         <div
           class="flex flex-col w-1/2 text-sm leading-tight"
-          :class="[message.by.id === messageTargetId ? 'receive' : 'send']"
+          :class="[
+            message.by.nickname === messageTargetName ? 'send' : 'receive'
+          ]"
         >
           <div>
             {{ message.content }}
@@ -42,11 +46,11 @@
           <div class="flex items-center mt-2 mb-1 text-xs">
             <div class="mr-2">{{ formattedDate(message.timestamp) }}</div>
             <img
-              v-if="message.by.id === messageTargetId"
-              src="/img/white-sent-icon.svg"
+              v-if="message.by.nickname === messageTargetName"
+              src="/img/dark-sent-icon.svg"
               alt=""
             />
-            <img v-else src="/img/dark-sent-icon.svg" alt="" />
+            <img v-else src="/img/white-sent-icon.svg" alt="" />
           </div>
         </div>
       </div>
@@ -77,12 +81,14 @@
       </div>
     </div>
 
-    <Wingman />
+    <!-- <Wingman /> -->
   </div>
 </template>
 
 <script>
 import Wingman from "../components/Wingman";
+import gql from "graphql-tag";
+
 export default {
   components: {
     Wingman
@@ -90,18 +96,22 @@ export default {
   data() {
     return {
       messages: [],
-      input: ""
+      input: "",
+      messageLoader: null
     };
   },
   computed: {
-    messageTargetId() {
-      return this.$store.state.messageTargetId;
-    },
+    // messageTargetId() {
+    //   return this.$store.state.messageTargetId;
+    // },
     messageTargetAvatar() {
       return this.$store.state.messageTargetAvatar;
     },
     messageTargetName() {
       return this.$store.state.messageTargetName;
+    },
+    messageChannelName() {
+      return this.$store.state.messageChannelName;
     }
   },
   methods: {
@@ -117,9 +127,39 @@ export default {
         minute: "numeric"
       };
       return today.toLocaleString("en-US", options);
+    },
+    async loadMessages() {
+      console.log("loading message");
+      try {
+        const results = await this.$apollo.query({
+          query: gql`
+            query($name: String!) {
+              getChannel(name: $name) {
+                createdAt
+                messages {
+                  by {
+                    nickname
+                  }
+                  content
+                  timestamp
+                }
+                name
+              }
+            }
+          `,
+          variables: {
+            name: this.$store.state.messageChannelName
+          }
+        });
+        console.log("getChannel results:", results.data.getChannel);
+        this.messages = results.data.getChannel.messages;
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
   mounted() {
+    //  Scroll to latest message
     var topBar = document.getElementById("topBar");
     console.log("height of top bar", topBar.offsetHeight);
 
@@ -140,91 +180,13 @@ export default {
       elem.scrollTop = elem.scrollHeight;
     }, 10);
 
-    //   Fetch latest messages
-    this.messages = [
-      {
-        id: 1,
-        by: {
-          id: this.messageTargetId,
-          name: this.messageTargetName
-        },
-        content: `Hey there! I'm ${this.messageTargetName}, Nice to meet you! xx`,
-        timestamp: `2021-02-21T14:01:05.000Z`
-      },
-      {
-        id: 2,
-        by: {
-          id: 99,
-          name: "User"
-        },
-        content: "Hey. My name's Microsoft. Can I crash at your's tonight?",
-        timestamp: `2021-02-21T14:02:05.000Z`
-      },
-      {
-        id: 3,
-        by: {
-          id: this.messageTargetId,
-          name: this.messageTargetName
-        },
-        content: "OMG you’re soooo silly haha Haven’t heard that one before ;)",
-        timestamp: `2021-02-21T14:02:55.000Z`
-      },
-      {
-        id: 4,
-        by: {
-          id: 99,
-          name: "User"
-        },
-        content: "Do you wanna grab a drink?",
-        timestamp: `2021-02-21T14:03:05.000Z`
-      },
-      {
-        id: 5,
-        by: {
-          id: this.messageTargetId,
-          name: this.messageTargetName
-        },
-        content: "Sure thing :) But lets know each other more first.",
-        timestamp: `2021-02-21T14:03:45.000Z`
-      },
-      {
-        id: 6,
-        by: {
-          id: this.messageTargetId,
-          name: this.messageTargetName
-        },
-        content: "Who is your favourite singer?",
-        timestamp: `2021-02-21T14:04:05.000Z`
-      },
-      {
-        id: 7,
-        by: {
-          id: 99,
-          name: "User"
-        },
-        content: "I dont really have one. Probably myself.",
-        timestamp: `2021-02-21T14:05:35.000Z`
-      },
-      {
-        id: 8,
-        by: {
-          id: 99,
-          name: "User"
-        },
-        content: "Let's play a game together.",
-        timestamp: `2021-02-21T14:06:00.000Z`
-      },
-      {
-        id: 9,
-        by: {
-          id: this.messageTargetId,
-          name: this.messageTargetName
-        },
-        content: "Sure thing!",
-        timestamp: `2021-02-21T14:07:00.000Z`
-      }
-    ];
+    //setInterval(this.loadMessages, 100);
+    this.loadMessages();
   }
+  // unmounted() {
+  //   clearInterval(this.messageLoader);
+  //   console.log("messageLoader stopped");
+  // }
 };
 </script>
 

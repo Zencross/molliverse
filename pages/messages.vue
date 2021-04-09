@@ -170,13 +170,23 @@ export default {
     }
   },
   methods: {
-    onClickItem(match) {
-      console.log("clicked", match);
-      this.$store.commit("setMessageTargetId", match.target.id);
-      this.$store.commit("setMessageTargetName", match.target.name);
-      this.$store.commit("setMessageTargetAvatar", match.target.avatar);
+    onClickItem(channel) {
+      console.log("clicked", channel);
 
-      document.getElementById(match.id).style.backgroundColor = "#e2e8f0";
+      let targetUser = channel.users.filter(
+        user => user.nickname !== this.$store.state.user.nickname
+      );
+
+      let targetUserMedia = targetUser[0].media.filter(
+        media => media.index === 0
+      );
+
+      //this.$store.commit("setMessageTargetId", match.target.id);
+      this.$store.commit("setMessageChannelName", channel.name);
+      this.$store.commit("setMessageTargetName", targetUser[0].nickname);
+      this.$store.commit("setMessageTargetAvatar", targetUserMedia[0].url);
+
+      //document.getElementById(match.id).style.backgroundColor = "#e2e8f0";
       this.$router.push("/message");
     },
     onClickTitle() {

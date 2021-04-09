@@ -43,7 +43,8 @@ export const state = () => ({
   messageTargetId: null,
   messageTargetName: "",
   messageTargetAvatar: "",
-  channels: []
+  channels: [],
+  messageChannelName: ""
 });
 
 export const mutations = {
@@ -241,6 +242,10 @@ export const mutations = {
   setChannels(state, val) {
     state.channels = val;
     console.log("VUEX: set user channels array", state.channels);
+  },
+  setMessageChannelName(state, val) {
+    state.messageChannelName = val;
+    console.log("VUEX: set messageChannelName", state.messageChannelName);
   }
 };
 
