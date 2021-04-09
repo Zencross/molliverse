@@ -119,6 +119,14 @@ export default {
                     timestamp
                   }
                   name
+                  users {
+                    nickname
+                    media {
+                      index
+                      type
+                      url
+                    }
+                  }
                 }
               }
             }
@@ -130,6 +138,7 @@ export default {
         console.log("getUser results:", results.data.getUser);
         //store user object in vuex (simulate login)
         this.$store.commit("setUser", results.data.getUser);
+        this.$store.commit("setChannels", results.data.getUser.channels);
       } catch (error) {
         console.error(error);
       }

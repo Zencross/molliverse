@@ -42,7 +42,8 @@ export const state = () => ({
   faceTrackingModelReady: false,
   messageTargetId: null,
   messageTargetName: "",
-  messageTargetAvatar: ""
+  messageTargetAvatar: "",
+  channels: []
 });
 
 export const mutations = {
@@ -236,6 +237,10 @@ export const mutations = {
   resetPassions(state) {
     state.passions = [];
     console.log("VUEX: new user passions array", state.passions);
+  },
+  setChannels(state, val) {
+    state.channels = val;
+    console.log("VUEX: set user channels array", state.channels);
   }
 };
 

@@ -11,7 +11,7 @@
     </div>
 
     <!-- List -->
-    <div
+    <!-- <div
       class="flex items-center py-4 bg-white border border-t-0 border-b-1"
       v-for="match in matches"
       :key="match.id"
@@ -23,6 +23,28 @@
         <div class="text-lg font-bold lato-font">{{ match.target.name }}</div>
         <div class="flex flex-wrap leading-tight text-gray-600 lato-font">
           {{ match.target.messages[0].content }}
+        </div>
+      </div>
+    </div> -->
+
+    <div
+      class="flex items-center py-4 bg-white border border-t-0 border-b-1"
+      v-for="channel in channels"
+      :key="channel.name"
+      :id="channel.name"
+      @click="onClickItem(channel)"
+    >
+      <img
+        :src="getTargetAvatar(channel)"
+        alt="Avatar"
+        class="w-2/12 ml-4 rounded-full"
+      />
+      <div class="flex flex-col justify-center w-full mx-4">
+        <div class="text-lg font-bold lato-font">
+          {{ getTargetNickname(channel) }}
+        </div>
+        <div class="flex flex-wrap leading-tight text-gray-600 lato-font">
+          Hey there! I'm Kit, Nice to meet you! xx
         </div>
       </div>
     </div>
@@ -142,7 +164,11 @@ export default {
       ]
     };
   },
-  computed: {},
+  computed: {
+    channels() {
+      return this.$store.state.channels;
+    }
+  },
   methods: {
     onClickItem(match) {
       console.log("clicked", match);
@@ -155,8 +181,24 @@ export default {
     },
     onClickTitle() {
       this.$router.push("/user-profile");
+    },
+    getTargetAvatar(channel) {
+      let targetUser = channel.users.filter(
+        user => user.nickname !== this.$store.state.user.nickname
+      );
+
+      let arr = targetUser[0].media.filter(media => media.index === 0);
+
+      return arr[0].url;
+    },
+    getTargetNickname(channel) {
+      let targetUser = channel.users.filter(
+        user => user.nickname !== this.$store.state.user.nickname
+      );
+      return targetUser[0].nickname;
     }
-  }
+  },
+  created() {}
 };
 </script>
 
