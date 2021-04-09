@@ -106,6 +106,20 @@ export default {
                 isOrientationPublic
                 orientation
                 showGender
+                channels {
+                  createdAt
+                  messages {
+                    by {
+                      nickname
+                    }
+                    in {
+                      name
+                    }
+                    content
+                    timestamp
+                  }
+                  name
+                }
               }
             }
           `,
