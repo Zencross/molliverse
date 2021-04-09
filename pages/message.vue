@@ -76,11 +76,17 @@
         <img src="/img/record-icon.svg" class="w-8 mx-2" alt="" />
       </div>
     </div>
+
+    <Wingman />
   </div>
 </template>
 
 <script>
+import Wingman from "../components/Wingman";
 export default {
+  components: {
+    Wingman
+  },
   data() {
     return {
       messages: [],
