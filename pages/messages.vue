@@ -299,15 +299,4 @@ export default {
 .page-leave-to {
   opacity: 0;
 }
-
-.image-cropper {
-  /* height: 4rem;
-  width: 4rem;
-  object-fit: contain;
-  overflow: hidden;
-  border-radius: 50%; */
-}
-
-.avatar {
-}
 </style>

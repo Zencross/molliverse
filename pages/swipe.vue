@@ -12,57 +12,65 @@
       <VueTinder
         id="swipe"
         ref="tinder"
-        key-name="id"
+        key-name="nickname"
         :queue.sync="queue"
         class="w-11/12 h-64"
         @submit="onSubmit"
       >
-        <div class="relative flex justify-center h-full">
-          <div class="absolute z-30 flex w-full h-full">
-            <div
-              id="lastMedia"
-              class="z-30 w-1/2 h-full bg-transparent rounded-xl"
-              @click="onClickLastMedia"
-            ></div>
-            <div
-              id="nextMedia"
-              class="z-30 w-1/2 h-full bg-transparent rounded-xl"
-              @click="onClickNextMedia"
-            ></div>
-          </div>
+        <template slot-scope="scope">
+          <div class="relative flex justify-center h-full">
+            <div class="absolute z-30 flex w-full h-full">
+              <div
+                id="lastMedia"
+                class="z-30 w-1/2 h-full bg-transparent rounded-xl"
+                @click="onClickLastMedia"
+              ></div>
+              <div
+                id="nextMedia"
+                class="z-30 w-1/2 h-full bg-transparent rounded-xl"
+                @click="onClickNextMedia"
+              ></div>
+            </div>
 
-          <div class="absolute z-40 flex w-full px-2 mt-4 bg-transparent">
-            <div
-              v-for="media in userProfileMedia"
-              :key="media.id"
-              class="w-full h-1 mx-1 bg-white rounded-full opacity-50"
-              :class="[
-                userProfileMedia.indexOf(media) === currentMediaIndex
-                  ? 'opacity-100'
-                  : ''
-              ]"
-            ></div>
-          </div>
+            <div class="absolute z-40 flex w-full px-2 mt-4 bg-transparent">
+              <div
+                v-for="media in scope.data.media"
+                :key="media.url"
+                class="w-full h-1 mx-1 bg-white rounded-full opacity-50"
+                :class="[
+                  scope.data.media.indexOf(media) === currentMediaIndex
+                    ? 'opacity-100'
+                    : ''
+                ]"
+              ></div>
+            </div>
 
-          <div class="absolute top-0 w-full h-full">
-            <img
-              id="mediaImg"
-              v-if="isMediaPhoto"
-              :src="getMediaSrc"
-              class="object-cover w-full h-full rounded-xl"
-              alt="photo"
-            />
-            <video
-              id="mediaVideo"
-              v-if="isMediaVideo"
-              :src="getMediaSrc"
-              autoplay
-              playsinline
-              loop
-              class="object-cover w-full h-full rounded-xl"
-            ></video>
+            <div class="absolute top-0 w-full h-full">
+              <img
+                id="mediaImg"
+                :src="getMediaSrc(scope)"
+                class="object-cover w-full h-full rounded-xl"
+                alt="photo"
+              />
+              <!-- <img
+                id="mediaImg"
+                v-if="isMediaPhoto(scope)"
+                :src="getMediaSrc(scope)"
+                class="object-cover w-full h-full rounded-xl"
+                alt="photo"
+              />
+              <video
+                id="mediaVideo"
+                v-if="isMediaVideo(scope)"
+                :src="getMediaSrc(scope)"
+                autoplay
+                playsinline
+                loop
+                class="object-cover w-full h-full rounded-xl"
+              ></video> -->
+            </div>
           </div>
-        </div>
+        </template>
 
         <img class="like-pointer" slot="like" src="/img/like.svg" />
         <img class="nope-pointer" slot="nope" src="/img/nope.svg" />
@@ -117,6 +125,7 @@
 import TopBar from "~/components/TopBar";
 import VueTinder from "vue-tinder";
 import source from "static/bing";
+import gql from "graphql-tag";
 
 export default {
   components: { TopBar, VueTinder },
@@ -131,9 +140,76 @@ export default {
     };
   },
   created() {
-    this.mock();
+    // this.mock();
+    this.loadUsers();
+  },
+  mounted() {
+    // this.checkMediaType(0);
+
+    var topBar = document.getElementById("topBar");
+    var buttonGroup = document.getElementById("buttonGroup");
+    document.getElementById("swipe").style.height =
+      window.innerHeight -
+      topBar.clientHeight -
+      buttonGroup.clientHeight +
+      "px";
+
+    console.log("height of top bar:", topBar.clientHeight);
+    console.log("height of button grp:", buttonGroup.clientHeight);
+    console.log(
+      "Carousel height should be: ",
+      window.innerHeight - topBar.clientHeight - buttonGroup.clientHeight
+    );
   },
   methods: {
+    async loadUsers() {
+      try {
+        const results = await this.$apollo.query({
+          query: gql`
+            query {
+              queryUser {
+                nickname
+                age
+                bio
+                email
+                gender
+                isGenderPublic
+                isOrientationPublic
+                isPushNotiEnabled
+                isVerified
+                jobTitle
+                location {
+                  longitude
+                  latitude
+                }
+                media {
+                  index
+                  type
+                  url
+                }
+                name
+                orientation
+                passions {
+                  name
+                }
+                phoneNumber
+                showGender
+                university
+                channels {
+                  name
+                }
+              }
+            }
+          `
+        });
+        console.log("queryUsers results:", results.data.queryUser);
+        this.queue = results.data.queryUser;
+        console.log("queue", this.queue);
+        // this.userSelected = this.users[0].nickname;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     mock(count = 5, append = true) {
       const list = [];
       for (let i = 0; i < count; i++) {
@@ -146,7 +222,6 @@ export default {
         this.queue.unshift(...list);
       }
     },
-
     onClickPersonIcon() {
       this.$router.push("/user-profile");
     },
@@ -211,34 +286,21 @@ export default {
       } else {
         this.$refs.tinder.decide(choice);
       }
+    },
+    getMediaSrc(scope) {
+      // return scope.media[0].url;
+      if (scope) {
+        console.log("scope", scope.data);
+        return scope.data.media[0].url;
+      }
     }
   },
   computed: {
     userProfileMedia() {
-      return this.$store.state.userProfileMedia.filter(e => e.url !== null);
-    },
-    getMediaSrc() {
-      return this.$store.state.userProfileMedia[this.currentMediaIndex].url;
+      // return this.$store.state.userProfileMedia.filter(e => e.url !== null);
     }
   },
-  mounted() {
-    this.checkMediaType(0);
-
-    var topBar = document.getElementById("topBar");
-    var buttonGroup = document.getElementById("buttonGroup");
-    document.getElementById("swipe").style.height =
-      window.innerHeight -
-      topBar.clientHeight -
-      buttonGroup.clientHeight +
-      "px";
-
-    console.log("height of top bar:", topBar.clientHeight);
-    console.log("height of button grp:", buttonGroup.clientHeight);
-    console.log(
-      "Carousel height should be: ",
-      window.innerHeight - topBar.clientHeight - buttonGroup.clientHeight
-    );
-  }
+  mounted() {}
 };
 </script>
 
