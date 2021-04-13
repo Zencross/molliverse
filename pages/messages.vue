@@ -37,9 +37,10 @@
       <img
         :src="getTargetAvatar(channel)"
         alt="Avatar"
-        class="w-2/12 ml-4 rounded-full"
+        class="object-cover w-16 h-16 ml-3 rounded-full"
       />
-      <div class="flex flex-col justify-center w-full mx-4">
+
+      <div class="flex flex-col justify-center w-9/12 mx-3">
         <div class="text-lg font-bold lato-font">
           {{ getTargetNickname(channel) }}
         </div>
@@ -228,5 +229,16 @@ export default {
 .page-enter,
 .page-leave-to {
   opacity: 0;
+}
+
+.image-cropper {
+  /* height: 4rem;
+  width: 4rem;
+  object-fit: contain;
+  overflow: hidden;
+  border-radius: 50%; */
+}
+
+.avatar {
 }
 </style>

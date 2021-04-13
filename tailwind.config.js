@@ -16,10 +16,10 @@ module.exports = {
       ...theme("colors"),
       lightgrey: "#7F8C99",
       "grayish-red": "#796B6B",
-      dark: '#333333',
+      dark: "#333333",
       brandPurple: "#89287C"
     })
   },
   variants: {},
-  plugins: []
+  plugins: [require("@tailwindcss/aspect-ratio")]
 };

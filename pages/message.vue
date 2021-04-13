@@ -11,8 +11,12 @@
         alt=""
         @click="onClickBack"
       />
-      <div class="flex items-center ml-5">
-        <img :src="messageTargetAvatar" alt="" class="w-2/12 rounded-full" />
+      <div class="flex items-center w-full ml-2">
+        <img
+          :src="messageTargetAvatar"
+          alt=""
+          class="object-cover w-12 h-12 rounded-full"
+        />
         <div class="ml-2 text-lg font-semibold lato-font">
           {{ messageTargetName }}
         </div>
@@ -30,14 +34,14 @@
         class="flex w-full px-2 my-2 lato-font"
         :class="[
           message.by.nickname === messageTargetName
-            ? 'justify-end'
-            : 'justify-start'
+            ? 'justify-start'
+            : 'justify-end'
         ]"
       >
         <div
           class="flex flex-col w-1/2 text-sm leading-tight"
           :class="[
-            message.by.nickname === messageTargetName ? 'send' : 'receive'
+            message.by.nickname === messageTargetName ? 'receive' : 'send'
           ]"
         >
           <div>
@@ -45,12 +49,16 @@
           </div>
           <div class="flex items-center mt-2 mb-1 text-xs">
             <div class="mr-2">{{ formattedDate(message.timestamp) }}</div>
-            <img
+            <!-- <img
               v-if="message.by.nickname === messageTargetName"
-              src="/img/dark-sent-icon.svg"
+              src="/img/white-sent-icon.svg"
+              alt=""
+            /> -->
+            <img
+              v-if="message.by.nickname !== messageTargetName"
+              src="/img/white-sent-icon.svg"
               alt=""
             />
-            <img v-else src="/img/white-sent-icon.svg" alt="" />
           </div>
         </div>
       </div>
@@ -71,8 +79,9 @@
       <div v-if="input" class="flex items-center">
         <img
           src="/img/send-24px.svg"
-          class="flex items-center justify-center w-8 mt-1 ml-1 mr-2"
+          class="flex items-center justify-center w-8 mx-2 mt-1"
           alt=""
+          @click="onClickSendMessage"
         />
       </div>
       <div v-else class="flex">
@@ -115,6 +124,27 @@ export default {
     }
   },
   methods: {
+    scrollToBottom() {
+      var topBar = document.getElementById("topBar");
+      console.log("height of top bar", topBar.offsetHeight);
+
+      var inputs = document.getElementById("inputs");
+      console.log("height of inputs", inputs.offsetHeight);
+
+      console.log("inner height", window.innerHeight);
+
+      var messages = document.getElementById("messages");
+      messages.style.height =
+        window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
+
+      console.log("height of messages", messages.offsetHeight);
+
+      window.setTimeout(function() {
+        var elem = document.getElementById("messages");
+        console.log("elem", elem);
+        elem.scrollTop = elem.scrollHeight;
+      }, 10);
+    },
     onClickBack() {
       this.$router.push("/messages");
     },
@@ -153,40 +183,70 @@ export default {
         });
         console.log("getChannel results:", results.data.getChannel);
         this.messages = results.data.getChannel.messages;
+        this.scrollToBottom();
       } catch (error) {
         console.error(error);
       }
+    },
+    async onClickSendMessage() {
+      //console.log("sending message", this.input);
+      let messageInput = [
+        {
+          by: { nickname: this.$store.state.user.nickname },
+          in: { name: this.$store.state.messageChannelName },
+          content: this.input,
+          timestamp: new Date().toISOString()
+        }
+      ];
+
+      console.log("addMessage Input:", messageInput);
+
+      try {
+        const results = await this.$apollo.mutate({
+          mutation: gql`
+            mutation($input: [AddMessageInput!]!) {
+              addMessage(input: $input) {
+                message {
+                  by {
+                    name
+                  }
+                  in {
+                    name
+                  }
+                  content
+                  timestamp
+                }
+              }
+            }
+          `,
+          variables: {
+            input: messageInput
+          }
+        });
+        console.log("addMessage results", results);
+        this.input = "";
+      } catch (e) {
+        console.error(e);
+      }
+
+      this.loadMessages();
     }
   },
   mounted() {
-    //  Scroll to latest message
-    var topBar = document.getElementById("topBar");
-    console.log("height of top bar", topBar.offsetHeight);
+    console.log("message.vue mounted.");
 
-    var inputs = document.getElementById("inputs");
-    console.log("height of inputs", inputs.offsetHeight);
-
-    console.log("inner height", window.innerHeight);
-
-    var messages = document.getElementById("messages");
-    messages.style.height =
-      window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
-
-    console.log("height of messages", messages.offsetHeight);
-
-    window.setTimeout(function() {
-      var elem = document.getElementById("messages");
-      console.log("elem", elem);
-      elem.scrollTop = elem.scrollHeight;
-    }, 10);
-
-    //setInterval(this.loadMessages, 100);
     this.loadMessages();
+
+    this.messageLoader = setInterval(() => {
+      this.loadMessages();
+    }, 1000);
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log("message.vue is unmounted.");
+    clearInterval(this.messageLoader);
+    console.log("messageLoader stopped");
+    next();
   }
-  // unmounted() {
-  //   clearInterval(this.messageLoader);
-  //   console.log("messageLoader stopped");
-  // }
 };
 </script>
 
@@ -197,12 +257,21 @@ export default {
   font-family: "Lato", sans-serif;
 }
 
-.receive {
+/* Original style class for sending and receiving dialog box */
+/* .receive {
   @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-3 pb-2 pr-4;
 }
 
 .send {
   @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-3 pb-2 pr-4;
+} */
+
+.receive {
+  @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-3 pb-2 pr-4;
+}
+
+.send {
+  @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-3 pb-2 pr-4;
 }
 
 .messagesContainer {
