@@ -45,7 +45,7 @@
           {{ getTargetNickname(channel) }}
         </div>
         <div class="flex flex-wrap leading-tight text-gray-600 lato-font">
-          Hey there! I'm Kit, Nice to meet you! xx
+          {{ getLatestMessage(channel) }}
         </div>
       </div>
     </div>
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
+
 export default {
   components: {},
   data() {
@@ -162,7 +164,8 @@ export default {
             ]
           }
         }
-      ]
+      ],
+      channelLoader: null
     };
   },
   computed: {
@@ -207,9 +210,75 @@ export default {
         user => user.nickname !== this.$store.state.user.nickname
       );
       return targetUser[0].nickname;
+    },
+    getLatestMessage(channel) {
+      let latestMsgIndex = channel.messages.length - 1;
+      console.log("latestMsgIndex", latestMsgIndex);
+      if (latestMsgIndex == -1) {
+        return "Start a new conversation now!";
+      } else {
+        return channel.messages[latestMsgIndex].content;
+      }
+    },
+    async getChannels() {
+      try {
+        const results = await this.$apollo.query({
+          query: gql`
+            query($nickname: String!) {
+              getUser(nickname: $nickname) {
+                channels {
+                  createdAt
+                  messages {
+                    by {
+                      nickname
+                    }
+                    in {
+                      name
+                    }
+                    content
+                    timestamp
+                  }
+                  name
+                  users {
+                    nickname
+                    media {
+                      index
+                      type
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          variables: {
+            nickname: this.$store.state.user.nickname
+          }
+        });
+        console.log("getUser results:", results.data.getUser);
+        //store user object in vuex (simulate login)
+        this.$store.commit("setChannels", results.data.getUser.channels);
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
-  created() {}
+  async mounted() {
+    this.getChannels();
+  },
+  async mounted() {
+    console.log("messages.vue mounted.");
+    this.getChannels();
+    this.channelLoader = setInterval(() => {
+      this.getChannels();
+    }, 1000);
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log("messages.vue is unmounted.");
+    clearInterval(this.channelLoader);
+    console.log("channelLoader stopped");
+    next();
+  }
 };
 </script>
 
