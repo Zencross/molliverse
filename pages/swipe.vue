@@ -18,27 +18,33 @@
         @submit="onSubmit"
       >
         <template slot-scope="scope">
+          <!-- <div class="z-10">{{ scope }}</div> -->
           <div class="relative flex justify-center h-full">
+            <!-- Buttons for carousel behavior -->
             <div class="absolute z-30 flex w-full h-full">
               <div
                 id="lastMedia"
                 class="z-30 w-1/2 h-full bg-transparent rounded-xl"
-                @click="onClickLastMedia"
+                @click="onClickLastMedia(scope)"
               ></div>
               <div
                 id="nextMedia"
                 class="z-30 w-1/2 h-full bg-transparent rounded-xl"
-                @click="onClickNextMedia"
+                @click="onClickNextMedia(scope)"
               ></div>
             </div>
 
             <div class="absolute z-40 flex w-full px-2 mt-4 bg-transparent">
               <div
-                v-for="media in scope.data.media"
+                v-for="media in scope.data.media.filter(
+                  media => media.url !== null
+                )"
                 :key="media.url"
-                class="w-full h-1 mx-1 bg-white rounded-full opacity-50"
+                class="w-full h-1 mx-1 bg-black rounded-full opacity-50"
                 :class="[
-                  scope.data.media.indexOf(media) === currentMediaIndex
+                  scope.data.media
+                    .filter(media => media.url !== null)
+                    .indexOf(media) === currentMediaIndex
                     ? 'opacity-100'
                     : ''
                 ]"
@@ -46,23 +52,63 @@
             </div>
 
             <div class="absolute top-0 w-full h-full">
-              <img
-                id="mediaImg"
-                :src="getMediaSrc(scope)"
-                class="object-cover w-full h-full rounded-xl"
-                alt="photo"
-              />
+              <div>
+                <!-- Weird Error Happens Here -->
+                <!-- I cannot access the media object property (type, url, etc) when currentMediaIndex increment / decrement -->
+
+                <!-- This works -->
+                Media Object =
+                {{
+                  scope.data.media
+                    .filter(m => m.url !== null)
+                    .sort((a, b) => {
+                      return a.index - b.index;
+                    })[currentMediaIndex]
+                }}
+
+                <br />
+
+                <!-- This doesn't work -->
+                {{
+                  scope.data.media
+                    .filter(m => m.url !== null)
+                    .sort((a, b) => {
+                      return a.index - b.index;
+                    })[currentMediaIndex].type
+                }}
+
+                <!-- This doesn't work -->
+                {{
+                  scope.data.media
+                    .filter(m => m.url !== null)
+                    .sort((a, b) => {
+                      return a.index - b.index;
+                    })[currentMediaIndex].url
+                }}
+              </div>
               <!-- <img
+                v-if="
+                  scope.data.media.filter(media => media.url !== null)[
+                    currentMediaIndex
+                  ].type === 'Image'
+                "
                 id="mediaImg"
-                v-if="isMediaPhoto(scope)"
-                :src="getMediaSrc(scope)"
+                :src="
+                  scope.data.meida.filter(media => media.url !== null)[
+                    currentMediaIndex
+                  ].url
+                "
                 class="object-cover w-full h-full rounded-xl"
                 alt="photo"
               />
               <video
+                v-else
                 id="mediaVideo"
-                v-if="isMediaVideo(scope)"
-                :src="getMediaSrc(scope)"
+                :src="
+                  scope.data.meida.filter(media => media.url !== null)[
+                    currentMediaIndex
+                  ].url
+                "
                 autoplay
                 playsinline
                 loop
@@ -131,8 +177,6 @@ export default {
   components: { TopBar, VueTinder },
   data() {
     return {
-      isMediaPhoto: false,
-      isMediaVideo: false,
       currentMediaIndex: 0,
       queue: [],
       offset: 0,
@@ -141,10 +185,11 @@ export default {
   },
   created() {
     // this.mock();
+    console.log("DOM created");
     this.loadUsers();
   },
   mounted() {
-    // this.checkMediaType(0);
+    console.log("DOM mounted");
 
     var topBar = document.getElementById("topBar");
     var buttonGroup = document.getElementById("buttonGroup");
@@ -202,15 +247,15 @@ export default {
             }
           `
         });
-        console.log("queryUsers results:", results.data.queryUser);
         this.queue = results.data.queryUser;
         console.log("queue", this.queue);
-        // this.userSelected = this.users[0].nickname;
+        // return results.data.queryUser;
       } catch (error) {
         console.error(error);
       }
     },
     mock(count = 5, append = true) {
+      console.log("mock running");
       const list = [];
       for (let i = 0; i < count; i++) {
         list.push({ id: source[this.offset] });
@@ -228,32 +273,33 @@ export default {
     onClickMessager() {
       this.$router.push("/messages");
     },
-    onClickLastMedia() {
-      console.log("last Media clicked");
+    currentMedia(scope) {
+      let media = scope.data.media
+        .filter(media => media.url !== null)
+        .sort((a, b) => {
+          return a.index - b.index;
+        });
+      return media;
+    },
+    onClickLastMedia(scope) {
+      console.log("last Media clicked", scope);
       if (this.currentMediaIndex !== 0) {
         this.currentMediaIndex -= 1;
-        this.checkMediaType(this.currentMediaIndex);
-        console.log("currentIndex", this.currentMediaIndex);
+        console.log("currentMediaIndex", this.currentMediaIndex);
       }
     },
-    onClickNextMedia() {
-      console.log("next Media clicked");
-      if (this.currentMediaIndex < this.userProfileMedia.length - 1) {
+    onClickNextMedia(scope) {
+      console.log("next Media clicked", scope);
+      if (
+        this.currentMediaIndex <
+        scope.data.media.filter(media => media.url !== null).length - 1
+      ) {
         this.currentMediaIndex += 1;
-        this.checkMediaType(this.currentMediaIndex);
-        console.log("currentIndex", this.currentMediaIndex);
+        console.log("currentMediaIndex", this.currentMediaIndex);
       }
     },
-    checkMediaType(index) {
-      if (this.$store.state.userProfileMedia[index].type === "Image") {
-        console.log(`media at index ${index} is a photo`);
-        this.isMediaPhoto = true;
-        this.isMediaVideo = false;
-      } else if (this.$store.state.userProfileMedia[index].type === "Video") {
-        console.log(`media at index ${index} is a video`);
-        this.isMediaPhoto = false;
-        this.isMediaVideo = true;
-      }
+    getMediaSrc(scope) {
+      return "";
     },
     onSubmit(choice) {
       console.log("user choice", choice);
@@ -267,18 +313,23 @@ export default {
         if (this.history.length) {
           //一个个 rewind
           this.$refs.tinder.rewind([this.history.pop()]);
+
           // 一次性 rewind 全部
           // this.$refs.tinder.rewind(this.history)
           // this.history = []
+
           // 一次随机 rewind 多个
           //   this.$refs.tinder.rewind(
           //     this.history.splice(-Math.ceil(Math.random() * 3))
           //   );
+
           // 非 api调用的添加
           // this.queue.unshift(this.history.pop())
           // this.queue.push(this.history.pop())
+
           // 非头部添加
           // this.queue.splice(1, 0, this.history.pop())
+
           // 一次性 rewind 多个，并且含有非头部添加的 item
           // this.queue.unshift(this.history.pop())
           // this.queue.unshift(...this.history)
@@ -286,21 +337,9 @@ export default {
       } else {
         this.$refs.tinder.decide(choice);
       }
-    },
-    getMediaSrc(scope) {
-      // return scope.media[0].url;
-      if (scope) {
-        console.log("scope", scope.data);
-        return scope.data.media[0].url;
-      }
     }
   },
-  computed: {
-    userProfileMedia() {
-      // return this.$store.state.userProfileMedia.filter(e => e.url !== null);
-    }
-  },
-  mounted() {}
+  computed: {}
 };
 </script>
 
