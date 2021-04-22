@@ -121,7 +121,7 @@ export default {
     isMediaPhoto(id) {
       if (
         this.$store.state.userProfileMedia[id] &&
-        this.$store.state.userProfileMedia[id].type === "Image"
+        this.$store.state.userProfileMedia[id].type === "IMAGE"
       ) {
         console.log(
           `media at index ${id} is`,
@@ -133,7 +133,7 @@ export default {
     isMediaVideo(id) {
       if (
         this.$store.state.userProfileMedia[id] &&
-        this.$store.state.userProfileMedia[id].type === "Video"
+        this.$store.state.userProfileMedia[id].type === "VIDEO"
       ) {
         console.log(
           `media at index ${id} is`,

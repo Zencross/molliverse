@@ -111,7 +111,7 @@ export const mutations = {
     if (state.photo) {
       state.userProfileMedia.splice(index, 1, {
         ...state.userProfileMedia[index],
-        type: "Image",
+        type: "IMAGE",
         url: state.photo
       });
       console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
@@ -122,7 +122,7 @@ export const mutations = {
     if (state.video) {
       state.userProfileMedia.splice(index, 1, {
         ...state.userProfileMedia[index],
-        type: "Video",
+        type: "VIDEO",
         url: state.video
       }),
         console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
@@ -258,7 +258,7 @@ export const actions = {
           console.log("The object is NULL, skipping this one");
           return { ...e };
         }
-        if (e.type === "Image") {
+        if (e.type === "IMAGE") {
           console.log("photo detected");
           this.$axios.setHeader("Content-Type", "application/json");
           const result = await this.$axios.$post(
@@ -267,7 +267,7 @@ export const actions = {
           );
           console.log("upload photo result", result);
           return { ...e, url: result.url };
-        } else if (e.type === "Video") {
+        } else if (e.type === "VIDEO") {
           console.log("video detected");
           this.$axios.setHeader("Content-Type", "application/json");
           const result = await this.$axios.$post(

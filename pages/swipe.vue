@@ -63,7 +63,7 @@
                       .filter(m => m.url !== null)
                       .sort((a, b) => {
                         return a.index - b.index;
-                      })[currentMediaIndex].type === 'Image'
+                      })[currentMediaIndex].type === 'IMAGE'
                 "
                 id="mediaImg"
                 :src="
@@ -235,6 +235,9 @@ export default {
           `
         });
         this.queue = results.data.queryUser;
+        this.queue = this.queue.filter(
+          ele => ele.nickname !== this.$store.state.user.nickname
+        );
         console.log("queue", this.queue);
         // return results.data.queryUser;
       } catch (error) {
@@ -288,15 +291,47 @@ export default {
     getMediaSrc(scope) {
       return "";
     },
-    onSubmit(choice) {
+    async onSubmit(choice) {
       console.log("user choice", choice);
-      if (this.queue.length < 3) {
-        this.mock();
+      console.log(`${this.queue.length} card left`);
+      this.currentMediaIndex = 0;
+      if (this.queue.length === 1) {
+        console.log("only 1 card left");
       }
+
+      try {
+        const results = await this.$apollo.mutate({
+          mutation: gql`
+            mutation swipe(
+              $sourceNick: String!
+              $targetNick: String!
+              $emotion: Emotion!
+            ) {
+              swipe(
+                sourceNick: $sourceNick
+                targetNick: $targetNick
+                emotion: $emotion
+              ) {
+                match
+              }
+            }
+          `,
+          variables: {
+            sourceNick: this.$store.state.user.nickname,
+            targetNick: choice.key,
+            emotion: choice.type.toUpperCase()
+          }
+        });
+        console.log("swipe results", results);
+      } catch (e) {
+        console.error(e);
+      }
+
       this.history.push(choice.item);
     },
     async decide(choice) {
       if (choice === "rewind") {
+        this.currentMediaIndex = 0;
         if (this.history.length) {
           //一个个 rewind
           this.$refs.tinder.rewind([this.history.pop()]);
@@ -322,6 +357,7 @@ export default {
           // this.queue.unshift(...this.history)
         }
       } else {
+        console.log("this.$refs.tinder.decide(choice)");
         this.$refs.tinder.decide(choice);
       }
     }

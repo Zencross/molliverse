@@ -76,7 +76,11 @@
         placeholder="New Message"
         v-model="input"
       />
-      <div v-if="input" class="flex items-center">
+      <div
+        v-if="input"
+        @keyup.enter="onClickSendMessage"
+        class="flex items-center"
+      >
         <img
           src="/img/send-24px.svg"
           class="flex items-center justify-center w-8 mx-2 mt-1"

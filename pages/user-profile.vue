@@ -97,7 +97,7 @@ export default {
   },
   computed: {
     IconIsImage() {
-      if (this.$store.state.user.media[0].type === "Image") return true;
+      if (this.$store.state.user.media[0].type === "IMAGE") return true;
       else return false;
     },
     userIcon() {
