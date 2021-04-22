@@ -52,51 +52,31 @@
             </div>
 
             <div class="absolute top-0 w-full h-full">
-              <div>
-                <!-- Weird Error Happens Here -->
-                <!-- I cannot access the media object property (type, url, etc) when currentMediaIndex increment / decrement -->
-
-                <!-- This works -->
-                Media Object =
-                {{
-                  scope.data.media
-                    .filter(m => m.url !== null)
-                    .sort((a, b) => {
-                      return a.index - b.index;
-                    })[currentMediaIndex]
-                }}
-
-                <br />
-
-                <!-- This doesn't work -->
-                {{
-                  scope.data.media
-                    .filter(m => m.url !== null)
-                    .sort((a, b) => {
-                      return a.index - b.index;
-                    })[currentMediaIndex].type
-                }}
-
-                <!-- This doesn't work -->
-                {{
-                  scope.data.media
-                    .filter(m => m.url !== null)
-                    .sort((a, b) => {
-                      return a.index - b.index;
-                    })[currentMediaIndex].url
-                }}
-              </div>
-              <!-- <img
+              <img
                 v-if="
-                  scope.data.media.filter(media => media.url !== null)[
-                    currentMediaIndex
-                  ].type === 'Image'
+                  scope.data.media
+                    .filter(m => m.url !== null)
+                    .sort((a, b) => {
+                      return a.index - b.index;
+                    })[currentMediaIndex] &&
+                    scope.data.media
+                      .filter(m => m.url !== null)
+                      .sort((a, b) => {
+                        return a.index - b.index;
+                      })[currentMediaIndex].type === 'Image'
                 "
                 id="mediaImg"
                 :src="
-                  scope.data.meida.filter(media => media.url !== null)[
-                    currentMediaIndex
-                  ].url
+                  scope.data.media
+                    .filter(m => m.url !== null)
+                    .sort((a, b) => {
+                      return a.index - b.index;
+                    })[currentMediaIndex] &&
+                    scope.data.media
+                      .filter(m => m.url !== null)
+                      .sort((a, b) => {
+                        return a.index - b.index;
+                      })[currentMediaIndex].url
                 "
                 class="object-cover w-full h-full rounded-xl"
                 alt="photo"
@@ -105,15 +85,22 @@
                 v-else
                 id="mediaVideo"
                 :src="
-                  scope.data.meida.filter(media => media.url !== null)[
-                    currentMediaIndex
-                  ].url
+                  scope.data.media
+                    .filter(m => m.url !== null)
+                    .sort((a, b) => {
+                      return a.index - b.index;
+                    })[currentMediaIndex] &&
+                    scope.data.media
+                      .filter(m => m.url !== null)
+                      .sort((a, b) => {
+                        return a.index - b.index;
+                      })[currentMediaIndex].url
                 "
                 autoplay
                 playsinline
                 loop
                 class="object-cover w-full h-full rounded-xl"
-              ></video> -->
+              ></video>
             </div>
           </div>
         </template>
