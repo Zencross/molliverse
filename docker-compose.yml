@@ -1,0 +1,10 @@
+mollie-app:
+  build: .
+  container_name: mollie-app
+  volumes:
+    - .:/app
+    - /app/node_modules
+  environment:
+    NODE_ENV: development
+  ports:
+    - "3000:3000"
