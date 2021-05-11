@@ -3,7 +3,7 @@ import fs from "fs";
 
 export default {
   server: {
-    // host: "0.0.0.0",
+    host: "0.0.0.0",
     https: {
       key: fs.readFileSync(path.resolve(__dirname, "server.key")),
       cert: fs.readFileSync(path.resolve(__dirname, "server.crt"))
