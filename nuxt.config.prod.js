@@ -10,7 +10,7 @@ export default {
       cert: fs.readFileSync(path.resolve(__dirname, "server.crt"))
     }
   },
-  ssr: false,
+  mode: "spa",
   publicRuntimeConfig: {
     imageUploadAPI: process.env.IMAGE_UPLOAD_API,
     videoUploadAPI: process.env.VIDEO_UPLOAD_API

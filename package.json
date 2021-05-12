@@ -1,12 +1,13 @@
 {
-  "name": "deepAR-vue",
+  "name": "mollie",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "start": "nuxt start -c nuxt.config.prod.js",
+    "generate": "nuxt generate",
+    "prod": "yarn build && yarn start"
   },
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.1-rc.5",
