@@ -2,7 +2,7 @@ FROM node:12.16.3-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY . ./
 RUN yarn
 
 EXPOSE 3000
