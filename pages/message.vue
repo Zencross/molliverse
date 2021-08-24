@@ -2,7 +2,7 @@
   <div>
     <!-- Top Bar -->
     <div
-      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 border border-t-0 border-b-1"
+      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
       id="topBar"
     >
       <img
@@ -75,12 +75,9 @@
         class="w-9/12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
         placeholder="New Message"
         v-model="input"
-      />
-      <div
-        v-if="input"
         @keyup.enter="onClickSendMessage"
-        class="flex items-center"
-      >
+      />
+      <div v-if="input" class="flex items-center">
         <img
           src="/img/send-24px.svg"
           class="flex items-center justify-center w-8 mx-2 mt-1"
@@ -110,7 +107,8 @@ export default {
     return {
       messages: [],
       input: "",
-      messageLoader: null
+      messageLoader: null,
+      userIsScrolling: false
     };
   },
   computed: {
@@ -128,26 +126,31 @@ export default {
     }
   },
   methods: {
+    handleScroll(event) {
+      // Any code to be executed when the window is scrolled
+      this.userIsScrolling = true;
+      console.log("scrolling detected!!", this.userIsScrolling);
+    },
     scrollToBottom() {
       var topBar = document.getElementById("topBar");
-      console.log("height of top bar", topBar.offsetHeight);
+      // console.log("height of top bar", topBar.offsetHeight);
 
       var inputs = document.getElementById("inputs");
-      console.log("height of inputs", inputs.offsetHeight);
+      // console.log("height of inputs", inputs.offsetHeight);
 
-      console.log("inner height", window.innerHeight);
+      // console.log("inner height", window.innerHeight);
 
       var messages = document.getElementById("messages");
       messages.style.height =
         window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
 
-      console.log("height of messages", messages.offsetHeight);
+      // console.log("height of messages", messages.offsetHeight);
 
       window.setTimeout(function() {
-        var elem = document.getElementById("messages");
-        console.log("elem", elem);
-        elem.scrollTop = elem.scrollHeight;
-      }, 10);
+        // var elem = document.getElementById("messages");
+        messages.scrollTop = messages.scrollHeight;
+        console.log("scrolled");
+      }, 100);
     },
     onClickBack() {
       this.$router.push("/messages");
@@ -163,7 +166,7 @@ export default {
       return today.toLocaleString("en-US", options);
     },
     async loadMessages() {
-      console.log("loading message");
+      // console.log("loading message");
       try {
         const results = await this.$apollo.query({
           query: gql`
@@ -185,15 +188,25 @@ export default {
             name: this.$store.state.messageChannelName
           }
         });
-        console.log("getChannel results:", results.data.getChannel);
+        // console.log("getChannel results:", results.data.getChannel);
         this.messages = results.data.getChannel.messages;
-        this.scrollToBottom();
+
+        // If user hasn't scroll
+        if (this.userIsScrolling) {
+          console.log("User is scrolling, pause auto scroll");
+        } else {
+          this.scrollToBottom();
+          // this.userIsScrolling = false;
+        }
+        // this.scrollToBottom();
       } catch (error) {
         console.error(error);
       }
     },
     async onClickSendMessage() {
-      //console.log("sending message", this.input);
+      if (!this.input) return;
+
+      console.log("sending message", this.input);
       let messageInput = [
         {
           by: { nickname: this.$store.state.user.nickname },
@@ -234,12 +247,16 @@ export default {
       }
 
       this.loadMessages();
+      // this.scrollToBottom();
     }
   },
+
   mounted() {
     console.log("message.vue mounted.");
 
-    this.loadMessages();
+    window.addEventListener("scroll", this.handleScroll);
+
+    // this.loadMessages();
 
     this.messageLoader = setInterval(() => {
       this.loadMessages();
@@ -249,7 +266,13 @@ export default {
     console.log("message.vue is unmounted.");
     clearInterval(this.messageLoader);
     console.log("messageLoader stopped");
+    window.removeEventListener("scroll", this.handleScroll);
+    console.log("remove scroll event listener");
     next();
+  },
+  destroyed() {
+    if (this.messageLoader) clearInterval(this.messageLoader);
+    window.removeEventListener("scroll", this.handleScroll);
   }
 };
 </script>
@@ -282,5 +305,9 @@ export default {
   display: flex;
   flex-direction: column;
   /* height: 200px; */
+}
+
+.body {
+  overflow: hidden;
 }
 </style>
