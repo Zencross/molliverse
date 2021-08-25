@@ -47,10 +47,10 @@
         alt="close"
         @click="onClickCloseVideoPreview"
       />
-      <!-- <video v-if="video" :src="video" autoplay loop playsinline></video> -->
-      <video v-if="video" autoplay loop playsinline>
-        <source type="video/webm" :src="video" />
-      </video>
+      <video v-if="video" :src="video" autoplay loop playsinline></video>
+      <!-- <video v-if="video" autoplay loop playsinline>
+        <source type="video/mp4" :src="video" />
+      </video> -->
       <div class="fixed bottom-0 z-40 flex justify-center w-full mb-8">
         <div class="p-2 bg-white rounded-full" @click="onClickVideoTick">
           <img
@@ -185,7 +185,7 @@ export default {
       this.mediaRecorder.onstop = async e => {
         console.log("video onStop");
         //var blob = new Blob(chunks, { type: "video/webm;codecs=vp8" });
-        var blob = new Blob(chunks, { type: "video/webm" });
+        var blob = new Blob(chunks, { type: "video/mp4" });
         chunks = [];
 
         const blobToBase64 = blob => {
