@@ -37,6 +37,8 @@
               </div>
         </div>
 
+        <div class="h-screen  bg-gray-100"> </div>
+        
      </div> 
 </template>
 

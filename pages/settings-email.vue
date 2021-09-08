@@ -27,11 +27,13 @@
             Your email is verified
         </div>
         
-        <div class="text-xl font-normal text-gray-700 lato-font">
+        <div class="text-lg font-normal text-gray-700 lato-font">
             <div class="pb-4 pt-3 border-b-2 text-center">
             <div class="">Send email verification </div>
             </div>
         </div>
+        <div class="h-screen  bg-gray-100"> </div>
+
         
     </div>
 

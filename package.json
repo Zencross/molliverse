@@ -10,6 +10,7 @@
     "prod": "yarn build && yarn start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@nuxtjs/apollo": "^4.0.1-rc.5",
     "@nuxtjs/axios": "^5.13.1",
     "@tailwindcss/aspect-ratio": "^0.2.0",

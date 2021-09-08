@@ -55,7 +55,7 @@
 
               <div class="pb-4 pt-3 pl-4 border-b-2 flex">
                 <div class="flex-1">Show me</div>
-                <div class="pr-4 text-gray-700">Women ></div>
+                <div class="pr-4 text-gray-700" @click="onClickShowMe">Women ></div>
               </div>
 
               <div class="pb-4 pt-3 border-b-2">
@@ -88,12 +88,12 @@
           <div class="text-sm font-medium lato-font ">
               <div class="pb-4 pt-4 pl-4 border-b-2 flex">  
                 <div class="flex-1">Email </div>
-                <div class="pr-4 text-gray-700">></div>
+                <div class="pr-4 text-gray-700" @click="onClickNotificationEmail">></div>
               </div>
 
               <div class="pb-4 pt-3 pl-4 border-b-2 flex">
                 <div class="flex-1">Push notifications</div>
-                <div class="pr-4 text-gray-700">></div>
+                <div class="pr-4 text-gray-700" @click="onClickPushNotifications">></div>
               </div>
           </div>
 
@@ -190,6 +190,15 @@
     },
     onClickLocation() {
       this.$router.push("/settings-location")
+    },
+    onClickShowMe() {
+      this.$router.push("/settings-showMe");
+    },
+    onClickNotificationEmail() {
+      this.$router.push("/settings-notificationsEmail")
+    },
+    onClickPushNotifications() {
+      this.$router.push("/settings-notificationsPushNotifications")
     }
   }
      
