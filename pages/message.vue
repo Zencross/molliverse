@@ -13,7 +13,7 @@
       />
       <div class="flex items-center w-full ml-2">
         <img
-          v-if="messageTargetAvatarType == 'PHOTO'"
+          v-if="messageTargetAvatarType == 'IMAGE'"
           :src="messageTargetAvatar"
           alt="Avatar"
           class="object-cover w-12 h-12 rounded-full"

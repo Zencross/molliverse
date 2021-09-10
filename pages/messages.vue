@@ -35,7 +35,7 @@
       @click="onClickItem(channel)"
     >
       <img
-        v-if="getTargetAvatarType(channel) == 'PHOTO'"
+        v-if="getTargetAvatarType(channel) == 'IMAGE'"
         :src="getTargetAvatar(channel)"
         alt="Avatar"
         class="object-cover w-16 h-16 ml-3 rounded-full"
