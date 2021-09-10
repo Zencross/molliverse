@@ -36,9 +36,14 @@
 
     <!-- Controls -->
     <div class="flex items-center w-full justify-evenly">
-      <div class="flex flex-col items-center justify-center">
+      <div
+        class="flex flex-col items-center justify-center"
+        @click="onClickSettings"
+      >
         <img src="/img/settings.svg" class="w-16 h-16" alt="" />
-        <div class="mt-1 text-sm lato-font">Settings</div>
+        <div class="mt-1 text-sm lato-font">
+          Settings
+        </div>
       </div>
       <div
         class="flex flex-col items-center justify-center"
@@ -137,6 +142,9 @@ export default {
     },
     onClickEditInfo() {
       //this.$router.push("/name");
+    },
+    onClickSettings() {
+      this.$router.push("/settings");
     },
     onClickName() {
       this.$router.push("/swipe");
