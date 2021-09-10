@@ -285,9 +285,6 @@ export default {
     }
   },
   async mounted() {
-    this.getChannels();
-  },
-  async mounted() {
     console.log("messages.vue mounted.");
     this.getChannels();
     this.channelLoader = setInterval(() => {
