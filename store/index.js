@@ -43,6 +43,7 @@ export const state = () => ({
   messageTargetId: null,
   messageTargetName: "",
   messageTargetAvatar: "",
+  messageTargetAvatarType: "",
   channels: [],
   messageChannelName: ""
 });
@@ -73,11 +74,18 @@ export const mutations = {
   },
   setMessageTargetName(state, val) {
     state.messageTargetName = val;
-    console.log("VUEX: set messageTargetId to", state.messageTargetName);
+    console.log("VUEX: set messageTargetName to", state.messageTargetName);
   },
   setMessageTargetAvatar(state, val) {
     state.messageTargetAvatar = val;
-    console.log("VUEX: set messageTargetId to", state.messageTargetAvatar);
+    console.log("VUEX: set messageTargetAvatar to", state.messageTargetAvatar);
+  },
+  setMessageTargetAvatarType(state, val) {
+    state.messageTargetAvatarType = val;
+    console.log(
+      "VUEX: set messageTargetAvatarType to",
+      state.messageTargetAvatarType
+    );
   },
   setFaceTrackingModelReady(state, val) {
     state.faceTrackingModelReady = val;

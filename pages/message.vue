@@ -13,10 +13,20 @@
       />
       <div class="flex items-center w-full ml-2">
         <img
+          v-if="messageTargetAvatarType == 'PHOTO'"
           :src="messageTargetAvatar"
-          alt=""
+          alt="Avatar"
           class="object-cover w-12 h-12 rounded-full"
         />
+        <video
+          autoplay
+          loop
+          playsinline
+          v-if="messageTargetAvatarType == 'VIDEO'"
+          :src="messageTargetAvatar"
+          alt="Avatar Video"
+          class="object-cover w-12 h-12 rounded-full"
+        ></video>
         <div class="ml-2 text-lg font-semibold lato-font">
           {{ messageTargetName }}
         </div>
@@ -117,6 +127,9 @@ export default {
     // },
     messageTargetAvatar() {
       return this.$store.state.messageTargetAvatar;
+    },
+    messageTargetAvatarType() {
+      return this.$store.state.messageTargetAvatarType;
     },
     messageTargetName() {
       return this.$store.state.messageTargetName;

@@ -35,10 +35,21 @@
       @click="onClickItem(channel)"
     >
       <img
+        v-if="getTargetAvatarType(channel) == 'PHOTO'"
         :src="getTargetAvatar(channel)"
         alt="Avatar"
         class="object-cover w-16 h-16 ml-3 rounded-full"
       />
+
+      <video
+        autoplay
+        loop
+        playsinline
+        v-if="getTargetAvatarType(channel) == 'VIDEO'"
+        :src="getTargetAvatar(channel)"
+        alt="Avatar Video"
+        class="object-cover w-16 h-16 ml-3 rounded-full"
+      ></video>
 
       <div class="flex flex-col justify-center w-9/12 mx-3">
         <div class="text-lg font-bold lato-font">
@@ -189,6 +200,7 @@ export default {
       this.$store.commit("setMessageChannelName", channel.name);
       this.$store.commit("setMessageTargetName", targetUser[0].nickname);
       this.$store.commit("setMessageTargetAvatar", targetUserMedia[0].url);
+      this.$store.commit("setMessageTargetAvatarType", targetUserMedia[0].type);
 
       //document.getElementById(match.id).style.backgroundColor = "#e2e8f0";
       this.$router.push("/message");
@@ -196,13 +208,22 @@ export default {
     onClickTitle() {
       this.$router.push("/user-profile");
     },
+    getTargetAvatarType(channel) {
+      let targetUser = channel.users.filter(
+        user => user.nickname !== this.$store.state.user.nickname
+      );
+
+      let arr = targetUser[0].media.filter(media => media.index === 0);
+      console.log("avatar type", arr[0].type);
+      return arr[0].type;
+    },
     getTargetAvatar(channel) {
       let targetUser = channel.users.filter(
         user => user.nickname !== this.$store.state.user.nickname
       );
 
       let arr = targetUser[0].media.filter(media => media.index === 0);
-
+      console.log("avatar url", arr[0]);
       return arr[0].url;
     },
     getTargetNickname(channel) {
