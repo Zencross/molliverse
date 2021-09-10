@@ -49,12 +49,13 @@
         class="mt-6"
         @click="onClickSignIn"
       />
-      <nuxt-link
-        to="name"
+
+      <div
+        @click="onClickCreateNewProfile"
         class="mt-4 text-white underline karla-font focus:outline-none"
       >
         Create a new profile
-      </nuxt-link>
+      </div>
     </div>
   </div>
 </template>
@@ -144,6 +145,9 @@ export default {
       }
       //go to user-profile page
       this.$router.push("/user-profile");
+    },
+    onClickCreateNewProfile() {
+      this.$router.replace("/name");
     }
   },
   computed: {
