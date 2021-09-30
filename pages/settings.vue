@@ -6,7 +6,7 @@
         class=" text-xl font-bold lato-font flex-1">
         Settings
       </div>
-      <div @click="onClickTitle" class="lato-font font-bold text-xl text-purple-800 pr-4"> Done </div>
+      <div @click="onClickTitle" class="lato-font font-bold text-xl text-pink-600 pr-4"> Done </div>
     </div>
     <!-- Settings menu -->
       <!--Account Setting -->
@@ -17,7 +17,7 @@
               <div class="pb-4 pt-4 pl-4 border-b-2 flex">  
                 <div class="flex-1">Phone Number </div>
                 <div class=" text-gray-700">
-                  +852 97489993
+                   {{ getPhoneNumber }}
                   <span class="pr-4 text-gray-700" @click="onClickPhoneNumber">></span>
                 </div>
               </div>
@@ -176,6 +176,7 @@
 // import 'vue-range-component/dist/vue-range-slider.css'
 // import VueRangeSlider from 'vue-range-component'
 import VueSlider from 'vue-slider-component'
+import { mapGetters } from 'vuex';
 
 
   export default {
@@ -250,7 +251,11 @@ import VueSlider from 'vue-slider-component'
     onClickPushNotifications() {
       this.$router.push("/settings-notificationsPushNotifications")
     }
+  },
+  computed: {
+    ...mapGetters(['getPhoneNumber'])
   }
+  
      
   }
 
@@ -279,12 +284,12 @@ import VueSlider from 'vue-slider-component'
 
 /* process style */
 .vue-slider-process {
-  background-color: #800080;
+  background-color: #d53f8c;
   border-radius: 15px;
   transition: background-color 0.3s;
 }
 .vue-slider:hover .vue-slider-process {
-  background-color: #800080;
+  background-color: #d53f8c;
 }
 
 /* mark style */
@@ -318,22 +323,22 @@ import VueSlider from 'vue-slider-component'
   transition: box-shadow 0.3s, border-color 0.3s;
 }
 .vue-slider:hover .vue-slider-dot-handle {
-  border-color: #800080;
+  border-color: #d53f8c;
 }
 
 .vue-slider-dot-handle-focus {
-  border-color: #800080;
-  box-shadow: 0 0 0 5px rgba(222, 54, 255, 0.445);
+  border-color: #d53f8c;
+  box-shadow: 0 0 0 5px rgb(95, 91, 93);
 }
 .vue-slider:hover .vue-slider-dot-handle-focus {
-  border-color: #800080;
+  border-color: #d53f8c;
 }
 
 .vue-slider-dot-handle:hover {
-  border-color: #800080;
+  border-color: #d53f8c;
 }
 .vue-slider:hover .vue-slider-dot-handle:hover {
-  border-color: #800080;
+  border-color: #d53f8c;
 }
 
 .vue-slider-dot-handle-disabled {
@@ -352,8 +357,8 @@ import VueSlider from 'vue-slider-component'
   padding: 4px 6px;
   color: #fff;
   border-radius: 5px;
-  border-color: #800080;
-  background-color: #800080;
+  border-color: #d53f8c;
+  background-color: #d53f8c;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transform: scale(0.9);
   transition: transform 0.3s;

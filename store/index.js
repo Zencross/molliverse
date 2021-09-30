@@ -1,5 +1,9 @@
 import gql from "graphql-tag";
 
+// export const getters = {
+//   getPhoneNumber: state => state.phoneNumber
+// };
+
 export const state = () => ({
   user: null,
   photo: null,
@@ -44,7 +48,8 @@ export const state = () => ({
   messageTargetName: "",
   messageTargetAvatar: "",
   channels: [],
-  messageChannelName: ""
+  messageChannelName: "",
+  phoneNumber: ""
 });
 
 export const mutations = {
@@ -246,6 +251,10 @@ export const mutations = {
   setMessageChannelName(state, val) {
     state.messageChannelName = val;
     console.log("VUEX: set messageChannelName", state.messageChannelName);
+  },
+  setPhoneNumber(state, val) {
+    state.phoneNumber = val;
+    console.log("VUEX: set phoneNumber", state.phoneNumber);
   }
 };
 
@@ -378,5 +387,14 @@ export const actions = {
     commit("setUniversity", "");
     commit("resetPassions");
     commit("resetUserProfileMedia");
+  },
+  setPhoneNumber(context) {
+    context.commit("setPhoneNumber", { val });
+  }
+};
+
+export const getters = {
+  getPhoneNumber(state) {
+    return state.phoneNumber;
   }
 };

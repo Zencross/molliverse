@@ -25,6 +25,14 @@
                 <vue-slider v-model="value" v-bind="options"/>
                 </div>
       </div>
+       <div class="pb-4 pt-4 pl-4 border-b-2 flex">  
+        <div class="flex-1">Phone Number </div>
+        <div class=" text-gray-700">
+          {{ phoneNumber }}
+          <settings-phone-number v-model="phoneNumber"/>
+          <!-- <span class="pr-4 text-gray-700" @click="onClickPhoneNumber">></span> -->
+        </div>
+      </div>
     </div>
 
 </template>
@@ -35,10 +43,11 @@
 // import HistogramSlider from "vue-histogram-slider";
 // import "vue-histogram-slider/dist/histogram-slider.css";
 import VueSlider from 'vue-slider-component'
+import SettingsPhoneNumber, { phoneNumber } from '../pages/settings-phoneNumber.vue'
 // import 'vue-slider-component/theme/antd.css'
 
 export default {
-      components: { VueSlider },
+      components: { VueSlider, SettingsPhoneNumber },
       data: () => ({
         value: [18, 45],
         options: {
