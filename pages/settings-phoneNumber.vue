@@ -16,13 +16,12 @@
             PHONE NUMBER
         </div>
 
-        <form @submit="onSubmit"> 
             <div class="text-lg font-medium lato-font">
 
                 <div class="pb-4 pt-3 pl-4 border-b-2 flex">
                     <!-- <div class="flex-1">+852 97489993 </div> -->
                     <div class="">
-                        <input :value="phoneNumber" placeholder="phone number" type="text" class="flex-1">
+                        <input v-model='phoneNumber' placeholder="phone number" type="text" class="flex-1">
                     </div>
                     <!-- <div class="pl-40 submit">
                         <input type="submit" value="✓" class=" text-purple-700 bg-white" >
@@ -36,14 +35,14 @@
             </div>
             
             <div class="text-xl font-bold text-purple-700 lato-font">
-                <div class="pb-4 pt-3 border-b-2 text-center">
-                <input type="submit"  value="Update my phone number " class="bg-white font-bold" >
+                <div class="pb-4 pt-3 border-b-2 text-center pl-10">
+                <input @click="onClickUpdate" value="Update my number" class="bg-white font-bold" >
                 </div>
             </div>
     <!-- </div> -->
         <!-- <div class="h-screen  bg-gray-100"> </div> -->
 
-     </form>   
+       
     </div>
      
 </template>
@@ -61,23 +60,26 @@ import { mapGetters, mapActions } from 'vuex'
             onClickSettings() {
                 this.$router.push("/settings");
             },
-            onSubmit(value) {
-                this.$store.commit("setPhoneNumber",value);
-                console.log(phoneNumber);
-                // this.$router.push('/settings')
-            },
-            ...mapActions(['setPhoneNumber'])
+            onClickUpdate() {
+                this.$router.push("/settings")
+            }
+            // onSubmit(value) {
+            //     this.$store.commit("setPhoneNumber",value);
+            //     console.log(value);
+            //     this.$router.push('/settings')
+            // },
+            // ...mapActions(['setPhoneNumber'])
         },
         computed: {
             phoneNumber: {
                 get() {
                     return this.$store.state.phoneNumber;
                 },
-                // set(value) {
-                //     this.$store.commit("setPhoneNumber", value);
-                // }
+                set(value) {
+                    this.$store.commit("setPhoneNumber", value);
+                }
             },
-            // ...mapGetters(['setPhoneNumber'])
+            // ...mapGetters(['getPhoneNumber'])
         }
     }
 

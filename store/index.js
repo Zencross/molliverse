@@ -49,7 +49,8 @@ export const state = () => ({
   messageTargetAvatar: "",
   channels: [],
   messageChannelName: "",
-  phoneNumber: ""
+  phoneNumber: "",
+  email: ""
 });
 
 export const mutations = {
@@ -255,6 +256,10 @@ export const mutations = {
   setPhoneNumber(state, val) {
     state.phoneNumber = val;
     console.log("VUEX: set phoneNumber", state.phoneNumber);
+  },
+  setEmail(state, val) {
+    state.email = val;
+    console.log("VUEX: set email", state.email);
   }
 };
 
@@ -387,14 +392,14 @@ export const actions = {
     commit("setUniversity", "");
     commit("resetPassions");
     commit("resetUserProfileMedia");
-  },
-  setPhoneNumber(context) {
-    context.commit("setPhoneNumber", { val });
   }
+  // setPhoneNumber(context, payload) {
+  //   context.commit("setPhoneNumber", { payload });
+  // }
 };
 
-export const getters = {
-  getPhoneNumber(state) {
-    return state.phoneNumber;
-  }
-};
+// export const getters = {
+//   getPhoneNumber(state) {
+//     return state.phoneNumber;
+//   }
+// };

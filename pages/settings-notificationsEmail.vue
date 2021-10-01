@@ -19,7 +19,7 @@
         <div class="text-lg font-medium lato-font">
 
             <div class="pb-4 pt-3 pl-4 border-b-2 flex">
-            <div class="flex-1">siena.l852@gmail.com </div>
+            <div class="flex-1">{{ this.$store.state.email }} </div>
             <div class="pr-4 text-purple-700">✓</div>
             </div>
         </div>

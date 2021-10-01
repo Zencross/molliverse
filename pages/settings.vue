@@ -17,7 +17,7 @@
               <div class="pb-4 pt-4 pl-4 border-b-2 flex">  
                 <div class="flex-1">Phone Number </div>
                 <div class=" text-gray-700">
-                   {{ getPhoneNumber }}
+                   {{ this.$store.state.phoneNumber }}
                   <span class="pr-4 text-gray-700" @click="onClickPhoneNumber">></span>
                 </div>
               </div>
@@ -29,7 +29,7 @@
 
               <div class="pb-4 pt-3 pl-4 border-b-2 flex">
                 <div class="flex-1">Email</div>
-                <div class="pr-4 text-gray-700" @click="onClickEmail">siena.l852@gmail.com ></div>
+                <div class="pr-4 text-gray-700" @click="onClickEmail">{{ this.$store.state.email }} ></div>
               </div>
           </div>
 
@@ -252,9 +252,6 @@ import { mapGetters } from 'vuex';
       this.$router.push("/settings-notificationsPushNotifications")
     }
   },
-  computed: {
-    ...mapGetters(['getPhoneNumber'])
-  }
   
      
   }
