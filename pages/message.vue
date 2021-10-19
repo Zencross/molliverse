@@ -166,7 +166,7 @@ export default {
       return today.toLocaleString("en-US", options);
     },
     async loadMessages() {
-      // console.log("loading message");
+      console.log("loading message");
       try {
         const results = await this.$apollo.query({
           query: gql`
@@ -188,16 +188,27 @@ export default {
             name: this.$store.state.messageChannelName
           }
         });
-        // console.log("getChannel results:", results.data.getChannel);
+
+        console.log("loadMessages results", results.data.getChannel.messages);
+
+        let oldMsgsLength = this.messages.length;
+        let newMsgsLength = results.data.getChannel.messages.length;
+
+        //  Update the messages array
         this.messages = results.data.getChannel.messages;
 
-        // If user hasn't scroll
-        if (this.userIsScrolling) {
-          console.log("User is scrolling, pause auto scroll");
-        } else {
+        if (newMsgsLength > oldMsgsLength) {
           this.scrollToBottom();
-          // this.userIsScrolling = false;
+          console.log("call scrollToBottom");
         }
+
+        // // If user hasn't scroll
+        // if (this.userIsScrolling) {
+        //   console.log("User is scrolling, pause auto scroll");
+        // } else {
+        //   this.scrollToBottom();
+        //   // this.userIsScrolling = false;
+        // }
         // this.scrollToBottom();
       } catch (error) {
         console.error(error);
