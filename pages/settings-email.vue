@@ -19,7 +19,8 @@
         <div class="text-lg font-medium lato-font">
 
             <div class="pb-4 pt-3 pl-4 border-b-2 flex">
-            <div class="flex-1">siena.l852@gmail.com </div>
+            <!-- <div class="flex-1">siena.l852@gmail.com </div> -->
+            <input v-model='email' placeholder="email" type="text" class="flex-1">
             <div class="pr-4 text-purple-700">✓</div>
             </div>
         </div>
@@ -44,6 +45,16 @@
         methods: {
             onClickSettings() {
                 this.$router.push("/settings");
+            }
+        },
+        computed: {
+            email: {
+                get() {
+                    return this.$store.state.email;
+                },
+                set(value) {
+                    this.$store.commit('setEmail', value)
+                }
             }
         }
     }

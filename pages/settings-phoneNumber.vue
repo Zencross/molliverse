@@ -16,36 +16,70 @@
             PHONE NUMBER
         </div>
 
-        <div class="text-lg font-medium lato-font">
+            <div class="text-lg font-medium lato-font">
 
-              <div class="pb-4 pt-3 pl-4 border-b-2 flex">
-                <div class="flex-1">+852 97489993 </div>
-                <div class="pr-4 text-purple-700">✓</div>
-              </div>
-        </div>
-        <div class= "bg-gray-100 pt-2 pb-8 pl-4 border-b-2 text-sm text-gray-700 font-thin lato-font">
-            Verified phone number
-        </div>
-        
-        <div class="text-xl font-semibold text-purple-700 lato-font">
-            <div class="pb-4 pt-3 border-b-2 text-center">
-            <div class="">Update my phone number </div>
+                <div class="pb-4 pt-3 pl-4 border-b-2 flex">
+                    <!-- <div class="flex-1">+852 97489993 </div> -->
+                    <div class="">
+                        <input v-model='phoneNumber' placeholder="phone number" type="text" class="flex-1">
+                    </div>
+                    <!-- <div class="pl-40 submit">
+                        <input type="submit" value="✓" class=" text-purple-700 bg-white" >
+                    </div> -->
+                    <!-- <div class="pr-4 text-purple-700" @click="onClickPhoneNumber">✓</div> -->
+                    
+                </div>
             </div>
-        </div>
+            <div class= "bg-gray-100 pt-2 pb-8 pl-4 border-b-2 text-sm text-gray-700 font-thin lato-font">
+                Verified phone number 
+            </div>
+            
+            <div class="text-xl font-bold text-purple-700 lato-font">
+                <div class="pb-4 pt-3 border-b-2 text-center pl-10">
+                <input @click="onClickUpdate" value="Update my number" class="bg-white font-bold" >
+                </div>
+            </div>
+    <!-- </div> -->
+        <!-- <div class="h-screen  bg-gray-100"> </div> -->
 
-        <div class="h-screen  bg-gray-100"> </div>
-
-     </div>   
-    
+       
+    </div>
      
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
     export default {
+        // data() {
+        //     return {
+        //         phoneNumber: ""
+        //     }
+        // },
         methods: {
             onClickSettings() {
                 this.$router.push("/settings");
+            },
+            onClickUpdate() {
+                this.$router.push("/settings")
             }
+            // onSubmit(value) {
+            //     this.$store.commit("setPhoneNumber",value);
+            //     console.log(value);
+            //     this.$router.push('/settings')
+            // },
+            // ...mapActions(['setPhoneNumber'])
+        },
+        computed: {
+            phoneNumber: {
+                get() {
+                    return this.$store.state.phoneNumber;
+                },
+                set(value) {
+                    this.$store.commit("setPhoneNumber", value);
+                }
+            },
+            // ...mapGetters(['getPhoneNumber'])
         }
     }
 
