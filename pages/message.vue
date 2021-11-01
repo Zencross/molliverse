@@ -38,7 +38,10 @@
     </div>
 
     <!-- Never Have I Ever Game Window -->
-    <div class="absolute top-auto z-20 w-full bg-white" v-if="showGameWindow">
+    <div
+      class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      v-if="showNHIESetupWindow"
+    >
       <!-- <p>Game Window Here</p> -->
       <!-- Category Tab -->
       <div class="flex h-10">
@@ -61,9 +64,11 @@
           Offensive
         </button>
       </div>
+
       <div class="p-4 text-xl font-semibold text-brandPurple">
         Never have I ever ...
       </div>
+
       <!-- Harmless Content -->
       <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
         <div
@@ -75,8 +80,11 @@
             {{ item }}
           </div>
           <button
-            class="h-8 px-3 font-semibold bg-white border border-purple-700 rounded-2xl text-brandPurple"
+            class="h-8 px-3 font-semibold bg-white border border-purple-700 rounded-2xl text-brandPurple "
             @click="NHIEUserSelections.push(item)"
+            :class="[
+              NHIEUserSelections.includes(item) ? 'bg-modalBtnGreen' : ''
+            ]"
           >
             I Have
           </button>
@@ -125,9 +133,42 @@
       </div>
 
       <div
-        class="mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+        v-if="NHIEUserSelections.length < 5"
+        class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
       >
         {{ NHIEUserSelections.length }} / 5
+      </div>
+      <div
+        v-else
+        class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+        @click="onClickStartNHIE"
+      >
+        Start Game
+      </div>
+    </div>
+
+    <!-- NHIE Window -->
+    <div
+      v-if="showNHIEGameWindow"
+      class="absolute top-auto z-20 w-full bg-white shadow-lg"
+    >
+      <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+      <p class="m-2 text-lg text-center">
+        {{ messageTargetName }} has never been to the hospital.
+      </p>
+      <div class="flex m-2">
+        <button
+          class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+          @click="showNHIEGameWindow = false"
+        >
+          True
+        </button>
+        <button
+          class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+          @click="showNHIEGameWindow = false"
+        >
+          False
+        </button>
       </div>
     </div>
 
@@ -213,7 +254,8 @@ export default {
       input: "",
       messageLoader: null,
       userIsScrolling: false,
-      showGameWindow: false,
+      showNHIESetupWindow: false,
+      showNHIEGameWindow: false,
       NHIECategory: "harmless",
       NHIEHarmlessContent: [
         "fainted",
@@ -390,7 +432,11 @@ export default {
     },
     startGame(game) {
       console.log("startGame", game);
-      this.showGameWindow = true;
+      this.showNHIESetupWindow = true;
+    },
+    onClickStartNHIE() {
+      this.showNHIESetupWindow = false;
+      this.showNHIEGameWindow = true;
     }
   },
 
