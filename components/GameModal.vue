@@ -20,6 +20,7 @@
           Would you rather?
         </button>
         <button
+          @click="onClickGame('Never have I ever')"
           class="w-1/2 h-16 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
         >
           Never have I ever
@@ -59,6 +60,10 @@ export default {
   methods: {
     onClickNoThanks() {
       this.showGameModal = false;
+    },
+    onClickGame(game) {
+      this.showGameModal = false;
+      this.$emit("start-game", game);
     }
   }
 };

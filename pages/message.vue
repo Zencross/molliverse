@@ -37,6 +37,100 @@
       </div>
     </div>
 
+    <!-- Never Have I Ever Game Window -->
+    <div class="absolute top-auto z-20 w-full bg-white" v-if="showGameWindow">
+      <!-- <p>Game Window Here</p> -->
+      <!-- Category Tab -->
+      <div class="flex h-10">
+        <button
+          @click="NHIECategory = 'harmless'"
+          class="w-1/3 text-white bg-modalBtnGreen"
+        >
+          Harmless
+        </button>
+        <button
+          @click="NHIECategory = 'delicate'"
+          class="w-1/3 text-white bg-modalBtnOrange"
+        >
+          Delicate
+        </button>
+        <button
+          @click="NHIECategory = 'offensive'"
+          class="w-1/3 text-white bg-modalBtnBlue"
+        >
+          Offensive
+        </button>
+      </div>
+      <div class="p-4 text-xl font-semibold text-brandPurple">
+        Never have I ever ...
+      </div>
+      <!-- Harmless Content -->
+      <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
+        <div
+          class="flex items-center"
+          v-for="item in NHIEHarmlessContent"
+          :key="item"
+        >
+          <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+            {{ item }}
+          </div>
+          <button
+            class="h-8 px-3 font-semibold bg-white border border-purple-700 rounded-2xl text-brandPurple"
+            @click="NHIEUserSelections.push(item)"
+          >
+            I Have
+          </button>
+        </div>
+      </div>
+      <!-- Delicate Content -->
+      <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
+        <div
+          class="flex items-center"
+          v-for="item in NHIEDelicateContent"
+          :key="item"
+        >
+          <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+            {{ item }}
+          </div>
+          <button
+            class="h-8 px-3 font-semibold bg-white border border-purple-700 rounded-2xl text-brandPurple"
+            @click="NHIEUserSelections.push(item)"
+          >
+            I Have
+          </button>
+        </div>
+      </div>
+      <!-- Offensive Content -->
+      <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
+        <div
+          class="flex items-center"
+          v-for="item in NHIEOffensiveContent"
+          :key="item"
+        >
+          <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+            {{ item }}
+          </div>
+          <button
+            class="h-8 px-3 font-semibold bg-white border border-purple-700 rounded-2xl text-brandPurple"
+            @click="NHIEUserSelections.push(item)"
+          >
+            I Have
+          </button>
+        </div>
+      </div>
+
+      <!-- Add custom NEIE item -->
+      <div class="mx-3 mt-3 text-center text-blue-600 underline">
+        Custom Questions
+      </div>
+
+      <div
+        class="mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+      >
+        {{ NHIEUserSelections.length }} / 5
+      </div>
+    </div>
+
     <!-- Message Container -->
     <div class="z-0 overflow-scroll messagesContainer" id="messages">
       <div
@@ -101,7 +195,7 @@
       </div>
     </div>
 
-    <GameModal />
+    <GameModal @start-game="startGame" />
   </div>
 </template>
 
@@ -118,7 +212,28 @@ export default {
       messages: [],
       input: "",
       messageLoader: null,
-      userIsScrolling: false
+      userIsScrolling: false,
+      showGameWindow: false,
+      NHIECategory: "harmless",
+      NHIEHarmlessContent: [
+        "fainted",
+        "been to the hospital",
+        "had a paranormal experience",
+        "gotten stitches"
+      ],
+      NHIEDelicateContent: [
+        "fallen in love",
+        "started a hashtag",
+        "been on TV",
+        "lied to my best friend"
+      ],
+      NHIEOffensiveContent: [
+        "cheated",
+        "ruined someone else's vacation",
+        "used someone else's toothbrush",
+        "broke a bone"
+      ],
+      NHIEUserSelections: []
     };
   },
   computed: {
@@ -272,6 +387,10 @@ export default {
 
       this.loadMessages();
       // this.scrollToBottom();
+    },
+    startGame(game) {
+      console.log("startGame", game);
+      this.showGameWindow = true;
     }
   },
 
