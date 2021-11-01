@@ -10,7 +10,10 @@ module.exports = {
       lightgrey: "#F6F6F6",
       FB: "#384FA2",
       brandPurple: "#89287C",
-      selected: "#333333"
+      selected: "#333333",
+      modalBtnOrange: "#FF8960",
+      modalBtnGreen: "#59AE88",
+      modalBtnBlue: "#169AE4"
     }),
     textColor: theme => ({
       ...theme("colors"),

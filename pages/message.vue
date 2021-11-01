@@ -2,7 +2,7 @@
   <div>
     <!-- Top Bar -->
     <div
-      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
+      class="sticky top-0 z-10 flex items-center justify-between w-full pt-4 pb-4 bg-white border border-t-0 border-b-1"
       id="topBar"
     >
       <img
@@ -27,7 +27,7 @@
           alt="Avatar Video"
           class="object-cover w-12 h-12 rounded-full"
         ></video>
-        <div class="ml-2 text-lg font-semibold lato-font">
+        <div class="ml-3 text-lg font-semibold lato-font">
           {{ messageTargetName }}
         </div>
       </div>
@@ -101,17 +101,17 @@
       </div>
     </div>
 
-    <!-- <Wingman /> -->
+    <GameModal />
   </div>
 </template>
 
 <script>
-import Wingman from "../components/Wingman";
+import GameModal from "../components/GameModal";
 import gql from "graphql-tag";
 
 export default {
   components: {
-    Wingman
+    GameModal
   },
   data() {
     return {
@@ -329,6 +329,7 @@ export default {
   display: flex;
   flex-direction: column;
   /* height: 200px; */
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .body {
