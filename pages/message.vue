@@ -2,7 +2,7 @@
   <div>
     <!-- Top Bar -->
     <div
-      class="sticky top-0 z-10 flex items-center justify-between w-full pt-4 pb-4 bg-white border border-t-0 border-b-1"
+      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
       id="topBar"
     >
       <img
@@ -65,7 +65,7 @@
         </button>
       </div>
 
-      <div class="p-4 text-xl font-semibold text-brandPurple">
+      <div class="px-4 py-2 text-xl font-semibold text-brandPurple">
         Never have I ever ...
       </div>
 
@@ -80,10 +80,12 @@
             {{ item }}
           </div>
           <button
-            class="h-8 px-3 font-semibold bg-white border border-purple-700 rounded-2xl text-brandPurple "
-            @click="NHIEUserSelections.push(item)"
+            class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+            @click="onClickNHIEItem(item)"
             :class="[
-              NHIEUserSelections.includes(item) ? 'bg-modalBtnGreen' : ''
+              NHIEUserSelections.includes(item)
+                ? 'bg-modalBtnGreen text-white'
+                : 'text-brandPurple'
             ]"
           >
             I Have
@@ -101,8 +103,13 @@
             {{ item }}
           </div>
           <button
-            class="h-8 px-3 font-semibold bg-white border border-purple-700 rounded-2xl text-brandPurple"
-            @click="NHIEUserSelections.push(item)"
+            class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+            @click="onClickNHIEItem(item)"
+            :class="[
+              NHIEUserSelections.includes(item)
+                ? 'bg-modalBtnGreen text-white'
+                : 'text-brandPurple'
+            ]"
           >
             I Have
           </button>
@@ -119,8 +126,13 @@
             {{ item }}
           </div>
           <button
-            class="h-8 px-3 font-semibold bg-white border border-purple-700 rounded-2xl text-brandPurple"
-            @click="NHIEUserSelections.push(item)"
+            class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+            @click="onClickNHIEItem(item)"
+            :class="[
+              NHIEUserSelections.includes(item)
+                ? 'bg-modalBtnGreen text-white'
+                : 'text-brandPurple'
+            ]"
           >
             I Have
           </button>
@@ -128,7 +140,7 @@
       </div>
 
       <!-- Add custom NEIE item -->
-      <div class="mx-3 mt-3 text-center text-blue-600 underline">
+      <div class="mx-3 mt-2 text-center text-blue-600 underline">
         Custom Questions
       </div>
 
@@ -437,6 +449,20 @@ export default {
     onClickStartNHIE() {
       this.showNHIESetupWindow = false;
       this.showNHIEGameWindow = true;
+    },
+    onClickNHIEItem(item) {
+      console.log("NHIE", item);
+      if (this.NHIEUserSelections.includes(item)) {
+        for (var i = 0; i < this.NHIEUserSelections.length; i++) {
+          if (this.NHIEUserSelections[i] === item) {
+            this.NHIEUserSelections.splice(i, 1);
+          }
+        }
+        console.log("NHIE", this.NHIEUserSelections);
+      } else {
+        this.NHIEUserSelections.push(item);
+        console.log("NHIE", this.NHIEUserSelections);
+      }
     }
   },
 
