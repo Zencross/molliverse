@@ -32,193 +32,205 @@
         </div>
       </div>
       <div class="flex items-center justify-around mr-4">
-        <img src="/img/video-call.svg" class="w-10 mr-2" alt="" />
+        <img
+          src="/img/video-call.svg"
+          class="w-10 mr-2"
+          alt=""
+          @click="showGameModal = !showGameModal"
+        />
         <img src="/img/phone-call.svg" class="w-10" alt="" />
       </div>
     </div>
 
     <!-- Never Have I Ever Game Window -->
-    <div
-      class="absolute top-auto z-20 w-full bg-white shadow-lg"
-      v-if="showNHIESetupWindow"
-    >
-      <!-- <p>Game Window Here</p> -->
-      <!-- Category Tab -->
-      <div class="flex h-10">
-        <button
-          @click="NHIECategory = 'harmless'"
-          class="w-1/3 text-white bg-modalBtnGreen"
-        >
-          Harmless
-        </button>
-        <button
-          @click="NHIECategory = 'delicate'"
-          class="w-1/3 text-white bg-modalBtnOrange"
-        >
-          Delicate
-        </button>
-        <button
-          @click="NHIECategory = 'offensive'"
-          class="w-1/3 text-white bg-modalBtnBlue"
-        >
-          Offensive
-        </button>
-      </div>
-
-      <div class="px-4 py-2 text-xl font-semibold text-brandPurple">
-        Never have I ever ...
-      </div>
-
-      <!-- Harmless Content -->
-      <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
-        <div
-          class="flex items-center"
-          v-for="item in NHIEHarmlessContent"
-          :key="item"
-        >
-          <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
-            {{ item }}
-          </div>
-          <button
-            class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
-            @click="onClickNHIEItem(item)"
-            :class="[
-              NHIEUserSelections.includes(item)
-                ? 'bg-modalBtnGreen text-white'
-                : 'text-brandPurple'
-            ]"
-          >
-            I Have
-          </button>
-        </div>
-      </div>
-      <!-- Delicate Content -->
-      <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
-        <div
-          class="flex items-center"
-          v-for="item in NHIEDelicateContent"
-          :key="item"
-        >
-          <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
-            {{ item }}
-          </div>
-          <button
-            class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
-            @click="onClickNHIEItem(item)"
-            :class="[
-              NHIEUserSelections.includes(item)
-                ? 'bg-modalBtnGreen text-white'
-                : 'text-brandPurple'
-            ]"
-          >
-            I Have
-          </button>
-        </div>
-      </div>
-      <!-- Offensive Content -->
-      <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
-        <div
-          class="flex items-center"
-          v-for="item in NHIEOffensiveContent"
-          :key="item"
-        >
-          <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
-            {{ item }}
-          </div>
-          <button
-            class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
-            @click="onClickNHIEItem(item)"
-            :class="[
-              NHIEUserSelections.includes(item)
-                ? 'bg-modalBtnGreen text-white'
-                : 'text-brandPurple'
-            ]"
-          >
-            I Have
-          </button>
-        </div>
-      </div>
-
-      <!-- Add custom NEIE item -->
-      <div class="mx-3 mt-2 text-center text-blue-600 underline">
-        Custom Questions
-      </div>
-
+    <transition name="fade">
       <div
-        v-if="NHIEUserSelections.length < 5"
-        class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+        v-if="showNHIESetupWindow"
       >
-        {{ NHIEUserSelections.length }} / 5
+        <!-- <p>Game Window Here</p> -->
+        <!-- Category Tab -->
+        <div class="flex h-10">
+          <button
+            @click="NHIECategory = 'harmless'"
+            class="w-1/3 text-white bg-modalBtnGreen"
+          >
+            Harmless
+          </button>
+          <button
+            @click="NHIECategory = 'delicate'"
+            class="w-1/3 text-white bg-modalBtnOrange"
+          >
+            Delicate
+          </button>
+          <button
+            @click="NHIECategory = 'offensive'"
+            class="w-1/3 text-white bg-modalBtnBlue"
+          >
+            Offensive
+          </button>
+        </div>
+
+        <div class="px-4 py-2 text-xl font-semibold text-brandPurple">
+          Never have I ever ...
+        </div>
+
+        <!-- Harmless Content -->
+        <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
+          <div
+            class="flex items-center"
+            v-for="item in NHIEHarmlessContent"
+            :key="item"
+          >
+            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+              {{ item }}
+            </div>
+            <button
+              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              @click="onClickNHIEItem(item)"
+              :class="[
+                NHIEUserSelections.includes(item)
+                  ? 'bg-modalBtnGreen text-white'
+                  : 'text-brandPurple'
+              ]"
+            >
+              I Have
+            </button>
+          </div>
+        </div>
+        <!-- Delicate Content -->
+        <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
+          <div
+            class="flex items-center"
+            v-for="item in NHIEDelicateContent"
+            :key="item"
+          >
+            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+              {{ item }}
+            </div>
+            <button
+              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              @click="onClickNHIEItem(item)"
+              :class="[
+                NHIEUserSelections.includes(item)
+                  ? 'bg-modalBtnGreen text-white'
+                  : 'text-brandPurple'
+              ]"
+            >
+              I Have
+            </button>
+          </div>
+        </div>
+        <!-- Offensive Content -->
+        <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
+          <div
+            class="flex items-center"
+            v-for="item in NHIEOffensiveContent"
+            :key="item"
+          >
+            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+              {{ item }}
+            </div>
+            <button
+              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              @click="onClickNHIEItem(item)"
+              :class="[
+                NHIEUserSelections.includes(item)
+                  ? 'bg-modalBtnGreen text-white'
+                  : 'text-brandPurple'
+              ]"
+            >
+              I Have
+            </button>
+          </div>
+        </div>
+
+        <!-- Add custom NEIE item -->
+        <div class="mx-3 mt-2 text-center text-blue-600 underline">
+          Custom Questions
+        </div>
+
+        <div
+          v-if="NHIEUserSelections.length < 5"
+          class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+        >
+          {{ NHIEUserSelections.length }} / 5
+        </div>
+        <div
+          v-else
+          class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+          @click="onClickStartNHIE"
+        >
+          Start Game
+        </div>
       </div>
-      <div
-        v-else
-        class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
-        @click="onClickStartNHIE"
-      >
-        Start Game
-      </div>
-    </div>
+    </transition>
 
     <!-- NHIE Window -->
-    <div
-      v-if="showNHIEGameWindow"
-      class="absolute top-auto z-20 w-full bg-white shadow-lg"
-    >
-      <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
-      <p class="m-2 text-lg text-center">
-        {{ messageTargetName }} has never been to the hospital.
-      </p>
-      <div class="flex m-2">
-        <button
-          class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
-          @click="showNHIEGameWindow = false"
-        >
-          True
-        </button>
-        <button
-          class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
-          @click="showNHIEGameWindow = false"
-        >
-          False
-        </button>
+    <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never been to the hospital.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            @click="showNHIEGameWindow = false"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            @click="showNHIEGameWindow = false"
+          >
+            False
+          </button>
+        </div>
       </div>
-    </div>
+    </transition>
 
     <!-- Message Container -->
     <div class="z-0 overflow-scroll messagesContainer" id="messages">
-      <div
-        v-for="message in messages"
-        class="flex w-full px-2 my-2 lato-font"
-        :class="[
-          message.by.nickname === messageTargetName
-            ? 'justify-start'
-            : 'justify-end'
-        ]"
-      >
+      <transition-group name="fade">
         <div
-          class="flex flex-col w-1/2 text-sm leading-tight"
+          v-for="message in messages"
+          :key="message.timestamp"
+          class="flex w-full px-2 my-2 lato-font"
           :class="[
-            message.by.nickname === messageTargetName ? 'receive' : 'send'
+            message.by.nickname === messageTargetName
+              ? 'justify-start'
+              : 'justify-end'
           ]"
         >
-          <div>
-            {{ message.content }}
-          </div>
-          <div class="flex items-center mt-2 mb-1 text-xs">
-            <div class="mr-2">{{ formattedDate(message.timestamp) }}</div>
-            <!-- <img
+          <div
+            class="flex flex-col w-1/2 text-sm leading-tight"
+            :class="[
+              message.by.nickname === messageTargetName ? 'receive' : 'send'
+            ]"
+          >
+            <div>
+              {{ message.content }}
+            </div>
+            <div class="flex items-center mt-2 mb-1 text-xs">
+              <div class="mr-2">{{ formattedDate(message.timestamp) }}</div>
+              <!-- <img
               v-if="message.by.nickname === messageTargetName"
               src="/img/white-sent-icon.svg"
               alt=""
             /> -->
-            <img
-              v-if="message.by.nickname !== messageTargetName"
-              src="/img/white-sent-icon.svg"
-              alt=""
-            />
+              <img
+                v-if="message.by.nickname !== messageTargetName"
+                src="/img/white-sent-icon.svg"
+                alt=""
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </transition-group>
     </div>
 
     <!-- Input Bar -->
@@ -248,7 +260,13 @@
       </div>
     </div>
 
-    <GameModal @start-game="startGame" />
+    <transition name="fade">
+      <GameModal
+        v-if="showGameModal"
+        @close-modal="closeModal"
+        @start-game="startGame"
+      />
+    </transition>
   </div>
 </template>
 
@@ -266,6 +284,7 @@ export default {
       input: "",
       messageLoader: null,
       userIsScrolling: false,
+      showGameModal: false,
       showNHIESetupWindow: false,
       showNHIEGameWindow: false,
       NHIECategory: "harmless",
@@ -442,8 +461,12 @@ export default {
       this.loadMessages();
       // this.scrollToBottom();
     },
+    closeModal() {
+      this.showGameModal = false;
+    },
     startGame(game) {
       console.log("startGame", game);
+      this.showGameModal = false;
       this.showNHIESetupWindow = true;
     },
     onClickStartNHIE() {
@@ -497,6 +520,15 @@ export default {
 
 .lato-font {
   font-family: "Lato", sans-serif;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 
 /* Original style class for sending and receiving dialog box */

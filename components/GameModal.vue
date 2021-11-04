@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="showGameModal"
-    class="absolute bottom-0 w-full bg-white shadow-2xl rounded-t-xl"
-  >
+  <div class="absolute bottom-0 w-full bg-white shadow-2xl rounded-t-xl">
     <!-- Question -->
     <div class="flex items-center justify-center px-6 pt-8 pb-4">
       <p class="text-center montserrat-font">
@@ -59,7 +56,7 @@ export default {
   },
   methods: {
     onClickNoThanks() {
-      this.showGameModal = false;
+      this.$emit("close-modal");
     },
     onClickGame(game) {
       this.showGameModal = false;
