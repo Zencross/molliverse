@@ -14,14 +14,14 @@
         ref="tinder"
         key-name="nickname"
         :queue.sync="queue"
-        class="w-11/12 h-64"
+        class="z-40 w-11/12 h-64"
         @submit="onSubmit"
       >
         <template slot-scope="scope">
           <!-- <div class="z-10">{{ scope }}</div> -->
           <div class="relative flex justify-center h-full">
             <!-- User Name, Age, and Bio -->
-            <div class="absolute bottom-0 z-40 p-6 mb-12 text-white">
+            <div class="absolute bottom-0 z-40 p-6 mb-20 text-white">
               <p class="text-4xl font-extrabold">
                 {{ scope.data.name }}, {{ scope.data.age }}
               </p>
@@ -136,7 +136,7 @@
 
     <!-- Swipe buttons -->
     <div
-      class="absolute bottom-0 flex justify-between w-full h-24 px-4 pt-4 disable-dbl-tap-zoom"
+      class="absolute bottom-0 z-50 flex justify-between w-full h-24 px-6 disable-dbl-tap-zoom"
       id="buttonGroup"
     >
       <button
@@ -196,14 +196,14 @@ export default {
     document.getElementById("swipe").style.height =
       window.innerHeight -
       topBar.clientHeight -
-      buttonGroup.clientHeight +
+      buttonGroup.clientHeight / 1.65 +
       "px";
 
     console.log("height of top bar:", topBar.clientHeight);
     console.log("height of button grp:", buttonGroup.clientHeight);
     console.log(
       "Carousel height should be: ",
-      window.innerHeight - topBar.clientHeight - buttonGroup.clientHeight
+      window.innerHeight - topBar.clientHeight - buttonGroup.clientHeight / 2
     );
   },
   methods: {
