@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max-h-screen">
     <!-- Top Bar -->
     <div
       class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
@@ -207,14 +207,17 @@
           ]"
         >
           <div
-            class="flex flex-col w-1/2 text-sm leading-tight"
+            class="flex flex-col text-sm leading-tight message-box-max-width"
             :class="[
               message.by.nickname === messageTargetName ? 'receive' : 'send'
             ]"
           >
-            <div>
+            <!-- Message Content -->
+            <p class="break-words whitespace-pre-line">
               {{ message.content }}
-            </div>
+            </p>
+
+            <!-- Message Timestamp -->
             <div class="flex items-center mt-2 mb-1 text-xs">
               <div class="mr-2">{{ formattedDate(message.timestamp) }}</div>
               <!-- <img
@@ -222,6 +225,7 @@
               src="/img/white-sent-icon.svg"
               alt=""
             /> -->
+              <!-- Tick Icon (fake sent/received) -->
               <img
                 v-if="message.by.nickname !== messageTargetName"
                 src="/img/white-sent-icon.svg"
@@ -235,31 +239,39 @@
 
     <!-- Input Bar -->
     <div
-      class="fixed bottom-0 flex w-full pt-2 pb-6 bg-white justify-evenly"
+      class="fixed bottom-0 flex w-full h-20 py-4 bg-white justify-evenly"
       id="inputs"
     >
+      <!-- Plus Icon -->
       <img src="/img/plus-icon.svg" class="w-5 mx-2" alt="" />
-      <input
+
+      <!-- Message Input Box -->
+      <textarea
         type="text"
-        class="w-9/12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
+        class="w-8/12 h-12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
         placeholder="New Message"
         v-model="input"
-        @keyup.enter="onClickSendMessage"
       />
-      <div v-if="input" class="flex items-center">
+
+      <!-- Send Button -->
+      <div
+        v-if="input"
+        class="flex items-center justify-center w-12 h-12 mx-2 bg-gray-200 rounded-full shadow-md"
+      >
         <img
           src="/img/send-24px.svg"
-          class="flex items-center justify-center w-8 mx-2 mt-1"
+          class="flex items-center justify-center w-2/3"
           alt=""
           @click="onClickSendMessage"
         />
       </div>
       <div v-else class="flex">
-        <img src="/img/camera-icon.svg" class="w-8 ml-2" alt="" />
-        <img src="/img/record-icon.svg" class="w-8 mx-2" alt="" />
+        <img src="/img/camera-icon.svg" class="w-6 ml-2" alt="" />
+        <img src="/img/record-icon.svg" class="w-6 mx-2" alt="" />
       </div>
     </div>
 
+    <!-- Game Modal -->
     <transition name="fade">
       <GameModal
         v-if="showGameModal"
@@ -541,11 +553,11 @@ export default {
 } */
 
 .receive {
-  @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-3 pb-2 pr-4;
+  @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-0 pb-3 pr-4;
 }
 
 .send {
-  @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-3 pb-2 pr-4;
+  @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-0 pb-3 pr-4;
 }
 
 .messagesContainer {
@@ -557,5 +569,9 @@ export default {
 
 .body {
   overflow: hidden;
+}
+
+.message-box-max-width {
+  max-width: 70%;
 }
 </style>

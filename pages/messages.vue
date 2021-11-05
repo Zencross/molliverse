@@ -56,7 +56,9 @@
         <div class="text-lg font-bold lato-font">
           {{ getTargetNickname(channel) }}
         </div>
-        <div class="flex flex-wrap leading-tight text-gray-600 lato-font">
+        <div
+          class="flex flex-wrap leading-tight text-gray-600 truncate lato-font"
+        >
           {{ getLatestMessage(channel) }}
         </div>
       </div>
