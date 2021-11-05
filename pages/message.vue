@@ -284,7 +284,7 @@ export default {
       input: "",
       messageLoader: null,
       userIsScrolling: false,
-      showGameModal: false,
+      showGameModal: true,
       showNHIESetupWindow: false,
       showNHIEGameWindow: false,
       NHIECategory: "harmless",

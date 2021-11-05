@@ -28,6 +28,7 @@
     </div> -->
 
     <div
+      v-if="channels"
       class="flex items-center py-4 bg-white border border-t-0 border-b-1"
       v-for="channel in channels"
       :key="channel.name"
@@ -59,6 +60,9 @@
           {{ getLatestMessage(channel) }}
         </div>
       </div>
+    </div>
+    <div v-else class="p-4 text-center text-gray-600">
+      Oops! No match yet. Go find your bliss!
     </div>
   </div>
 </template>

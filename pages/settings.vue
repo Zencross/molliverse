@@ -2,7 +2,7 @@
   <div>
     <!-- Top Bar -->
     <div class="flex w-full pt-6 pb-4 pl-4 border border-t-0 border-b-1">
-      <div class="flex-1 text-xl font-bold  lato-font">
+      <div class="flex-1 text-xl font-bold lato-font">
         Settings
       </div>
       <div
@@ -253,7 +253,7 @@ export default {
   // },
   methods: {
     onClickTitle() {
-      this.$router.push("/login");
+      this.$router.push("/user-profile");
     },
     onClickPhoneNumber() {
       this.$router.push("/settings-phoneNumber");
