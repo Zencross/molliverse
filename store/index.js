@@ -112,28 +112,28 @@ export const mutations = {
   },
   setPhoto(state, val) {
     state.photo = val;
-    console.log("VUEX: set photo to", state.photo);
+    // console.log("VUEX: set photo to", state.photo);
   },
   addPhotoToUserProfileMedia(state, index) {
-    console.log("type of index is", typeof index, index);
+    // console.log("type of index is", typeof index, index);
     if (state.photo) {
       state.userProfileMedia.splice(index, 1, {
         ...state.userProfileMedia[index],
         type: "IMAGE",
         url: state.photo
       });
-      console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
+      //console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
     }
   },
   addVideoToUserProfileMedia(state, index) {
-    console.log("type of index is", typeof index, index);
+    // console.log("type of index is", typeof index, index);
     if (state.video) {
       state.userProfileMedia.splice(index, 1, {
         ...state.userProfileMedia[index],
         type: "VIDEO",
         url: state.video
-      }),
-        console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
+      });
+      //console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
     }
   },
   setUserProfileMedia(state, val) {
@@ -168,7 +168,7 @@ export const mutations = {
   },
   setVideo(state, val) {
     state.video = val;
-    console.log("VUEX: set video to", state.video);
+    // console.log("VUEX: set video to", state.video);
   },
   setActiveEffectIcon(state, val) {
     state.activeEffectIcon = val;
@@ -261,9 +261,9 @@ export const actions = {
   async createUserProfile({ dispatch, commit, state }) {
     const userProfileMediaWithURL = await Promise.all(
       state.userProfileMedia.map(async e => {
-        console.log("turn", e.index);
+        // console.log("turn", e.index);
         if (!e.url) {
-          console.log("The object is NULL, skipping this one");
+          // console.log("The object is NULL, skipping this one");
           return { ...e };
         }
         if (e.type === "IMAGE") {
@@ -273,7 +273,7 @@ export const actions = {
             this.app.$config.imageUploadAPI,
             { image: e.url }
           );
-          console.log("upload photo result", result);
+          // console.log("upload photo result", result);
           return { ...e, url: result.url };
         } else if (e.type === "VIDEO") {
           console.log("video detected");
@@ -282,18 +282,18 @@ export const actions = {
             this.app.$config.videoUploadAPI,
             { video: e.url }
           );
-          console.log("upload video result", result);
+          // console.log("upload video result", result);
           return { ...e, url: result.url };
         }
       })
     );
-    console.log("old userProfileMedia array", state.userProfileMedia);
-    console.log(
-      "Iteration finished. Here's the new media array with url",
-      userProfileMediaWithURL
-    );
+    //console.log("old userProfileMedia array", state.userProfileMedia);
+    //console.log(
+    //  "Iteration finished. Here's the new media array with url",
+    //  userProfileMediaWithURL
+    //);
     commit("setUserProfileMedia", userProfileMediaWithURL);
-    console.log("new userProfileMedia array", state.userProfileMedia);
+    //console.log("new userProfileMedia array", state.userProfileMedia);
   },
   async addUser({ dispatch, commit, state }) {
     let dob = new Date(state.birthday);

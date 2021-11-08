@@ -89,6 +89,9 @@ import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import EffectIconButton from "../components/EffectIconButton";
 
+import { Plugins } from '@capacitor/core';
+import { Camera } from '@capacitor/camera';
+
 export default {
   components: { VueSlickCarousel, EffectIconButton },
   data() {
@@ -254,7 +257,7 @@ export default {
           "c94cd494f31234c2c4f1e46fabadbfbde29c1d44f4ff4f82ca1cbacc234d73f22cb2885f618aa041",
         canvas: document.getElementById("deepar-canvas"),
         numberOfFaces: 1,
-        libPath: "/lib",
+        libPath: "./lib",
         segmentationInfoZip: "segmentation.zip",
         onInitialize: () => {
           console.log("onInitialize callback", deepAR);
@@ -262,8 +265,8 @@ export default {
           deepAR.startVideo(true);
           console.log("initial effect loading (lion)");
           this.$store.commit("setEffectLoadingTrue", 0);
-          deepAR.switchEffect(0, "slot", "/effects/lion", () => {
-            // effect loaded
+          deepAR.switchEffect(0, "slot", "./effects/lion.dar", () => {
+            console.log("changeEffect: changed effect to lion");
             this.$store.commit("setEffectLoadingFalse", 0);
           });
         }
@@ -287,8 +290,8 @@ export default {
         this.showPhotoPreview = true;
       };
 
-      deepAR.onImageVisibilityChanged = function(visible) {
-        console.log("image visible", visible);
+      deepAR.onImageVisibilityChanged = function() {
+        console.log("image visible");
       };
 
       deepAR.onFaceVisibilityChanged = function(visible) {
@@ -296,18 +299,23 @@ export default {
       };
 
       deepAR.onVideoStarted = function() {
+        console.log("video started");
         // var loaderWrapper = document.getElementById("loader-wrapper");
         // loaderWrapper.style.display = "none";
       };
 
+      deepAR.onError = function(errorType, message) {
+        console.log(`errorType: ${errorType} message: ${message}`)
+      }
+
       //  The download of faceTracking model might be the reason why initial load is slow
-      deepAR.downloadFaceTrackingModel("/lib/models-68-extreme.bin", () => {
+      deepAR.downloadFaceTrackingModel("./lib/models-68-extreme.bin", () => {
         console.log("face tracking model ready");
         this.$store.commit("setFaceTrackingModelReady", true);
       });
 
       this.deepARInstance = deepAR;
-      console.log("initialize() ends.");
+      console.log("initialize ends.");
     },
     changeEffect(key) {
       console.log(`${key} selected`);
@@ -316,7 +324,7 @@ export default {
           this.$store.commit("setActiveEffectIcon", "lion");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 0);
-          this.deepARInstance.switchEffect(0, "slot", "/effects/lion", () => {
+          this.deepARInstance.switchEffect(0, "slot", "./effects/lion.dar", () => {
             console.log("changeEffect: changed effect to lion");
             this.$store.commit("setEffectLoadingFalse", 0);
           });
@@ -328,7 +336,7 @@ export default {
           this.deepARInstance.switchEffect(
             0,
             "slot",
-            "/effects/aviators",
+            "./effects/aviators.dar",
             () => {
               console.log("changeEffect: changed effect to aviators");
               this.$store.commit("setEffectLoadingFalse", 1);
@@ -339,7 +347,7 @@ export default {
           this.$store.commit("setActiveEffectIcon", "beard");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 2);
-          this.deepARInstance.switchEffect(0, "slot", "/effects/beard", () => {
+          this.deepARInstance.switchEffect(0, "slot", "./effects/beard.dar", () => {
             console.log("changeEffect: changed effect to beard");
             this.$store.commit("setEffectLoadingFalse", 2);
           });
@@ -351,7 +359,7 @@ export default {
           this.deepARInstance.switchEffect(
             0,
             "slot",
-            "/effects/dalmatian",
+            "./effects/dalmatian.dar",
             () => {
               console.log("changeEffect: changed effect to dalmation");
               this.$store.commit("setEffectLoadingFalse", 3);
@@ -365,7 +373,7 @@ export default {
           this.deepARInstance.switchEffect(
             0,
             "slot",
-            "/effects/flowers",
+            "./effects/flowers.dar",
             () => {
               console.log("changeEffect: changed effect to flowers");
               this.$store.commit("setEffectLoadingFalse", 4);
@@ -376,7 +384,7 @@ export default {
           this.$store.commit("setActiveEffectIcon", "koala");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 5);
-          this.deepARInstance.switchEffect(0, "slot", "/effects/koala", () => {
+          this.deepARInstance.switchEffect(0, "slot", "./effects/koala.dar", () => {
             console.log("changeEffect: changed effect to koala");
             this.$store.commit("setEffectLoadingFalse", 5);
           });
@@ -388,7 +396,7 @@ export default {
           this.deepARInstance.switchEffect(
             0,
             "slot",
-            "/effects/background_segmentation",
+            "./effects/background_segmentation.dar",
             () => {
               console.log(
                 "changeEffect: changed effect to background_segmentation"
@@ -404,7 +412,7 @@ export default {
           this.deepARInstance.switchEffect(
             0,
             "slot",
-            "/effects/teddycigar",
+            "./effects/teddycigar.dar",
             () => {
               console.log("changeEffect: changed effect to teddycigar");
               this.$store.commit("setEffectLoadingFalse", 7);
@@ -417,7 +425,13 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
+    // console.log('Checking camera permissions')
+    // const checkPerms = await Camera.checkPermissions()
+    // console.log('Permissions check', `${JSON.stringify(checkPerms)}`)
+    console.log('Requesting camera permissions')
+    const reqPerms = await Camera.requestPermissions({ permissions: ['camera']})
+    console.log('Permissions requested', `${JSON.stringify(reqPerms)}`)
     if (!this.deepARInstance) this.initialize();
   },
   beforeDestroy() {

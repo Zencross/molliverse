@@ -1,0 +1,6 @@
+{
+  "appId": "life.mollie.dating",
+  "appName": "mollie",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
