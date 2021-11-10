@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full" id="parent">
+  <div class="flex flex-col" id="parent">
     <!-- Top Bar -->
     <div
       class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
@@ -583,10 +583,8 @@ export default {
   @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-3 pb-2 pr-4;
 } */
 
-html,
 body {
-  height: 100%;
-  margin: 0;
+  position: relative;
 }
 
 .receive {
