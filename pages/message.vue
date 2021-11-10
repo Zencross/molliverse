@@ -194,6 +194,7 @@
     </transition>
 
     <!-- Message Container -->
+    <!-- Re-calculate the height of messageContainer when native keyboard is activated -->
     <div class="z-0 overflow-scroll messagesContainer" id="messages">
       <transition-group name="fade">
         <div
@@ -251,6 +252,8 @@
         class="w-8/12 h-12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
         placeholder="New Message"
         v-model="input"
+        @focus="onInputFocus"
+        @blur="onInputBlur"
       />
 
       <!-- Send Button -->
@@ -498,6 +501,12 @@ export default {
         this.NHIEUserSelections.push(item);
         console.log("NHIE", this.NHIEUserSelections);
       }
+    },
+    onInputFocus() {
+      console.log("onInputFocus, native keyboard should be triggered");
+    },
+    onInputBlur() {
+      console.log("onInputBlur, native keyboard should be hide");
     }
   },
 
