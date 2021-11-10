@@ -42,56 +42,78 @@
       </div>
     </div>
 
-    <!-- Never Have I Ever Game Window -->
-    <transition name="fade">
+    <!-- Never Have I Ever Game Setup Window -->
+    <!-- <transition name="fade"> -->
+    <div v-if="showNHIESetupWindow">
       <div
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
-        v-if="showNHIESetupWindow"
+        class="absolute top-0 bottom-0 left-0 right-0 z-20 w-full bg-black opacity-50"
+      ></div>
+
+      <div
+        class="absolute bottom-0 z-30 w-full bg-white shadow-xl rounded-t-xl"
       >
+        <div
+          class="px-4 pt-4 pb-2 text-2xl font-semibold text-center text-black"
+        >
+          Never have I ever
+        </div>
+
+        <div class="px-4 pb-3 text-sm leading-tight text-center text-black">
+          Prompts will pop up on the screen. Select whether you’ve done it or
+          not. You gain a point if you guess correctly on whether your match has
+          done it or not.
+        </div>
+
         <!-- <p>Game Window Here</p> -->
         <!-- Category Tab -->
-        <div class="flex h-10">
+        <div class="flex h-10 mx-3 mb-4">
           <button
             @click="NHIECategory = 'harmless'"
-            class="w-1/3 text-white bg-modalBtnGreen"
+            class="w-1/3 text-sm text-black "
+            :class="[NHIECategory == 'harmless' ? 'font-extrabold' : '']"
           >
             Harmless
           </button>
           <button
             @click="NHIECategory = 'delicate'"
-            class="w-1/3 text-white bg-modalBtnOrange"
+            class="w-1/3 text-sm text-black "
+            :class="[NHIECategory == 'delicate' ? 'font-extrabold' : '']"
           >
             Delicate
           </button>
           <button
+            @click="NHIECategory = 'dirty'"
+            class="w-1/3 text-sm text-black "
+            :class="[NHIECategory == 'dirty' ? 'font-extrabold' : '']"
+          >
+            Dirty
+          </button>
+          <button
             @click="NHIECategory = 'offensive'"
-            class="w-1/3 text-white bg-modalBtnBlue"
+            class="w-1/3 text-sm text-black "
+            :class="[NHIECategory == 'offensive' ? 'font-extrabold' : '']"
           >
             Offensive
           </button>
         </div>
 
-        <div class="px-4 py-2 text-xl font-semibold text-brandPurple">
-          Never have I ever ...
-        </div>
-
         <!-- Harmless Content -->
         <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
           <div
-            class="flex items-center"
+            class="flex items-center justify-between mx-5"
             v-for="item in NHIEHarmlessContent"
             :key="item"
           >
-            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+            <div class="my-2 text-lg text-gray-800 lato-font">
               {{ item }}
             </div>
             <button
-              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
               @click="onClickNHIEItem(item)"
               :class="[
                 NHIEUserSelections.includes(item)
-                  ? 'bg-modalBtnGreen text-white'
-                  : 'text-brandPurple'
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black'
               ]"
             >
               I Have
@@ -101,20 +123,43 @@
         <!-- Delicate Content -->
         <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
           <div
-            class="flex items-center"
+            class="flex items-center justify-between mx-5"
             v-for="item in NHIEDelicateContent"
             :key="item"
           >
-            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+            <div class="my-2 text-lg text-gray-800 lato-font">
               {{ item }}
             </div>
             <button
-              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
               @click="onClickNHIEItem(item)"
               :class="[
                 NHIEUserSelections.includes(item)
-                  ? 'bg-modalBtnGreen text-white'
-                  : 'text-brandPurple'
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black'
+              ]"
+            >
+              I Have
+            </button>
+          </div>
+        </div>
+        <!-- Dirty Content -->
+        <div v-if="NHIECategory == 'dirty'" class="flex flex-col">
+          <div
+            class="flex items-center justify-between mx-5"
+            v-for="item in NHIEDirtyContent"
+            :key="item"
+          >
+            <div class="my-2 text-lg text-gray-800 lato-font">
+              {{ item }}
+            </div>
+            <button
+              class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+              @click="onClickNHIEItem(item)"
+              :class="[
+                NHIEUserSelections.includes(item)
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black'
               ]"
             >
               I Have
@@ -124,20 +169,20 @@
         <!-- Offensive Content -->
         <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
           <div
-            class="flex items-center"
+            class="flex items-center justify-between mx-5"
             v-for="item in NHIEOffensiveContent"
             :key="item"
           >
-            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+            <div class="my-2 text-lg text-gray-800 lato-font">
               {{ item }}
             </div>
             <button
-              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
               @click="onClickNHIEItem(item)"
               :class="[
                 NHIEUserSelections.includes(item)
-                  ? 'bg-modalBtnGreen text-white'
-                  : 'text-brandPurple'
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black'
               ]"
             >
               I Have
@@ -146,25 +191,30 @@
         </div>
 
         <!-- Add custom NEIE item -->
-        <div class="mx-3 mt-2 text-center text-blue-600 underline">
-          Custom Questions
-        </div>
+        <!-- <div class="mx-3 mt-2 text-center text-blue-600 underline">
+            Custom Questions
+          </div> -->
 
-        <div
-          v-if="NHIEUserSelections.length < 5"
-          class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
-        >
-          {{ NHIEUserSelections.length }} / 5
-        </div>
-        <div
-          v-else
-          class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
-          @click="onClickStartNHIE"
-        >
-          Start Game
+        <div class="flex justify-center">
+          <button
+            v-if="NHIEUserSelections.length < 5"
+            class="w-full py-4 m-4 font-semibold text-white bg-black opacity-50 lato-font rounded-xl"
+            disabled
+          >
+            {{ NHIEUserSelections.length }} / 5 selected
+          </button>
+
+          <button
+            v-else
+            class="w-full py-4 m-4 font-semibold text-white bg-black lato-font rounded-xl"
+            @click="onClickStartNHIE"
+          >
+            Start Game
+          </button>
         </div>
       </div>
-    </transition>
+    </div>
+    <!-- </transition> -->
 
     <!-- NHIE Window -->
     <transition name="fade">
@@ -304,19 +354,29 @@ export default {
         "fainted",
         "been to the hospital",
         "had a paranormal experience",
-        "gotten stitches"
+        "gotten stitches",
+        "been to Iceland"
       ],
       NHIEDelicateContent: [
         "fallen in love",
         "started a hashtag",
         "been on TV",
-        "lied to my best friend"
+        "lied to my best friend",
+        "raced on the circuit"
+      ],
+      NHIEDirtyContent: [
+        "being crazy",
+        "stole something in a store",
+        "had crush on relatives",
+        "bully someone in high school",
+        "been drunk"
       ],
       NHIEOffensiveContent: [
         "cheated",
         "ruined someone else's vacation",
         "used someone else's toothbrush",
-        "broke a bone"
+        "broke a bone",
+        "fleed"
       ],
       NHIEUserSelections: []
     };
@@ -484,14 +544,16 @@ export default {
     },
     onClickNHIEItem(item) {
       console.log("NHIE", item);
+
       if (this.NHIEUserSelections.includes(item)) {
+        // Find and remove
         for (var i = 0; i < this.NHIEUserSelections.length; i++) {
           if (this.NHIEUserSelections[i] === item) {
             this.NHIEUserSelections.splice(i, 1);
           }
         }
         console.log("NHIE", this.NHIEUserSelections);
-      } else {
+      } else if (this.NHIEUserSelections.length < 5) {
         this.NHIEUserSelections.push(item);
         console.log("NHIE", this.NHIEUserSelections);
       }
