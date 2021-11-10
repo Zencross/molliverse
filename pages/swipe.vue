@@ -122,7 +122,7 @@
         <img
           class="super-pointer"
           slot="super"
-          src="/img/swipe-superlike-btn.png"
+          src="/img/btn__super-like.svg"
         />
         <!-- Down swipe is disabled -->
         <!-- <img class="down-pointer" slot="down" src="/img/down-txt.png" /> -->
