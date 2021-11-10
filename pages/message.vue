@@ -504,7 +504,7 @@ export default {
       var parent = document.getElementById("parent");
 
       // Calculate 40% of the innerHeight as the keyboard height
-      var IOSKeyboardHeight = Math.round(window.innerHeight * 0.4);
+      var IOSKeyboardHeight = Math.round(window.innerHeight * 0.35);
       console.log("Estimated keyboard height: ", IOSKeyboardHeight);
 
       messages.style.height =
