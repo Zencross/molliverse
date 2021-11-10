@@ -1,5 +1,5 @@
 <template>
-  <div class="max-h-screen">
+  <div class="">
     <!-- Top Bar -->
     <div
       class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
