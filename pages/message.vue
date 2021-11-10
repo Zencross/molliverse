@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="" id="parent">
     <!-- Top Bar -->
     <div
       class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
@@ -501,14 +501,17 @@ export default {
       var messages = document.getElementById("messages");
       var topBar = document.getElementById("topBar");
       var inputs = document.getElementById("inputs");
+      var parent = document.getElementById("parent");
       messages.style.height =
         window.innerHeight -
         topBar.offsetHeight -
         inputs.offsetHeight -
-        270 +
+        300 +
         "px";
 
       console.log("height of messages", messages.offsetHeight);
+
+      window.scrollTo(0, 0);
       messages.scrollTop = messages.scrollHeight;
     },
     onInputBlur() {
