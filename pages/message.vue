@@ -1,5 +1,5 @@
 <template>
-  <div class="" id="parent">
+  <div class="flex flex-col" id="parent">
     <!-- Top Bar -->
     <div
       class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
