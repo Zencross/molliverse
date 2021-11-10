@@ -542,6 +542,13 @@ export default {
 
     // this.loadMessages();
 
+    // Initialize height on loaded
+    var topBar = document.getElementById("topBar");
+    var inputs = document.getElementById("inputs");
+    var messages = document.getElementById("messages");
+    messages.style.height =
+      window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
+
     this.messageLoader = setInterval(() => {
       this.loadMessages();
     }, 1000);
