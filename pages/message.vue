@@ -502,11 +502,16 @@ export default {
       var topBar = document.getElementById("topBar");
       var inputs = document.getElementById("inputs");
       var parent = document.getElementById("parent");
+
+      // Calculate 40% of the innerHeight as the keyboard height
+      var IOSKeyboardHeight = Math.round(window.innerHeight * 0.4);
+      console.log("Estimated keyboard height: ", IOSKeyboardHeight);
+
       messages.style.height =
         window.innerHeight -
         topBar.offsetHeight -
         inputs.offsetHeight -
-        300 +
+        IOSKeyboardHeight +
         "px";
 
       console.log("height of messages", messages.offsetHeight);
