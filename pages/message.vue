@@ -43,178 +43,178 @@
     </div>
 
     <!-- Never Have I Ever Game Setup Window -->
-    <!-- <transition name="fade"> -->
-    <div v-if="showNHIESetupWindow">
-      <div
-        class="absolute top-0 bottom-0 left-0 right-0 z-20 w-full bg-black opacity-50"
-      ></div>
-
-      <div
-        class="absolute bottom-0 z-30 w-full bg-white shadow-xl rounded-t-xl"
-      >
+    <transition name="fade">
+      <div v-if="showNHIESetupWindow">
         <div
-          class="px-4 pt-4 pb-2 text-2xl font-semibold text-center text-black"
+          class="absolute top-0 bottom-0 left-0 right-0 z-20 w-full bg-black opacity-50"
+        ></div>
+
+        <div
+          class="absolute bottom-0 z-30 w-full bg-white shadow-xl rounded-t-xl"
         >
-          Never have I ever
-        </div>
-
-        <div class="px-4 pb-3 text-sm leading-tight text-center text-black">
-          Prompts will pop up on the screen. Select whether you’ve done it or
-          not. You gain a point if you guess correctly on whether your match has
-          done it or not.
-        </div>
-
-        <!-- <p>Game Window Here</p> -->
-        <!-- Category Tab -->
-        <div class="flex h-10 mx-3 mb-4">
-          <button
-            @click="NHIECategory = 'harmless'"
-            class="w-1/3 text-sm text-black "
-            :class="[NHIECategory == 'harmless' ? 'font-extrabold' : '']"
-          >
-            Harmless
-          </button>
-          <button
-            @click="NHIECategory = 'delicate'"
-            class="w-1/3 text-sm text-black "
-            :class="[NHIECategory == 'delicate' ? 'font-extrabold' : '']"
-          >
-            Delicate
-          </button>
-          <button
-            @click="NHIECategory = 'dirty'"
-            class="w-1/3 text-sm text-black "
-            :class="[NHIECategory == 'dirty' ? 'font-extrabold' : '']"
-          >
-            Dirty
-          </button>
-          <button
-            @click="NHIECategory = 'offensive'"
-            class="w-1/3 text-sm text-black "
-            :class="[NHIECategory == 'offensive' ? 'font-extrabold' : '']"
-          >
-            Offensive
-          </button>
-        </div>
-
-        <!-- Harmless Content -->
-        <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
           <div
-            class="flex items-center justify-between mx-5"
-            v-for="item in NHIEHarmlessContent"
-            :key="item"
+            class="px-4 pt-4 pb-2 text-2xl font-semibold text-center text-black"
           >
-            <div class="my-2 text-lg text-gray-800 lato-font">
-              {{ item }}
-            </div>
+            Never Have I Ever
+          </div>
+
+          <div class="px-4 pb-3 text-sm leading-tight text-center text-black">
+            Prompts will pop up on the screen. Select whether you’ve done it or
+            not. You gain a point if you guess correctly on whether your match
+            has done it or not.
+          </div>
+
+          <!-- <p>Game Window Here</p> -->
+          <!-- Category Tab -->
+          <div class="flex h-10 mx-3 mb-4">
             <button
-              class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
-              @click="onClickNHIEItem(item)"
-              :class="[
-                NHIEUserSelections.includes(item)
-                  ? 'bg-black text-white'
-                  : 'bg-white text-black'
-              ]"
+              @click="NHIECategory = 'harmless'"
+              class="w-1/3 text-sm text-black "
+              :class="[NHIECategory == 'harmless' ? 'font-extrabold' : '']"
             >
-              I Have
+              Harmless
+            </button>
+            <button
+              @click="NHIECategory = 'delicate'"
+              class="w-1/3 text-sm text-black "
+              :class="[NHIECategory == 'delicate' ? 'font-extrabold' : '']"
+            >
+              Delicate
+            </button>
+            <button
+              @click="NHIECategory = 'dirty'"
+              class="w-1/3 text-sm text-black "
+              :class="[NHIECategory == 'dirty' ? 'font-extrabold' : '']"
+            >
+              Dirty
+            </button>
+            <button
+              @click="NHIECategory = 'offensive'"
+              class="w-1/3 text-sm text-black "
+              :class="[NHIECategory == 'offensive' ? 'font-extrabold' : '']"
+            >
+              Offensive
             </button>
           </div>
-        </div>
-        <!-- Delicate Content -->
-        <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
-          <div
-            class="flex items-center justify-between mx-5"
-            v-for="item in NHIEDelicateContent"
-            :key="item"
-          >
-            <div class="my-2 text-lg text-gray-800 lato-font">
-              {{ item }}
-            </div>
-            <button
-              class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
-              @click="onClickNHIEItem(item)"
-              :class="[
-                NHIEUserSelections.includes(item)
-                  ? 'bg-black text-white'
-                  : 'bg-white text-black'
-              ]"
-            >
-              I Have
-            </button>
-          </div>
-        </div>
-        <!-- Dirty Content -->
-        <div v-if="NHIECategory == 'dirty'" class="flex flex-col">
-          <div
-            class="flex items-center justify-between mx-5"
-            v-for="item in NHIEDirtyContent"
-            :key="item"
-          >
-            <div class="my-2 text-lg text-gray-800 lato-font">
-              {{ item }}
-            </div>
-            <button
-              class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
-              @click="onClickNHIEItem(item)"
-              :class="[
-                NHIEUserSelections.includes(item)
-                  ? 'bg-black text-white'
-                  : 'bg-white text-black'
-              ]"
-            >
-              I Have
-            </button>
-          </div>
-        </div>
-        <!-- Offensive Content -->
-        <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
-          <div
-            class="flex items-center justify-between mx-5"
-            v-for="item in NHIEOffensiveContent"
-            :key="item"
-          >
-            <div class="my-2 text-lg text-gray-800 lato-font">
-              {{ item }}
-            </div>
-            <button
-              class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
-              @click="onClickNHIEItem(item)"
-              :class="[
-                NHIEUserSelections.includes(item)
-                  ? 'bg-black text-white'
-                  : 'bg-white text-black'
-              ]"
-            >
-              I Have
-            </button>
-          </div>
-        </div>
 
-        <!-- Add custom NEIE item -->
-        <!-- <div class="mx-3 mt-2 text-center text-blue-600 underline">
+          <!-- Harmless Content -->
+          <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
+            <div
+              class="flex items-center justify-between mx-5"
+              v-for="item in NHIEHarmlessContent"
+              :key="item"
+            >
+              <div class="my-2 text-lg text-gray-800 lato-font">
+                {{ item }}
+              </div>
+              <button
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+                @click="onClickNHIEItem(item)"
+                :class="[
+                  NHIEUserSelections.includes(item)
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black'
+                ]"
+              >
+                I Have
+              </button>
+            </div>
+          </div>
+          <!-- Delicate Content -->
+          <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
+            <div
+              class="flex items-center justify-between mx-5"
+              v-for="item in NHIEDelicateContent"
+              :key="item"
+            >
+              <div class="my-2 text-lg text-gray-800 lato-font">
+                {{ item }}
+              </div>
+              <button
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+                @click="onClickNHIEItem(item)"
+                :class="[
+                  NHIEUserSelections.includes(item)
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black'
+                ]"
+              >
+                I Have
+              </button>
+            </div>
+          </div>
+          <!-- Dirty Content -->
+          <div v-if="NHIECategory == 'dirty'" class="flex flex-col">
+            <div
+              class="flex items-center justify-between mx-5"
+              v-for="item in NHIEDirtyContent"
+              :key="item"
+            >
+              <div class="my-2 text-lg text-gray-800 lato-font">
+                {{ item }}
+              </div>
+              <button
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+                @click="onClickNHIEItem(item)"
+                :class="[
+                  NHIEUserSelections.includes(item)
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black'
+                ]"
+              >
+                I Have
+              </button>
+            </div>
+          </div>
+          <!-- Offensive Content -->
+          <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
+            <div
+              class="flex items-center justify-between mx-5"
+              v-for="item in NHIEOffensiveContent"
+              :key="item"
+            >
+              <div class="my-2 text-lg text-gray-800 lato-font">
+                {{ item }}
+              </div>
+              <button
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+                @click="onClickNHIEItem(item)"
+                :class="[
+                  NHIEUserSelections.includes(item)
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black'
+                ]"
+              >
+                I Have
+              </button>
+            </div>
+          </div>
+
+          <!-- Add custom NEIE item -->
+          <!-- <div class="mx-3 mt-2 text-center text-blue-600 underline">
             Custom Questions
           </div> -->
 
-        <div class="flex justify-center">
-          <button
-            v-if="NHIEUserSelections.length < 5"
-            class="w-full py-4 m-4 font-semibold text-white bg-black opacity-50 lato-font rounded-xl"
-            disabled
-          >
-            {{ NHIEUserSelections.length }} / 5 selected
-          </button>
+          <div class="flex justify-center">
+            <button
+              v-if="NHIEUserSelections.length < 5"
+              class="w-full py-4 m-4 font-semibold text-white bg-black opacity-50 lato-font rounded-xl"
+              disabled
+            >
+              {{ NHIEUserSelections.length }} / 5 selected
+            </button>
 
-          <button
-            v-else
-            class="w-full py-4 m-4 font-semibold text-white bg-black lato-font rounded-xl"
-            @click="onClickStartNHIE"
-          >
-            Start Game
-          </button>
+            <button
+              v-else
+              class="w-full py-4 m-4 font-semibold text-white bg-black lato-font rounded-xl"
+              @click="onClickStartNHIE"
+            >
+              Start Game
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- </transition> -->
+    </transition>
 
     <!-- NHIE Window -->
     <transition name="fade">
