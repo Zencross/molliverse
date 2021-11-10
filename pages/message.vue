@@ -360,7 +360,7 @@ export default {
       messages.style.height =
         window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
 
-      // console.log("height of messages", messages.offsetHeight);
+      console.log("height of messages", messages.offsetHeight);
 
       window.setTimeout(function() {
         // var elem = document.getElementById("messages");
@@ -504,9 +504,29 @@ export default {
     },
     onInputFocus() {
       console.log("onInputFocus, native keyboard should be triggered");
+      var messages = document.getElementById("messages");
+      var topBar = document.getElementById("topBar");
+      var inputs = document.getElementById("inputs");
+      messages.style.height =
+        window.innerHeight -
+        topBar.offsetHeight -
+        inputs.offsetHeight -
+        270 +
+        "px";
+
+      console.log("height of messages", messages.offsetHeight);
+      messages.scrollTop = messages.scrollHeight;
     },
     onInputBlur() {
       console.log("onInputBlur, native keyboard should be hide");
+      var messages = document.getElementById("messages");
+      var topBar = document.getElementById("topBar");
+      var inputs = document.getElementById("inputs");
+      messages.style.height =
+        window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
+
+      console.log("height of messages", messages.offsetHeight);
+      messages.scrollTop = messages.scrollHeight;
     }
   },
 
