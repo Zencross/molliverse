@@ -511,7 +511,7 @@ export default {
         window.innerHeight -
         topBar.offsetHeight -
         inputs.offsetHeight -
-        IOSKeyboardHeight +
+        300 +
         "px";
 
       console.log("height of messages", messages.offsetHeight);
