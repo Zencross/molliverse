@@ -45,7 +45,7 @@
     <!-- Never Have I Ever Game Window -->
     <transition name="fade">
       <div
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+        class="top-auto z-20 w-full bg-white shadow-lg"
         v-if="showNHIESetupWindow"
       >
         <!-- <p>Game Window Here</p> -->
@@ -170,7 +170,7 @@
     <transition name="fade">
       <div
         v-if="showNHIEGameWindow"
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+        class="top-auto z-20 w-full bg-white shadow-lg "
       >
         <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
         <p class="m-2 text-lg text-center">
