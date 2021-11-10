@@ -544,7 +544,9 @@ export default {
     console.log("message.vue mounted.");
 
     window.addEventListener("scroll", this.handleScroll);
-
+    window.addEventListener("resize", e => {
+      console.log("resized deteected, new innerHeight:", window.innerHeight);
+    });
     // this.loadMessages();
 
     // Initialize height on loaded
