@@ -511,6 +511,10 @@ export default {
 
       console.log("height of messages", messages.offsetHeight);
 
+      setTimeout(() => {
+        "wait 1 sec and scroll?";
+      }, 1000);
+
       // Scroll to top of page
       window.scrollTo(0, 0);
       document.body.scrollTop = 0;
