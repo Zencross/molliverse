@@ -2,7 +2,7 @@
   <div class="max-h-screen">
     <!-- Top Bar -->
     <div
-      class="fixed top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
+      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
       id="topBar"
     >
       <img
@@ -239,10 +239,7 @@
     </div>
 
     <!-- Input Bar -->
-    <div
-      class="fixed bottom-0 flex w-full h-20 py-4 bg-white justify-evenly"
-      id="inputs"
-    >
+    <div class="flex w-full h-20 py-4 bg-white justify-evenly" id="inputs">
       <!-- Plus Icon -->
       <img src="/img/plus-icon.svg" class="w-5 mx-2" alt="" />
 
