@@ -108,7 +108,7 @@
                 {{ item }}
               </div>
               <button
-                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl disable-dbl-tap-zoom"
                 @click="onClickNHIEItem(item)"
                 :class="[
                   NHIEUserSelections.includes(item)
@@ -131,7 +131,7 @@
                 {{ item }}
               </div>
               <button
-                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl disable-dbl-tap-zoom"
                 @click="onClickNHIEItem(item)"
                 :class="[
                   NHIEUserSelections.includes(item)
@@ -154,7 +154,7 @@
                 {{ item }}
               </div>
               <button
-                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl disable-dbl-tap-zoom"
                 @click="onClickNHIEItem(item)"
                 :class="[
                   NHIEUserSelections.includes(item)
@@ -177,7 +177,7 @@
                 {{ item }}
               </div>
               <button
-                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl"
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl disable-dbl-tap-zoom"
                 @click="onClickNHIEItem(item)"
                 :class="[
                   NHIEUserSelections.includes(item)
@@ -683,5 +683,9 @@ export default {
 
 .message-box-max-width {
   max-width: 70%;
+}
+
+.disable-dbl-tap-zoom {
+  touch-action: manipulation;
 }
 </style>
