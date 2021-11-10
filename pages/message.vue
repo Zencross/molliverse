@@ -517,7 +517,7 @@ export default {
         window.scrollTo(0, 0);
         document.body.scrollTop = 0;
         console.log("Scroll to top of page");
-      }, 1000);
+      }, 100);
 
       // Scroll to latest message
       messages.scrollTop = messages.scrollHeight;
