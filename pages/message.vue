@@ -45,7 +45,7 @@
     <!-- Never Have I Ever Game Window -->
     <transition name="fade">
       <div
-        class="top-auto z-20 w-full bg-white shadow-lg"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
         v-if="showNHIESetupWindow"
       >
         <!-- <p>Game Window Here</p> -->
@@ -170,7 +170,7 @@
     <transition name="fade">
       <div
         v-if="showNHIEGameWindow"
-        class="top-auto z-20 w-full bg-white shadow-lg "
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
       >
         <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
         <p class="m-2 text-lg text-center">
@@ -582,10 +582,6 @@ export default {
 .send {
   @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-3 pb-2 pr-4;
 } */
-
-body {
-  position: relative;
-}
 
 .receive {
   @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-0 pb-3 pr-4;
