@@ -2,7 +2,7 @@
   <div class="max-h-screen">
     <!-- Top Bar -->
     <div
-      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
+      class="fixed top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
       id="topBar"
     >
       <img
@@ -299,7 +299,7 @@ export default {
       input: "",
       messageLoader: null,
       userIsScrolling: false,
-      showGameModal: true,
+      showGameModal: false,
       showNHIESetupWindow: false,
       showNHIEGameWindow: false,
       NHIECategory: "harmless",
@@ -349,12 +349,10 @@ export default {
     },
     scrollToBottom() {
       var topBar = document.getElementById("topBar");
-      // console.log("height of top bar", topBar.offsetHeight);
+      console.log("height of top bar", topBar.offsetHeight);
 
       var inputs = document.getElementById("inputs");
-      // console.log("height of inputs", inputs.offsetHeight);
-
-      // console.log("inner height", window.innerHeight);
+      console.log("height of inputs", inputs.offsetHeight);
 
       var messages = document.getElementById("messages");
       messages.style.height =
@@ -363,7 +361,6 @@ export default {
       console.log("height of messages", messages.offsetHeight);
 
       window.setTimeout(function() {
-        // var elem = document.getElementById("messages");
         messages.scrollTop = messages.scrollHeight;
         console.log("scrolled");
       }, 100);
@@ -405,7 +402,7 @@ export default {
           }
         });
 
-        console.log("loadMessages results", results.data.getChannel.messages);
+        // console.log("loadMessages results", results.data.getChannel.messages);
 
         let oldMsgsLength = this.messages.length;
         let newMsgsLength = results.data.getChannel.messages.length;
@@ -529,7 +526,6 @@ export default {
       messages.scrollTop = messages.scrollHeight;
     }
   },
-
   mounted() {
     console.log("message.vue mounted.");
 
