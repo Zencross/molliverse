@@ -511,8 +511,14 @@ export default {
 
       console.log("height of messages", messages.offsetHeight);
 
+      // Scroll to top of page
       window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      console.log("Scroll to top of page");
+
+      // Scroll to latest message
       messages.scrollTop = messages.scrollHeight;
+      console.log("Scroll to latest message");
     },
     onInputBlur() {
       console.log("onInputBlur, native keyboard should be hide");
