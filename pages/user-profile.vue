@@ -153,7 +153,7 @@ export default {
       this.$router.push("/swipe");
     },
     onClickLogout() {
-      this.$router.push("/login");
+      this.$router.push("/");
       //  TODO: call action that cleans user data & form data
       this.$store.dispatch("clearOnboardingFormStates");
     }
