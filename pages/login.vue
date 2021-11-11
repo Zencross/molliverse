@@ -48,7 +48,7 @@
 
       <div
         @click="onClickCreateNewProfile"
-        class="mt-4 text-white underline karla-font focus:outline-none"
+        class="mt-4 text-black underline karla-font focus:outline-none"
       >
         Create a new profile
       </div>

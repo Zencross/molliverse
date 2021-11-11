@@ -45,21 +45,45 @@
     <!-- Congrat screen (temparory) -->
     <transition name="fade">
       <div
-        class="absolute top-0 bottom-0 left-0 right-0 z-20 flex flex-col items-center w-full bg-white"
+        class="absolute top-0 bottom-0 left-0 right-0 z-20 flex flex-col items-center justify-center w-full bg-white"
         v-if="showNHIECongratScreen"
       >
         <div class="flex items-center justify-center w-full">
-          <img src="/img/Happy Bunch Party of Three.png" alt="" class="" />
+          <img src="/img/you_win.png" alt="" class="" />
         </div>
         <div class="text-3xl font-semibold text-center text-black">
           Congratulations!
         </div>
         <div class="mt-2 text-center">
-          You won Never Have I Ever with {{ messageTargetName }} !
+          You won the game
         </div>
         <button
           class="w-10/12 py-4 mt-6 font-semibold text-black bg-white border border-black lato-font rounded-xl"
           @click="showNHIECongratScreen = false"
+        >
+          Back to Chat
+        </button>
+      </div>
+    </transition>
+
+    <!-- Sorry screen (temparory) -->
+    <transition name="fade">
+      <div
+        class="absolute top-0 bottom-0 left-0 right-0 z-20 flex flex-col items-center justify-center w-full bg-white"
+        v-if="showNHIESorryScreen"
+      >
+        <div class="flex items-center justify-center w-full">
+          <img src="/img/you_lose.png" alt="" class="" />
+        </div>
+        <div class="text-3xl font-semibold text-center text-black">
+          Sorry!
+        </div>
+        <div class="mt-2 text-center">
+          You lost the game
+        </div>
+        <button
+          class="w-10/12 py-4 mt-6 font-semibold text-black bg-white border border-black lato-font rounded-xl"
+          @click="showNHIESorryScreen = false"
         >
           Back to Chat
         </button>
@@ -240,10 +264,37 @@
       </div>
     </transition>
 
-    <!-- NHIE Game Window (True/False) -->
+    <!-- NHIE Game Window 1 (True/False) -->
     <transition name="fade">
       <div
-        v-if="showNHIEGameWindow"
+        v-if="showNHIEGameWindow1"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never fainted.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            @click="onClickGameWindowTrue1"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            @click="onClickGameWindowFalse1"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition>
+
+    <!-- NHIE Game Window 2 (True/False) -->
+    <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow2"
         class="absolute top-auto z-20 w-full bg-white shadow-lg"
       >
         <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
@@ -253,13 +304,94 @@
         <div class="flex m-2">
           <button
             class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
-            @click="onClickGameWindowTrue"
+            @click="onClickGameWindowTrue2"
           >
             True
           </button>
           <button
             class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
-            @click="onClickGameWindowFalse"
+            @click="onClickGameWindowFalse2"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition>
+
+    <!-- NHIE Game Window 3 (True/False) -->
+    <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow3"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never had a paranormal experience.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            @click="onClickGameWindowTrue3"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            @click="onClickGameWindowFalse3"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition>
+
+    <!-- NHIE Game Window 4 (True/False) -->
+    <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow4"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never gotten stitches.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            @click="onClickGameWindowTrue4"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            @click="onClickGameWindowFalse4"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition>
+
+    <!-- NHIE Game Window 5 (True/False) -->
+    <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow5"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never been to Iceland.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            @click="onClickGameWindowTrue5"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            @click="onClickGameWindowFalse5"
           >
             False
           </button>
@@ -372,8 +504,13 @@ export default {
       userIsScrolling: false,
       showGameModal: false,
       showNHIESetupWindow: false,
-      showNHIEGameWindow: false,
+      showNHIEGameWindow1: false,
+      showNHIEGameWindow2: false,
+      showNHIEGameWindow3: false,
+      showNHIEGameWindow4: false,
+      showNHIEGameWindow5: false,
       showNHIECongratScreen: false,
+      showNHIESorryScreen: false,
       NHIECategory: "harmless",
       NHIEHarmlessContent: [
         "fainted",
@@ -565,7 +702,7 @@ export default {
     },
     onClickStartNHIE() {
       this.showNHIESetupWindow = false;
-      this.showNHIEGameWindow = true;
+      this.showNHIEGameWindow1 = true;
     },
     onClickNHIEItem(item) {
       console.log("NHIE", item);
@@ -584,6 +721,16 @@ export default {
       }
     },
     onInputFocus() {
+      console.log("UA: ", navigator.userAgent);
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        ) == false
+      ) {
+        console.log("non mobile detected. Not shrinking the message container");
+        return;
+      }
+
       console.log("onInputFocus, native keyboard should be triggered");
       var messages = document.getElementById("messages");
       var topBar = document.getElementById("topBar");
@@ -626,15 +773,55 @@ export default {
       console.log("height of messages", messages.offsetHeight);
       messages.scrollTop = messages.scrollHeight;
     },
-    onClickGameWindowTrue() {
+    onClickGameWindowTrue1() {
       console.log("True");
-      this.showNHIEGameWindow = false;
+      this.showNHIEGameWindow1 = false;
+      this.showNHIEGameWindow2 = true;
+    },
+    onClickGameWindowFalse1() {
+      console.log("False");
+      this.showNHIEGameWindow1 = false;
+      this.showNHIEGameWindow2 = true;
+    },
+    onClickGameWindowTrue2() {
+      console.log("True");
+      this.showNHIEGameWindow2 = false;
+      this.showNHIEGameWindow3 = true;
+    },
+    onClickGameWindowFalse2() {
+      console.log("False");
+      this.showNHIEGameWindow2 = false;
+      this.showNHIEGameWindow3 = true;
+    },
+    onClickGameWindowTrue3() {
+      console.log("True");
+      this.showNHIEGameWindow3 = false;
+      this.showNHIEGameWindow4 = true;
+    },
+    onClickGameWindowFalse3() {
+      console.log("False");
+      this.showNHIEGameWindow3 = false;
+      this.showNHIEGameWindow4 = true;
+    },
+    onClickGameWindowTrue4() {
+      console.log("True");
+      this.showNHIEGameWindow4 = false;
+      this.showNHIEGameWindow5 = true;
+    },
+    onClickGameWindowFalse4() {
+      console.log("False");
+      this.showNHIEGameWindow4 = false;
+      this.showNHIEGameWindow5 = true;
+    },
+    onClickGameWindowTrue5() {
+      console.log("True");
+      this.showNHIEGameWindow5 = false;
       this.showNHIECongratScreen = true;
     },
-    onClickGameWindowFalse() {
+    onClickGameWindowFalse5() {
       console.log("False");
-      this.showNHIEGameWindow = false;
-      this.showNHIECongratScreen = true;
+      this.showNHIEGameWindow5 = false;
+      this.showNHIESorryScreen = true;
     }
   },
   mounted() {
