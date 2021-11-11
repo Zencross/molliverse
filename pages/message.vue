@@ -276,13 +276,13 @@
         </p>
         <div class="flex m-2">
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
             @click="onClickGameWindowTrue1"
           >
             True
           </button>
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
             @click="onClickGameWindowFalse1"
           >
             False
@@ -303,13 +303,13 @@
         </p>
         <div class="flex m-2">
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
             @click="onClickGameWindowTrue2"
           >
             True
           </button>
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
             @click="onClickGameWindowFalse2"
           >
             False
@@ -330,13 +330,13 @@
         </p>
         <div class="flex m-2">
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
             @click="onClickGameWindowTrue3"
           >
             True
           </button>
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
             @click="onClickGameWindowFalse3"
           >
             False
@@ -357,13 +357,13 @@
         </p>
         <div class="flex m-2">
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
             @click="onClickGameWindowTrue4"
           >
             True
           </button>
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
             @click="onClickGameWindowFalse4"
           >
             False
@@ -384,13 +384,13 @@
         </p>
         <div class="flex m-2">
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
             @click="onClickGameWindowTrue5"
           >
             True
           </button>
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
             @click="onClickGameWindowFalse5"
           >
             False
