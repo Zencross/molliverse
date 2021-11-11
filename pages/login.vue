@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center w-full h-full"
+    class="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center w-full"
   >
     <!-- <img src="../static/img/bliss2.svg" alt="Bliss" class="w-9/12 mt-24"> -->
     <img
