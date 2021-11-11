@@ -721,12 +721,8 @@ export default {
       }
     },
     onInputFocus() {
-      console.log("UA: ", navigator.userAgent);
-      if (
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        ) == false
-      ) {
+      console.log("UA: ", navigator.userAgentData);
+      if (navigator.userAgentData.mobile == false) {
         console.log("non mobile detected. Not shrinking the message container");
         return;
       }
