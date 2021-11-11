@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-between w-full"
-  >
+  <div class="flex flex-col items-center justify-between w-full">
     <img
       src="/img/bliss_new_splash_image_short.png"
       alt="Bliss"

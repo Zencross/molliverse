@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center w-full"
-  >
+  <div class="flex flex-col items-center w-full">
     <!-- <img src="../static/img/bliss2.svg" alt="Bliss" class="w-9/12 mt-24"> -->
     <img
       src="/img/bliss_new_splash_image_short.png"
@@ -48,7 +46,7 @@
 
       <div
         @click="onClickCreateNewProfile"
-        class="mt-4 text-black underline karla-font focus:outline-none"
+        class="mt-4 mb-4 text-black underline karla-font focus:outline-none"
       >
         Create a new profile
       </div>
