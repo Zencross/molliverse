@@ -55,10 +55,10 @@
           Congratulations!
         </div>
         <div class="mt-2 text-center">
-          You won Never Have I Ever with {{ messageTargetName }}
+          You won Never Have I Ever with {{ messageTargetName }} !
         </div>
         <button
-          class="w-10/12 py-4 m-4 font-semibold text-black bg-white border border-black lato-font rounded-xl"
+          class="w-10/12 py-4 mt-6 font-semibold text-black bg-white border border-black lato-font rounded-xl"
           @click="showNHIECongratScreen = false"
         >
           Back to Chat
@@ -373,7 +373,7 @@ export default {
       showGameModal: false,
       showNHIESetupWindow: false,
       showNHIEGameWindow: false,
-      showNHIECongratScreen: true,
+      showNHIECongratScreen: false,
       NHIECategory: "harmless",
       NHIEHarmlessContent: [
         "fainted",
