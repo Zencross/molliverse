@@ -42,6 +42,30 @@
       </div>
     </div>
 
+    <!-- Congrat screen (temparory) -->
+    <transition name="fade">
+      <div
+        class="absolute top-0 bottom-0 left-0 right-0 z-20 flex flex-col items-center w-full bg-white"
+        v-if="showNHIECongratScreen"
+      >
+        <div class="flex items-center justify-center w-full">
+          <img src="/img/Happy Bunch Party of Three.png" alt="" class="" />
+        </div>
+        <div class="text-3xl font-semibold text-center text-black">
+          Congratulations!
+        </div>
+        <div class="mt-2 text-center">
+          You won Never Have I Ever with {{ messageTargetName }}
+        </div>
+        <button
+          class="w-10/12 py-4 m-4 font-semibold text-black bg-white border border-black lato-font rounded-xl"
+          @click="showNHIECongratScreen = false"
+        >
+          Back to Chat
+        </button>
+      </div>
+    </transition>
+
     <!-- Never Have I Ever Game Setup Window -->
     <transition name="fade">
       <div v-if="showNHIESetupWindow">
@@ -216,7 +240,7 @@
       </div>
     </transition>
 
-    <!-- NHIE Window -->
+    <!-- NHIE Game Window (True/False) -->
     <transition name="fade">
       <div
         v-if="showNHIEGameWindow"
@@ -229,13 +253,13 @@
         <div class="flex m-2">
           <button
             class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
-            @click="showNHIEGameWindow = false"
+            @click="onClickGameWindowTrue"
           >
             True
           </button>
           <button
             class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
-            @click="showNHIEGameWindow = false"
+            @click="onClickGameWindowFalse"
           >
             False
           </button>
@@ -349,6 +373,7 @@ export default {
       showGameModal: false,
       showNHIESetupWindow: false,
       showNHIEGameWindow: false,
+      showNHIECongratScreen: true,
       NHIECategory: "harmless",
       NHIEHarmlessContent: [
         "fainted",
@@ -600,6 +625,16 @@ export default {
 
       console.log("height of messages", messages.offsetHeight);
       messages.scrollTop = messages.scrollHeight;
+    },
+    onClickGameWindowTrue() {
+      console.log("True");
+      this.showNHIEGameWindow = false;
+      this.showNHIECongratScreen = true;
+    },
+    onClickGameWindowFalse() {
+      console.log("False");
+      this.showNHIEGameWindow = false;
+      this.showNHIECongratScreen = true;
     }
   },
   mounted() {
