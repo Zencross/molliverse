@@ -721,11 +721,11 @@ export default {
       }
     },
     onInputFocus() {
-      console.log("UA: ", navigator.userAgentData);
-      if (navigator.userAgentData.mobile == false) {
-        console.log("non mobile detected. Not shrinking the message container");
-        return;
-      }
+      console.log("UA: ", navigator.userAgent);
+      // if (navigator.userAgentData.mobile == false) {
+      //   console.log("non mobile detected. Not shrinking the message container");
+      //   return;
+      // }
 
       console.log("onInputFocus, native keyboard should be triggered");
       var messages = document.getElementById("messages");
