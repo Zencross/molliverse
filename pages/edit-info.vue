@@ -1,69 +1,75 @@
 <template>
-    <div class="w-full h-screen select-none">
-            <!-- Top Bar -->
-            <div class="w-full border border-t-0 border-b-1 flex pt-6 pb-4 pl-4">
-            <div
-                class=" text-xl font-bold lato-font flex-1">
-                Edit Info
-            </div>
-            <div class="lato-font font-bold text-xl text-pink-600 pr-4"> Done </div>
-            </div>
-        <div class="bg-gray-100">
-            <div class="flex flex-col items-center w-full">
-            <!-- <div class="flex justify-center w-4/5 mt-2 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Record a Video</div> -->
-            <div class="w-11/12 mt-2 ml-2 text-3xl font-semibold text-dark">
-                Record a video
-            </div>
-            <div
-                class="w-11/12 ml-2 text-xs montserrat-font text-lightgrey disable-dbl-tap-zoom"
-            >
-                Drag to re-order your videos
-            </div>
-            </div>
-            <draggable
-            v-model="userProfileMedia"
-            group="people"
-            @start="drag = true"
-            @end="drag = false"
-            @change="log"
-            class="w-full px-1 my-2 pb-4"
-            >
-            <transition-group
-                tag="div"
-                class="z-10 flex flex-wrap justify-around w-full h-full"
-                name="flip-list"
-            >
-                <div
-                v-for="ele in userProfileMedia"
-                :key="ele.index"
-                class="relative z-10 my-1 bg-darkgrey rounded-xl cell-width cell-aspect-ratio"
-                @click="onClickBox(userProfileMedia.indexOf(ele))"
-                >
-                <img
-                    v-if="!ele.url"
-                    class="absolute bottom-0 right-0 z-30"
-                    src="../static/img/plus-purple-30px.svg"
-                    alt=""
-                />
-                <img
-                    v-if="isMediaPhoto(userProfileMedia.indexOf(ele))"
-                    :src="getMediaSrc(userProfileMedia.indexOf(ele))"
-                    class="absolute top-0 left-0 z-20 object-cover w-full h-full rounded-xl"
-                    alt=""
-                />
-                <video
-                    v-if="isMediaVideo(userProfileMedia.indexOf(ele))"
-                    autoplay
-                    playsinline
-                    loop
-                    :src="getMediaSrc(userProfileMedia.indexOf(ele))"
-                    class="absolute top-0 left-0 z-20 rounded-xl"
-                ></video>
-                </div>
-            </transition-group>
-            </draggable>
-            <!-- <gradient-button buttonText="DONE" /> -->
-            <!-- <app-button
+  <div class="w-full h-screen select-none">
+    <!-- Top Bar -->
+    <div class="flex w-full pt-6 pb-4 pl-4 border border-t-0 border-b-1">
+      <div class="flex-1 text-xl font-bold lato-font">
+        Edit Info
+      </div>
+      <div
+        @click="onClickDone"
+        class="pr-4 text-xl font-bold text-pink-600 lato-font"
+      >
+        Done
+      </div>
+    </div>
+    <div class="bg-gray-100">
+      <div class="flex flex-col items-center w-full">
+        <!-- <div class="flex justify-center w-4/5 mt-2 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Record a Video</div> -->
+        <div class="w-11/12 mt-2 ml-2 text-3xl font-semibold text-dark">
+          Record a video
+        </div>
+        <div
+          class="w-11/12 ml-2 text-xs montserrat-font text-lightgrey disable-dbl-tap-zoom"
+        >
+          Drag to re-order your videos
+        </div>
+      </div>
+      <draggable
+        v-model="userProfileMedia"
+        group="people"
+        @start="drag = true"
+        @end="drag = false"
+        @change="log"
+        class="w-full px-1 pb-4 my-2"
+      >
+        <transition-group
+          tag="div"
+          class="z-10 flex flex-wrap justify-around w-full h-full"
+          name="flip-list"
+        >
+          <div
+            v-for="ele in userProfileMedia"
+            :key="ele.index"
+            class="relative z-10 my-1 bg-darkgrey rounded-xl cell-width cell-aspect-ratio"
+          >
+            <!-- The blank box -->
+            <img
+              v-if="!ele.url"
+              class="absolute bottom-0 right-0 z-30"
+              src="../static/img/plus-purple-30px.svg"
+              alt=""
+            />
+            <!-- The photo -->
+            <img
+              v-if="userProfileMedia[ele.index].type === 'IMAGE'"
+              :src="userProfileMedia[ele.index].url"
+              class="absolute top-0 left-0 z-20 object-cover w-full h-full rounded-xl"
+              alt=""
+            />
+            <!-- The video -->
+            <video
+              v-if="userProfileMedia[ele.index].type === 'VIDEO'"
+              autoplay
+              playsinline
+              loop
+              :src="userProfileMedia[ele.index].url"
+              class="absolute top-0 left-0 z-20 rounded-xl"
+            ></video>
+          </div>
+        </transition-group>
+      </draggable>
+      <!-- <gradient-button buttonText="DONE" /> -->
+      <!-- <app-button
             buttonText="Finish"
             textWhite
             bgPhoneNum
@@ -71,60 +77,100 @@
             @click="onClickFinsih"
             /> -->
 
-            <!-- About Me -->
-       
-            <div class="pt-8 pl-4 text-lg pb-4 font-semibold lato-font bg-gray-100">
-                About me
-            </div>
-             <textarea class="pr-2 pt-4 pl-4 border" placeholder="My relationship status? Netflix, Oreos and sweatpants" rows=6 cols="50"></textarea>
-           
-            <!-- Passions-->
-             <div class="pt-8 pl-4 pb-4 text-lg font-semibold lato-font bg-gray-100">
-                Passions
-            </div>
-            <textarea class="pr-2 pt-4 pl-4 border" placeholder="Boxing, Foodie, Travel" rows=2 cols="50"></textarea>
+      <!-- About Me -->
 
-            <!-- Job Title -->
-            <div class="pt-8 pl-4 pb-4 text-lg font-semibold lato-font bg-gray-100">
-                Job Title
-            </div>
-            <textarea class="pr-2 pt-4 pl-4 border" placeholder="Part time Techie, full time hustler" rows=2 cols="50"></textarea>
-            
-            <!-- Education-->
-            <div class="pt-8 pl-4 pb-4 text-lg font-semibold lato-font bg-gray-100">
-                Education
-            </div>
-            <textarea class="pr-2 pt-4 pl-4 border" placeholder="HKU" rows=2 cols="50"></textarea>
+      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+        About me
+      </div>
+      <textarea
+        class="pt-4 pl-4 pr-2 border"
+        placeholder="My relationship status? Netflix, Oreos and sweatpants"
+        rows="6"
+        cols="50"
+      ></textarea>
 
-            <!-- Company-->
-            <div class="pt-8 pl-4 pb-4 text-lg font-semibold lato-font bg-gray-100">
-                Company
-            </div>
-            <textarea class="pr-2 pt-4 pl-4 border" placeholder="Self-Employed" rows=2 cols="50"></textarea>
+      <!-- Passions-->
+      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+        Passions
+      </div>
+      <textarea
+        class="pt-4 pl-4 pr-2 border"
+        placeholder="Boxing, Foodie, Travel"
+        rows="2"
+        cols="50"
+      ></textarea>
 
-            <!-- Living in-->
-            <div class="pt-8 pl-4 pb-4 text-lg font-semibold lato-font bg-gray-100">
-                Living in 
-            </div>
-            <textarea class="pr-2 pt-4 pl-4 border" placeholder="Hong Kong" rows=2 cols="50"></textarea>
-            
-            <!-- Gender-->
-            <div class="pt-8 pl-4 pb-4 text-lg font-semibold lato-font bg-gray-100">
-                Gender
-            </div>
-            <textarea class="pr-2 pt-4 pl-4 border" placeholder="Male" rows=2 cols="50"></textarea>
-            
-            <!-- Sexual Orientation -->
-            <div class="pt-8 pl-4 pb-4 text-lg font-semibold lato-font bg-gray-100">
-                Sexual Orientation
-            </div>
-            <textarea class="pr-2 pt-4 pl-4 border" placeholder="Straight" rows=2 cols="50"></textarea>
+      <!-- Job Title -->
+      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+        Job Title
+      </div>
+      <textarea
+        class="pt-4 pl-4 pr-2 border"
+        placeholder="Part time Techie, full time hustler"
+        rows="2"
+        cols="50"
+      ></textarea>
 
-            <div class="pt-8 pl-4 pb-4 text-lg font-semibold lato-font bg-gray-100">
-            </div>
+      <!-- Education-->
+      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+        Education
+      </div>
+      <textarea
+        class="pt-4 pl-4 pr-2 border"
+        placeholder="HKU"
+        rows="2"
+        cols="50"
+      ></textarea>
 
-        </div>
+      <!-- Company-->
+      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+        Company
+      </div>
+      <textarea
+        class="pt-4 pl-4 pr-2 border"
+        placeholder="Self-Employed"
+        rows="2"
+        cols="50"
+      ></textarea>
+
+      <!-- Living in-->
+      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+        Living in
+      </div>
+      <textarea
+        class="pt-4 pl-4 pr-2 border"
+        placeholder="Hong Kong"
+        rows="2"
+        cols="50"
+      ></textarea>
+
+      <!-- Gender-->
+      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+        Gender
+      </div>
+      <textarea
+        class="pt-4 pl-4 pr-2 border"
+        placeholder="Male"
+        rows="2"
+        cols="50"
+      ></textarea>
+
+      <!-- Sexual Orientation -->
+      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+        Sexual Orientation
+      </div>
+      <textarea
+        class="pt-4 pl-4 pr-2 border"
+        placeholder="Straight"
+        rows="2"
+        cols="50"
+      ></textarea>
+
+      <div
+        class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font"
+      ></div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -152,57 +198,30 @@ export default {
   computed: {
     userProfileMedia: {
       get() {
-        return this.$store.state.userProfileMedia;
+        // return this.$store.state.userProfileMedia;
+        return this.$store.state.user.media;
       },
       set(value) {
         console.log("setter value", value);
-        this.$store.commit("setUserProfileMedia", value);
+        // this.$store.commit("setUserProfileMedia", value);
       }
     }
   },
-  mounted() {},
+  mounted() {
+    console.log("edit-info page, user object", this.$store.state.user);
+  },
   methods: {
     log(arg) {
       console.log("drag detected", arg);
       // const indexOfMediaMoved = arg.oldIndex;
       // const newIndex = arg.newIndex;
-      this.$store.commit("updateUserProfileMediaIndex");
-      console.log("user Media array", this.userProfileMedia);
-    },
-    onClickBackButton() {
-      this.$router.push("/passions");
+      // this.$store.commit("updateUserProfileMediaIndex");
+      // console.log("user Media array", this.userProfileMedia);
     },
     onClickBox(id) {
       console.log("clicked box ", id);
-      this.$store.commit("setCurrentMediaIndex", id);
+      // this.$store.commit("setCurrentMediaIndex", id);
       this.$router.push("/ar-filter");
-    },
-    getMediaSrc(id) {
-      return this.$store.state.userProfileMedia[id].url;
-    },
-    isMediaPhoto(id) {
-      if (
-        this.$store.state.userProfileMedia[id] &&
-        this.$store.state.userProfileMedia[id].type === "IMAGE"
-      ) {
-        console.log(
-          `media at index ${id} is`,
-          this.$store.state.userProfileMedia[id].type
-        );
-        return true;
-      } else return false;
-    },
-    isMediaVideo(id) {
-      if (
-        this.$store.state.userProfileMedia[id] &&
-        this.$store.state.userProfileMedia[id].type === "VIDEO"
-      ) {
-        console.log(
-          `media at index ${id} is`,
-          this.$store.state.userProfileMedia[id].type
-        );
-        return true;
-      } else return false;
     },
     async onClickFinsih() {
       //  Create User Profile
@@ -213,6 +232,9 @@ export default {
       await this.$store.dispatch("addUser");
       console.log("--------------------addUser finished--------------------");
       this.$router.push("/swipe");
+    },
+    onClickDone() {
+      this.$router.push("/user-profile");
     }
   }
 };

@@ -141,7 +141,7 @@ export default {
       //this.$router.push("/gallery");
     },
     onClickEditInfo() {
-      //this.$router.push("/name");
+      this.$router.push("/edit-info");
     },
     onClickSettings() {
       this.$router.push("/settings");
