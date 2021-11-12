@@ -264,6 +264,46 @@
       </div>
     </transition>
 
+    <!-- NHIE Game Question Window (New)  -->
+    <transition name="fade">
+      <div class="absolute top-auto z-20 w-full bg-white shadow-lg">
+        <div class="flex items-center justify-center">
+          <img
+            src="/img/back-arrow.png"
+            alt="back"
+            class="absolute left-0 ml-4"
+          />
+          <div>
+            <p class="mt-4 text-3xl font-medium text-center">
+              Never Have I Ever
+            </p>
+            <p class="m-2 text-lg text-center">
+              sent a dirty text to the wrong person.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <div class="flex flex-col my-4">
+            <p class="mx-4 mb-2">You</p>
+            <div class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-filled.png" alt="" />
+            </div>
+          </div>
+          <div class="flex flex-col my-4">
+            <p class="mx-4 mb-2 text-right">{{ messageTargetName }}</p>
+            <div class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-filled.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+
     <!-- NHIE Game Window 1 (True/False) -->
     <transition name="fade">
       <div
@@ -401,7 +441,7 @@
 
     <!-- Message Container -->
     <!-- Re-calculate the height of messageContainer when native keyboard is activated -->
-    <div class="z-0 overflow-scroll messagesContainer" id="messages">
+    <div class="relative z-0 overflow-scroll messagesContainer" id="messages">
       <transition-group name="fade">
         <div
           v-for="message in messages"
@@ -442,6 +482,28 @@
           </div>
         </div>
       </transition-group>
+      <!-- NHIE Game Answer Window (True/False) -->
+      <transition name="fade">
+        <div class="z-20 flex flex-col w-full bg-white shadow-lg">
+          <p v-if="showNHIERoundResult" class="text-center">
+            You both lose a life!
+          </p>
+          <div class="flex">
+            <button
+              class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium text-black bg-white border border-black rounded-full disable-dbl-tap-zoom"
+              @click="showNHIERoundResult = true"
+            >
+              True
+            </button>
+            <button
+              class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium text-black bg-white border border-black rounded-full disable-dbl-tap-zoom"
+              @click="showNHIERoundResult = true"
+            >
+              False
+            </button>
+          </div>
+        </div>
+      </transition>
     </div>
 
     <!-- Input Bar -->
@@ -511,6 +573,7 @@ export default {
       showNHIEGameWindow5: false,
       showNHIECongratScreen: false,
       showNHIESorryScreen: false,
+      showNHIERoundResult: false,
       NHIECategory: "harmless",
       NHIEHarmlessContent: [
         "fainted",
