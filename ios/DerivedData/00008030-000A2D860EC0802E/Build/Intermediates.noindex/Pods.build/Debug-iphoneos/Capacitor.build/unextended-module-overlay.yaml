@@ -1,0 +1,13 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/jkscheung/zx/mollie/src/deepAR-vue/ios/DerivedData/00008030-000A2D860EC0802E/Build/Products/Debug-iphoneos/Capacitor/Capacitor.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/jkscheung/zx/mollie/src/deepAR-vue/ios/DerivedData/00008030-000A2D860EC0802E/Build/Intermediates.noindex/Pods.build/Debug-iphoneos/Capacitor.build/unextended-module.modulemap",
+    }]
+  }]
+}

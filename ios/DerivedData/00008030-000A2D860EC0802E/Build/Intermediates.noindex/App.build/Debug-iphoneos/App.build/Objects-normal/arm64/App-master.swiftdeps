@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)"
+options: "4feac5a3e3de34c8d744ae66f4f9bfa63a6721bb89ac8e2363152ab05a2f8ebb"
+build_start_time: [1636702640, 51159858]
+build_end_time: [1636702642, 952597141]
+inputs:
+  "/Users/jkscheung/zx/mollie/src/deepAR-vue/ios/App/App/AppDelegate.swift": [1636702583, 665615081]
