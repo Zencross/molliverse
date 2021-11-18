@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col" id="parent">
+  <div class="flex flex-col -mt-8" id="parent">
     <!-- Top Bar -->
     <div
-      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
+      class="sticky top-0 z-10 flex items-center justify-between w-full pt-10 pb-2 bg-white border border-t-0 border-b-1"
       id="topBar"
     >
       <img
@@ -275,14 +275,15 @@
             src="/img/back-arrow.png"
             alt="back"
             class="absolute left-0 ml-4"
-            @click="onClickBack"
+            @click="onClickExitGame"
           />
           <div>
             <p class="mt-4 text-3xl font-medium text-center">
               Never Have I Ever
             </p>
             <p class="m-2 text-lg text-center">
-              Q{{ NHIETargetUserSelections[NHIETargetQuestionIndex].id }}:
+              Question
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].id }}: <br />
               {{ messageTargetName }}
               has
               {{ NHIETargetUserSelections[NHIETargetQuestionIndex].question }}.
@@ -293,10 +294,26 @@
         <div class="flex justify-between">
           <div class="flex flex-col my-4">
             <p class="mx-4 mb-2">You</p>
-            <div class="flex justify-between mx-4">
+            <!-- Full HP -->
+            <div v-if="NHIEUserLives == 3" class="flex justify-between mx-4">
               <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
               <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
               <img class="" src="/img/game-heart-filled.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 2" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 1" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 0" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
             </div>
           </div>
           <div class="flex flex-col my-4">
@@ -493,12 +510,12 @@
       <transition name="fade">
         <div
           v-if="showNHIEGameWindow"
-          class="z-20 flex flex-col w-full bg-white shadow-lg"
+          class="z-20 flex flex-col w-full bg-white rounded-t-lg"
         >
           <transition name="fade">
             <p
               v-if="NHIERoundResult == 'correct'"
-              class="text-center text-green-500"
+              class="mt-3 font-medium text-center text-green-500"
             >
               You're correct! Q{{
                 NHIETargetUserSelections[NHIETargetQuestionIndex].id
@@ -511,7 +528,7 @@
           <transition name="fade">
             <p
               v-if="NHIERoundResult == 'wrong'"
-              class="text-center text-red-500"
+              class="mt-4 font-medium text-center text-red-500"
             >
               You're wrong! Q{{
                 NHIETargetUserSelections[NHIETargetQuestionIndex].id
@@ -522,14 +539,22 @@
           </transition>
           <div class="flex">
             <button
-              class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium text-black bg-white border border-black rounded-full disable-dbl-tap-zoom"
+              class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium border border-black rounded-full disable-dbl-tap-zoom"
+              :class="[
+                blockTrueButton ? 'bg-black text-white' : 'bg-white text-black'
+              ]"
               @click="onClickNHIEAnswerTrue"
+              :disabled="blockTrueButton"
             >
               True
             </button>
             <button
-              class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium text-black bg-white border border-black rounded-full disable-dbl-tap-zoom"
+              class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium border border-black rounded-full disable-dbl-tap-zoom"
+              :class="[
+                blockFalseButton ? 'bg-black text-white' : 'bg-white text-black'
+              ]"
               @click="onClickNHIEAnswerFalse"
+              :disabled="blockFalseButton"
             >
               False
             </button>
@@ -619,37 +644,41 @@ export default {
         "fallen in love",
         "started a hashtag",
         "been on TV",
-        "lied to my best friend",
+        "lied to a best friend",
         "raced on the circuit"
       ],
       NHIEDirtyContent: [
         "being crazy",
-        "stole something in a store",
+        "stolen something in a store",
         "had crush on relatives",
-        "bully someone in high school",
+        "bullied someone in high school",
         "been drunk"
       ],
       NHIEOffensiveContent: [
         "cheated",
         "ruined someone else's vacation",
         "used someone else's toothbrush",
-        "broke a bone",
-        "fleed"
+        "broken a bone",
+        "fled to another country"
       ],
       NHIEUserSelections: [], // Current User Selection of NHIE Question
       NHIETargetUserSelections: [
         { id: 1, question: "ruined someone else's vacation", answer: true },
-        { id: 2, question: "stole something in a store", answer: true },
-        { id: 3, question: "bully someone in high school", answer: false },
-        { id: 4, question: "lied to my best friend", answer: false },
+        { id: 2, question: "stolen something in a store", answer: true },
+        { id: 3, question: "bullied someone in high school", answer: false },
+        { id: 4, question: "lied to a best friend", answer: false },
         { id: 5, question: "had a paranormal experience", answer: false },
         { id: 6, question: "been drunk", answer: true },
         { id: 7, question: "been to Iceland", answer: true },
         { id: 8, question: "cheated", answer: false },
         { id: 9, question: "gotten stitches", answer: true },
-        { id: 10, question: "broke a bone", answer: false }
+        { id: 10, question: "broken a bone", answer: false }
       ],
-      NHIETargetQuestionIndex: 0 // value range from 0-4 (5 Questions)
+      NHIETargetQuestionIndex: 0, // value range from 0-4 (5 Questions),
+      blockTrueButton: false,
+      blockFalseButton: false,
+      NHIEUserLives: 3,
+      NHIETargetUserLives: 3
     };
   },
   computed: {
@@ -890,15 +919,29 @@ export default {
       } else {
         //  Display wrong msg, deduct heart
         this.NHIERoundResult = "wrong";
+        if (this.NHIEUserLives > 0) {
+          this.NHIEUserLives--;
+          if (this.NHIEUserLives == 0) {
+            this.showNHIESorryScreen = true;
+            this.showNHIEGameWindow = false;
+            this.NHIEUserLives = 3;
+            this.NHIEUserSelections = [];
+          }
+        }
       }
       this.scrollToBottom();
+
+      //  Block user from touching the buttons
+      this.blockTrueButton = true;
+
       setTimeout(() => {
-        if (this.NHIETargetQuestionIndex < 4) {
+        if (this.NHIETargetQuestionIndex < 9) {
           this.NHIETargetQuestionIndex++;
           console.log("Next Question");
         }
         this.NHIERoundResult = "";
-      }, 5000);
+        this.blockTrueButton = false;
+      }, 3000);
     },
     onClickNHIEAnswerFalse() {
       let currentItem = this.NHIETargetUserSelections[
@@ -911,15 +954,34 @@ export default {
       } else {
         //  Display wrong msg, deduct heart
         this.NHIERoundResult = "wrong";
+        if (this.NHIEUserLives > 0) {
+          this.NHIEUserLives--;
+          if (this.NHIEUserLives == 0) {
+            this.showNHIESorryScreen = true;
+            this.showNHIEGameWindow = false;
+            this.NHIEUserLives = 3;
+            this.NHIEUserSelections = [];
+          }
+        }
       }
       this.scrollToBottom();
+
+      //  Block user from touching the buttons
+      this.blockFalseButton = true;
+
       setTimeout(() => {
-        if (this.NHIETargetQuestionIndex < 4) {
+        if (this.NHIETargetQuestionIndex < 9) {
           this.NHIETargetQuestionIndex++;
           console.log("Next Question");
         }
         this.NHIERoundResult = "";
-      }, 5000);
+        this.blockFalseButton = false;
+      }, 3000);
+    },
+    onClickExitGame() {
+      this.showNHIEGameWindow = false;
+      this.NHIEUserLives = 3;
+      this.NHIEUserSelections = [];
     }
     // onClickGameWindowTrue1() {
     //   console.log("True");

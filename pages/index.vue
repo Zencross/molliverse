@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="-mt-8">
     <splash2 />
   </div>
 </template>

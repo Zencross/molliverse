@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center w-full">
+  <div class="flex flex-col items-center w-full -mt-8">
     <!-- <img src="../static/img/bliss2.svg" alt="Bliss" class="w-9/12 mt-24"> -->
     <img
       src="/img/bliss_new_splash_image_short.png"
