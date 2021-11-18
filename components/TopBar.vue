@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-between w-full py-4 bg-white shadow-md select-none disable-dbl-tap-zoom"
+    class="flex items-center justify-between w-full py-4 mt-8 bg-white shadow-md select-none disable-dbl-tap-zoom"
   >
     <img
       v-if="close"

@@ -264,21 +264,28 @@
       </div>
     </transition>
 
-    <!-- NHIE Game Question Window (New)  -->
+    <!-- NHIE In-Game Window (New)  -->
     <transition name="fade">
-      <div class="absolute top-auto z-20 w-full bg-white shadow-lg">
+      <div
+        v-if="showNHIEGameWindow"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
         <div class="flex items-center justify-center">
           <img
             src="/img/back-arrow.png"
             alt="back"
             class="absolute left-0 ml-4"
+            @click="onClickBack"
           />
           <div>
             <p class="mt-4 text-3xl font-medium text-center">
               Never Have I Ever
             </p>
             <p class="m-2 text-lg text-center">
-              sent a dirty text to the wrong person.
+              Q{{ NHIETargetUserSelections[NHIETargetQuestionIndex].id }}:
+              {{ messageTargetName }}
+              has
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].question }}.
             </p>
           </div>
         </div>
@@ -305,7 +312,7 @@
     </transition>
 
     <!-- NHIE Game Window 1 (True/False) -->
-    <transition name="fade">
+    <!-- <transition name="fade">
       <div
         v-if="showNHIEGameWindow1"
         class="absolute top-auto z-20 w-full bg-white shadow-lg"
@@ -329,10 +336,10 @@
           </button>
         </div>
       </div>
-    </transition>
+    </transition> -->
 
     <!-- NHIE Game Window 2 (True/False) -->
-    <transition name="fade">
+    <!-- <transition name="fade">
       <div
         v-if="showNHIEGameWindow2"
         class="absolute top-auto z-20 w-full bg-white shadow-lg"
@@ -356,10 +363,10 @@
           </button>
         </div>
       </div>
-    </transition>
+    </transition> -->
 
     <!-- NHIE Game Window 3 (True/False) -->
-    <transition name="fade">
+    <!-- <transition name="fade">
       <div
         v-if="showNHIEGameWindow3"
         class="absolute top-auto z-20 w-full bg-white shadow-lg"
@@ -383,10 +390,10 @@
           </button>
         </div>
       </div>
-    </transition>
+    </transition> -->
 
     <!-- NHIE Game Window 4 (True/False) -->
-    <transition name="fade">
+    <!-- <transition name="fade">
       <div
         v-if="showNHIEGameWindow4"
         class="absolute top-auto z-20 w-full bg-white shadow-lg"
@@ -410,10 +417,10 @@
           </button>
         </div>
       </div>
-    </transition>
+    </transition> -->
 
     <!-- NHIE Game Window 5 (True/False) -->
-    <transition name="fade">
+    <!-- <transition name="fade">
       <div
         v-if="showNHIEGameWindow5"
         class="absolute top-auto z-20 w-full bg-white shadow-lg"
@@ -437,7 +444,7 @@
           </button>
         </div>
       </div>
-    </transition>
+    </transition> -->
 
     <!-- Message Container -->
     <!-- Re-calculate the height of messageContainer when native keyboard is activated -->
@@ -484,20 +491,45 @@
       </transition-group>
       <!-- NHIE Game Answer Window (True/False) -->
       <transition name="fade">
-        <div class="z-20 flex flex-col w-full bg-white shadow-lg">
-          <p v-if="showNHIERoundResult" class="text-center">
-            You both lose a life!
-          </p>
+        <div
+          v-if="showNHIEGameWindow"
+          class="z-20 flex flex-col w-full bg-white shadow-lg"
+        >
+          <transition name="fade">
+            <p
+              v-if="NHIERoundResult == 'correct'"
+              class="text-center text-green-500"
+            >
+              You're correct! Q{{
+                NHIETargetUserSelections[NHIETargetQuestionIndex].id
+              }}
+              answer is
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].answer }}!
+            </p>
+          </transition>
+
+          <transition name="fade">
+            <p
+              v-if="NHIERoundResult == 'wrong'"
+              class="text-center text-red-500"
+            >
+              You're wrong! Q{{
+                NHIETargetUserSelections[NHIETargetQuestionIndex].id
+              }}
+              answer is
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].answer }}!
+            </p>
+          </transition>
           <div class="flex">
             <button
               class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium text-black bg-white border border-black rounded-full disable-dbl-tap-zoom"
-              @click="showNHIERoundResult = true"
+              @click="onClickNHIEAnswerTrue"
             >
               True
             </button>
             <button
               class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium text-black bg-white border border-black rounded-full disable-dbl-tap-zoom"
-              @click="showNHIERoundResult = true"
+              @click="onClickNHIEAnswerFalse"
             >
               False
             </button>
@@ -564,16 +596,17 @@ export default {
       input: "",
       messageLoader: null,
       userIsScrolling: false,
-      showGameModal: false,
-      showNHIESetupWindow: false,
-      showNHIEGameWindow1: false,
-      showNHIEGameWindow2: false,
-      showNHIEGameWindow3: false,
-      showNHIEGameWindow4: false,
-      showNHIEGameWindow5: false,
+      showGameModal: false, // Controls the display of wingman game suggestion
+      showNHIESetupWindow: false, // Controls the display of NHIE Setup Window (Choose Question)
+      showNHIEGameWindow: false, // Controls the display of NHIE In-Game Window (Question + users' lives)
+      // showNHIEGameWindow1: false,
+      // showNHIEGameWindow2: false,
+      // showNHIEGameWindow3: false,
+      // showNHIEGameWindow4: false,
+      // showNHIEGameWindow5: false,
       showNHIECongratScreen: false,
       showNHIESorryScreen: false,
-      showNHIERoundResult: false,
+      NHIERoundResult: "",
       NHIECategory: "harmless",
       NHIEHarmlessContent: [
         "fainted",
@@ -603,7 +636,20 @@ export default {
         "broke a bone",
         "fleed"
       ],
-      NHIEUserSelections: []
+      NHIEUserSelections: [], // Current User Selection of NHIE Question
+      NHIETargetUserSelections: [
+        { id: 1, question: "ruined someone else's vacation", answer: true },
+        { id: 2, question: "stole something in a store", answer: true },
+        { id: 3, question: "bully someone in high school", answer: false },
+        { id: 4, question: "lied to my best friend", answer: false },
+        { id: 5, question: "had a paranormal experience", answer: false },
+        { id: 6, question: "been drunk", answer: true },
+        { id: 7, question: "been to Iceland", answer: true },
+        { id: 8, question: "cheated", answer: false },
+        { id: 9, question: "gotten stitches", answer: true },
+        { id: 10, question: "broke a bone", answer: false }
+      ],
+      NHIETargetQuestionIndex: 0 // value range from 0-4 (5 Questions)
     };
   },
   computed: {
@@ -765,7 +811,8 @@ export default {
     },
     onClickStartNHIE() {
       this.showNHIESetupWindow = false;
-      this.showNHIEGameWindow1 = true;
+      this.showNHIEGameWindow = true;
+      this.scrollToBottom();
     },
     onClickNHIEItem(item) {
       console.log("NHIE", item);
@@ -832,56 +879,98 @@ export default {
       console.log("height of messages", messages.offsetHeight);
       messages.scrollTop = messages.scrollHeight;
     },
-    onClickGameWindowTrue1() {
-      console.log("True");
-      this.showNHIEGameWindow1 = false;
-      this.showNHIEGameWindow2 = true;
+    onClickNHIEAnswerTrue() {
+      let currentItem = this.NHIETargetUserSelections[
+        this.NHIETargetQuestionIndex
+      ];
+      console.log("currentItem", currentItem);
+      if (currentItem.answer == true) {
+        //  Display correct msg
+        this.NHIERoundResult = "correct";
+      } else {
+        //  Display wrong msg, deduct heart
+        this.NHIERoundResult = "wrong";
+      }
+      this.scrollToBottom();
+      setTimeout(() => {
+        if (this.NHIETargetQuestionIndex < 4) {
+          this.NHIETargetQuestionIndex++;
+          console.log("Next Question");
+        }
+        this.NHIERoundResult = "";
+      }, 5000);
     },
-    onClickGameWindowFalse1() {
-      console.log("False");
-      this.showNHIEGameWindow1 = false;
-      this.showNHIEGameWindow2 = true;
-    },
-    onClickGameWindowTrue2() {
-      console.log("True");
-      this.showNHIEGameWindow2 = false;
-      this.showNHIEGameWindow3 = true;
-    },
-    onClickGameWindowFalse2() {
-      console.log("False");
-      this.showNHIEGameWindow2 = false;
-      this.showNHIEGameWindow3 = true;
-    },
-    onClickGameWindowTrue3() {
-      console.log("True");
-      this.showNHIEGameWindow3 = false;
-      this.showNHIEGameWindow4 = true;
-    },
-    onClickGameWindowFalse3() {
-      console.log("False");
-      this.showNHIEGameWindow3 = false;
-      this.showNHIEGameWindow4 = true;
-    },
-    onClickGameWindowTrue4() {
-      console.log("True");
-      this.showNHIEGameWindow4 = false;
-      this.showNHIEGameWindow5 = true;
-    },
-    onClickGameWindowFalse4() {
-      console.log("False");
-      this.showNHIEGameWindow4 = false;
-      this.showNHIEGameWindow5 = true;
-    },
-    onClickGameWindowTrue5() {
-      console.log("True");
-      this.showNHIEGameWindow5 = false;
-      this.showNHIECongratScreen = true;
-    },
-    onClickGameWindowFalse5() {
-      console.log("False");
-      this.showNHIEGameWindow5 = false;
-      this.showNHIESorryScreen = true;
+    onClickNHIEAnswerFalse() {
+      let currentItem = this.NHIETargetUserSelections[
+        this.NHIETargetQuestionIndex
+      ];
+      console.log("currentItem", currentItem);
+      if (currentItem.answer == false) {
+        //  Display correct msg
+        this.NHIERoundResult = "correct";
+      } else {
+        //  Display wrong msg, deduct heart
+        this.NHIERoundResult = "wrong";
+      }
+      this.scrollToBottom();
+      setTimeout(() => {
+        if (this.NHIETargetQuestionIndex < 4) {
+          this.NHIETargetQuestionIndex++;
+          console.log("Next Question");
+        }
+        this.NHIERoundResult = "";
+      }, 5000);
     }
+    // onClickGameWindowTrue1() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow1 = false;
+    //   this.showNHIEGameWindow2 = true;
+    // },
+    // onClickGameWindowFalse1() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow1 = false;
+    //   this.showNHIEGameWindow2 = true;
+    // },
+    // onClickGameWindowTrue2() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow2 = false;
+    //   this.showNHIEGameWindow3 = true;
+    // },
+    // onClickGameWindowFalse2() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow2 = false;
+    //   this.showNHIEGameWindow3 = true;
+    // },
+    // onClickGameWindowTrue3() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow3 = false;
+    //   this.showNHIEGameWindow4 = true;
+    // },
+    // onClickGameWindowFalse3() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow3 = false;
+    //   this.showNHIEGameWindow4 = true;
+    // },
+    // onClickGameWindowTrue4() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow4 = false;
+    //   this.showNHIEGameWindow5 = true;
+    // },
+    // onClickGameWindowFalse4() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow4 = false;
+    //   this.showNHIEGameWindow5 = true;
+    // },
+    // onClickGameWindowTrue5() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow5 = false;
+    //   this.showNHIECongratScreen = true;
+    // },
+    // onClickGameWindowFalse5() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow5 = false;
+    //   this.showNHIESorryScreen = true;
+    // }
   },
   mounted() {
     console.log("message.vue mounted.");
