@@ -1,22 +1,45 @@
 PODS:
-  - Capacitor (3.3.1):
+  - Capacitor (3.2.5):
     - CapacitorCordova
-  - CapacitorCordova (3.3.1)
+  - CapacitorCamera (1.1.2):
+    - Capacitor
+  - CapacitorCordova (3.2.5)
+  - CapacitorFilesystem (1.0.5):
+    - Capacitor
+  - CordovaPlugins (3.2.5):
+    - CapacitorCordova
+  - CordovaPluginsResources (0.0.105)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
+  - CordovaPluginsResources (from `../capacitor-cordova-ios-plugins`)
 
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorCamera:
+    :path: "../../node_modules/@capacitor/camera"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorFilesystem:
+    :path: "../../node_modules/@capacitor/filesystem"
+  CordovaPlugins:
+    :path: "../capacitor-cordova-ios-plugins"
+  CordovaPluginsResources:
+    :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-  Capacitor: 03a45821c64411719140ba9fb39a895d026e597c
-  CapacitorCordova: 6c6127c6ee31a7a808705bf4ac17fb5f80ed63f6
+  Capacitor: 32416638f82066f863d7cd85d6f738b5cc2797d2
+  CapacitorCamera: 80a2001eeed64ffc37d4f1dea83576425f9ed2d1
+  CapacitorCordova: e2ae8ac0f7ff5bc7bebaa5fa41afe0300e66837b
+  CapacitorFilesystem: 44c9c8fb233191c0906ede26deff69808f57516f
+  CordovaPlugins: d7a4008199cb0703f68f706d0e98c9c974264f1b
+  CordovaPluginsResources: 1b3992e05cb6336d2850cd77dd5e3054f2f76f96
 
-PODFILE CHECKSUM: 04a7fc82bc9fe67db905b17ed4b4330082051832
+PODFILE CHECKSUM: e2313aea110c36df427ec3647629ded66967d095
 
 COCOAPODS: 1.11.2
