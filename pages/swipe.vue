@@ -14,12 +14,23 @@
         ref="tinder"
         key-name="nickname"
         :queue.sync="queue"
-        class="w-11/12 h-64"
+        class="z-40 w-11/12 h-64"
         @submit="onSubmit"
       >
         <template slot-scope="scope">
           <!-- <div class="z-10">{{ scope }}</div> -->
           <div class="relative flex justify-center h-full">
+            <!-- User Name, Age, and Bio -->
+            <div class="absolute bottom-0 z-40 p-6 mb-20 text-white">
+              <p class="text-4xl font-extrabold">
+                {{ scope.data.name }}, {{ scope.data.age }}
+              </p>
+              <p class="text-lg font-medium">
+                Hello ladies! I'm learning about important dates in history.
+                Wanna be one of them?
+              </p>
+            </div>
+
             <!-- Buttons for carousel behavior -->
             <div class="absolute z-30 flex w-full h-full">
               <div
@@ -105,50 +116,52 @@
           </div>
         </template>
 
-        <img class="like-pointer" slot="like" src="/img/like.svg" />
-        <img class="nope-pointer" slot="nope" src="/img/nope.svg" />
-        <img class="super-pointer" slot="super" src="/img/super-like.svg" />
+        <!-- Action icons showing up on the card upon swipe -->
+        <img class="like-pointer" slot="like" src="/img/swipe-like-btn.png" />
+        <img class="nope-pointer" slot="nope" src="/img/swipe-nope-btn.png" />
+        <img
+          class="super-pointer"
+          slot="super"
+          src="/img/swipe-superlike-btn.png"
+        />
+        <!-- Down swipe is disabled -->
         <!-- <img class="down-pointer" slot="down" src="/img/down-txt.png" /> -->
-        <img class="rewind-pointer" slot="rewind" src="/img/undo.svg" />
-
-        <div
-          class="absolute bottom-0 z-50 flex flex-col w-full pl-4 mb-20 text-white lato-font"
-        >
-          <div class="text-xl font-extrabold leading-tight">
-            Bob, 24
-          </div>
-          <div class="text-sm">Are you French? Because Eiffel for you.</div>
-        </div>
+        <img
+          class="rewind-pointer"
+          slot="rewind"
+          src="/img/swipe-undo-btn.png"
+        />
       </VueTinder>
     </div>
 
+    <!-- Swipe buttons -->
     <div
-      class="absolute bottom-0 z-50 flex justify-between w-full h-24 px-4 pt-4 disable-dbl-tap-zoom"
+      class="absolute bottom-0 z-50 flex justify-between w-full h-24 px-6 disable-dbl-tap-zoom"
       id="buttonGroup"
     >
       <button
         @click="decide('nope')"
         class="disable-dbl-tap-zoom focus:outline-none active:scale-50"
       >
-        <img src="/img/nope.svg" alt="" />
+        <img src="/img/swipe-nope-btn.png" alt="" />
       </button>
       <button
         @click="decide('rewind')"
         class="disable-dbl-tap-zoom focus:outline-none"
       >
-        <img src="/img/undo.svg" alt="" />
+        <img src="/img/swipe-undo-btn.png" alt="" />
       </button>
       <button
         @click="decide('super')"
         class="disable-dbl-tap-zoom focus:outline-none"
       >
-        <img src="/img/super-like.svg" alt="" />
+        <img src="/img/swipe-superlike-btn.png" alt="" />
       </button>
       <button
         @click="decide('like')"
         class="disable-dbl-tap-zoom focus:outline-none"
       >
-        <img src="/img/like.svg" alt="" />
+        <img src="/img/swipe-like-btn.png" alt="" />
       </button>
     </div>
   </div>
@@ -183,14 +196,14 @@ export default {
     document.getElementById("swipe").style.height =
       window.innerHeight -
       topBar.clientHeight -
-      buttonGroup.clientHeight +
+      buttonGroup.clientHeight / 1.65 +
       "px";
 
     console.log("height of top bar:", topBar.clientHeight);
     console.log("height of button grp:", buttonGroup.clientHeight);
     console.log(
       "Carousel height should be: ",
-      window.innerHeight - topBar.clientHeight - buttonGroup.clientHeight
+      window.innerHeight - topBar.clientHeight - buttonGroup.clientHeight / 2
     );
   },
   methods: {

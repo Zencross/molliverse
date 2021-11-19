@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max-h-screen">
     <!-- Top Bar -->
     <div
       class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
@@ -27,98 +27,298 @@
           alt="Avatar Video"
           class="object-cover w-12 h-12 rounded-full"
         ></video>
-        <div class="ml-2 text-lg font-semibold lato-font">
+        <div class="ml-3 text-lg font-semibold lato-font">
           {{ messageTargetName }}
         </div>
       </div>
       <div class="flex items-center justify-around mr-4">
-        <img src="/img/video-call.svg" class="w-10 mr-2" alt="" />
+        <img
+          src="/img/video-call.svg"
+          class="w-10 mr-2"
+          alt=""
+          @click="showGameModal = !showGameModal"
+        />
         <img src="/img/phone-call.svg" class="w-10" alt="" />
       </div>
     </div>
 
+    <!-- Never Have I Ever Game Window -->
+    <transition name="fade">
+      <div
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+        v-if="showNHIESetupWindow"
+      >
+        <!-- <p>Game Window Here</p> -->
+        <!-- Category Tab -->
+        <div class="flex h-10">
+          <button
+            @click="NHIECategory = 'harmless'"
+            class="w-1/3 text-white bg-modalBtnGreen"
+          >
+            Harmless
+          </button>
+          <button
+            @click="NHIECategory = 'delicate'"
+            class="w-1/3 text-white bg-modalBtnOrange"
+          >
+            Delicate
+          </button>
+          <button
+            @click="NHIECategory = 'offensive'"
+            class="w-1/3 text-white bg-modalBtnBlue"
+          >
+            Offensive
+          </button>
+        </div>
+
+        <div class="px-4 py-2 text-xl font-semibold text-brandPurple">
+          Never have I ever ...
+        </div>
+
+        <!-- Harmless Content -->
+        <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
+          <div
+            class="flex items-center"
+            v-for="item in NHIEHarmlessContent"
+            :key="item"
+          >
+            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+              {{ item }}
+            </div>
+            <button
+              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              @click="onClickNHIEItem(item)"
+              :class="[
+                NHIEUserSelections.includes(item)
+                  ? 'bg-modalBtnGreen text-white'
+                  : 'text-brandPurple'
+              ]"
+            >
+              I Have
+            </button>
+          </div>
+        </div>
+        <!-- Delicate Content -->
+        <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
+          <div
+            class="flex items-center"
+            v-for="item in NHIEDelicateContent"
+            :key="item"
+          >
+            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+              {{ item }}
+            </div>
+            <button
+              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              @click="onClickNHIEItem(item)"
+              :class="[
+                NHIEUserSelections.includes(item)
+                  ? 'bg-modalBtnGreen text-white'
+                  : 'text-brandPurple'
+              ]"
+            >
+              I Have
+            </button>
+          </div>
+        </div>
+        <!-- Offensive Content -->
+        <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
+          <div
+            class="flex items-center"
+            v-for="item in NHIEOffensiveContent"
+            :key="item"
+          >
+            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
+              {{ item }}
+            </div>
+            <button
+              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
+              @click="onClickNHIEItem(item)"
+              :class="[
+                NHIEUserSelections.includes(item)
+                  ? 'bg-modalBtnGreen text-white'
+                  : 'text-brandPurple'
+              ]"
+            >
+              I Have
+            </button>
+          </div>
+        </div>
+
+        <!-- Add custom NEIE item -->
+        <div class="mx-3 mt-2 text-center text-blue-600 underline">
+          Custom Questions
+        </div>
+
+        <div
+          v-if="NHIEUserSelections.length < 5"
+          class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+        >
+          {{ NHIEUserSelections.length }} / 5
+        </div>
+        <div
+          v-else
+          class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+          @click="onClickStartNHIE"
+        >
+          Start Game
+        </div>
+      </div>
+    </transition>
+
+    <!-- NHIE Window -->
+    <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never been to the hospital.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+            @click="showNHIEGameWindow = false"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+            @click="showNHIEGameWindow = false"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition>
+
     <!-- Message Container -->
     <div class="z-0 overflow-scroll messagesContainer" id="messages">
-      <div
-        v-for="message in messages"
-        class="flex w-full px-2 my-2 lato-font"
-        :class="[
-          message.by.nickname === messageTargetName
-            ? 'justify-start'
-            : 'justify-end'
-        ]"
-      >
+      <transition-group name="fade">
         <div
-          class="flex flex-col w-1/2 text-sm leading-tight"
+          v-for="message in messages"
+          :key="message.timestamp"
+          class="flex w-full px-2 my-2 lato-font"
           :class="[
-            message.by.nickname === messageTargetName ? 'receive' : 'send'
+            message.by.nickname === messageTargetName
+              ? 'justify-start'
+              : 'justify-end'
           ]"
         >
-          <div>
-            {{ message.content }}
-          </div>
-          <div class="flex items-center mt-2 mb-1 text-xs">
-            <div class="mr-2">{{ formattedDate(message.timestamp) }}</div>
-            <!-- <img
+          <div
+            class="flex flex-col text-sm leading-tight message-box-max-width"
+            :class="[
+              message.by.nickname === messageTargetName ? 'receive' : 'send'
+            ]"
+          >
+            <!-- Message Content -->
+            <p class="break-words whitespace-pre-line">
+              {{ message.content }}
+            </p>
+
+            <!-- Message Timestamp -->
+            <div class="flex items-center mt-2 mb-1 text-xs">
+              <div class="mr-2">{{ formattedDate(message.timestamp) }}</div>
+              <!-- <img
               v-if="message.by.nickname === messageTargetName"
               src="/img/white-sent-icon.svg"
               alt=""
             /> -->
-            <img
-              v-if="message.by.nickname !== messageTargetName"
-              src="/img/white-sent-icon.svg"
-              alt=""
-            />
+              <!-- Tick Icon (fake sent/received) -->
+              <img
+                v-if="message.by.nickname !== messageTargetName"
+                src="/img/white-sent-icon.svg"
+                alt=""
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </transition-group>
     </div>
 
     <!-- Input Bar -->
     <div
-      class="fixed bottom-0 flex w-full pt-2 pb-6 bg-white justify-evenly"
+      class="fixed bottom-0 flex w-full h-20 py-4 bg-white justify-evenly"
       id="inputs"
     >
+      <!-- Plus Icon -->
       <img src="/img/plus-icon.svg" class="w-5 mx-2" alt="" />
-      <input
+
+      <!-- Message Input Box -->
+      <textarea
         type="text"
-        class="w-9/12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
+        class="w-8/12 h-12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
         placeholder="New Message"
         v-model="input"
-        @keyup.enter="onClickSendMessage"
       />
-      <div v-if="input" class="flex items-center">
+
+      <!-- Send Button -->
+      <div
+        v-if="input"
+        class="flex items-center justify-center w-12 h-12 mx-2 bg-gray-200 rounded-full shadow-md"
+      >
         <img
           src="/img/send-24px.svg"
-          class="flex items-center justify-center w-8 mx-2 mt-1"
+          class="flex items-center justify-center w-2/3"
           alt=""
           @click="onClickSendMessage"
         />
       </div>
       <div v-else class="flex">
-        <img src="/img/camera-icon.svg" class="w-8 ml-2" alt="" />
-        <img src="/img/record-icon.svg" class="w-8 mx-2" alt="" />
+        <img src="/img/camera-icon.svg" class="w-6 ml-2" alt="" />
+        <img src="/img/record-icon.svg" class="w-6 mx-2" alt="" />
       </div>
     </div>
 
-    <!-- <Wingman /> -->
+    <!-- Game Modal -->
+    <transition name="fade">
+      <GameModal
+        v-if="showGameModal"
+        @close-modal="closeModal"
+        @start-game="startGame"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
-import Wingman from "../components/Wingman";
+import GameModal from "../components/GameModal";
 import gql from "graphql-tag";
 
 export default {
   components: {
-    Wingman
+    GameModal
   },
   data() {
     return {
       messages: [],
       input: "",
       messageLoader: null,
-      userIsScrolling: false
+      userIsScrolling: false,
+      showGameModal: true,
+      showNHIESetupWindow: false,
+      showNHIEGameWindow: false,
+      NHIECategory: "harmless",
+      NHIEHarmlessContent: [
+        "fainted",
+        "been to the hospital",
+        "had a paranormal experience",
+        "gotten stitches"
+      ],
+      NHIEDelicateContent: [
+        "fallen in love",
+        "started a hashtag",
+        "been on TV",
+        "lied to my best friend"
+      ],
+      NHIEOffensiveContent: [
+        "cheated",
+        "ruined someone else's vacation",
+        "used someone else's toothbrush",
+        "broke a bone"
+      ],
+      NHIEUserSelections: []
     };
   },
   computed: {
@@ -179,7 +379,7 @@ export default {
       return today.toLocaleString("en-US", options);
     },
     async loadMessages() {
-      // console.log("loading message");
+      console.log("loading message");
       try {
         const results = await this.$apollo.query({
           query: gql`
@@ -201,16 +401,27 @@ export default {
             name: this.$store.state.messageChannelName
           }
         });
-        // console.log("getChannel results:", results.data.getChannel);
+
+        console.log("loadMessages results", results.data.getChannel.messages);
+
+        let oldMsgsLength = this.messages.length;
+        let newMsgsLength = results.data.getChannel.messages.length;
+
+        //  Update the messages array
         this.messages = results.data.getChannel.messages;
 
-        // If user hasn't scroll
-        if (this.userIsScrolling) {
-          console.log("User is scrolling, pause auto scroll");
-        } else {
+        if (newMsgsLength > oldMsgsLength) {
           this.scrollToBottom();
-          // this.userIsScrolling = false;
+          console.log("call scrollToBottom");
         }
+
+        // // If user hasn't scroll
+        // if (this.userIsScrolling) {
+        //   console.log("User is scrolling, pause auto scroll");
+        // } else {
+        //   this.scrollToBottom();
+        //   // this.userIsScrolling = false;
+        // }
         // this.scrollToBottom();
       } catch (error) {
         console.error(error);
@@ -261,6 +472,32 @@ export default {
 
       this.loadMessages();
       // this.scrollToBottom();
+    },
+    closeModal() {
+      this.showGameModal = false;
+    },
+    startGame(game) {
+      console.log("startGame", game);
+      this.showGameModal = false;
+      this.showNHIESetupWindow = true;
+    },
+    onClickStartNHIE() {
+      this.showNHIESetupWindow = false;
+      this.showNHIEGameWindow = true;
+    },
+    onClickNHIEItem(item) {
+      console.log("NHIE", item);
+      if (this.NHIEUserSelections.includes(item)) {
+        for (var i = 0; i < this.NHIEUserSelections.length; i++) {
+          if (this.NHIEUserSelections[i] === item) {
+            this.NHIEUserSelections.splice(i, 1);
+          }
+        }
+        console.log("NHIE", this.NHIEUserSelections);
+      } else {
+        this.NHIEUserSelections.push(item);
+        console.log("NHIE", this.NHIEUserSelections);
+      }
     }
   },
 
@@ -297,6 +534,15 @@ export default {
   font-family: "Lato", sans-serif;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
 /* Original style class for sending and receiving dialog box */
 /* .receive {
   @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-3 pb-2 pr-4;
@@ -307,20 +553,25 @@ export default {
 } */
 
 .receive {
-  @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-3 pb-2 pr-4;
+  @apply text-gray-900 bg-gray-300 rounded-tl-3xl rounded-tr-3xl rounded-br-3xl rounded-bl-md pl-4 pt-0 pb-3 pr-4;
 }
 
 .send {
-  @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-3 pb-2 pr-4;
+  @apply bg-brandPurple text-white rounded-tl-3xl rounded-tr-3xl rounded-br-md rounded-bl-3xl pl-4 pt-0 pb-3 pr-4;
 }
 
 .messagesContainer {
   display: flex;
   flex-direction: column;
   /* height: 200px; */
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .body {
   overflow: hidden;
+}
+
+.message-box-max-width {
+  max-width: 70%;
 }
 </style>

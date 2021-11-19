@@ -2,12 +2,12 @@
   <div>
     <!-- Top Bar -->
     <div class="flex w-full pt-6 pb-4 pl-4 border border-t-0 border-b-1">
-      <div class="flex-1 text-xl font-bold  lato-font">
+      <div class="flex-1 text-xl font-bold lato-font">
         Settings
       </div>
       <div
         @click="onClickTitle"
-        class="pr-4 text-xl font-bold text-blue-500 lato-font"
+        class="pr-4 text-xl font-bold text-pink-600 lato-font"
       >
         Done
       </div>
@@ -23,7 +23,7 @@
       <div class="flex pt-4 pb-4 pl-4 border-b-2">
         <div class="flex-1">Phone Number</div>
         <div class="text-gray-700 ">
-          +852 97489993
+          {{ this.$store.state.phoneNumber }}
           <span class="pr-4 text-gray-700" @click="onClickPhoneNumber">></span>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="flex pt-3 pb-4 pl-4 border-b-2">
         <div class="flex-1">Email</div>
         <div class="pr-4 text-gray-700" @click="onClickEmail">
-          siena.l852@gmail.com >
+          {{ this.$store.state.email }} >
         </div>
       </div>
     </div>
@@ -60,17 +60,10 @@
       <div class="pt-3 pb-4 pl-4 border-b-2 ">
         <div class="flex">
           <div class="flex-1">Maximum Distance</div>
-          <div class="pr-4 text-gray-700">100km</div>
+          <div class="pr-4 text-gray-700">{{ value1 }} km</div>
         </div>
-        <div class="pt-4 pb-6 pr-4 slidecontainer">
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value="50"
-            class="slider1"
-            id="myRange"
-          />
+        <div class="pt-10 pb-6">
+          <vue-slider v-model="value1" v-bind="options" />
         </div>
       </div>
 
@@ -82,17 +75,10 @@
       <div class="pt-3 pb-4 border-b-2">
         <div class="flex pl-4">
           <div class="flex-1">Age Range</div>
-          <div class="pr-4 text-gray-700">18-36</div>
+          <div class="pr-4 text-gray-700">{{ value[0] }} - {{ value[1] }}</div>
         </div>
-        <div class="pt-4 pb-6 pl-4 pr-4 slidecontainer">
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value="50"
-            class="slider1"
-            id="myRange"
-          />
+        <div class="pt-10 pb-6 pl-4">
+          <vue-slider v-model="value" v-bind="options" />
         </div>
       </div>
       <div class="flex border-b-2">
@@ -100,7 +86,7 @@
         <div class="pt-2 pr-4">
           <label class="switch">
             <input type="checkbox" />
-            <span class="slider round"></span>
+            <span class="slider2 round"></span>
           </label>
         </div>
       </div>
@@ -213,8 +199,58 @@
 </template>
 
 <script>
+// import 'vue-range-component/dist/vue-range-slider.css'
+// import VueRangeSlider from 'vue-range-component'
+import VueSlider from "vue-slider-component";
+import { mapGetters } from "vuex";
+
 export default {
-  components: {},
+  components: { VueSlider },
+  data: () => ({
+    value1: 50,
+    value: [18, 45],
+    options: {
+      width: "92%",
+      dotSize: 16,
+      height: 4,
+      contained: true,
+      direction: "ltr",
+      data: null,
+      min: 18,
+      max: void 0,
+      interval: 1,
+      disabled: false,
+      clickable: false,
+      duration: 0.5,
+      adsorb: true,
+      lazy: true,
+      tooltip: "always",
+      tooltipPlacement: "top",
+      tooltipFormatter: void 0,
+      useKeyboard: false,
+      keydownHook: null,
+      dragOnClick: false,
+      enableCross: true,
+      fixed: false,
+      minRange: 10,
+      maxRange: 100,
+      order: true,
+      marks: false
+      // dotOptions: void 0,
+      // process: true,
+      // dotStyle: void 0,
+      // railStyle: void 0,
+      // processStyle: void 0,
+      // tooltipStyle: void 0,
+      // stepStyle: void 0,
+      // stepActiveStyle: void 0,
+      // labelStyle: void 0,
+      // labelActiveStyle: void 0,
+    }
+  }),
+  // created() {
+  //       this.width = window.innerWidth * 88/100
+  // },
   methods: {
     onClickTitle() {
       this.$router.push("/user-profile");
@@ -245,82 +281,175 @@ export default {
 </script>
 
 <style>
-.slidecontainer {
-  width: 100%; /* Width of the outside container */
+.vue-slider-disabled .vue-slider-process {
+  background-color: #a7a7a7;
+}
+.vue-slider-disabled .vue-slider-dot-handle {
+  border-color: #a7a7a7;
+}
+.vue-slider-disabled .vue-slider-mark-step-active {
+  box-shadow: 0 0 0 2px #a7a7a7;
 }
 
-.slider1 {
-  /* -webkit-appearance: none; */
+/* rail style */
+.vue-slider-rail {
+  background-color: whitesmoke;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+.vue-slider:hover .vue-slider-rail {
+  background-color: rgba(175, 169, 169, 0.719);
+}
+
+/* process style */
+.vue-slider-process {
+  background-color: #d53f8c;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+.vue-slider:hover .vue-slider-process {
+  background-color: #d53f8c;
+}
+
+/* mark style */
+.vue-slider-mark-step {
   width: 100%;
-  height: 5px;
-  border-radius: 5px;
-  background: #d3d3d3;
-  /* outline: none; */
-  opacity: 0.7;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
-}
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 54px;
-  height: 30.6px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 23.4px;
-  width: 23.4px;
-  left: 3.6px;
-  bottom: 3.6px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: #2196f3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 30.6px;
-}
-
-.slider.round:before {
+  height: 100%;
   border-radius: 50%;
+  box-shadow: 0 0 0 2px #e8e8e8;
+  background-color: #fff;
+}
+.vue-slider-mark-step-active {
+  box-shadow: 0 0 0 2px #9cd5ff;
+}
+.vue-slider:hover .vue-slider-mark-step-active {
+  box-shadow: 0 0 0 2px #69c0ff;
+}
+
+.vue-slider-mark-label {
+  font-size: 12px;
+  white-space: nowrap;
+}
+/* dot style */
+.vue-slider-dot-handle {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #c2c2c2;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+.vue-slider:hover .vue-slider-dot-handle {
+  border-color: #d53f8c;
+}
+
+.vue-slider-dot-handle-focus {
+  border-color: #d53f8c;
+  box-shadow: 0 0 0 5px rgb(95, 91, 93);
+}
+.vue-slider:hover .vue-slider-dot-handle-focus {
+  border-color: #d53f8c;
+}
+
+.vue-slider-dot-handle:hover {
+  border-color: #d53f8c;
+}
+.vue-slider:hover .vue-slider-dot-handle:hover {
+  border-color: #d53f8c;
+}
+
+.vue-slider-dot-handle-disabled {
+  cursor: not-allowed;
+  border-color: #ddd !important;
+}
+
+.vue-slider-dot-tooltip {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+.vue-slider-dot-tooltip-inner {
+  font-size: 12px;
+  white-space: nowrap;
+  padding: 4px 6px;
+  color: #fff;
+  border-radius: 5px;
+  border-color: #d53f8c;
+  background-color: #d53f8c;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(0.9);
+  transition: transform 0.3s;
+}
+.vue-slider-dot-tooltip-inner::after {
+  content: "";
+  position: absolute;
+}
+.vue-slider-dot-tooltip-inner-top::after {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px;
+  border-top-color: inherit;
+}
+.vue-slider-dot-tooltip-inner-bottom::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px;
+  border-bottom-color: inherit;
+}
+.vue-slider-dot-tooltip-inner-left::after {
+  left: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px;
+  border-left-color: inherit;
+}
+.vue-slider-dot-tooltip-inner-right::after {
+  right: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px;
+  border-right-color: inherit;
+}
+.vue-slider-dot-tooltip-inner-top {
+  transform-origin: 50% 100%;
+}
+.vue-slider-dot-tooltip-inner-bottom {
+  transform-origin: 50% 0;
+}
+.vue-slider-dot-tooltip-inner-left {
+  transform-origin: 100% 50%;
+}
+.vue-slider-dot-tooltip-inner-right {
+  transform-origin: 0% 50%;
+}
+
+.vue-slider-dot:hover .vue-slider-dot-tooltip,
+.vue-slider-dot-tooltip-show {
+  opacity: 1;
+  visibility: visible;
+}
+.vue-slider-dot:hover .vue-slider-dot-tooltip .vue-slider-dot-tooltip-inner,
+.vue-slider-dot-tooltip-show .vue-slider-dot-tooltip-inner {
+  transform: scale(1);
 }
 </style>

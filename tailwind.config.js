@@ -10,14 +10,20 @@ module.exports = {
       lightgrey: "#F6F6F6",
       FB: "#384FA2",
       brandPurple: "#89287C",
-      selected: "#333333"
+      selected: "#333333",
+      modalBtnOrange: "#FF8960",
+      modalBtnGreen: "#59AE88",
+      modalBtnBlue: "#169AE4"
     }),
     textColor: theme => ({
       ...theme("colors"),
       lightgrey: "#7F8C99",
       "grayish-red": "#796B6B",
       dark: "#333333",
-      brandPurple: "#89287C"
+      brandPurple: "#89287C",
+      modalBtnOrange: "#FF8960",
+      modalBtnGreen: "#59AE88",
+      modalBtnBlue: "#169AE4"
     }),
     fontSize: {
       xxs: ".70rem",
