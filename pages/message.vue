@@ -916,6 +916,12 @@ export default {
       if (currentItem.answer == true) {
         //  Display correct msg
         this.NHIERoundResult = "correct";
+        if (this.NHIETargetQuestionIndex == 9 && this.NHIEUserLives > 0) {
+          this.showNHIECongratScreen = true;
+          this.showNHIEGameWindow = false;
+          this.NHIEUserLives = 3;
+          this.NHIEUserSelections = [];
+        }
       } else {
         //  Display wrong msg, deduct heart
         this.NHIERoundResult = "wrong";
@@ -923,6 +929,14 @@ export default {
           this.NHIEUserLives--;
           if (this.NHIEUserLives == 0) {
             this.showNHIESorryScreen = true;
+            this.showNHIEGameWindow = false;
+            this.NHIEUserLives = 3;
+            this.NHIEUserSelections = [];
+          } else if (
+            this.NHIETargetQuestionIndex == 9 &&
+            this.NHIEUserLives > 0
+          ) {
+            this.showNHIECongratScreen = true;
             this.showNHIEGameWindow = false;
             this.NHIEUserLives = 3;
             this.NHIEUserSelections = [];
@@ -951,13 +965,28 @@ export default {
       if (currentItem.answer == false) {
         //  Display correct msg
         this.NHIERoundResult = "correct";
+        if (this.NHIETargetQuestionIndex == 9 && this.NHIEUserLives > 0) {
+          this.showNHIECongratScreen = true;
+          this.showNHIEGameWindow = false;
+          this.NHIEUserLives = 3;
+          this.NHIEUserSelections = [];
+        }
       } else {
         //  Display wrong msg, deduct heart
         this.NHIERoundResult = "wrong";
+
         if (this.NHIEUserLives > 0) {
           this.NHIEUserLives--;
           if (this.NHIEUserLives == 0) {
             this.showNHIESorryScreen = true;
+            this.showNHIEGameWindow = false;
+            this.NHIEUserLives = 3;
+            this.NHIEUserSelections = [];
+          } else if (
+            this.NHIETargetQuestionIndex == 9 &&
+            this.NHIEUserLives > 0
+          ) {
+            this.showNHIECongratScreen = true;
             this.showNHIEGameWindow = false;
             this.NHIEUserLives = 3;
             this.NHIEUserSelections = [];
