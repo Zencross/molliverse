@@ -1,6 +1,6 @@
 {
-  "appId": "life.mollie.dating",
-  "appName": "mollie",
+  "appId": "life.mysocialcapital.mollie.dating",
+  "appName": "Mollie Dating",
   "webDir": "dist",
   "bundledWebRuntime": false
 }
