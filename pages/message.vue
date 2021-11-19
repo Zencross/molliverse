@@ -44,70 +44,70 @@
     </div>
 
     <!-- NHIE In-Game Window (New)  -->
-    <!-- <transition name="fade"> -->
-    <div
-      id="NHIEGameWindow"
-      v-show="showNHIEGameWindow"
-      class="sticky top-0 z-20 w-full overflow-hidden bg-white shadow-lg "
-    >
-      <div class="flex items-center justify-center">
-        <img
-          src="/img/back-arrow.png"
-          alt="back"
-          class="absolute left-0 ml-4"
-          @click="onClickExitGame"
-        />
-        <div class="pt-8">
-          <p class="mt-4 text-3xl font-medium text-center">
-            Never Have I Ever
-          </p>
-          <p class="m-2 text-lg text-center">
-            Question
-            {{ NHIETargetUserSelections[NHIETargetQuestionIndex].id }}:
-            <br />
-            {{ messageTargetName }}
-            has
-            {{ NHIETargetUserSelections[NHIETargetQuestionIndex].question }}.
-          </p>
+    <transition name="fade">
+      <div
+        id="NHIEGameWindow"
+        v-show="showNHIEGameWindow"
+        class="sticky top-0 z-20 w-full overflow-hidden bg-white shadow-lg "
+      >
+        <div class="flex items-center justify-center">
+          <img
+            src="/img/back-arrow.png"
+            alt="back"
+            class="absolute left-0 ml-4"
+            @click="onClickExitGame"
+          />
+          <div class="pt-8">
+            <p class="mt-4 text-3xl font-medium text-center">
+              Never Have I Ever
+            </p>
+            <p class="m-2 text-lg text-center">
+              Question
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].id }}:
+              <br />
+              {{ messageTargetName }}
+              has
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].question }}.
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div class="flex justify-between">
-        <div class="flex flex-col my-4">
-          <p class="mx-4 mb-2">You</p>
-          <!-- Full HP -->
-          <div v-if="NHIEUserLives == 3" class="flex justify-between mx-4">
-            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-            <img class="" src="/img/game-heart-filled.png" alt="" />
+        <div class="flex justify-between">
+          <div class="flex flex-col my-4">
+            <p class="mx-4 mb-2">You</p>
+            <!-- Full HP -->
+            <div v-if="NHIEUserLives == 3" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-filled.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 2" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 1" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 0" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
+            </div>
           </div>
-          <div v-if="NHIEUserLives == 2" class="flex justify-between mx-4">
-            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-            <img class="" src="/img/game-heart-empty.png" alt="" />
-          </div>
-          <div v-if="NHIEUserLives == 1" class="flex justify-between mx-4">
-            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-            <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
-            <img class="" src="/img/game-heart-empty.png" alt="" />
-          </div>
-          <div v-if="NHIEUserLives == 0" class="flex justify-between mx-4">
-            <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
-            <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
-            <img class="" src="/img/game-heart-empty.png" alt="" />
-          </div>
-        </div>
-        <div class="flex flex-col my-4">
-          <p class="mx-4 mb-2 text-right">{{ messageTargetName }}</p>
-          <div class="flex justify-between mx-4">
-            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-            <img class="" src="/img/game-heart-filled.png" alt="" />
+          <div class="flex flex-col my-4">
+            <p class="mx-4 mb-2 text-right">{{ messageTargetName }}</p>
+            <div class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-filled.png" alt="" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- </transition> -->
+    </transition>
 
     <!-- Congrat screen (temparory) -->
     <transition name="fade">
@@ -820,6 +820,8 @@ export default {
           this.showNHIEGameWindow = false;
           this.NHIEUserLives = 3;
           this.NHIEUserSelections = [];
+          this.NHIETargetQuestionIndex = 0;
+          this.NHIERoundResult = "";
         }
       } else {
         //  Display wrong msg, deduct heart
@@ -831,6 +833,8 @@ export default {
             this.showNHIEGameWindow = false;
             this.NHIEUserLives = 3;
             this.NHIEUserSelections = [];
+            this.NHIETargetQuestionIndex = 0;
+            this.NHIERoundResult = "";
           } else if (
             this.NHIETargetQuestionIndex == 9 &&
             this.NHIEUserLives > 0
@@ -839,22 +843,29 @@ export default {
             this.showNHIEGameWindow = false;
             this.NHIEUserLives = 3;
             this.NHIEUserSelections = [];
+            this.NHIETargetQuestionIndex = 0;
+            this.NHIERoundResult = "";
           }
         }
       }
-      this.scrollToBottom();
-
-      //  Block user from touching the buttons
-      this.blockTrueButton = true;
-
       setTimeout(() => {
-        if (this.NHIETargetQuestionIndex < 9) {
-          this.NHIETargetQuestionIndex++;
-          console.log("Next Question");
-        }
-        this.NHIERoundResult = "";
+        this.scrollToBottom();
+      }, 100);
+
+      if (this.showNHIEGameWindow) {
+        //  Block user from touching the buttons
+        this.blockTrueButton = true;
+        setTimeout(() => {
+          if (this.NHIETargetQuestionIndex < 9) {
+            this.NHIETargetQuestionIndex++;
+            console.log("Next Question");
+          }
+          this.NHIERoundResult = "";
+          this.blockTrueButton = false;
+        }, 1000);
+      } else {
         this.blockTrueButton = false;
-      }, 3000);
+      }
     },
     onClickNHIEAnswerFalse() {
       let currentItem = this.NHIETargetUserSelections[
@@ -869,6 +880,8 @@ export default {
           this.showNHIEGameWindow = false;
           this.NHIEUserLives = 3;
           this.NHIEUserSelections = [];
+          this.NHIETargetQuestionIndex = 0;
+          this.NHIERoundResult = "";
         }
       } else {
         //  Display wrong msg, deduct heart
@@ -881,6 +894,8 @@ export default {
             this.showNHIEGameWindow = false;
             this.NHIEUserLives = 3;
             this.NHIEUserSelections = [];
+            this.NHIETargetQuestionIndex = 0;
+            this.NHIERoundResult = "";
           } else if (
             this.NHIETargetQuestionIndex == 9 &&
             this.NHIEUserLives > 0
@@ -889,27 +904,36 @@ export default {
             this.showNHIEGameWindow = false;
             this.NHIEUserLives = 3;
             this.NHIEUserSelections = [];
+            this.NHIETargetQuestionIndex = 0;
+            this.NHIERoundResult = "";
           }
         }
       }
-      this.scrollToBottom();
-
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100);
       //  Block user from touching the buttons
       this.blockFalseButton = true;
-
-      setTimeout(() => {
-        if (this.NHIETargetQuestionIndex < 9) {
-          this.NHIETargetQuestionIndex++;
-          console.log("Next Question");
-        }
-        this.NHIERoundResult = "";
+      if (this.showNHIEGameWindow) {
+        setTimeout(() => {
+          if (this.NHIETargetQuestionIndex < 9) {
+            this.NHIETargetQuestionIndex++;
+            console.log("Next Question");
+          }
+          this.NHIERoundResult = "";
+          this.blockFalseButton = false;
+        }, 1000);
+      } else {
         this.blockFalseButton = false;
-      }, 3000);
+      }
     },
     onClickExitGame() {
       this.showNHIEGameWindow = false;
       this.NHIEUserLives = 3;
       this.NHIEUserSelections = [];
+      this.NHIETargetQuestionIndex = 0;
+      this.NHIERoundResult = "";
+
       setTimeout(() => {
         this.scrollToBottom();
       }, 100);
