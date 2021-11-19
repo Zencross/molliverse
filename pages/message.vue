@@ -2,8 +2,9 @@
   <div class="flex flex-col -mt-8" id="parent">
     <!-- Top Bar -->
     <div
-      class="sticky top-0 z-10 flex items-center justify-between w-full pt-10 pb-2 bg-white border border-t-0 border-b-1"
+      class="sticky top-0 z-10 flex items-center justify-between w-full pt-10 pb-2 overflow-hidden bg-white border border-t-0 border-b-1"
       id="topBar"
+      v-show="!showNHIEGameWindow"
     >
       <img
         src="/img/arrow-back-24px.svg"
@@ -41,6 +42,72 @@
         <img src="/img/phone-call.svg" class="w-10" alt="" />
       </div>
     </div>
+
+    <!-- NHIE In-Game Window (New)  -->
+    <!-- <transition name="fade"> -->
+    <div
+      id="NHIEGameWindow"
+      v-show="showNHIEGameWindow"
+      class="sticky top-0 z-20 w-full overflow-hidden bg-white shadow-lg "
+    >
+      <div class="flex items-center justify-center">
+        <img
+          src="/img/back-arrow.png"
+          alt="back"
+          class="absolute left-0 ml-4"
+          @click="onClickExitGame"
+        />
+        <div class="pt-8">
+          <p class="mt-4 text-3xl font-medium text-center">
+            Never Have I Ever
+          </p>
+          <p class="m-2 text-lg text-center">
+            Question
+            {{ NHIETargetUserSelections[NHIETargetQuestionIndex].id }}:
+            <br />
+            {{ messageTargetName }}
+            has
+            {{ NHIETargetUserSelections[NHIETargetQuestionIndex].question }}.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-between">
+        <div class="flex flex-col my-4">
+          <p class="mx-4 mb-2">You</p>
+          <!-- Full HP -->
+          <div v-if="NHIEUserLives == 3" class="flex justify-between mx-4">
+            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+            <img class="" src="/img/game-heart-filled.png" alt="" />
+          </div>
+          <div v-if="NHIEUserLives == 2" class="flex justify-between mx-4">
+            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+            <img class="" src="/img/game-heart-empty.png" alt="" />
+          </div>
+          <div v-if="NHIEUserLives == 1" class="flex justify-between mx-4">
+            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+            <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+            <img class="" src="/img/game-heart-empty.png" alt="" />
+          </div>
+          <div v-if="NHIEUserLives == 0" class="flex justify-between mx-4">
+            <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+            <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+            <img class="" src="/img/game-heart-empty.png" alt="" />
+          </div>
+        </div>
+        <div class="flex flex-col my-4">
+          <p class="mx-4 mb-2 text-right">{{ messageTargetName }}</p>
+          <div class="flex justify-between mx-4">
+            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+            <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+            <img class="" src="/img/game-heart-filled.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </transition> -->
 
     <!-- Congrat screen (temparory) -->
     <transition name="fade">
@@ -264,213 +331,15 @@
       </div>
     </transition>
 
-    <!-- NHIE In-Game Window (New)  -->
-    <transition name="fade">
-      <div
-        v-if="showNHIEGameWindow"
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
-      >
-        <div class="flex items-center justify-center">
-          <img
-            src="/img/back-arrow.png"
-            alt="back"
-            class="absolute left-0 ml-4"
-            @click="onClickExitGame"
-          />
-          <div>
-            <p class="mt-4 text-3xl font-medium text-center">
-              Never Have I Ever
-            </p>
-            <p class="m-2 text-lg text-center">
-              Question
-              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].id }}: <br />
-              {{ messageTargetName }}
-              has
-              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].question }}.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex justify-between">
-          <div class="flex flex-col my-4">
-            <p class="mx-4 mb-2">You</p>
-            <!-- Full HP -->
-            <div v-if="NHIEUserLives == 3" class="flex justify-between mx-4">
-              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-              <img class="" src="/img/game-heart-filled.png" alt="" />
-            </div>
-            <div v-if="NHIEUserLives == 2" class="flex justify-between mx-4">
-              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-              <img class="" src="/img/game-heart-empty.png" alt="" />
-            </div>
-            <div v-if="NHIEUserLives == 1" class="flex justify-between mx-4">
-              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
-              <img class="" src="/img/game-heart-empty.png" alt="" />
-            </div>
-            <div v-if="NHIEUserLives == 0" class="flex justify-between mx-4">
-              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
-              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
-              <img class="" src="/img/game-heart-empty.png" alt="" />
-            </div>
-          </div>
-          <div class="flex flex-col my-4">
-            <p class="mx-4 mb-2 text-right">{{ messageTargetName }}</p>
-            <div class="flex justify-between mx-4">
-              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
-              <img class="" src="/img/game-heart-filled.png" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-
-    <!-- NHIE Game Window 1 (True/False) -->
-    <!-- <transition name="fade">
-      <div
-        v-if="showNHIEGameWindow1"
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
-      >
-        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
-        <p class="m-2 text-lg text-center">
-          {{ messageTargetName }} has never fainted.
-        </p>
-        <div class="flex m-2">
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
-            @click="onClickGameWindowTrue1"
-          >
-            True
-          </button>
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
-            @click="onClickGameWindowFalse1"
-          >
-            False
-          </button>
-        </div>
-      </div>
-    </transition> -->
-
-    <!-- NHIE Game Window 2 (True/False) -->
-    <!-- <transition name="fade">
-      <div
-        v-if="showNHIEGameWindow2"
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
-      >
-        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
-        <p class="m-2 text-lg text-center">
-          {{ messageTargetName }} has never been to the hospital.
-        </p>
-        <div class="flex m-2">
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
-            @click="onClickGameWindowTrue2"
-          >
-            True
-          </button>
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
-            @click="onClickGameWindowFalse2"
-          >
-            False
-          </button>
-        </div>
-      </div>
-    </transition> -->
-
-    <!-- NHIE Game Window 3 (True/False) -->
-    <!-- <transition name="fade">
-      <div
-        v-if="showNHIEGameWindow3"
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
-      >
-        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
-        <p class="m-2 text-lg text-center">
-          {{ messageTargetName }} has never had a paranormal experience.
-        </p>
-        <div class="flex m-2">
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
-            @click="onClickGameWindowTrue3"
-          >
-            True
-          </button>
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
-            @click="onClickGameWindowFalse3"
-          >
-            False
-          </button>
-        </div>
-      </div>
-    </transition> -->
-
-    <!-- NHIE Game Window 4 (True/False) -->
-    <!-- <transition name="fade">
-      <div
-        v-if="showNHIEGameWindow4"
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
-      >
-        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
-        <p class="m-2 text-lg text-center">
-          {{ messageTargetName }} has never gotten stitches.
-        </p>
-        <div class="flex m-2">
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
-            @click="onClickGameWindowTrue4"
-          >
-            True
-          </button>
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
-            @click="onClickGameWindowFalse4"
-          >
-            False
-          </button>
-        </div>
-      </div>
-    </transition> -->
-
-    <!-- NHIE Game Window 5 (True/False) -->
-    <!-- <transition name="fade">
-      <div
-        v-if="showNHIEGameWindow5"
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
-      >
-        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
-        <p class="m-2 text-lg text-center">
-          {{ messageTargetName }} has never been to Iceland.
-        </p>
-        <div class="flex m-2">
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
-            @click="onClickGameWindowTrue5"
-          >
-            True
-          </button>
-          <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
-            @click="onClickGameWindowFalse5"
-          >
-            False
-          </button>
-        </div>
-      </div>
-    </transition> -->
-
     <!-- Message Container -->
     <!-- Re-calculate the height of messageContainer when native keyboard is activated -->
-    <div class="relative z-0 overflow-scroll messagesContainer" id="messages">
+    <div class="z-0 overflow-scroll messagesContainer" id="messages">
+      <!-- Messages -->
       <transition-group name="fade">
         <div
           v-for="message in messages"
           :key="message.timestamp"
-          class="flex w-full px-2 my-2 lato-font"
+          class="flex flex-auto w-full px-2 my-2 lato-font"
           :class="[
             message.by.nickname === messageTargetName
               ? 'justify-start'
@@ -506,6 +375,7 @@
           </div>
         </div>
       </transition-group>
+
       <!-- NHIE Game Answer Window (True/False) -->
       <transition name="fade">
         <div
@@ -564,7 +434,10 @@
     </div>
 
     <!-- Input Bar -->
-    <div class="flex w-full h-20 py-4 bg-white justify-evenly" id="inputs">
+    <div
+      class="fixed bottom-0 flex w-full h-20 py-4 bg-white justify-evenly"
+      id="inputs"
+    >
       <!-- Plus Icon -->
       <img src="/img/plus-icon.svg" class="w-5 mx-2" alt="" />
 
@@ -574,8 +447,6 @@
         class="w-8/12 h-12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
         placeholder="New Message"
         v-model="input"
-        @focus="onInputFocus"
-        @blur="onInputBlur"
       />
 
       <!-- Send Button -->
@@ -705,15 +576,40 @@ export default {
       console.log("scrolling detected!!", this.userIsScrolling);
     },
     scrollToBottom() {
-      var topBar = document.getElementById("topBar");
-      console.log("height of top bar", topBar.offsetHeight);
+      setTimeout(() => {
+        console.log("wait time");
+      }, 1000);
+
+      var topBar;
+      if (!this.showNHIEGameWindow) {
+        topBar = document.getElementById("topBar");
+        console.log("elem topBar", topBar);
+        console.log("height of top bar", topBar.offsetHeight);
+      }
 
       var inputs = document.getElementById("inputs");
+      console.log("elem inputs", inputs);
       console.log("height of inputs", inputs.offsetHeight);
 
+      var NHIEGameWindow;
+      if (this.showNHIEGameWindow) {
+        NHIEGameWindow = document.getElementById("NHIEGameWindow");
+        console.log("elem NHIE game window", NHIEGameWindow);
+        console.log("height of NHIE game window", NHIEGameWindow.offsetHeight);
+      }
+
       var messages = document.getElementById("messages");
-      messages.style.height =
-        window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
+
+      if (this.showNHIEGameWindow) {
+        messages.style.height =
+          window.innerHeight -
+          NHIEGameWindow.offsetHeight -
+          inputs.offsetHeight +
+          "px";
+      } else {
+        messages.style.height =
+          window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
+      }
 
       console.log("height of messages", messages.offsetHeight);
 
@@ -841,7 +737,10 @@ export default {
     onClickStartNHIE() {
       this.showNHIESetupWindow = false;
       this.showNHIEGameWindow = true;
-      this.scrollToBottom();
+      setTimeout(() => {
+        console.log("wait 5 sec after click NHIE start");
+        this.scrollToBottom();
+      }, 100);
     },
     onClickNHIEItem(item) {
       console.log("NHIE", item);
@@ -1011,57 +910,10 @@ export default {
       this.showNHIEGameWindow = false;
       this.NHIEUserLives = 3;
       this.NHIEUserSelections = [];
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100);
     }
-    // onClickGameWindowTrue1() {
-    //   console.log("True");
-    //   this.showNHIEGameWindow1 = false;
-    //   this.showNHIEGameWindow2 = true;
-    // },
-    // onClickGameWindowFalse1() {
-    //   console.log("False");
-    //   this.showNHIEGameWindow1 = false;
-    //   this.showNHIEGameWindow2 = true;
-    // },
-    // onClickGameWindowTrue2() {
-    //   console.log("True");
-    //   this.showNHIEGameWindow2 = false;
-    //   this.showNHIEGameWindow3 = true;
-    // },
-    // onClickGameWindowFalse2() {
-    //   console.log("False");
-    //   this.showNHIEGameWindow2 = false;
-    //   this.showNHIEGameWindow3 = true;
-    // },
-    // onClickGameWindowTrue3() {
-    //   console.log("True");
-    //   this.showNHIEGameWindow3 = false;
-    //   this.showNHIEGameWindow4 = true;
-    // },
-    // onClickGameWindowFalse3() {
-    //   console.log("False");
-    //   this.showNHIEGameWindow3 = false;
-    //   this.showNHIEGameWindow4 = true;
-    // },
-    // onClickGameWindowTrue4() {
-    //   console.log("True");
-    //   this.showNHIEGameWindow4 = false;
-    //   this.showNHIEGameWindow5 = true;
-    // },
-    // onClickGameWindowFalse4() {
-    //   console.log("False");
-    //   this.showNHIEGameWindow4 = false;
-    //   this.showNHIEGameWindow5 = true;
-    // },
-    // onClickGameWindowTrue5() {
-    //   console.log("True");
-    //   this.showNHIEGameWindow5 = false;
-    //   this.showNHIECongratScreen = true;
-    // },
-    // onClickGameWindowFalse5() {
-    //   console.log("False");
-    //   this.showNHIEGameWindow5 = false;
-    //   this.showNHIESorryScreen = true;
-    // }
   },
   mounted() {
     console.log("message.vue mounted.");
@@ -1073,11 +925,11 @@ export default {
     // this.loadMessages();
 
     // Initialize height on loaded
-    var topBar = document.getElementById("topBar");
-    var inputs = document.getElementById("inputs");
-    var messages = document.getElementById("messages");
-    messages.style.height =
-      window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
+    // var topBar = document.getElementById("topBar");
+    // var inputs = document.getElementById("inputs");
+    // var messages = document.getElementById("messages");
+    // messages.style.height =
+    //   window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
 
     this.messageLoader = setInterval(() => {
       this.loadMessages();
