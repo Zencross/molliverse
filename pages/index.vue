@@ -1,29 +1,21 @@
 <template>
-  <div>
-    <splash/>
+  <div class="-mt-8">
+    <splash2 />
   </div>
 </template>
 
 <script>
-import FaceFilter from '../components/FaceFilter'
-import Splash from '../components/Splash'
+import FaceFilter from "../components/FaceFilter";
+import Splash2 from "../components/Splash2";
 
 export default {
   components: { FaceFilter },
   data() {
-    return {
-      
-    };
+    return {};
   },
-  computed:{
-    
-  },
-  methods: {
-    
-  },
-  mounted() {
-
-  },
+  computed: {},
+  methods: {},
+  mounted() {}
 };
 </script>
 

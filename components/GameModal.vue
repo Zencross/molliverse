@@ -2,7 +2,7 @@
   <div class="absolute bottom-0 w-full bg-white shadow-2xl rounded-t-xl">
     <!-- Question -->
     <div class="flex items-center justify-center px-6 pt-8 pb-4">
-      <p class="text-center montserrat-font">
+      <p class="text-center">
         Looks like you guys want to play a game :)<br />
         Here are some good suggestions!
       </p>
@@ -12,25 +12,25 @@
     <div class="flex flex-col w-full">
       <div class="flex w-full justify-evenly">
         <button
-          class="w-1/2 h-16 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
+          class="w-1/2 h-16 mx-4 mt-4 mb-2 font-bold text-black bg-white border-2 border-black rounded-full"
         >
           Would you rather?
         </button>
         <button
           @click="onClickGame('Never have I ever')"
-          class="w-1/2 h-16 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
+          class="w-1/2 h-16 mx-4 mt-4 mb-2 font-bold text-black bg-white border-2 border-black rounded-full"
         >
           Never have I ever
         </button>
       </div>
       <div class="flex w-full justify-evenly">
         <button
-          class="w-1/2 h-16 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnGreen"
+          class="w-1/2 h-16 mx-4 mt-4 mb-2 font-bold text-black bg-white border-2 border-black rounded-full"
         >
           Two truths & one lie
         </button>
         <button
-          class="w-1/2 h-16 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnBlue"
+          class="w-1/2 h-16 mx-4 mt-4 mb-2 font-bold text-black bg-white border-2 border-black rounded-full"
         >
           20 Questions
         </button>

@@ -1,8 +1,8 @@
 <template>
-  <div class="max-h-screen">
+  <div class="flex flex-col -mt-8" id="parent">
     <!-- Top Bar -->
     <div
-      class="sticky top-0 z-10 flex items-center justify-between w-full pt-2 pb-2 bg-white border border-t-0 border-b-1"
+      class="sticky top-0 z-10 flex items-center justify-between w-full pt-10 pb-2 bg-white border border-t-0 border-b-1"
       id="topBar"
     >
       <img
@@ -42,134 +42,323 @@
       </div>
     </div>
 
-    <!-- Never Have I Ever Game Window -->
+    <!-- Congrat screen (temparory) -->
     <transition name="fade">
       <div
-        class="absolute top-auto z-20 w-full bg-white shadow-lg"
-        v-if="showNHIESetupWindow"
+        class="absolute top-0 bottom-0 left-0 right-0 z-20 flex flex-col items-center justify-center w-full bg-white"
+        v-if="showNHIECongratScreen"
       >
-        <!-- <p>Game Window Here</p> -->
-        <!-- Category Tab -->
-        <div class="flex h-10">
-          <button
-            @click="NHIECategory = 'harmless'"
-            class="w-1/3 text-white bg-modalBtnGreen"
-          >
-            Harmless
-          </button>
-          <button
-            @click="NHIECategory = 'delicate'"
-            class="w-1/3 text-white bg-modalBtnOrange"
-          >
-            Delicate
-          </button>
-          <button
-            @click="NHIECategory = 'offensive'"
-            class="w-1/3 text-white bg-modalBtnBlue"
-          >
-            Offensive
-          </button>
+        <div class="flex items-center justify-center w-full">
+          <img src="/img/you_win.png" alt="" class="" />
         </div>
+        <div class="text-3xl font-semibold text-center text-black">
+          Congratulations!
+        </div>
+        <div class="mt-2 text-center">
+          You won the game
+        </div>
+        <button
+          class="w-10/12 py-4 mt-6 font-semibold text-black bg-white border border-black lato-font rounded-xl"
+          @click="showNHIECongratScreen = false"
+        >
+          Back to Chat
+        </button>
+      </div>
+    </transition>
 
-        <div class="px-4 py-2 text-xl font-semibold text-brandPurple">
-          Never have I ever ...
+    <!-- Sorry screen (temparory) -->
+    <transition name="fade">
+      <div
+        class="absolute top-0 bottom-0 left-0 right-0 z-20 flex flex-col items-center justify-center w-full bg-white"
+        v-if="showNHIESorryScreen"
+      >
+        <div class="flex items-center justify-center w-full">
+          <img src="/img/you_lose.png" alt="" class="" />
         </div>
+        <div class="text-3xl font-semibold text-center text-black">
+          Sorry!
+        </div>
+        <div class="mt-2 text-center">
+          You lost the game
+        </div>
+        <button
+          class="w-10/12 py-4 mt-6 font-semibold text-black bg-white border border-black lato-font rounded-xl"
+          @click="showNHIESorryScreen = false"
+        >
+          Back to Chat
+        </button>
+      </div>
+    </transition>
 
-        <!-- Harmless Content -->
-        <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
-          <div
-            class="flex items-center"
-            v-for="item in NHIEHarmlessContent"
-            :key="item"
-          >
-            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
-              {{ item }}
-            </div>
-            <button
-              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
-              @click="onClickNHIEItem(item)"
-              :class="[
-                NHIEUserSelections.includes(item)
-                  ? 'bg-modalBtnGreen text-white'
-                  : 'text-brandPurple'
-              ]"
-            >
-              I Have
-            </button>
-          </div>
-        </div>
-        <!-- Delicate Content -->
-        <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
-          <div
-            class="flex items-center"
-            v-for="item in NHIEDelicateContent"
-            :key="item"
-          >
-            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
-              {{ item }}
-            </div>
-            <button
-              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
-              @click="onClickNHIEItem(item)"
-              :class="[
-                NHIEUserSelections.includes(item)
-                  ? 'bg-modalBtnGreen text-white'
-                  : 'text-brandPurple'
-              ]"
-            >
-              I Have
-            </button>
-          </div>
-        </div>
-        <!-- Offensive Content -->
-        <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
-          <div
-            class="flex items-center"
-            v-for="item in NHIEOffensiveContent"
-            :key="item"
-          >
-            <div class="mx-4 my-2 text-lg text-gray-800 lato-font">
-              {{ item }}
-            </div>
-            <button
-              class="h-8 px-2 text-sm font-semibold bg-white border border-purple-700 rounded-2xl"
-              @click="onClickNHIEItem(item)"
-              :class="[
-                NHIEUserSelections.includes(item)
-                  ? 'bg-modalBtnGreen text-white'
-                  : 'text-brandPurple'
-              ]"
-            >
-              I Have
-            </button>
-          </div>
-        </div>
-
-        <!-- Add custom NEIE item -->
-        <div class="mx-3 mt-2 text-center text-blue-600 underline">
-          Custom Questions
-        </div>
+    <!-- Never Have I Ever Game Setup Window -->
+    <transition name="fade">
+      <div v-if="showNHIESetupWindow">
+        <div
+          class="absolute top-0 bottom-0 left-0 right-0 z-20 w-full bg-black opacity-50"
+        ></div>
 
         <div
-          v-if="NHIEUserSelections.length < 5"
-          class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
+          class="absolute bottom-0 z-30 w-full bg-white shadow-xl rounded-t-xl"
         >
-          {{ NHIEUserSelections.length }} / 5
-        </div>
-        <div
-          v-else
-          class="mb-2 mr-6 text-lg font-semibold text-right text-green-500 lato-font"
-          @click="onClickStartNHIE"
-        >
-          Start Game
+          <div
+            class="px-4 pt-4 pb-2 text-2xl font-semibold text-center text-black"
+          >
+            Never Have I Ever
+          </div>
+
+          <div class="px-4 pb-3 text-sm leading-tight text-center text-black">
+            Prompts will pop up on the screen. Select whether you’ve done it or
+            not. You gain a point if you guess correctly on whether your match
+            has done it or not.
+          </div>
+
+          <!-- <p>Game Window Here</p> -->
+          <!-- Category Tab -->
+          <div class="flex h-10 mx-3 mb-4">
+            <button
+              @click="NHIECategory = 'harmless'"
+              class="w-1/3 text-sm text-black "
+              :class="[NHIECategory == 'harmless' ? 'font-extrabold' : '']"
+            >
+              Harmless
+            </button>
+            <button
+              @click="NHIECategory = 'delicate'"
+              class="w-1/3 text-sm text-black "
+              :class="[NHIECategory == 'delicate' ? 'font-extrabold' : '']"
+            >
+              Delicate
+            </button>
+            <button
+              @click="NHIECategory = 'dirty'"
+              class="w-1/3 text-sm text-black "
+              :class="[NHIECategory == 'dirty' ? 'font-extrabold' : '']"
+            >
+              Dirty
+            </button>
+            <button
+              @click="NHIECategory = 'offensive'"
+              class="w-1/3 text-sm text-black "
+              :class="[NHIECategory == 'offensive' ? 'font-extrabold' : '']"
+            >
+              Offensive
+            </button>
+          </div>
+
+          <!-- Harmless Content -->
+          <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
+            <div
+              class="flex items-center justify-between mx-5"
+              v-for="item in NHIEHarmlessContent"
+              :key="item"
+            >
+              <div class="my-2 text-lg text-gray-800 lato-font">
+                {{ item }}
+              </div>
+              <button
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl disable-dbl-tap-zoom"
+                @click="onClickNHIEItem(item)"
+                :class="[
+                  NHIEUserSelections.includes(item)
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black'
+                ]"
+              >
+                I Have
+              </button>
+            </div>
+          </div>
+          <!-- Delicate Content -->
+          <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
+            <div
+              class="flex items-center justify-between mx-5"
+              v-for="item in NHIEDelicateContent"
+              :key="item"
+            >
+              <div class="my-2 text-lg text-gray-800 lato-font">
+                {{ item }}
+              </div>
+              <button
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl disable-dbl-tap-zoom"
+                @click="onClickNHIEItem(item)"
+                :class="[
+                  NHIEUserSelections.includes(item)
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black'
+                ]"
+              >
+                I Have
+              </button>
+            </div>
+          </div>
+          <!-- Dirty Content -->
+          <div v-if="NHIECategory == 'dirty'" class="flex flex-col">
+            <div
+              class="flex items-center justify-between mx-5"
+              v-for="item in NHIEDirtyContent"
+              :key="item"
+            >
+              <div class="my-2 text-lg text-gray-800 lato-font">
+                {{ item }}
+              </div>
+              <button
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl disable-dbl-tap-zoom"
+                @click="onClickNHIEItem(item)"
+                :class="[
+                  NHIEUserSelections.includes(item)
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black'
+                ]"
+              >
+                I Have
+              </button>
+            </div>
+          </div>
+          <!-- Offensive Content -->
+          <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
+            <div
+              class="flex items-center justify-between mx-5"
+              v-for="item in NHIEOffensiveContent"
+              :key="item"
+            >
+              <div class="my-2 text-lg text-gray-800 lato-font">
+                {{ item }}
+              </div>
+              <button
+                class="h-8 px-2 text-sm font-semibold border border-black rounded-2xl disable-dbl-tap-zoom"
+                @click="onClickNHIEItem(item)"
+                :class="[
+                  NHIEUserSelections.includes(item)
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black'
+                ]"
+              >
+                I Have
+              </button>
+            </div>
+          </div>
+
+          <!-- Add custom NEIE item -->
+          <!-- <div class="mx-3 mt-2 text-center text-blue-600 underline">
+            Custom Questions
+          </div> -->
+
+          <div class="flex justify-center">
+            <button
+              v-if="NHIEUserSelections.length < 5"
+              class="w-full py-4 m-4 font-semibold text-white bg-black opacity-50 lato-font rounded-xl"
+              disabled
+            >
+              {{ NHIEUserSelections.length }} / 5 selected
+            </button>
+
+            <button
+              v-else
+              class="w-full py-4 m-4 font-semibold text-white bg-black lato-font rounded-xl"
+              @click="onClickStartNHIE"
+            >
+              Start Game
+            </button>
+          </div>
         </div>
       </div>
     </transition>
 
-    <!-- NHIE Window -->
+    <!-- NHIE In-Game Window (New)  -->
     <transition name="fade">
       <div
         v-if="showNHIEGameWindow"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <div class="flex items-center justify-center">
+          <img
+            src="/img/back-arrow.png"
+            alt="back"
+            class="absolute left-0 ml-4"
+            @click="onClickExitGame"
+          />
+          <div>
+            <p class="mt-4 text-3xl font-medium text-center">
+              Never Have I Ever
+            </p>
+            <p class="m-2 text-lg text-center">
+              Question
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].id }}: <br />
+              {{ messageTargetName }}
+              has
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].question }}.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <div class="flex flex-col my-4">
+            <p class="mx-4 mb-2">You</p>
+            <!-- Full HP -->
+            <div v-if="NHIEUserLives == 3" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-filled.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 2" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 1" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
+            </div>
+            <div v-if="NHIEUserLives == 0" class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-empty.png" alt="" />
+              <img class="" src="/img/game-heart-empty.png" alt="" />
+            </div>
+          </div>
+          <div class="flex flex-col my-4">
+            <p class="mx-4 mb-2 text-right">{{ messageTargetName }}</p>
+            <div class="flex justify-between mx-4">
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="mr-1" src="/img/game-heart-filled.png" alt="" />
+              <img class="" src="/img/game-heart-filled.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <!-- NHIE Game Window 1 (True/False) -->
+    <!-- <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow1"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never fainted.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
+            @click="onClickGameWindowTrue1"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
+            @click="onClickGameWindowFalse1"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition> -->
+
+    <!-- NHIE Game Window 2 (True/False) -->
+    <!-- <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow2"
         class="absolute top-auto z-20 w-full bg-white shadow-lg"
       >
         <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
@@ -178,23 +367,105 @@
         </p>
         <div class="flex m-2">
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple"
-            @click="showNHIEGameWindow = false"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
+            @click="onClickGameWindowTrue2"
           >
             True
           </button>
           <button
-            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange"
-            @click="showNHIEGameWindow = false"
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
+            @click="onClickGameWindowFalse2"
           >
             False
           </button>
         </div>
       </div>
-    </transition>
+    </transition> -->
+
+    <!-- NHIE Game Window 3 (True/False) -->
+    <!-- <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow3"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never had a paranormal experience.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
+            @click="onClickGameWindowTrue3"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
+            @click="onClickGameWindowFalse3"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition> -->
+
+    <!-- NHIE Game Window 4 (True/False) -->
+    <!-- <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow4"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never gotten stitches.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
+            @click="onClickGameWindowTrue4"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
+            @click="onClickGameWindowFalse4"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition> -->
+
+    <!-- NHIE Game Window 5 (True/False) -->
+    <!-- <transition name="fade">
+      <div
+        v-if="showNHIEGameWindow5"
+        class="absolute top-auto z-20 w-full bg-white shadow-lg"
+      >
+        <p class="mt-4 text-2xl font-semibold text-center">Never Have I Ever</p>
+        <p class="m-2 text-lg text-center">
+          {{ messageTargetName }} has never been to Iceland.
+        </p>
+        <div class="flex m-2">
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-brandPurple disable-dbl-tap-zoom"
+            @click="onClickGameWindowTrue5"
+          >
+            True
+          </button>
+          <button
+            class="w-1/2 h-12 mx-4 mt-4 mb-2 text-white rounded-xl bg-modalBtnOrange disable-dbl-tap-zoom"
+            @click="onClickGameWindowFalse5"
+          >
+            False
+          </button>
+        </div>
+      </div>
+    </transition> -->
 
     <!-- Message Container -->
-    <div class="z-0 overflow-scroll messagesContainer" id="messages">
+    <!-- Re-calculate the height of messageContainer when native keyboard is activated -->
+    <div class="relative z-0 overflow-scroll messagesContainer" id="messages">
       <transition-group name="fade">
         <div
           v-for="message in messages"
@@ -235,13 +506,65 @@
           </div>
         </div>
       </transition-group>
+      <!-- NHIE Game Answer Window (True/False) -->
+      <transition name="fade">
+        <div
+          v-if="showNHIEGameWindow"
+          class="z-20 flex flex-col w-full bg-white rounded-t-lg"
+        >
+          <transition name="fade">
+            <p
+              v-if="NHIERoundResult == 'correct'"
+              class="mt-3 font-medium text-center text-green-500"
+            >
+              You're correct! Q{{
+                NHIETargetUserSelections[NHIETargetQuestionIndex].id
+              }}
+              answer is
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].answer }}!
+            </p>
+          </transition>
+
+          <transition name="fade">
+            <p
+              v-if="NHIERoundResult == 'wrong'"
+              class="mt-4 font-medium text-center text-red-500"
+            >
+              You're wrong! Q{{
+                NHIETargetUserSelections[NHIETargetQuestionIndex].id
+              }}
+              answer is
+              {{ NHIETargetUserSelections[NHIETargetQuestionIndex].answer }}!
+            </p>
+          </transition>
+          <div class="flex">
+            <button
+              class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium border border-black rounded-full disable-dbl-tap-zoom"
+              :class="[
+                blockTrueButton ? 'bg-black text-white' : 'bg-white text-black'
+              ]"
+              @click="onClickNHIEAnswerTrue"
+              :disabled="blockTrueButton"
+            >
+              True
+            </button>
+            <button
+              class="w-1/2 h-12 mx-4 mt-4 mb-2 text-sm font-medium border border-black rounded-full disable-dbl-tap-zoom"
+              :class="[
+                blockFalseButton ? 'bg-black text-white' : 'bg-white text-black'
+              ]"
+              @click="onClickNHIEAnswerFalse"
+              :disabled="blockFalseButton"
+            >
+              False
+            </button>
+          </div>
+        </div>
+      </transition>
     </div>
 
     <!-- Input Bar -->
-    <div
-      class="fixed bottom-0 flex w-full h-20 py-4 bg-white justify-evenly"
-      id="inputs"
-    >
+    <div class="flex w-full h-20 py-4 bg-white justify-evenly" id="inputs">
       <!-- Plus Icon -->
       <img src="/img/plus-icon.svg" class="w-5 mx-2" alt="" />
 
@@ -251,6 +574,8 @@
         class="w-8/12 h-12 p-3 pl-5 bg-gray-300 rounded-full outline-none"
         placeholder="New Message"
         v-model="input"
+        @focus="onInputFocus"
+        @blur="onInputBlur"
       />
 
       <!-- Send Button -->
@@ -296,29 +621,64 @@ export default {
       input: "",
       messageLoader: null,
       userIsScrolling: false,
-      showGameModal: true,
-      showNHIESetupWindow: false,
-      showNHIEGameWindow: false,
+      showGameModal: false, // Controls the display of wingman game suggestion
+      showNHIESetupWindow: false, // Controls the display of NHIE Setup Window (Choose Question)
+      showNHIEGameWindow: false, // Controls the display of NHIE In-Game Window (Question + users' lives)
+      // showNHIEGameWindow1: false,
+      // showNHIEGameWindow2: false,
+      // showNHIEGameWindow3: false,
+      // showNHIEGameWindow4: false,
+      // showNHIEGameWindow5: false,
+      showNHIECongratScreen: false,
+      showNHIESorryScreen: false,
+      NHIERoundResult: "",
       NHIECategory: "harmless",
       NHIEHarmlessContent: [
         "fainted",
         "been to the hospital",
         "had a paranormal experience",
-        "gotten stitches"
+        "gotten stitches",
+        "been to Iceland"
       ],
       NHIEDelicateContent: [
         "fallen in love",
         "started a hashtag",
         "been on TV",
-        "lied to my best friend"
+        "lied to a best friend",
+        "raced on the circuit"
+      ],
+      NHIEDirtyContent: [
+        "being crazy",
+        "stolen something in a store",
+        "had crush on relatives",
+        "bullied someone in high school",
+        "been drunk"
       ],
       NHIEOffensiveContent: [
         "cheated",
         "ruined someone else's vacation",
         "used someone else's toothbrush",
-        "broke a bone"
+        "broken a bone",
+        "fled to another country"
       ],
-      NHIEUserSelections: []
+      NHIEUserSelections: [], // Current User Selection of NHIE Question
+      NHIETargetUserSelections: [
+        { id: 1, question: "ruined someone else's vacation", answer: true },
+        { id: 2, question: "stolen something in a store", answer: true },
+        { id: 3, question: "bullied someone in high school", answer: false },
+        { id: 4, question: "lied to a best friend", answer: false },
+        { id: 5, question: "had a paranormal experience", answer: false },
+        { id: 6, question: "been drunk", answer: true },
+        { id: 7, question: "been to Iceland", answer: true },
+        { id: 8, question: "cheated", answer: false },
+        { id: 9, question: "gotten stitches", answer: true },
+        { id: 10, question: "broken a bone", answer: false }
+      ],
+      NHIETargetQuestionIndex: 0, // value range from 0-4 (5 Questions),
+      blockTrueButton: false,
+      blockFalseButton: false,
+      NHIEUserLives: 3,
+      NHIETargetUserLives: 3
     };
   },
   computed: {
@@ -346,21 +706,18 @@ export default {
     },
     scrollToBottom() {
       var topBar = document.getElementById("topBar");
-      // console.log("height of top bar", topBar.offsetHeight);
+      console.log("height of top bar", topBar.offsetHeight);
 
       var inputs = document.getElementById("inputs");
-      // console.log("height of inputs", inputs.offsetHeight);
-
-      // console.log("inner height", window.innerHeight);
+      console.log("height of inputs", inputs.offsetHeight);
 
       var messages = document.getElementById("messages");
       messages.style.height =
         window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
 
-      // console.log("height of messages", messages.offsetHeight);
+      console.log("height of messages", messages.offsetHeight);
 
       window.setTimeout(function() {
-        // var elem = document.getElementById("messages");
         messages.scrollTop = messages.scrollHeight;
         console.log("scrolled");
       }, 100);
@@ -402,7 +759,7 @@ export default {
           }
         });
 
-        console.log("loadMessages results", results.data.getChannel.messages);
+        // console.log("loadMessages results", results.data.getChannel.messages);
 
         let oldMsgsLength = this.messages.length;
         let newMsgsLength = results.data.getChannel.messages.length;
@@ -484,29 +841,214 @@ export default {
     onClickStartNHIE() {
       this.showNHIESetupWindow = false;
       this.showNHIEGameWindow = true;
+      this.scrollToBottom();
     },
     onClickNHIEItem(item) {
       console.log("NHIE", item);
+
       if (this.NHIEUserSelections.includes(item)) {
+        // Find and remove
         for (var i = 0; i < this.NHIEUserSelections.length; i++) {
           if (this.NHIEUserSelections[i] === item) {
             this.NHIEUserSelections.splice(i, 1);
           }
         }
         console.log("NHIE", this.NHIEUserSelections);
-      } else {
+      } else if (this.NHIEUserSelections.length < 5) {
         this.NHIEUserSelections.push(item);
         console.log("NHIE", this.NHIEUserSelections);
       }
-    }
-  },
+    },
+    onInputFocus() {
+      console.log("UA: ", navigator.userAgent);
+      // if (navigator.userAgentData.mobile == false) {
+      //   console.log("non mobile detected. Not shrinking the message container");
+      //   return;
+      // }
 
+      console.log("onInputFocus, native keyboard should be triggered");
+      var messages = document.getElementById("messages");
+      var topBar = document.getElementById("topBar");
+      var inputs = document.getElementById("inputs");
+      var parent = document.getElementById("parent");
+
+      // Calculate 40% of the innerHeight as the keyboard height
+      var IOSKeyboardHeight = Math.round(window.innerHeight * 0.35);
+      console.log("Estimated keyboard height: ", IOSKeyboardHeight);
+
+      messages.style.height =
+        window.innerHeight -
+        topBar.offsetHeight -
+        inputs.offsetHeight -
+        300 +
+        "px";
+
+      console.log("height of messages", messages.offsetHeight);
+
+      window.setTimeout(function() {
+        "wait 1 sec and scroll...";
+        // Scroll to top of page
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        console.log("Scroll to top of page");
+      }, 100);
+
+      // Scroll to latest message
+      messages.scrollTop = messages.scrollHeight;
+      console.log("Scroll to latest message");
+    },
+    onInputBlur() {
+      console.log("onInputBlur, native keyboard should be hide");
+      var messages = document.getElementById("messages");
+      var topBar = document.getElementById("topBar");
+      var inputs = document.getElementById("inputs");
+      messages.style.height =
+        window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
+
+      console.log("height of messages", messages.offsetHeight);
+      messages.scrollTop = messages.scrollHeight;
+    },
+    onClickNHIEAnswerTrue() {
+      let currentItem = this.NHIETargetUserSelections[
+        this.NHIETargetQuestionIndex
+      ];
+      console.log("currentItem", currentItem);
+      if (currentItem.answer == true) {
+        //  Display correct msg
+        this.NHIERoundResult = "correct";
+      } else {
+        //  Display wrong msg, deduct heart
+        this.NHIERoundResult = "wrong";
+        if (this.NHIEUserLives > 0) {
+          this.NHIEUserLives--;
+          if (this.NHIEUserLives == 0) {
+            this.showNHIESorryScreen = true;
+            this.showNHIEGameWindow = false;
+            this.NHIEUserLives = 3;
+            this.NHIEUserSelections = [];
+          }
+        }
+      }
+      this.scrollToBottom();
+
+      //  Block user from touching the buttons
+      this.blockTrueButton = true;
+
+      setTimeout(() => {
+        if (this.NHIETargetQuestionIndex < 9) {
+          this.NHIETargetQuestionIndex++;
+          console.log("Next Question");
+        }
+        this.NHIERoundResult = "";
+        this.blockTrueButton = false;
+      }, 3000);
+    },
+    onClickNHIEAnswerFalse() {
+      let currentItem = this.NHIETargetUserSelections[
+        this.NHIETargetQuestionIndex
+      ];
+      console.log("currentItem", currentItem);
+      if (currentItem.answer == false) {
+        //  Display correct msg
+        this.NHIERoundResult = "correct";
+      } else {
+        //  Display wrong msg, deduct heart
+        this.NHIERoundResult = "wrong";
+        if (this.NHIEUserLives > 0) {
+          this.NHIEUserLives--;
+          if (this.NHIEUserLives == 0) {
+            this.showNHIESorryScreen = true;
+            this.showNHIEGameWindow = false;
+            this.NHIEUserLives = 3;
+            this.NHIEUserSelections = [];
+          }
+        }
+      }
+      this.scrollToBottom();
+
+      //  Block user from touching the buttons
+      this.blockFalseButton = true;
+
+      setTimeout(() => {
+        if (this.NHIETargetQuestionIndex < 9) {
+          this.NHIETargetQuestionIndex++;
+          console.log("Next Question");
+        }
+        this.NHIERoundResult = "";
+        this.blockFalseButton = false;
+      }, 3000);
+    },
+    onClickExitGame() {
+      this.showNHIEGameWindow = false;
+      this.NHIEUserLives = 3;
+      this.NHIEUserSelections = [];
+    }
+    // onClickGameWindowTrue1() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow1 = false;
+    //   this.showNHIEGameWindow2 = true;
+    // },
+    // onClickGameWindowFalse1() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow1 = false;
+    //   this.showNHIEGameWindow2 = true;
+    // },
+    // onClickGameWindowTrue2() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow2 = false;
+    //   this.showNHIEGameWindow3 = true;
+    // },
+    // onClickGameWindowFalse2() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow2 = false;
+    //   this.showNHIEGameWindow3 = true;
+    // },
+    // onClickGameWindowTrue3() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow3 = false;
+    //   this.showNHIEGameWindow4 = true;
+    // },
+    // onClickGameWindowFalse3() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow3 = false;
+    //   this.showNHIEGameWindow4 = true;
+    // },
+    // onClickGameWindowTrue4() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow4 = false;
+    //   this.showNHIEGameWindow5 = true;
+    // },
+    // onClickGameWindowFalse4() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow4 = false;
+    //   this.showNHIEGameWindow5 = true;
+    // },
+    // onClickGameWindowTrue5() {
+    //   console.log("True");
+    //   this.showNHIEGameWindow5 = false;
+    //   this.showNHIECongratScreen = true;
+    // },
+    // onClickGameWindowFalse5() {
+    //   console.log("False");
+    //   this.showNHIEGameWindow5 = false;
+    //   this.showNHIESorryScreen = true;
+    // }
+  },
   mounted() {
     console.log("message.vue mounted.");
 
     window.addEventListener("scroll", this.handleScroll);
-
+    window.addEventListener("resize", e => {
+      console.log("resized deteected, new innerHeight:", window.innerHeight);
+    });
     // this.loadMessages();
+
+    // Initialize height on loaded
+    var topBar = document.getElementById("topBar");
+    var inputs = document.getElementById("inputs");
+    var messages = document.getElementById("messages");
+    messages.style.height =
+      window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
 
     this.messageLoader = setInterval(() => {
       this.loadMessages();
@@ -573,5 +1115,9 @@ export default {
 
 .message-box-max-width {
   max-width: 70%;
+}
+
+.disable-dbl-tap-zoom {
+  touch-action: manipulation;
 }
 </style>

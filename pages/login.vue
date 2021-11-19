@@ -1,36 +1,30 @@
 <template>
-  <div
-    class="container absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center"
-  >
+  <div class="flex flex-col items-center w-full -mt-8">
     <!-- <img src="../static/img/bliss2.svg" alt="Bliss" class="w-9/12 mt-24"> -->
     <img
-      src="../static/img/mollie-white.png"
+      src="/img/bliss_new_splash_image_short.png"
       alt="Bliss"
-      class="w-7/12 mt-24"
+      class="w-full"
     />
-    <!--
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ]
-  }
-  ```
--->
-    <div class="flex flex-col items-center w-9/12 mt-16">
-      <label for="location" class="block font-medium text-white"
+
+    <div class="flex flex-col items-center justify-center w-full my-8">
+      <img
+        id="goFS"
+        src="../static/img/mollie-color.png"
+        alt="Bliss"
+        class="w-1/4 mb-2"
+      />
+
+      <p class="font-medium">Where two minds make a connection</p>
+    </div>
+
+    <div class="flex flex-col items-center w-9/12">
+      <label for="location" class="block font-medium text-black"
         >Sign in as:</label
       >
       <select
         name="location"
-        class="block w-full py-3 pl-3 pr-10 mt-1 text-base bg-white border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        class="block w-full py-3 pl-3 pr-10 mt-1 text-base bg-white border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         v-model="userSelected"
         @change="onSelectInput"
       >
@@ -52,7 +46,7 @@
 
       <div
         @click="onClickCreateNewProfile"
-        class="mt-4 text-white underline karla-font focus:outline-none"
+        class="mt-4 mb-4 text-black underline karla-font focus:outline-none"
       >
         Create a new profile
       </div>
