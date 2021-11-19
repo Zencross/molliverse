@@ -138,8 +138,8 @@ export const mutations = {
         ...state.userProfileMedia[index],
         type: "VIDEO",
         url: state.video
-      }),
-        // console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
+      });
+      // console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
     }
   },
   setUserProfileMedia(state, val) {
