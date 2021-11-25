@@ -128,7 +128,7 @@ export const mutations = {
         type: "IMAGE",
         url: state.photo
       });
-      // console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
+      console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
     }
   },
   addVideoToUserProfileMedia(state, index) {

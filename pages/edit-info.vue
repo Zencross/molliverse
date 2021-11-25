@@ -41,6 +41,7 @@
             v-for="ele in userProfileMedia"
             :key="ele.index"
             class="relative z-10 my-1 bg-darkgrey rounded-xl cell-width cell-aspect-ratio"
+            @click="onClickBox(userProfileMedia.indexOf(ele))"
           >
             <!-- The blank box -->
             <img
@@ -198,8 +199,8 @@ export default {
   computed: {
     userProfileMedia: {
       get() {
-        // return this.$store.state.userProfileMedia;
-        return this.$store.state.user.media;
+        return this.$store.state.userProfileMedia;
+        // return this.$store.state.user.media;
       },
       set(value) {
         console.log("setter value", value);
@@ -209,6 +210,7 @@ export default {
   },
   mounted() {
     console.log("edit-info page, user object", this.$store.state.user);
+    this.$store.commit("setUserProfileMedia", this.$store.state.user.media);
   },
   methods: {
     log(arg) {
@@ -220,8 +222,8 @@ export default {
     },
     onClickBox(id) {
       console.log("clicked box ", id);
-      // this.$store.commit("setCurrentMediaIndex", id);
-      this.$router.push("/ar-filter");
+      this.$store.commit("setCurrentMediaIndex", id);
+      this.$router.push("/ar-filter-2");
     },
     async onClickFinsih() {
       //  Create User Profile
