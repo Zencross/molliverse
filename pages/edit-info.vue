@@ -235,7 +235,17 @@ export default {
       console.log("--------------------addUser finished--------------------");
       this.$router.push("/swipe");
     },
-    onClickDone() {
+    async onClickDone() {
+      //  Update User Profile
+      // await this.$store.dispatch("createUserProfile");
+      // console.log(
+      //   "--------------------createUserProfile finished--------------------"
+      // );
+      // await this.$store.dispatch("updateUser");
+      // console.log(
+      //   "--------------------updateUser finished--------------------"
+      // );
+
       this.$router.push("/user-profile");
     }
   }
