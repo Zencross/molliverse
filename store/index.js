@@ -118,7 +118,7 @@ export const mutations = {
   },
   setPhoto(state, val) {
     state.photo = val;
-    // console.log("VUEX: set photo to", state.photo);
+    //console.log("VUEX: set photo to", state.photo);
   },
   addPhotoToUserProfileMedia(state, index) {
     // console.log("type of index is", typeof index, index);
