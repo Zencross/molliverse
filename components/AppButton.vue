@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center w-full">
     <button
-      class="flex items-center w-11/12 px-3 py-4 bg-transparent border rounded-lg focus:outline-none lato-font"
+      class="flex items-center w-11/12 px-3 py-4 bg-transparent border rounded-lg focus:outline-none"
       :class="[
         borderBlack ? 'border-black' : '',
         borderWhite ? 'border-white' : '',
@@ -13,9 +13,10 @@
         bgApple ? 'bg-white' : '',
         bgFB ? 'bg-FB' : '',
         bgPhoneNum ? 'bg-brandPurple' : '',
+        bgBlack ? 'bg-black' : '',
         fontBold ? 'font-semibold' : '',
         disabled ? 'opacity-50' : '',
-        selected ? 'bg-selected text-white' : ''
+        selected ? 'bg-black text-white' : ''
       ]"
       @click="onClickButton"
       :disabled="disabled"
@@ -66,6 +67,9 @@ export default {
     bgPhoneNum: {
       type: Boolean
     },
+    bgBlack: {
+      type: Boolean
+    },
     borderNone: {
       type: Boolean
     },
@@ -93,15 +97,4 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Karla:wght@700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
-.lato-font {
-  font-family: "Lato", sans-serif;
-}
-
-.karla-font {
-  font-family: "Karla", sans-serif;
-}
-</style>
+<style></style>

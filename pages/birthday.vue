@@ -9,13 +9,10 @@
       class="mt-10"
     ></input-field> -->
 
-    <div class="w-full mt-10 bg-transparent lato-font">
+    <div class="w-full mt-10 bg-transparent">
       <div class="flex flex-col items-center w-full">
-        <label
-          for="input"
-          class="w-11/12 mb-4 text-3xl font-semibold text-dark"
-        >
-          My Birthday is</label
+        <label for="input" class="w-11/12 mb-4 text-3xl text-dark">
+          My birthday is</label
         >
         <datepicker
           class="w-11/12 mx-4 text-lg border border-gray-300 rounded-md bg-lightgrey input-color focus:outline-none"
@@ -30,9 +27,9 @@
     </div>
 
     <app-button
-      buttonText="Continue"
+      buttonText="Next"
       textWhite
-      bgPhoneNum
+      bgBlack
       @click="onClickButton"
       class="absolute bottom-0 mb-8"
     />
