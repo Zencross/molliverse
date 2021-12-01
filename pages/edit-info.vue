@@ -236,11 +236,11 @@ export default {
       this.$router.push("/swipe");
     },
     async onClickDone() {
-      //  Update User Profile
-      // await this.$store.dispatch("createUserProfile");
-      // console.log(
-      //   "--------------------createUserProfile finished--------------------"
-      // );
+      // Update User Profile
+      await this.$store.dispatch("createUserProfile");
+      console.log(
+        "--------------------createUserProfile finished--------------------"
+      );
       // await this.$store.dispatch("updateUser");
       // console.log(
       //   "--------------------updateUser finished--------------------"

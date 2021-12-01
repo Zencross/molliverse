@@ -277,7 +277,10 @@ export const actions = {
       state.userProfileMedia.map(async e => {
         console.log("turn", e.index);
         if (!e.url) {
-          console.log("The object is NULL, skipping this one");
+          console.log("The object is NULL, skipping this one", e.url);
+          return { ...e };
+        } else if (e.url.includes("https://")) {
+          console.log("The object already has a URL, skipping this one", e.url);
           return { ...e };
         }
         if (e.type === "IMAGE") {
@@ -307,7 +310,10 @@ export const actions = {
       userProfileMediaWithURL
     );
     commit("setUserProfileMedia", userProfileMediaWithURL);
-    console.log("new userProfileMedia array", state.userProfileMedia);
+    console.log(
+      "new userProfileMedia array saved to vuex",
+      state.userProfileMedia
+    );
   },
   async addUser({ dispatch, commit, state }) {
     let dob = new Date(state.birthday);
