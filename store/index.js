@@ -467,7 +467,9 @@ export const actions = {
         variables: {
           patch: {
             filter: {
-              nickname: [state.user.nickname]
+              nickname: {
+                eq: state.user.nickname
+              }
             },
             set: {
               media: state.userProfileMedia
