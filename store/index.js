@@ -431,8 +431,8 @@ export const actions = {
     try {
       const results = await this.app.apolloProvider.defaultClient.mutate({
         mutation: gql`
-          mutation($input: [UpdateUserInput!]!) {
-            updateUser(input: $input) {
+          mutation($patch: UpdateUserInput!) {
+            updateUser(input: $patch) {
               user {
                 name
                 nickname
@@ -467,10 +467,10 @@ export const actions = {
         variables: {
           patch: {
             filter: {
-              nickname: userInput.nickname
+              nickname: state.user.nickname
             },
             set: {
-              media: userInput.media
+              media: state.userProfileMedia
             }
           }
         }
