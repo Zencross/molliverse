@@ -211,6 +211,7 @@ export default {
   mounted() {
     console.log("edit-info page, user object", this.$store.state.user);
     this.$store.commit("setUserProfileMedia", this.$store.state.user.media);
+    console.log("nickname", this.$store.state.user.nickname);
   },
   methods: {
     log(arg) {

@@ -426,7 +426,7 @@ export const actions = {
       }
     ];
 
-    console.log("updateUser Input:", userInput);
+    //console.log("updateUser Input:", userInput);
 
     try {
       const results = await this.app.apolloProvider.defaultClient.mutate({
@@ -467,7 +467,7 @@ export const actions = {
         variables: {
           patch: {
             filter: {
-              nickname: state.user.nickname
+              nickname: [state.user.nickname]
             },
             set: {
               media: state.userProfileMedia
