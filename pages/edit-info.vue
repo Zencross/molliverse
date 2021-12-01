@@ -241,10 +241,10 @@ export default {
       console.log(
         "--------------------createUserProfile finished--------------------"
       );
-      // await this.$store.dispatch("updateUser");
-      // console.log(
-      //   "--------------------updateUser finished--------------------"
-      // );
+      await this.$store.dispatch("updateUser");
+      console.log(
+        "--------------------updateUser finished--------------------"
+      );
 
       this.$router.push("/user-profile");
     }

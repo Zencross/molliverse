@@ -393,7 +393,7 @@ export const actions = {
       console.error(e);
     }
   },
-  async UpdateUser({ dispatch, commit, state }) {
+  async updateUser({ dispatch, commit, state }) {
     let dob = new Date(state.birthday);
     let month_diff = Date.now() - dob.getTime();
     let age_dt = new Date(month_diff);
@@ -402,27 +402,27 @@ export const actions = {
 
     let userInput = [
       {
-        age: age,
-        email: "abc@abc.com",
-        gender: state.gender,
-        location: {
-          longitude: 114.177216,
-          latitude: 22.302711
-        },
-        name: state.firstName,
+        // age: age,
+        // email: "abc@abc.com",
+        // gender: state.gender,
+        // location: {
+        //   longitude: 114.177216,
+        //   latitude: 22.302711
+        // },
+        // name: state.firstName,
         nickname: state.firstName,
-        passions: state.passions.map(e => {
-          return { name: e.name };
-        }),
-        phoneNumber: "98765432",
-        university: state.university,
-        media: state.userProfileMedia,
-        isGenderPublic: state.showGenderOnProfile,
-        isOrientationPublic: state.showSexualOrientationOnProfile,
-        orientation: state.userSexualOrientations.map(e => {
-          return e.name;
-        }),
-        showGender: state.showMePreference
+        // passions: state.passions.map(e => {
+        //   return { name: e.name };
+        // }),
+        // phoneNumber: "98765432",
+        // university: state.university,
+        media: state.userProfileMedia
+        // isGenderPublic: state.showGenderOnProfile,
+        // isOrientationPublic: state.showSexualOrientationOnProfile,
+        // orientation: state.userSexualOrientations.map(e => {
+        //   return e.name;
+        // }),
+        // showGender: state.showMePreference
       }
     ];
 
@@ -431,8 +431,8 @@ export const actions = {
     try {
       const results = await this.app.apolloProvider.defaultClient.mutate({
         mutation: gql`
-          mutation($input: [AddUserInput!]!) {
-            addUser(input: $input) {
+          mutation($input: [UpdateUserInput!]!) {
+            updateUser(input: $input) {
               user {
                 name
                 nickname
@@ -461,12 +461,22 @@ export const actions = {
             }
           }
         `,
+        // variables: {
+        //   input: userInput
+        // }
         variables: {
-          input: userInput
+          patch: {
+            filter: {
+              nickname: userInput.nickname
+            },
+            set: {
+              media: userInput.media
+            }
+          }
         }
       });
-      console.log("updateUser results", results.data.addUser.user[0]);
-      commit("setUser", results.data.addUser.user[0]);
+      console.log("updateUser results", results.data.updateUser.user[0]);
+      commit("setUser", results.data.updateUser.user[0]);
     } catch (e) {
       console.error(e);
     }
