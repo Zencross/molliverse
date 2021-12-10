@@ -128,7 +128,7 @@ export const mutations = {
         type: "IMAGE",
         url: state.photo
       });
-      // console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
+      console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
     }
   },
   addVideoToUserProfileMedia(state, index) {
@@ -277,7 +277,10 @@ export const actions = {
       state.userProfileMedia.map(async e => {
         // console.log("turn", e.index);
         if (!e.url) {
-          // console.log("The object is NULL, skipping this one");
+          console.log("The object is NULL, skipping this one", e.url);
+          return { ...e };
+        } else if (e.url.includes("https://")) {
+          console.log("The object already has a URL, skipping this one", e.url);
           return { ...e };
         }
         if (e.type === "IMAGE") {
@@ -307,7 +310,10 @@ export const actions = {
     //  userProfileMediaWithURL
     //);
     commit("setUserProfileMedia", userProfileMediaWithURL);
-    //console.log("new userProfileMedia array", state.userProfileMedia);
+    console.log(
+      "new userProfileMedia array saved to vuex",
+      state.userProfileMedia
+    );
   },
   async addUser({ dispatch, commit, state }) {
     let dob = new Date(state.birthday);
@@ -383,6 +389,96 @@ export const actions = {
       });
       console.log("addUser results", results.data.addUser.user[0]);
       commit("setUser", results.data.addUser.user[0]);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  async updateUser({ dispatch, commit, state }) {
+    let dob = new Date(state.birthday);
+    let month_diff = Date.now() - dob.getTime();
+    let age_dt = new Date(month_diff);
+    let year = age_dt.getUTCFullYear();
+    let age = Math.abs(year - 1970);
+
+    let userInput = [
+      {
+        // age: age,
+        // email: "abc@abc.com",
+        // gender: state.gender,
+        // location: {
+        //   longitude: 114.177216,
+        //   latitude: 22.302711
+        // },
+        // name: state.firstName,
+        nickname: state.firstName,
+        // passions: state.passions.map(e => {
+        //   return { name: e.name };
+        // }),
+        // phoneNumber: "98765432",
+        // university: state.university,
+        media: state.userProfileMedia
+        // isGenderPublic: state.showGenderOnProfile,
+        // isOrientationPublic: state.showSexualOrientationOnProfile,
+        // orientation: state.userSexualOrientations.map(e => {
+        //   return e.name;
+        // }),
+        // showGender: state.showMePreference
+      }
+    ];
+
+    //console.log("updateUser Input:", userInput);
+
+    try {
+      const results = await this.app.apolloProvider.defaultClient.mutate({
+        mutation: gql`
+          mutation($patch: UpdateUserInput!) {
+            updateUser(input: $patch) {
+              user {
+                name
+                nickname
+                age
+                gender
+                location {
+                  longitude
+                  latitude
+                }
+                passions {
+                  name
+                }
+                phoneNumber
+                email
+                university
+                media {
+                  index
+                  type
+                  url
+                }
+                isGenderPublic
+                isOrientationPublic
+                orientation
+                showGender
+              }
+            }
+          }
+        `,
+        // variables: {
+        //   input: userInput
+        // }
+        variables: {
+          patch: {
+            filter: {
+              nickname: {
+                eq: state.user.nickname
+              }
+            },
+            set: {
+              media: state.userProfileMedia
+            }
+          }
+        }
+      });
+      console.log("updateUser results", results.data.updateUser.user[0]);
+      commit("setUser", results.data.updateUser.user[0]);
     } catch (e) {
       console.error(e);
     }

@@ -3,13 +3,8 @@
     <top-bar back @click="onClickBackButton" />
     <div class="flex flex-col items-center w-full">
       <!-- <div class="flex justify-center w-4/5 mt-2 text-3xl text-grayish-red montserrat-font disable-dbl-tap-zoom">Record a Video</div> -->
-      <div class="w-11/12 mt-2 ml-2 text-3xl font-semibold text-dark">
+      <div class="w-11/12 mt-2 ml-2 text-3xl text-dark">
         Record a video
-      </div>
-      <div
-        class="w-11/12 ml-2 text-xs montserrat-font text-lightgrey disable-dbl-tap-zoom"
-      >
-        Drag to re-order your videos
       </div>
     </div>
     <draggable
@@ -34,7 +29,7 @@
           <img
             v-if="!ele.url"
             class="absolute bottom-0 right-0 z-30"
-            src="../static/img/plus-purple-30px.svg"
+            src="../static/img/plus-black.svg"
             alt=""
           />
           <img
@@ -55,12 +50,15 @@
       </transition-group>
     </draggable>
     <!-- <gradient-button buttonText="DONE" /> -->
+    <div class="w-11/12 ml-4 text-xs text-lightgrey disable-dbl-tap-zoom">
+      Hold, drag and drop to re-order
+    </div>
     <app-button
       buttonText="Finish"
       textWhite
-      bgPhoneNum
-      class=""
+      bgBlack
       @click="onClickFinsih"
+      class="absolute bottom-0 mb-8"
     />
   </div>
 </template>

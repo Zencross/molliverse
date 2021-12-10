@@ -8,8 +8,7 @@
       <div
         class="flex flex-col items-center justify-center w-full h-full text-2xl text-gray-900"
       >
-        <div class="lato-font">Loading Face Detection Model...</div>
-        <div class="lato-font">Please wait a few seconds :)</div>
+        <img src="../static/img/loading_mollie.png" alt="" />
       </div>
     </div>
 
@@ -19,7 +18,7 @@
       class="absolute top-0 bottom-0 left-0 right-0 z-30"
     >
       <img
-        class="fixed top-0 right-0 w-16 h-16 p-3"
+        class="fixed top-0 right-0 w-16 h-16 p-3 mt-5"
         src="~/assets/img/close-white-18dp.svg"
         alt="close"
         @click="onClickClosePhotoPreview"
@@ -42,7 +41,7 @@
       class="absolute top-0 bottom-0 left-0 right-0 z-30"
     >
       <img
-        class="fixed top-0 right-0 z-40 w-16 h-16 p-3"
+        class="fixed top-0 right-0 z-40 w-16 h-16 p-3 mt-5"
         src="~/assets/img/close-white-18dp.svg"
         alt="close"
         @click="onClickCloseVideoPreview"
@@ -443,12 +442,6 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
-.lato-font {
-  font-family: "Lato", sans-serif;
-}
-
 canvas.deepar {
   border: 0px none;
   background-color: black;

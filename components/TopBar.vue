@@ -19,7 +19,7 @@
     <img
       v-if="person"
       class="w-5 h-5 ml-4 disable-dbl-tap-zoom"
-      src="/img/person.svg"
+      src="/img/top-bar-profile-icon.svg"
       alt="person"
       @click="onClickButton"
     />
@@ -27,7 +27,7 @@
     <img
       @click="onClickLogo"
       src="/img/mollie-color.png"
-      class="h-8 mt-1 disable-dbl-tap-zoom"
+      class="h-8 disable-dbl-tap-zoom"
       alt=""
     />
     <div
@@ -39,8 +39,8 @@
     </div>
     <img
       v-if="messager"
-      class="w-6 h-6 mr-4 disable-dbl-tap-zoom"
-      src="/img/messager.svg"
+      class="w-5 h-5 mr-4 disable-dbl-tap-zoom"
+      src="/img/top-bar-chat-icon.svg"
       alt="messager"
       @click="onClickMessager"
     />

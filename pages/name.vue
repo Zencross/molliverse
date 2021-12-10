@@ -11,13 +11,13 @@
       @input="onInputFirstName"
     >
     </input-field>
-    <div v-if="userExists" class="ml-4 text-sm text-red-500 lato-font">
+    <div v-if="userExists" class="ml-4 text-sm text-red-500">
       Username is taken
     </div>
     <app-button
-      buttonText="Continue"
+      buttonText="Next"
       textWhite
-      bgPhoneNum
+      bgBlack
       @click="onClickButton"
       class="absolute bottom-0 mb-8"
       :disabled="userExists || !firstName"
@@ -101,10 +101,4 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
-.lato-font {
-  font-family: "Lato", sans-serif;
-}
-</style>
+<style></style>

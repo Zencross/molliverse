@@ -1,11 +1,9 @@
 <template>
-  <div class="w-full bg-transparent lato-font">
+  <div class="w-full bg-transparent">
     <div class="flex flex-col items-center w-full">
-      <label
-        for="input"
-        class="w-11/12 mb-4 text-3xl font-semibold text-dark"
-        >{{ labelText }}</label
-      >
+      <label for="input" class="w-11/12 mb-4 text-3xl text-dark">{{
+        labelText
+      }}</label>
       <input
         id="input"
         :value="value"
@@ -56,17 +54,6 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
-.lato-font {
-  font-family: "Lato", sans-serif;
-}
-
-.montserrat-font {
-  font-family: "Montserrat", sans-serif;
-}
-
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: red;

@@ -3,7 +3,7 @@
     <top-bar back @click="onClickBackButton" />
     <div class="flex flex-col items-center w-full mt-10">
       <!-- <app-text class="w-4/5 mb-8" text="I am a" /> -->
-      <div class="w-11/12 mb-6 text-3xl font-semibold text-dark">I am a:</div>
+      <div class="w-11/12 mb-6 text-3xl text-dark">I am a:</div>
       <app-button
         buttonText="Man"
         @click="onClickMan"
@@ -37,15 +37,15 @@
           v-model="showGenderOnProfile"
           class="w-4 h-4 form-checkbox"
         />
-        <span class="ml-2 text-sm montserrat-font text-lightgrey"
+        <span class="ml-2 text-sm text-lightgrey"
           >Show my gender on my profile</span
         >
       </label>
       <!-- <gradient-button class="mt-12" @click="onClickContinueButton" /> -->
       <app-button
-        buttonText="Continue"
+        buttonText="Next"
         textWhite
-        bgPhoneNum
+        bgBlack
         @click="onClickButton"
         class="absolute bottom-0 mb-8"
       />
@@ -111,10 +111,4 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-
-.montserrat-font {
-  font-family: "Montserrat", sans-serif;
-}
-</style>
+<style></style>
