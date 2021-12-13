@@ -501,6 +501,8 @@ export const actions = {
       console.log("skipping the mutation as nothing is new.");
       return;
     } else {
+      let newArr3 = newArr2.filter(e => e.url !== null);
+
       // Delete media first
       try {
         const results = await this.app.apolloProvider.defaultClient.mutate({
@@ -541,7 +543,7 @@ export const actions = {
           variables: {
             patch: {
               filter: { nickname: { eq: state.user.nickname } },
-              remove: { media: newArr2 }
+              remove: { media: newArr3 }
             }
           }
         });
@@ -552,56 +554,56 @@ export const actions = {
         console.error(e);
       }
 
-      // Set media again
-      // try {
-      //   const results = await this.app.apolloProvider.defaultClient.mutate({
-      //     mutation: gql`
-      //       mutation($patch: UpdateUserInput!) {
-      //         updateUser(input: $patch) {
-      //           user {
-      //             name
-      //             nickname
-      //             age
-      //             gender
-      //             location {
-      //               longitude
-      //               latitude
-      //             }
-      //             passions {
-      //               name
-      //             }
-      //             phoneNumber
-      //             email
-      //             university
-      //             media {
-      //               index
-      //               type
-      //               url
-      //             }
-      //             isGenderPublic
-      //             isOrientationPublic
-      //             orientation
-      //             showGender
-      //           }
-      //         }
-      //       }
-      //     `,
-      //     // variables: {
-      //     //   input: userInput
-      //     // }
-      //     variables: {
-      //       patch: {
-      //         filter: { nickname: { eq: state.user.nickname } },
-      //         set: { media: newArr }
-      //       }
-      //     }
-      //   });
-      //   console.log("updateUser results", results.data.updateUser.user[0]);
-      //   commit("setUser", results.data.updateUser.user[0]);
-      //   commit("setUserProfileMedia", state.user.media);
-      // } catch (e) {
-      //   console.error(e);
-      // }
+      //Set media again
+      try {
+        const results = await this.app.apolloProvider.defaultClient.mutate({
+          mutation: gql`
+            mutation($patch: UpdateUserInput!) {
+              updateUser(input: $patch) {
+                user {
+                  name
+                  nickname
+                  age
+                  gender
+                  location {
+                    longitude
+                    latitude
+                  }
+                  passions {
+                    name
+                  }
+                  phoneNumber
+                  email
+                  university
+                  media {
+                    index
+                    type
+                    url
+                  }
+                  isGenderPublic
+                  isOrientationPublic
+                  orientation
+                  showGender
+                }
+              }
+            }
+          `,
+          // variables: {
+          //   input: userInput
+          // }
+          variables: {
+            patch: {
+              filter: { nickname: { eq: state.user.nickname } },
+              set: { media: newArr }
+            }
+          }
+        });
+        console.log("updateUser results", results.data.updateUser.user[0]);
+        commit("setUser", results.data.updateUser.user[0]);
+        commit("setUserProfileMedia", state.user.media);
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
   clearOnboardingFormStates({ dispatch, commit, state }) {
