@@ -209,9 +209,9 @@ export default {
     }
   },
   mounted() {
-    console.log("edit-info page, user object", this.$store.state.user);
-    this.$store.commit("setUserProfileMedia", this.$store.state.user.media);
+    // console.log("edit-info page, user object", this.$store.state.user);
     console.log("nickname", this.$store.state.user.nickname);
+    console.log("userProfileMedia", this.$store.state.userProfileMedia);
   },
   methods: {
     log(arg) {
@@ -247,7 +247,7 @@ export default {
         "--------------------updateUser finished--------------------"
       );
 
-      this.$router.push("/user-profile");
+      //this.$router.push("/user-profile");
     }
   }
 };

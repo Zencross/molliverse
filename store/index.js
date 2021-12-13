@@ -144,6 +144,7 @@ export const mutations = {
   },
   setUserProfileMedia(state, val) {
     state.userProfileMedia = val;
+    console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
   },
   updateUserProfileMediaIndex(state) {
     let arr = state.userProfileMedia;
@@ -310,10 +311,6 @@ export const actions = {
       userProfileMediaWithURL
     );
     commit("setUserProfileMedia", userProfileMediaWithURL);
-    console.log(
-      "new userProfileMedia array saved to vuex",
-      state.userProfileMedia
-    );
   },
   async addUser({ dispatch, commit, state }) {
     let dob = new Date(state.birthday);
@@ -427,6 +424,79 @@ export const actions = {
     ];
 
     //console.log("updateUser Input:", userInput);
+    // console.log("before removing __typename", state.userProfileMedia);
+    let newArr = state.userProfileMedia.map(e => {
+      const { __typename, ...newMediaObject } = e;
+      return newMediaObject;
+    });
+    console.log("state.userProfileMedia after removing __typename", newArr);
+
+    let newArr2 = state.user.media.map(e => {
+      const { __typename, ...newMediaObject } = e;
+      return newMediaObject;
+    });
+    console.log("state.user.media after removing __typename", newArr2);
+
+    var isEqual = function(value, other) {
+      // Get the value type
+      var type = Object.prototype.toString.call(value);
+
+      // If the two objects are not the same type, return false
+      if (type !== Object.prototype.toString.call(other)) return false;
+
+      // If items are not an object or array, return false
+      if (["[object Array]", "[object Object]"].indexOf(type) < 0) return false;
+
+      // Compare the length of the length of the two items
+      var valueLen =
+        type === "[object Array]" ? value.length : Object.keys(value).length;
+      var otherLen =
+        type === "[object Array]" ? other.length : Object.keys(other).length;
+      if (valueLen !== otherLen) return false;
+
+      // Compare two items
+      var compare = function(item1, item2) {
+        // Get the object type
+        var itemType = Object.prototype.toString.call(item1);
+
+        // If an object or array, compare recursively
+        if (["[object Array]", "[object Object]"].indexOf(itemType) >= 0) {
+          if (!isEqual(item1, item2)) return false;
+        }
+
+        // Otherwise, do a simple comparison
+        else {
+          // If the two items are not the same type, return false
+          if (itemType !== Object.prototype.toString.call(item2)) return false;
+
+          // Else if it's a function, convert to a string and compare
+          // Otherwise, just compare
+          if (itemType === "[object Function]") {
+            if (item1.toString() !== item2.toString()) return false;
+          } else {
+            if (item1 !== item2) return false;
+          }
+        }
+      };
+
+      // Compare properties
+      if (type === "[object Array]") {
+        for (var i = 0; i < valueLen; i++) {
+          if (compare(value[i], other[i]) === false) return false;
+        }
+      } else {
+        for (var key in value) {
+          if (value.hasOwnProperty(key)) {
+            if (compare(value[key], other[key]) === false) return false;
+          }
+        }
+      }
+
+      // If nothing failed, return true
+      return true;
+    };
+    let compareArrResult = isEqual(newArr, newArr2);
+    console.log("result: ", compareArrResult);
 
     try {
       const results = await this.app.apolloProvider.defaultClient.mutate({
@@ -466,19 +536,15 @@ export const actions = {
         // }
         variables: {
           patch: {
-            filter: {
-              nickname: {
-                eq: state.user.nickname
-              }
-            },
-            set: {
-              media: state.userProfileMedia
-            }
+            filter: { nickname: { eq: state.user.nickname } },
+            set: { media: newArr },
+            remove: { media: newArr2 }
           }
         }
       });
       console.log("updateUser results", results.data.updateUser.user[0]);
       commit("setUser", results.data.updateUser.user[0]);
+      commit("setUserProfileMedia", state.user.media);
     } catch (e) {
       console.error(e);
     }
