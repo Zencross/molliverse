@@ -501,6 +501,7 @@ export const actions = {
       console.log("skipping the mutation as nothing is new.");
       return;
     } else {
+      // Delete media first
       try {
         const results = await this.app.apolloProvider.defaultClient.mutate({
           mutation: gql`
@@ -540,8 +541,58 @@ export const actions = {
           variables: {
             patch: {
               filter: { nickname: { eq: state.user.nickname } },
-              set: { media: newArr },
               remove: { media: newArr2 }
+            }
+          }
+        });
+        console.log("updateUser results", results.data.updateUser.user[0]);
+        commit("setUser", results.data.updateUser.user[0]);
+        commit("setUserProfileMedia", state.user.media);
+      } catch (e) {
+        console.error(e);
+      }
+
+      // Set media again
+      try {
+        const results = await this.app.apolloProvider.defaultClient.mutate({
+          mutation: gql`
+            mutation($patch: UpdateUserInput!) {
+              updateUser(input: $patch) {
+                user {
+                  name
+                  nickname
+                  age
+                  gender
+                  location {
+                    longitude
+                    latitude
+                  }
+                  passions {
+                    name
+                  }
+                  phoneNumber
+                  email
+                  university
+                  media {
+                    index
+                    type
+                    url
+                  }
+                  isGenderPublic
+                  isOrientationPublic
+                  orientation
+                  showGender
+                }
+              }
+            }
+          `,
+          // variables: {
+          //   input: userInput
+          // }
+          variables: {
+            patch: {
+              filter: { nickname: { eq: state.user.nickname } },
+              set: { media: newArr }
             }
           }
         });
