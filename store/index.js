@@ -144,6 +144,7 @@ export const mutations = {
   },
   setUserProfileMedia(state, val) {
     state.userProfileMedia = val;
+    console.log("VUEX: new userProfileMedia arr", state.userProfileMedia);
   },
   updateUserProfileMediaIndex(state) {
     let arr = state.userProfileMedia;
@@ -277,7 +278,10 @@ export const actions = {
       state.userProfileMedia.map(async e => {
         // console.log("turn", e.index);
         if (!e.url) {
-          // console.log("The object is NULL, skipping this one");
+          console.log("The object is NULL, skipping this one", e.url);
+          return { ...e };
+        } else if (e.url.includes("https://")) {
+          console.log("The object already has a URL, skipping this one", e.url);
           return { ...e };
         }
         if (e.type === "IMAGE") {
@@ -387,7 +391,7 @@ export const actions = {
       console.error(e);
     }
   },
-  async UpdateUser({ dispatch, commit, state }) {
+  async updateUser({ dispatch, commit, state }) {
     let dob = new Date(state.birthday);
     let month_diff = Date.now() - dob.getTime();
     let age_dt = new Date(month_diff);
@@ -396,73 +400,211 @@ export const actions = {
 
     let userInput = [
       {
-        age: age,
-        email: "abc@abc.com",
-        gender: state.gender,
-        location: {
-          longitude: 114.177216,
-          latitude: 22.302711
-        },
-        name: state.firstName,
+        // age: age,
+        // email: "abc@abc.com",
+        // gender: state.gender,
+        // location: {
+        //   longitude: 114.177216,
+        //   latitude: 22.302711
+        // },
+        // name: state.firstName,
         nickname: state.firstName,
-        passions: state.passions.map(e => {
-          return { name: e.name };
-        }),
-        phoneNumber: "98765432",
-        university: state.university,
-        media: state.userProfileMedia,
-        isGenderPublic: state.showGenderOnProfile,
-        isOrientationPublic: state.showSexualOrientationOnProfile,
-        orientation: state.userSexualOrientations.map(e => {
-          return e.name;
-        }),
-        showGender: state.showMePreference
+        // passions: state.passions.map(e => {
+        //   return { name: e.name };
+        // }),
+        // phoneNumber: "98765432",
+        // university: state.university,
+        media: state.userProfileMedia
+        // isGenderPublic: state.showGenderOnProfile,
+        // isOrientationPublic: state.showSexualOrientationOnProfile,
+        // orientation: state.userSexualOrientations.map(e => {
+        //   return e.name;
+        // }),
+        // showGender: state.showMePreference
       }
     ];
 
-    console.log("updateUser Input:", userInput);
+    //console.log("updateUser Input:", userInput);
+    // console.log("before removing __typename", state.userProfileMedia);
+    let newArr = state.userProfileMedia.map(e => {
+      const { __typename, ...newMediaObject } = e;
+      return newMediaObject;
+    });
+    console.log("state.userProfileMedia after removing __typename", newArr);
 
-    try {
-      const results = await this.app.apolloProvider.defaultClient.mutate({
-        mutation: gql`
-          mutation($input: [AddUserInput!]!) {
-            addUser(input: $input) {
-              user {
-                name
-                nickname
-                age
-                gender
-                location {
-                  longitude
-                  latitude
-                }
-                passions {
+    let newArr2 = state.user.media.map(e => {
+      const { __typename, ...newMediaObject } = e;
+      return newMediaObject;
+    });
+    console.log("state.user.media after removing __typename", newArr2);
+
+    var isEqual = function(value, other) {
+      // Get the value type
+      var type = Object.prototype.toString.call(value);
+
+      // If the two objects are not the same type, return false
+      if (type !== Object.prototype.toString.call(other)) return false;
+
+      // If items are not an object or array, return false
+      if (["[object Array]", "[object Object]"].indexOf(type) < 0) return false;
+
+      // Compare the length of the length of the two items
+      var valueLen =
+        type === "[object Array]" ? value.length : Object.keys(value).length;
+      var otherLen =
+        type === "[object Array]" ? other.length : Object.keys(other).length;
+      if (valueLen !== otherLen) return false;
+
+      // Compare two items
+      var compare = function(item1, item2) {
+        // Get the object type
+        var itemType = Object.prototype.toString.call(item1);
+
+        // If an object or array, compare recursively
+        if (["[object Array]", "[object Object]"].indexOf(itemType) >= 0) {
+          if (!isEqual(item1, item2)) return false;
+        }
+
+        // Otherwise, do a simple comparison
+        else {
+          // If the two items are not the same type, return false
+          if (itemType !== Object.prototype.toString.call(item2)) return false;
+
+          // Else if it's a function, convert to a string and compare
+          // Otherwise, just compare
+          if (itemType === "[object Function]") {
+            if (item1.toString() !== item2.toString()) return false;
+          } else {
+            if (item1 !== item2) return false;
+          }
+        }
+      };
+
+      // Compare properties
+      if (type === "[object Array]") {
+        for (var i = 0; i < valueLen; i++) {
+          if (compare(value[i], other[i]) === false) return false;
+        }
+      } else {
+        for (var key in value) {
+          if (value.hasOwnProperty(key)) {
+            if (compare(value[key], other[key]) === false) return false;
+          }
+        }
+      }
+
+      // If nothing failed, return true
+      return true;
+    };
+    let compareArrResult = isEqual(newArr, newArr2);
+    console.log("result: ", compareArrResult);
+    if (compareArrResult == true) {
+      console.log("skipping the mutation as nothing is new.");
+      return;
+    } else {
+      let newArr3 = newArr2.filter(e => e.url !== null);
+
+      // Delete media first
+      try {
+        const results = await this.app.apolloProvider.defaultClient.mutate({
+          mutation: gql`
+            mutation($patch: UpdateUserInput!) {
+              updateUser(input: $patch) {
+                user {
                   name
+                  nickname
+                  age
+                  gender
+                  location {
+                    longitude
+                    latitude
+                  }
+                  passions {
+                    name
+                  }
+                  phoneNumber
+                  email
+                  university
+                  media {
+                    index
+                    type
+                    url
+                  }
+                  isGenderPublic
+                  isOrientationPublic
+                  orientation
+                  showGender
                 }
-                phoneNumber
-                email
-                university
-                media {
-                  index
-                  type
-                  url
-                }
-                isGenderPublic
-                isOrientationPublic
-                orientation
-                showGender
               }
             }
+          `,
+          // variables: {
+          //   input: userInput
+          // }
+          variables: {
+            patch: {
+              filter: { nickname: { eq: state.user.nickname } },
+              remove: { media: null }
+            }
           }
-        `,
-        variables: {
-          input: userInput
-        }
-      });
-      console.log("updateUser results", results.data.addUser.user[0]);
-      commit("setUser", results.data.addUser.user[0]);
-    } catch (e) {
-      console.error(e);
+        });
+        console.log("updateUser results", results.data.updateUser.user[0]);
+        //commit("setUser", results.data.updateUser.user[0]);
+        //commit("setUserProfileMedia", state.user.media);
+      } catch (e) {
+        console.error(e);
+      }
+
+      //Set media again
+      try {
+        const results = await this.app.apolloProvider.defaultClient.mutate({
+          mutation: gql`
+            mutation($patch: UpdateUserInput!) {
+              updateUser(input: $patch) {
+                user {
+                  name
+                  nickname
+                  age
+                  gender
+                  location {
+                    longitude
+                    latitude
+                  }
+                  passions {
+                    name
+                  }
+                  phoneNumber
+                  email
+                  university
+                  media {
+                    index
+                    type
+                    url
+                  }
+                  isGenderPublic
+                  isOrientationPublic
+                  orientation
+                  showGender
+                }
+              }
+            }
+          `,
+          // variables: {
+          //   input: userInput
+          // }
+          variables: {
+            patch: {
+              filter: { nickname: { eq: state.user.nickname } },
+              set: { media: newArr }
+            }
+          }
+        });
+        console.log("updateUser results", results.data.updateUser.user[0]);
+        commit("setUser", results.data.updateUser.user[0]);
+        commit("setUserProfileMedia", state.user.media);
+      } catch (e) {
+        console.error(e);
+      }
     }
   },
   clearOnboardingFormStates({ dispatch, commit, state }) {

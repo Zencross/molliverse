@@ -210,7 +210,8 @@ export default {
   },
   mounted() {
     console.log("edit-info page, user object", this.$store.state.user);
-    this.$store.commit("setUserProfileMedia", this.$store.state.user.media);
+    console.log("nickname", this.$store.state.user.nickname);
+    console.log("userProfileMedia", this.$store.state.userProfileMedia);
   },
   methods: {
     log(arg) {
@@ -236,15 +237,16 @@ export default {
       this.$router.push("/swipe");
     },
     async onClickDone() {
-      //  Update User Profile
-      // await this.$store.dispatch("createUserProfile");
-      // console.log(
-      //   "--------------------createUserProfile finished--------------------"
-      // );
-      // await this.$store.dispatch("updateUser");
-      // console.log(
-      //   "--------------------updateUser finished--------------------"
-      // );
+      // Update User Profile
+      await this.$store.dispatch("createUserProfile");
+      console.log(
+        "--------------------createUserProfile finished--------------------"
+      );
+
+      await this.$store.dispatch("updateUser");
+      console.log(
+        "--------------------updateUser finished--------------------"
+      );
 
       this.$router.push("/user-profile");
     }

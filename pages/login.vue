@@ -134,6 +134,7 @@ export default {
         //store user object in vuex (simulate login)
         this.$store.commit("setUser", results.data.getUser);
         this.$store.commit("setChannels", results.data.getUser.channels);
+        this.$store.commit("setUserProfileMedia", this.$store.state.user.media);
       } catch (error) {
         console.error(error);
       }
