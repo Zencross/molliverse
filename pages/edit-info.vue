@@ -47,7 +47,7 @@
             <img
               v-if="!ele.url"
               class="absolute bottom-0 right-0 z-30"
-              src="../static/img/plus-purple-30px.svg"
+              src="../static/img/plus-black.svg"
               alt=""
             />
             <!-- The photo -->
