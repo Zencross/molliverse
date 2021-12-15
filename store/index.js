@@ -543,7 +543,58 @@ export const actions = {
           variables: {
             patch: {
               filter: { nickname: { eq: state.user.nickname } },
-              remove: { media: newArr3 }
+              remove: { media: null }
+            }
+          }
+        });
+        console.log("updateUser results", results.data.updateUser.user[0]);
+        //commit("setUser", results.data.updateUser.user[0]);
+        //commit("setUserProfileMedia", state.user.media);
+      } catch (e) {
+        console.error(e);
+      }
+
+      //Set media again
+      try {
+        const results = await this.app.apolloProvider.defaultClient.mutate({
+          mutation: gql`
+            mutation($patch: UpdateUserInput!) {
+              updateUser(input: $patch) {
+                user {
+                  name
+                  nickname
+                  age
+                  gender
+                  location {
+                    longitude
+                    latitude
+                  }
+                  passions {
+                    name
+                  }
+                  phoneNumber
+                  email
+                  university
+                  media {
+                    index
+                    type
+                    url
+                  }
+                  isGenderPublic
+                  isOrientationPublic
+                  orientation
+                  showGender
+                }
+              }
+            }
+          `,
+          // variables: {
+          //   input: userInput
+          // }
+          variables: {
+            patch: {
+              filter: { nickname: { eq: state.user.nickname } },
+              set: { media: newArr }
             }
           }
         });
@@ -553,57 +604,6 @@ export const actions = {
       } catch (e) {
         console.error(e);
       }
-
-      //Set media again
-      // try {
-      //   const results = await this.app.apolloProvider.defaultClient.mutate({
-      //     mutation: gql`
-      //       mutation($patch: UpdateUserInput!) {
-      //         updateUser(input: $patch) {
-      //           user {
-      //             name
-      //             nickname
-      //             age
-      //             gender
-      //             location {
-      //               longitude
-      //               latitude
-      //             }
-      //             passions {
-      //               name
-      //             }
-      //             phoneNumber
-      //             email
-      //             university
-      //             media {
-      //               index
-      //               type
-      //               url
-      //             }
-      //             isGenderPublic
-      //             isOrientationPublic
-      //             orientation
-      //             showGender
-      //           }
-      //         }
-      //       }
-      //     `,
-      //     // variables: {
-      //     //   input: userInput
-      //     // }
-      //     variables: {
-      //       patch: {
-      //         filter: { nickname: { eq: state.user.nickname } },
-      //         set: { media: newArr }
-      //       }
-      //     }
-      //   });
-      //   console.log("updateUser results", results.data.updateUser.user[0]);
-      //   commit("setUser", results.data.updateUser.user[0]);
-      //   commit("setUserProfileMedia", state.user.media);
-      // } catch (e) {
-      //   console.error(e);
-      // }
     }
   },
   clearOnboardingFormStates({ dispatch, commit, state }) {
