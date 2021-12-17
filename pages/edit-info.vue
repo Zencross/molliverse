@@ -1,5 +1,30 @@
 <template>
   <div class="w-full h-screen select-none">
+    <div
+      v-show="showWarningModal"
+      class="absolute top-0 bottom-0 left-0 right-0 z-30 flex items-center justify-center backdrop-color"
+    >
+      <div class="relative z-40 flex flex-col m-4 bg-white rounded-xl">
+        <div class="p-6 text-lg font-bold text-left">Delete Media</div>
+        <p class="px-6 pb-4 text-lg">
+          Do you want to delete this media?
+        </p>
+        <div class="flex justify-end px-4 py-2">
+          <button
+            id="cancelDeleteBtn"
+            class="px-3 py-2 m-2 text-black border border-gray-500 rounded-lg"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirmDeleteBtn"
+            class="px-3 py-2 m-2 text-white bg-red-600 rounded-lg"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
     <!-- Top Bar -->
     <div class="flex w-full pt-6 pb-4 pl-4 border border-t-0 border-b-1">
       <div class="flex-1 text-xl font-bold lato-font">
@@ -41,13 +66,19 @@
             v-for="ele in userProfileMedia"
             :key="ele.index"
             class="relative z-10 my-1 bg-darkgrey rounded-xl cell-width cell-aspect-ratio"
-            @click="onClickBox(userProfileMedia.indexOf(ele))"
+            @click="onClickBox(ele, userProfileMedia.indexOf(ele))"
           >
             <!-- The blank box -->
             <img
               v-if="!ele.url"
               class="absolute bottom-0 right-0 z-30"
-              src="../static/img/plus-purple-30px.svg"
+              src="../static/img/plus-black.svg"
+              alt=""
+            />
+            <img
+              v-else
+              class="absolute bottom-0 right-0 z-30"
+              src="../static/img/minus-black.svg"
               alt=""
             />
             <!-- The photo -->
@@ -178,9 +209,10 @@
 import GradientButton from "~/components/GradientButton.vue";
 import TopBar from "~/components/TopBar.vue";
 import draggable from "vuedraggable";
+import WarningModal from "~/components/WarningModal.vue";
 
 export default {
-  components: { TopBar, GradientButton, draggable },
+  components: { TopBar, GradientButton, draggable, WarningModal },
   data() {
     return {
       myArray: [
@@ -193,7 +225,9 @@ export default {
         { name: "G", id: 6 },
         { name: "H", id: 7 },
         { name: "I", id: 8 }
-      ]
+      ],
+      showWarningModal: false,
+      confirmDeleteMedia: false
     };
   },
   computed: {
@@ -204,7 +238,7 @@ export default {
       },
       set(value) {
         console.log("setter value", value);
-        // this.$store.commit("setUserProfileMedia", value);
+        this.$store.commit("setUserProfileMedia", value);
       }
     }
   },
@@ -218,23 +252,60 @@ export default {
       console.log("drag detected", arg);
       // const indexOfMediaMoved = arg.oldIndex;
       // const newIndex = arg.newIndex;
-      // this.$store.commit("updateUserProfileMediaIndex");
-      // console.log("user Media array", this.userProfileMedia);
+      this.$store.commit("updateUserProfileMediaIndex");
+      console.log("user Media array", this.userProfileMedia);
     },
-    onClickBox(id) {
+    resolveDeleteFlag() {
+      return new Promise((resolve, reject) => {
+        this.showWarningModal = true;
+
+        document
+          .getElementById("cancelDeleteBtn")
+          .addEventListener("click", () => {
+            // console.log("resolve false");
+            resolve(false);
+          });
+
+        document
+          .getElementById("confirmDeleteBtn")
+          .addEventListener("click", () => {
+            // console.log("resolve true");
+            resolve(true);
+          });
+      });
+    },
+    async onClickBox(ele, id) {
       console.log("clicked box ", id);
-      this.$store.commit("setCurrentMediaIndex", id);
-      this.$router.push("/ar-filter-2");
+      if (ele.url) {
+        console.log(
+          "media exists, we want to shows a pop-up for delete confirmation"
+        );
+        // this.$store.commit("setCurrentMediaIndex", id);
+
+        let result = await this.resolveDeleteFlag();
+
+        if (result) {
+          // console.log("removing the media..");
+          let userProfileMedia = this.$store.state.userProfileMedia;
+          userProfileMedia = userProfileMedia.map(e => {
+            if (e.index == id) {
+              return { index: id, type: null, url: null };
+            } else {
+              return { ...e };
+            }
+          });
+          // console.log("after remove:", userProfileMedia);
+          this.$store.commit("setUserProfileMedia", userProfileMedia);
+        }
+        this.showWarningModal = false;
+      } else {
+        this.$store.commit("setCurrentMediaIndex", id);
+        this.$router.push("/ar-filter-2");
+      }
     },
-    async onClickFinsih() {
-      //  Create User Profile
-      await this.$store.dispatch("createUserProfile");
-      console.log(
-        "--------------------createUserProfile finished--------------------"
-      );
-      await this.$store.dispatch("addUser");
-      console.log("--------------------addUser finished--------------------");
-      this.$router.push("/swipe");
+    onClickConfirmDeleteMedia() {
+      this.showWarningModal = false;
+      this.confirmDeleteMedia = true;
     },
     async onClickDone() {
       // Update User Profile
@@ -284,5 +355,9 @@ video::-webkit-media-controls {
 video {
   width: 100%;
   height: auto;
+}
+
+.backdrop-color {
+  background-color: rgba(143, 139, 139, 0.75);
 }
 </style>
