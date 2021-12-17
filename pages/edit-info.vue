@@ -41,13 +41,19 @@
             v-for="ele in userProfileMedia"
             :key="ele.index"
             class="relative z-10 my-1 bg-darkgrey rounded-xl cell-width cell-aspect-ratio"
-            @click="onClickBox(userProfileMedia.indexOf(ele))"
+            @click="onClickBox(ele, userProfileMedia.indexOf(ele))"
           >
             <!-- The blank box -->
             <img
               v-if="!ele.url"
               class="absolute bottom-0 right-0 z-30"
               src="../static/img/plus-black.svg"
+              alt=""
+            />
+            <img
+              v-else
+              class="absolute bottom-0 right-0 z-30"
+              src="../static/img/minus-black.svg"
               alt=""
             />
             <!-- The photo -->
@@ -221,10 +227,27 @@ export default {
       // this.$store.commit("updateUserProfileMediaIndex");
       // console.log("user Media array", this.userProfileMedia);
     },
-    onClickBox(id) {
+    onClickBox(ele, id) {
       console.log("clicked box ", id);
-      this.$store.commit("setCurrentMediaIndex", id);
-      this.$router.push("/ar-filter-2");
+      if (ele.url) {
+        console.log(
+          "media exists, we want to shows a pop-up for delete confirmation"
+        );
+        // this.$store.commit("setCurrentMediaIndex", id);
+        let userProfileMedia = this.$store.state.userProfileMedia;
+        userProfileMedia = userProfileMedia.map(e => {
+          if (e.index == id) {
+            return { index: id, type: null, url: null };
+          } else {
+            return { ...e };
+          }
+        });
+        console.log("after remove:", userProfileMedia);
+        this.$store.commit("setUserProfileMedia", userProfileMedia);
+      } else {
+        this.$store.commit("setCurrentMediaIndex", id);
+        this.$router.push("/ar-filter-2");
+      }
     },
     async onClickFinsih() {
       //  Create User Profile
