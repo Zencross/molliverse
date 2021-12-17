@@ -210,7 +210,7 @@ export default {
       },
       set(value) {
         console.log("setter value", value);
-        // this.$store.commit("setUserProfileMedia", value);
+        this.$store.commit("setUserProfileMedia", value);
       }
     }
   },
