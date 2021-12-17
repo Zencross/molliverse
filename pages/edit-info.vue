@@ -224,8 +224,8 @@ export default {
       console.log("drag detected", arg);
       // const indexOfMediaMoved = arg.oldIndex;
       // const newIndex = arg.newIndex;
-      // this.$store.commit("updateUserProfileMediaIndex");
-      // console.log("user Media array", this.userProfileMedia);
+      this.$store.commit("updateUserProfileMediaIndex");
+      console.log("user Media array", this.userProfileMedia);
     },
     onClickBox(ele, id) {
       console.log("clicked box ", id);
