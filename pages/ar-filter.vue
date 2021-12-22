@@ -22,7 +22,7 @@ export default {
         "addPhotoToUserProfileMedia",
         this.$store.state.currentMediaIndex
       );
-      this.$store.commit("setActiveEffectIcon", "lion");
+      this.$store.commit("setActiveEffectIcon", "none");
     },
     onClickConfirmVideo() {
       this.$router.push("/gallery");
@@ -32,7 +32,7 @@ export default {
         this.$store.state.currentMediaIndex
       );
       this.$store.commit("setVideo", null);
-      this.$store.commit("setActiveEffectIcon", "lion");
+      this.$store.commit("setActiveEffectIcon", "none");
     }
   }
 };
