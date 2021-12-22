@@ -20,7 +20,7 @@
         :class="[
           activeEffectIcon === icon
             ? ''
-            : 'border-white rounded-full border-4 bg-white'
+            : 'border-white rounded-full border-4 bg-transparent'
         ]"
       ></div>
       <img
