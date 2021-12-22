@@ -16,10 +16,13 @@
       <Spinner v-if="loading" class="absolute top-0 bottom-0 left-0 right-0" />
       <div
         v-if="icon == 'none'"
-        class="w-20 h-20 text-white bg-white rounded-full"
-      >
-        None
-      </div>
+        class="w-20 h-20 text-white bg-transparent rounded-full"
+        :class="[
+          activeEffectIcon === icon
+            ? ''
+            : 'border-white rounded-full border-4 bg-white'
+        ]"
+      ></div>
       <img
         v-else
         :src="iconURL"
