@@ -54,7 +54,12 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ["nuxt-user-agent", "@nuxtjs/apollo", "@nuxtjs/axios"],
+  modules: [
+    "nuxt-user-agent",
+    "@nuxtjs/apollo",
+    "@nuxtjs/axios",
+    "@nuxtjs/auth-next"
+   ],
 
   apollo: {
     defaultOptions: {
@@ -78,6 +83,25 @@ export default {
 
   axios: {
     // proxy: true
+  },
+
+  auth: {
+    redirect: {
+      login: '/login',
+      logoutRedirectUri: '/login',
+      callback: '/user-profile'
+    },
+    strategies: {
+      auth0: {
+        domain: 'zencross.auth0.com',
+        clientId: '9KIKjTVAWqWRsENGgaFbB0PYRfJ2oCxd',
+        redirectUri: 'life.mysocialcapital.mollie.dating://zencross.auth0.com/capacitor/life.mysocialcapital.mollie.dating/callback'
+      }
+    }
+  },
+
+  router: {
+    middleware: ['auth']
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

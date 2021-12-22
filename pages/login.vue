@@ -18,13 +18,22 @@
       <p class="font-medium">Where two minds make a connection</p>
     </div>
 
-    <div class="flex flex-col items-center w-9/12">
-      <label for="location" class="block font-medium text-black"
+    <!--div class="flex flex-col items-center w-9/12"-->
+    <div class="flex flex-col items-center justify-center w-full">
+      <app-button
+        buttonText="Sign in"
+        bgPhoneNum
+        textWhite
+        borderNone
+        class="mt-1"
+        @click="onClickSignIn"
+      />
+      <label for="location" class="block font-medium text-black mt-4"
         >Sign in as:</label
       >
       <select
         name="location"
-        class="block w-full py-3 pl-3 pr-10 mt-1 text-base bg-white border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        class="block py-3 mt-1 text-base bg-white border border-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         v-model="userSelected"
         @change="onSelectInput"
       >
@@ -35,27 +44,20 @@
           >{{ user.nickname }}</option
         >
       </select>
-      <app-button
-        buttonText="Sign in"
-        bgPhoneNum
-        textWhite
-        borderNone
-        class="mt-6"
-        @click="onClickSignIn"
-      />
 
-      <div
+      <!--div
         @click="onClickCreateNewProfile"
         class="mt-4 mb-4 text-black underline karla-font focus:outline-none"
       >
         Create a new profile
-      </div>
+      </div-->
     </div>
   </div>
 </template>
 
 <script>
 import AppButton from "../components/AppButton";
+import { App } from "@capacitor/app";
 import gql from "graphql-tag";
 
 export default {
@@ -71,6 +73,8 @@ export default {
       console.log(this.userSelected);
     },
     async onClickSignIn() {
+      this.$auth.loginWith('auth0')
+      return
       //call getUser using userSelected as variable
       console.log(`Sign in as ${this.userSelected}`);
       try {
@@ -154,6 +158,20 @@ export default {
     }
   },
   async mounted() {
+    App.addListener('appUrlOpen', async data => {
+      const accessToken = data.url.split('access_token=')[1].split('&')[0]
+      console.log('accessToken: ', accessToken)
+      const result = await this.$axios.$get(
+        "https://zencross.auth0.com/userinfo",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`
+          }
+        }
+      );
+      console.log('logged in user: ', result);
+    });
     console.log("in fullscreen ?", document.fullscreenElement);
     console.log("Support fullscreen ?", document.fullscreenEnabled);
 

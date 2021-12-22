@@ -152,8 +152,9 @@ export default {
     onClickLogo() {
       this.$router.push("/swipe");
     },
-    onClickLogout() {
-      this.$router.push("/");
+    async onClickLogout() {
+      await this.$auth.logout();
+      //this.$router.push("/");
       //  TODO: call action that cleans user data & form data
       this.$store.dispatch("clearOnboardingFormStates");
     }

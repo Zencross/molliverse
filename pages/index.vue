@@ -5,11 +5,9 @@
 </template>
 
 <script>
-import FaceFilter from "../components/FaceFilter";
 import Splash2 from "../components/Splash2";
 
 export default {
-  components: { FaceFilter },
   data() {
     return {};
   },
