@@ -262,12 +262,12 @@ export default {
           console.log("onInitialize callback", deepAR);
           // start video immediately after the initalization, mirror = true
           deepAR.startVideo(true);
-          console.log("initial effect loading (lion)");
-          this.$store.commit("setEffectLoadingTrue", 0);
-          deepAR.switchEffect(0, "slot", "./effects/lion.dar", () => {
-            console.log("changeEffect: changed effect to lion");
-            this.$store.commit("setEffectLoadingFalse", 0);
-          });
+          // console.log("initial effect loading (lion)");
+          // this.$store.commit("setEffectLoadingTrue", 0);
+          // deepAR.switchEffect(0, "slot", "/effects/lion.dar", () => {
+          //   // effect loaded
+          //   this.$store.commit("setEffectLoadingFalse", 0);
+          // });
         }
       });
 
@@ -320,6 +320,15 @@ export default {
       console.log(`${key} selected`);
       switch (key) {
         case 0:
+          this.$store.commit("setActiveEffectIcon", "none");
+          this.deepARInstance.clearEffect("slot");
+          // this.$store.commit("setEffectLoadingTrue", 0);
+          // this.deepARInstance.switchEffect(0, "slot", "/effects/lion", () => {
+          //   console.log("changeEffect: changed effect to lion");
+          //   this.$store.commit("setEffectLoadingFalse", 0);
+          // });
+          break;
+        case 1:
           this.$store.commit("setActiveEffectIcon", "lion");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 0);
@@ -328,7 +337,7 @@ export default {
             this.$store.commit("setEffectLoadingFalse", 0);
           });
           break;
-        case 1:
+        case 2:
           this.$store.commit("setActiveEffectIcon", "aviators");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 1);
@@ -342,7 +351,7 @@ export default {
             }
           );
           break;
-        case 2:
+        case 3:
           this.$store.commit("setActiveEffectIcon", "beard");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 2);
@@ -351,7 +360,7 @@ export default {
             this.$store.commit("setEffectLoadingFalse", 2);
           });
           break;
-        case 3:
+        case 4:
           this.$store.commit("setActiveEffectIcon", "dalmatian");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 3);
@@ -365,7 +374,7 @@ export default {
             }
           );
           break;
-        case 4:
+        case 5:
           this.$store.commit("setActiveEffectIcon", "flowers");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 4);
@@ -379,7 +388,7 @@ export default {
             }
           );
           break;
-        case 5:
+        case 6:
           this.$store.commit("setActiveEffectIcon", "koala");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 5);
@@ -388,7 +397,7 @@ export default {
             this.$store.commit("setEffectLoadingFalse", 5);
           });
           break;
-        case 6:
+        case 7:
           this.$store.commit("setActiveEffectIcon", "background_segmentation");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 6);
@@ -404,7 +413,7 @@ export default {
             }
           );
           break;
-        case 7:
+        case 8:
           this.$store.commit("setActiveEffectIcon", "teddycigar");
           this.deepARInstance.clearEffect("slot");
           this.$store.commit("setEffectLoadingTrue", 7);
