@@ -161,7 +161,7 @@ export default {
     App.addListener('appUrlOpen', async data => {
       const accessToken = data.url.split('access_token=')[1].split('&')[0]
       console.log('accessToken: ', accessToken)
-      const result = await this.$axios.$get(
+      const userinfo = await this.$axios.$get(
         "https://zencross.auth0.com/userinfo",
         {
           headers: {
@@ -170,8 +170,80 @@ export default {
           }
         }
       );
-      console.log('logged in user: ', result);
+      console.log('logged in user: ', userinfo);
+      try {
+        const user = await this.$apollo.query({
+          query: gql`
+            query($email: String!) {
+              getUser(email: $email) {
+                name
+                nickname
+                age
+                gender
+                location {
+                  longitude
+                  latitude
+                }
+                passions {
+                  name
+                }
+                phoneNumber
+                email
+                university
+                media {
+                  index
+                  type
+                  url
+                }
+                isGenderPublic
+                isOrientationPublic
+                orientation
+                showGender
+                channels {
+                  createdAt
+                  messages {
+                    by {
+                      nickname
+                    }
+                    in {
+                      name
+                    }
+                    content
+                    timestamp
+                  }
+                  name
+                  users {
+                    nickname
+                    media {
+                      index
+                      type
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          `,
+          variables: {
+            email: userinfo.email
+          }
+        });
+        console.log("getUser results:", user.data.getUser);
+        if (user.data.getUser) {
+          console.log(`logging in user ${user.data.getUser.nickname} ${user.data.getUser.email}`);
+          this.$store.commit("setUser", results.data.getUser);
+          this.$store.commit("setChannels", results.data.getUser.channels);
+          this.$store.commit("setUserProfileMedia", this.$store.state.user.media);
+          this.$router.push("/user-profile");
+        } else {
+          console.log(`user with email ${result.email} does not exist, creating new profile`);
+          this.$router.push("/name");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     });
+
     console.log("in fullscreen ?", document.fullscreenElement);
     console.log("Support fullscreen ?", document.fullscreenEnabled);
 
