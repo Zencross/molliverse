@@ -153,14 +153,14 @@ export default {
       this.$router.push("/swipe");
     },
     async onClickLogout() {
-      await this.$auth.logout();
-      //this.$router.push("/");
+      //await this.$auth.logout();
+      this.$router.push("/");
       //  TODO: call action that cleans user data & form data
       this.$store.dispatch("clearOnboardingFormStates");
     }
   },
   async mounted() {
-    if (this.$store.state.firstName) {
+    /*if (this.$store.state.firstName) {
       try {
         const results = await this.$apollo.query({
           query: gql`
@@ -185,7 +185,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    }
+    }*/
   }
 };
 </script>

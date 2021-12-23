@@ -87,9 +87,9 @@ export default {
 
   auth: {
     redirect: {
-      login: '/login',
-      logoutRedirectUri: '/login',
-      callback: '/user-profile'
+      login: '/',
+      logoutRedirectUri: '/',
+      callback: '/'
     },
     strategies: {
       auth0: {
@@ -98,10 +98,6 @@ export default {
         redirectUri: 'life.mysocialcapital.mollie.dating://zencross.auth0.com/capacitor/life.mysocialcapital.mollie.dating/callback'
       }
     }
-  },
-
-  router: {
-    middleware: ['auth']
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
