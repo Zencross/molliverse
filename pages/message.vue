@@ -334,6 +334,13 @@
     <!-- Message Container -->
     <!-- Re-calculate the height of messageContainer when native keyboard is activated -->
     <div class="z-0 overflow-scroll messagesContainer" id="messages">
+      <div v-if="messages.length == 0" class="flex justify-center w-full ">
+        <p
+          class="px-4 py-1 my-4 text-gray-900 bg-gray-300 shadow-md rounded-2xl"
+        >
+          Start chatting, Say Hi to {{ messageTargetName }}!
+        </p>
+      </div>
       <!-- Messages -->
       <transition-group name="fade">
         <div
