@@ -8,6 +8,78 @@
       @clickMessager="onClickMessager"
     ></TopBar>
 
+    <!-- Match Screen -->
+    <transition name="fade">
+      <div
+        v-if="showMatchAnimation"
+        class="absolute top-0 bottom-0 left-0 right-0 z-50"
+        @click="showMatchAnimation = false"
+      >
+        <div
+          class="absolute top-0 z-40 flex flex-col w-full px-6 mt-20 disable-dbl-tap-zoom"
+        >
+          <p class="w-full mb-8 text-lg font-medium text-center text-white">
+            You and {{ currentTarget.nickname }} have liked each other!
+          </p>
+          <div class="flex w-full justify-evenly">
+            <!-- Own's icon -->
+            <div>
+              <img
+                v-if="IconIsImage"
+                :src="userIcon"
+                alt="icon"
+                class="object-cover w-32 h-32 bg-gray-300 border-4 border-white rounded-full"
+              />
+              <!-- <video
+                v-else
+                autoplay
+                loop
+                playsinline
+                :src="userIcon"
+                alt="icon"
+                class="object-cover w-32 h-32 bg-gray-300 border-4 border-white rounded-full"
+              /> -->
+            </div>
+
+            <!-- Target's Icon -->
+            <div>
+              <img
+                v-if="IconIsImage"
+                :src="currentTargetIconURL"
+                alt="icon"
+                class="object-cover w-32 h-32 bg-gray-300 border-4 border-white rounded-full"
+              />
+              <!-- <video
+                v-else
+                autoplay
+                loop
+                playsinline
+                :src="currentTargetIconURL"
+                alt="icon"
+                class="object-cover w-32 h-32 bg-gray-300 border-4 border-white rounded-full"
+              /> -->
+            </div>
+          </div>
+        </div>
+        <img src="/img/match_screen_gif_1.gif" alt="gif1" class="h-full" />
+        <div
+          class="absolute bottom-0 z-40 flex flex-col items-center w-full mb-20 disable-dbl-tap-zoom"
+        >
+          <button
+            class="flex items-center justify-center w-10/12 py-4 mb-3 text-lg font-semibold text-white rounded-full bg-brandPurple focus:outline-none"
+            @click="sendMessage()"
+          >
+            Send Message
+          </button>
+          <button
+            class="flex items-center justify-center w-10/12 py-4 text-lg font-semibold text-white bg-transparent border-2 rounded-sm focus:outline-none"
+          >
+            Keep Swiping
+          </button>
+        </div>
+      </div>
+    </transition>
+
     <div class="flex justify-center mt-4">
       <VueTinder
         id="swipe"
@@ -136,7 +208,7 @@
 
     <!-- Swipe buttons -->
     <div
-      class="absolute bottom-0 z-50 flex justify-between w-full h-24 px-6 disable-dbl-tap-zoom"
+      class="absolute bottom-0 z-40 flex justify-between w-full h-24 px-6 disable-dbl-tap-zoom"
       id="buttonGroup"
     >
       <button
@@ -180,7 +252,11 @@ export default {
       currentMediaIndex: 0,
       queue: [],
       offset: 0,
-      history: []
+      history: [],
+      showMatchAnimation: false,
+      IconIsImage: true,
+      currentTarget: null,
+      currentTargetIconURL: null
     };
   },
   created() {
@@ -305,8 +381,14 @@ export default {
       return "";
     },
     async onSubmit(choice) {
+      this.currentTarget = choice.item;
+      this.currentTargetIconURL = this.currentTarget.media.find(
+        media => media.index == 0 || media.url != null
+      ).url;
       console.log("user choice", choice);
       console.log(`${this.queue.length} card left`);
+      console.log("currentTarget", this.currentTarget);
+      console.log("currentTargetIconURL", this.currentTargetIconURL);
       this.currentMediaIndex = 0;
       if (this.queue.length === 1) {
         console.log("only 1 card left");
@@ -336,6 +418,9 @@ export default {
           }
         });
         console.log("swipe results", results);
+        if (results.data.swipe.match == true) {
+          this.showMatchAnimation = true;
+        }
       } catch (e) {
         console.error(e);
       }
@@ -373,9 +458,40 @@ export default {
         console.log("this.$refs.tinder.decide(choice)");
         this.$refs.tinder.decide(choice);
       }
+    },
+    sendMessage() {
+      //this.$store.commit("setMessageTargetId", match.target.id);
+      this.$store.commit(
+        "setMessageChannelName",
+        `${this.userName} x ${this.currentTarget.nickname}`
+      );
+      this.$store.commit("setMessageTargetName", this.currentTarget.nickname);
+      this.$store.commit("setMessageTargetAvatar", this.currentTargetIconURL);
+      this.$store.commit(
+        "setMessageTargetAvatarType",
+        this.currentTarget.media.find(
+          media => media.index == 0 || media.url != null
+        ).type
+      );
+
+      //document.getElementById(match.id).style.backgroundColor = "#e2e8f0";
+      this.$router.push("/message");
     }
   },
-  computed: {}
+  computed: {
+    userIcon() {
+      return this.$store.state.user.media[0].url;
+    },
+    userName() {
+      return this.$store.state.user.nickname;
+    },
+    targetIcon() {
+      return this.queue[0].media[0].url;
+    },
+    targetName() {
+      return this.queue[0].nickname;
+    }
+  }
 };
 </script>
 
@@ -384,6 +500,15 @@ export default {
 
 .lato-font {
   font-family: "Lato", sans-serif;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.7s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 
 html,
@@ -432,5 +557,9 @@ body {
   right: 10px;
   width: 64px;
   height: 64px;
+}
+
+.border-brandPurple {
+  border-color: "#89287C";
 }
 </style>

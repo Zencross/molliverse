@@ -63,8 +63,8 @@
         </div>
       </div>
     </div>
-    <div v-else class="p-4 text-center text-gray-600">
-      Oops! No match yet. Go find your bliss!
+    <div v-if="channels.length == 0" class="p-4 text-center text-gray-600">
+      No match yet. Swipe more to get matched!
     </div>
   </div>
 </template>
