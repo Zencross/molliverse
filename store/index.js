@@ -328,7 +328,7 @@ export const actions = {
     let userInput = [
       {
         age: age,
-        email: "abc@abc.com",
+        email: state.email || "abc@abc.com",
         gender: state.gender,
         location: {
           longitude: 114.177216,
