@@ -28,7 +28,7 @@
         class="mt-1"
         @click="onClickSignIn"
       />
-      <label for="location" class="block font-medium text-black mt-4"
+      <!--label for="location" class="block font-medium text-black mt-4"
         >Sign in as:</label
       >
       <select
@@ -45,7 +45,7 @@
         >
       </select>
 
-      <!--div
+      <div
         @click="onClickCreateNewProfile"
         class="mt-4 mb-4 text-black underline karla-font focus:outline-none"
       >

@@ -327,6 +327,9 @@ export default {
         this.queue = this.queue.filter(
           ele => ele.nickname !== this.$store.state.user.nickname
         );
+        this.queue = this.queue.filter(
+          ele => this.$store.state.showMePreference.includes(ele.gender)
+        );
         console.log("queue", this.queue);
         // return results.data.queryUser;
       } catch (error) {
