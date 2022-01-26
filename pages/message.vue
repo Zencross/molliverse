@@ -183,37 +183,37 @@
           <!-- Category Tab -->
           <div class="flex h-10 mx-3 mb-4">
             <button
-              @click="NHIECategory = 'harmless'"
+              @click="NHIECategory = 'HARMLESS'"
               class="w-1/3 text-sm text-black "
-              :class="[NHIECategory == 'harmless' ? 'font-extrabold' : '']"
+              :class="[NHIECategory == 'HARMLESS' ? 'font-extrabold' : '']"
             >
               Harmless
             </button>
             <button
-              @click="NHIECategory = 'delicate'"
+              @click="NHIECategory = 'DELICATE'"
               class="w-1/3 text-sm text-black "
-              :class="[NHIECategory == 'delicate' ? 'font-extrabold' : '']"
+              :class="[NHIECategory == 'DELICATE' ? 'font-extrabold' : '']"
             >
               Delicate
             </button>
             <button
-              @click="NHIECategory = 'dirty'"
+              @click="NHIECategory = 'DIRTY'"
               class="w-1/3 text-sm text-black "
-              :class="[NHIECategory == 'dirty' ? 'font-extrabold' : '']"
+              :class="[NHIECategory == 'DIRTY' ? 'font-extrabold' : '']"
             >
               Dirty
             </button>
             <button
-              @click="NHIECategory = 'offensive'"
+              @click="NHIECategory = 'OFFENSIVE'"
               class="w-1/3 text-sm text-black "
-              :class="[NHIECategory == 'offensive' ? 'font-extrabold' : '']"
+              :class="[NHIECategory == 'OFFENSIVE' ? 'font-extrabold' : '']"
             >
               Offensive
             </button>
           </div>
 
           <!-- Harmless Content -->
-          <div v-if="NHIECategory == 'harmless'" class="flex flex-col">
+          <div v-if="NHIECategory == 'HARMLESS'" class="flex flex-col">
             <div
               class="flex items-center justify-between mx-5"
               v-for="item in NHIEHarmlessContent"
@@ -236,7 +236,7 @@
             </div>
           </div>
           <!-- Delicate Content -->
-          <div v-if="NHIECategory == 'delicate'" class="flex flex-col">
+          <div v-if="NHIECategory == 'DELICATE'" class="flex flex-col">
             <div
               class="flex items-center justify-between mx-5"
               v-for="item in NHIEDelicateContent"
@@ -259,7 +259,7 @@
             </div>
           </div>
           <!-- Dirty Content -->
-          <div v-if="NHIECategory == 'dirty'" class="flex flex-col">
+          <div v-if="NHIECategory == 'DIRTY'" class="flex flex-col">
             <div
               class="flex items-center justify-between mx-5"
               v-for="item in NHIEDirtyContent"
@@ -282,7 +282,7 @@
             </div>
           </div>
           <!-- Offensive Content -->
-          <div v-if="NHIECategory == 'offensive'" class="flex flex-col">
+          <div v-if="NHIECategory == 'OFFENSIVE'" class="flex flex-col">
             <div
               class="flex items-center justify-between mx-5"
               v-for="item in NHIEOffensiveContent"
@@ -305,7 +305,7 @@
             </div>
           </div>
 
-          <!-- Add custom NEIE item -->
+          <!-- Add custom NHIE item -->
           <!-- <div class="mx-3 mt-2 text-center text-blue-600 underline">
             Custom Questions
           </div> -->
@@ -502,16 +502,15 @@ export default {
       showGameModal: false, // Controls the display of wingman game suggestion
       showNHIESetupWindow: false, // Controls the display of NHIE Setup Window (Choose Question)
       showNHIEGameWindow: false, // Controls the display of NHIE In-Game Window (Question + users' lives)
-      // showNHIEGameWindow1: false,
-      // showNHIEGameWindow2: false,
-      // showNHIEGameWindow3: false,
-      // showNHIEGameWindow4: false,
-      // showNHIEGameWindow5: false,
       showNHIECongratScreen: false,
       showNHIESorryScreen: false,
+      NHIEGameStateLoader: null,
+      NHIEGameStateID: null,
+      NHIEGameSourceNick: "",
+      NHIEGameTargetNick: "",
       NHIERoundResult: "",
-      NHIECategory: "harmless",
-      NHIEHarmlessContent: [
+      NHIECategory: "HARMLESS",
+      /*NHIEHarmlessContent: [
         "fainted",
         "been to the hospital",
         "had a paranormal experience",
@@ -538,9 +537,14 @@ export default {
         "used someone else's toothbrush",
         "broken a bone",
         "fled to another country"
-      ],
+      ],*/
+      NHIEHarmlessContent: [],
+      NHIEDelicateContent: [],
+      NHIEDirtyContent: [],
+      NHIEOffensiveContent: [],
       NHIEUserSelections: [], // Current User Selection of NHIE Question
-      NHIETargetUserSelections: [
+      NHIETargetUserSelections: [],
+      /*NHIETargetUserSelections: [
         { id: 1, question: "ruined someone else's vacation", answer: true },
         { id: 2, question: "stolen something in a store", answer: true },
         { id: 3, question: "bullied someone in high school", answer: false },
@@ -551,7 +555,7 @@ export default {
         { id: 8, question: "cheated", answer: false },
         { id: 9, question: "gotten stitches", answer: true },
         { id: 10, question: "broken a bone", answer: false }
-      ],
+      ],*/
       NHIETargetQuestionIndex: 0, // value range from 0-4 (5 Questions),
       blockTrueButton: false,
       blockFalseButton: false,
@@ -687,6 +691,170 @@ export default {
         console.error(error);
       }
     },
+    async loadNHIEQuestions() {
+      console.log("loading NHIE questions");
+
+      try {
+        const results = await this.$apollo.query({
+          query: gql`
+            query {
+              queryNhieGameState {
+                category
+                question
+              }
+            }
+          `,
+          variables: {
+            name: this.$store.state.messageChannelName
+          }
+        });
+
+        console.log("NHIE questions", results.data.queryNhieGameQuestion);
+
+        this.NHIEHarmlessContent = results.filter(r => r.category === "HARMLESS")
+        this.NHIEDelicateContent = results.filter(r => r.category === "DELICATE")
+        this.NHIEDirtyContent = results.filter(r => r.category === "DIRTY")
+        this.NHIEOffensiveContent = results.filter(r => r.category === "OFFENSIVE")
+
+        console.log("HARMLESS: ", this.NHIEHarmlessContent)
+        console.log("DELICATE: ", this.NHIEDelicateContent)
+        console.log("DIRTY: ", this.NHIEDirtyContent)
+        console.log("OFFENSIVE: ", this.NHIEOffensiveContent)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async loadNHIEGameState() {
+      console.log("loading NHIE game state");
+      try {
+        let gameState = null
+        if (this.NHIEGameStateID) {
+          // This user started game
+          const results = await this.$apollo.query({
+            query: gql`
+              query($id: String!) {
+                getNhieGameState($id: String!) {
+                  isInProgress
+                  sourceLives
+                  targetLives
+                  sourceAnswers {
+                    question {
+                      id
+                    }
+                    answer
+                  }
+                  targetAnswers {
+                    question {
+                      id
+                    }
+                    answer
+                  }
+                }
+              }
+            `,
+            variables: {
+              id: this.NHIEGameStateID
+            }
+          });
+          console.log("loaded NHIE game state ", results.data.getNhieGameState)
+          gameState = results.data.getNhieGameState
+        } else {
+          // Other user started game
+          console.log("NHIE game state", results.data.getNhieGameState);
+          
+          const results = await this.$apollo.query({
+            query: gql`
+              query($sourceNick: String!, $targetNick: String!) {
+                queryNhieGameState(
+                  filter: {
+                    and: [
+                      { sourceNick: { eq: $sourceNick }},
+                      { targetNick: { eq: $targetNick }}
+                    ]
+                  }
+                ) {
+                  isInProgress
+                  sourceLives
+                  targetLives
+                  sourceAnswers {
+                    question {
+                      id
+                    }
+                    answer
+                  }
+                  targetAnswers {
+                    question {
+                      id
+                    }
+                    answer
+                  }
+                }
+              }
+            `,
+            variables: {
+              sourceNick: this.messageTargetName,
+              targetNick: this.$store.state.user.nickname
+            }l
+          });
+          if (results.data.getNhieGameState) {
+            console.log("loaded NHIE game state ", results.data.getNhieGameState)
+            gameState = results.data.getNhieGameState
+          }
+        }
+        if (gameState) {
+
+        } else {
+          console.log("no NHIE game in progress")
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async updateNHIEGameState() {
+      try {
+        let gameStateInput = null
+        if (this.NHIEGameStateID) {
+          gameStateInput = {
+            sourceLives: this.NHIEUserLives
+            sourceAnswers: this.NHIEUserSelections
+          }
+        } else {
+          gameStateInput = {
+            targetLives: this.NHIEUserLives
+            targetAnswers: this.NHIEUserSelections
+          }
+        }
+        const results = await this.$apollo.mutate({
+          mutation: gql`
+            mutation($input: UpdateNHIEGameStateInput!) {
+              updateNHIEGameState(input: $input) {
+                isInProgress
+                sourceLives
+                targetLives
+                sourceAnswers {
+                  question {
+                    id
+                  }
+                  answer
+                }
+                targetAnswers {
+                  question {
+                    id
+                  }
+                  answer
+                }
+              }
+            }
+          `,
+          variables: {
+            input: gameStateInput
+          }
+        });
+        console.log("updateNHIEGameState results", results);
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async onClickSendMessage() {
       if (!this.input) return;
 
@@ -738,6 +906,35 @@ export default {
     },
     startGame(game) {
       console.log("startGame", game);
+
+      try {
+        const gameStateInput = {
+          sourceNick: this.$state.user.nickname,
+          targetNick: this.messageTargetName,
+          sourceLives: 3,
+          targetLives: 3,
+          isInProgress: true,
+          sourceAnswers: [],
+          targetAnswers: []
+        }
+        const results = await this.$apollo.mutate({
+          mutation: gql`
+            mutation($input: [AddNhieGameStateInput!) {
+              addNhieGameState(input: $input) {
+                id
+              }
+            }
+          `,
+          variables: {
+            input: gameStateInput
+          }
+        });
+        console.log("addNhieGameState results", results.data.addNhieGameState);
+        this.NHIEGameStateID = results.data.addNhieGameState.id
+      } catch (e) {
+        console.error(e);
+      }
+
       this.showGameModal = false;
       this.showNHIESetupWindow = true;
     },
@@ -811,7 +1008,7 @@ export default {
       messages.style.height =
         window.innerHeight - topBar.offsetHeight - inputs.offsetHeight + "px";
 
-      console.log("height of messages", messages.offsetHeight);
+      // console.log("height of messages", messages.offsetHeight);
       messages.scrollTop = messages.scrollHeight;
     },
     onClickNHIEAnswerTrue() {
@@ -819,10 +1016,10 @@ export default {
         this.NHIETargetQuestionIndex
       ];
       console.log("currentItem", currentItem);
-      if (currentItem.answer == true) {
+      if (currentItem.answer) {
         //  Display correct msg
         this.NHIERoundResult = "correct";
-        if (this.NHIETargetQuestionIndex == 9 && this.NHIEUserLives > 0) {
+        if (this.NHIETargetQuestionIndex === 9 && this.NHIEUserLives > 0) {
           this.showNHIECongratScreen = true;
           this.showNHIEGameWindow = false;
           this.NHIEUserLives = 3;
@@ -835,7 +1032,7 @@ export default {
         this.NHIERoundResult = "wrong";
         if (this.NHIEUserLives > 0) {
           this.NHIEUserLives--;
-          if (this.NHIEUserLives == 0) {
+          if (this.NHIEUserLives === 0) {
             this.showNHIESorryScreen = true;
             this.showNHIEGameWindow = false;
             this.NHIEUserLives = 3;
@@ -843,7 +1040,7 @@ export default {
             this.NHIETargetQuestionIndex = 0;
             this.NHIERoundResult = "";
           } else if (
-            this.NHIETargetQuestionIndex == 9 &&
+            this.NHIETargetQuestionIndex === 9 &&
             this.NHIEUserLives > 0
           ) {
             this.showNHIECongratScreen = true;
@@ -873,16 +1070,17 @@ export default {
       } else {
         this.blockTrueButton = false;
       }
+      this.updateNHIEGameState()
     },
     onClickNHIEAnswerFalse() {
       let currentItem = this.NHIETargetUserSelections[
         this.NHIETargetQuestionIndex
       ];
       console.log("currentItem", currentItem);
-      if (currentItem.answer == false) {
+      if (!currentItem.answer) {
         //  Display correct msg
         this.NHIERoundResult = "correct";
-        if (this.NHIETargetQuestionIndex == 9 && this.NHIEUserLives > 0) {
+        if (this.NHIETargetQuestionIndex === 9 && this.NHIEUserLives > 0) {
           this.showNHIECongratScreen = true;
           this.showNHIEGameWindow = false;
           this.NHIEUserLives = 3;
@@ -896,7 +1094,7 @@ export default {
 
         if (this.NHIEUserLives > 0) {
           this.NHIEUserLives--;
-          if (this.NHIEUserLives == 0) {
+          if (this.NHIEUserLives === 0) {
             this.showNHIESorryScreen = true;
             this.showNHIEGameWindow = false;
             this.NHIEUserLives = 3;
@@ -904,7 +1102,7 @@ export default {
             this.NHIETargetQuestionIndex = 0;
             this.NHIERoundResult = "";
           } else if (
-            this.NHIETargetQuestionIndex == 9 &&
+            this.NHIETargetQuestionIndex === 9 &&
             this.NHIEUserLives > 0
           ) {
             this.showNHIECongratScreen = true;
@@ -915,6 +1113,7 @@ export default {
             this.NHIERoundResult = "";
           }
         }
+        this.updateNHIEGameState()
       }
       setTimeout(() => {
         this.scrollToBottom();
@@ -953,7 +1152,6 @@ export default {
     window.addEventListener("resize", e => {
       console.log("resized deteected, new innerHeight:", window.innerHeight);
     });
-    // this.loadMessages();
 
     // Initialize height on loaded
     // var topBar = document.getElementById("topBar");
@@ -965,17 +1163,26 @@ export default {
     this.messageLoader = setInterval(() => {
       this.loadMessages();
     }, 1000);
+
+    this.NHIEGameStateLoader = setInterval(() => {
+      this.loadNHIEGameState();
+    }, 1000);
+
+    this.loadNHIEQuestions()
   },
   beforeRouteLeave(to, from, next) {
     console.log("message.vue is unmounted.");
     clearInterval(this.messageLoader);
     console.log("messageLoader stopped");
+    clearInterval(this.NHIEGameStateLoader);
+    console.log("NHIEGameStateLoader stopped");
     window.removeEventListener("scroll", this.handleScroll);
     console.log("remove scroll event listener");
     next();
   },
   destroyed() {
     if (this.messageLoader) clearInterval(this.messageLoader);
+    if (this.NHIEGameStateLoader) clearInterval(this.NHIEGameStateLoader);
     window.removeEventListener("scroll", this.handleScroll);
   }
 };
