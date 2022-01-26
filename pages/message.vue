@@ -794,7 +794,7 @@ export default {
             variables: {
               sourceNick: this.messageTargetName,
               targetNick: this.$store.state.user.nickname
-            }l
+            }
           });
           if (results.data.getNhieGameState) {
             console.log("loaded NHIE game state ", results.data.getNhieGameState)
@@ -815,12 +815,12 @@ export default {
         let gameStateInput = null
         if (this.NHIEGameStateID) {
           gameStateInput = {
-            sourceLives: this.NHIEUserLives
+            sourceLives: this.NHIEUserLives,
             sourceAnswers: this.NHIEUserSelections
           }
         } else {
           gameStateInput = {
-            targetLives: this.NHIEUserLives
+            targetLives: this.NHIEUserLives,
             targetAnswers: this.NHIEUserSelections
           }
         }
@@ -904,7 +904,7 @@ export default {
     closeModal() {
       this.showGameModal = false;
     },
-    startGame(game) {
+    async startGame(game) {
       console.log("startGame", game);
 
       try {
