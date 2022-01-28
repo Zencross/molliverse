@@ -111,7 +111,7 @@
 
       <!-- About Me -->
 
-      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+      <!-- <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
         About me
       </div>
       <textarea
@@ -119,10 +119,10 @@
         placeholder="My relationship status? Netflix, Oreos and sweatpants"
         rows="6"
         cols="50"
-      ></textarea>
+      ></textarea> -->
 
       <!-- Passions-->
-      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+      <!-- <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
         Passions
       </div>
       <textarea
@@ -130,10 +130,10 @@
         placeholder="Boxing, Foodie, Travel"
         rows="2"
         cols="50"
-      ></textarea>
+      ></textarea> -->
 
       <!-- Job Title -->
-      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+      <!-- <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
         Job Title
       </div>
       <textarea
@@ -141,10 +141,10 @@
         placeholder="Part time Techie, full time hustler"
         rows="2"
         cols="50"
-      ></textarea>
+      ></textarea> -->
 
       <!-- Education-->
-      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+      <!-- <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
         Education
       </div>
       <textarea
@@ -152,10 +152,10 @@
         placeholder="HKU"
         rows="2"
         cols="50"
-      ></textarea>
+      ></textarea> -->
 
       <!-- Company-->
-      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+      <!-- <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
         Company
       </div>
       <textarea
@@ -163,10 +163,10 @@
         placeholder="Self-Employed"
         rows="2"
         cols="50"
-      ></textarea>
+      ></textarea> -->
 
       <!-- Living in-->
-      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+      <!-- <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
         Living in
       </div>
       <textarea
@@ -174,10 +174,10 @@
         placeholder="Hong Kong"
         rows="2"
         cols="50"
-      ></textarea>
+      ></textarea> -->
 
       <!-- Gender-->
-      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+      <!-- <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
         Gender
       </div>
       <textarea
@@ -185,10 +185,10 @@
         placeholder="Male"
         rows="2"
         cols="50"
-      ></textarea>
+      ></textarea> -->
 
       <!-- Sexual Orientation -->
-      <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
+      <!-- <div class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font">
         Sexual Orientation
       </div>
       <textarea
@@ -196,11 +196,11 @@
         placeholder="Straight"
         rows="2"
         cols="50"
-      ></textarea>
+      ></textarea> -->
 
-      <div
+      <!-- <div
         class="pt-8 pb-4 pl-4 text-lg font-semibold bg-gray-100 lato-font"
-      ></div>
+      ></div> -->
     </div>
   </div>
 </template>

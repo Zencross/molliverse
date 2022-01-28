@@ -29,14 +29,14 @@
       <div class="mt-3 text-2xl font-bold lato-font" @click="onClickName">
         {{ userName + ", " + userAge }}
       </div>
-      <div class="text-sm lato-font">
+      <!-- <div class="text-sm lato-font">
         Are you French? Because Eiffel for you.
-      </div>
+      </div> -->
     </div>
 
     <!-- Controls -->
     <div class="flex items-center w-full justify-evenly">
-      <div
+      <!-- <div
         class="flex flex-col items-center justify-center"
         @click="onClickSettings"
       >
@@ -44,7 +44,7 @@
         <div class="mt-1 text-sm lato-font">
           Settings
         </div>
-      </div>
+      </div> -->
       <div
         class="flex flex-col items-center justify-center"
         @click="onClickAddMedia"
@@ -52,17 +52,17 @@
         <img src="/img/add-media.svg" class="w-20 h-20" alt="" />
         <div class="mt-1 text-sm lato-font">Add Media</div>
       </div>
-      <div
+      <!-- <div
         @click="onClickEditInfo"
         class="flex flex-col items-center justify-center"
       >
         <img src="/img/edit-info.svg" class="w-16 h-16" alt="" />
         <div class="mt-1 text-sm lato-font">Edit Info</div>
-      </div>
+      </div> -->
     </div>
 
     <!-- Ads -->
-    <div class="flex flex-col items-center justify-center w-full mt-4">
+    <!-- <div class="flex flex-col items-center justify-center w-full mt-4">
       <div class="text-2xl font-bold leading-none lato-font">
         Stand out with
       </div>
@@ -72,14 +72,14 @@
       <div class="text-sm">
         {{ "You're 3 times more likely to get matched!" }}
       </div>
-    </div>
+    </div> -->
 
     <div class="flex flex-col items-center justify-center w-full my-4">
-      <button
+      <!-- <button
         class="w-11/12 p-4 mb-2 font-bold border rounded-lg text-brandPurple border-brandPurple lato-font feedback-btn"
       >
         Give us feedback
-      </button>
+      </button> -->
       <button
         class="w-11/12 p-4 font-bold text-white border rounded-lg bg-brandPurple lato-font"
         @click="onClickLogout"
@@ -138,10 +138,10 @@ export default {
       this.$router.push("/messages");
     },
     onClickAddMedia() {
-      //this.$router.push("/gallery");
+      this.$router.push("/edit-info");
     },
     onClickEditInfo() {
-      this.$router.push("/edit-info");
+      // this.$router.push("/edit-info");
     },
     onClickSettings() {
       this.$router.push("/settings");

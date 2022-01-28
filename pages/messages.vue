@@ -1,11 +1,14 @@
 <template>
   <div class="select-none">
     <!-- Top Bar -->
-    <div class="w-full border border-t-0 border-b-1">
-      <div
-        @click="onClickTitle"
-        class="pt-6 pb-4 pl-4 text-2xl font-bold lato-font"
-      >
+    <div class="flex items-center w-full border border-t-0 border-b-1">
+      <img
+        src="/img/arrow-back-24px.svg"
+        class="w-10 h-10 pb-3 pl-4"
+        alt=""
+        @click="onClickBack"
+      />
+      <div class="pb-3 pl-4 text-2xl font-bold lato-font">
         Messages
       </div>
     </div>
@@ -63,8 +66,13 @@
         </div>
       </div>
     </div>
-    <div v-if="channels.length == 0" class="p-4 text-center text-gray-600">
+    <!-- <div v-if="channels.length == 0" class="p-4 text-center text-gray-600">
       No match yet. Swipe more to get matched!
+    </div> -->
+    <div v-if="channels.length == 0" class="flex justify-center w-full ">
+      <p class="px-4 py-1 my-4 text-gray-900 bg-gray-300 shadow-md rounded-2xl">
+        No match yet. Swipe more to get matched!
+      </p>
     </div>
   </div>
 </template>
@@ -211,7 +219,7 @@ export default {
       //document.getElementById(match.id).style.backgroundColor = "#e2e8f0";
       this.$router.push("/message");
     },
-    onClickTitle() {
+    onClickBack() {
       this.$router.push("/user-profile");
     },
     getTargetAvatarType(channel) {

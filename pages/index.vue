@@ -28,7 +28,7 @@
         class="mt-1"
         @click="onClickSignIn"
       />
-      <!--label for="location" class="block font-medium text-black mt-4"
+      <label for="location" class="block mt-4 font-medium text-black"
         >Sign in as:</label
       >
       <select
@@ -50,7 +50,7 @@
         class="mt-4 mb-4 text-black underline karla-font focus:outline-none"
       >
         Create a new profile
-      </div-->
+      </div>
     </div>
   </div>
 </template>
@@ -140,16 +140,16 @@ export default {
       }
     },
     async onClickSignIn() {
-      await App.removeAllListeners()
-      App.addListener('appUrlOpen', async data => {
-        const accessToken = data.url.split('access_token=')[1].split('&')[0]
-        console.log('accessToken: ', accessToken)
+      await App.removeAllListeners();
+      App.addListener("appUrlOpen", async data => {
+        const accessToken = data.url.split("access_token=")[1].split("&")[0];
+        console.log("accessToken: ", accessToken);
         const userinfo = await this.$axios.$get(
           "https://zencross.auth0.com/userinfo",
           {
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${accessToken}`
+              Authorization: `Bearer ${accessToken}`
             }
           }
         );
@@ -213,13 +213,20 @@ export default {
           });
           console.log("getUser results:", user.data.getUser);
           if (user.data.getUser) {
-            console.log(`logging in user ${user.data.getUser.nickname} ${user.data.getUser.email}`);
+            console.log(
+              `logging in user ${user.data.getUser.nickname} ${user.data.getUser.email}`
+            );
             this.$store.commit("setUser", user.data.getUser);
             this.$store.commit("setChannels", user.data.getUser.channels);
-            this.$store.commit("setUserProfileMedia", this.$store.state.user.media);
+            this.$store.commit(
+              "setUserProfileMedia",
+              this.$store.state.user.media
+            );
             this.$router.push("/user-profile");
           } else {
-            console.log(`user with email ${userinfo.email} does not exist, creating new profile`);
+            console.log(
+              `user with email ${userinfo.email} does not exist, creating new profile`
+            );
             this.$store.commit("setEmail", userinfo.email);
             this.$router.push("/name");
           }
@@ -228,7 +235,7 @@ export default {
         }
       });
 
-      this.$auth.loginWith('auth0');
+      this.$auth.loginWith("auth0");
     },
     onClickCreateNewProfile() {
       this.$router.replace("/name");
