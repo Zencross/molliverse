@@ -10,6 +10,7 @@
     "prod": "yarn build && yarn start"
   },
   "dependencies": {
+    "@avalabs/avalanche-wallet-sdk": "^0.14.4",
     "@capacitor/app": "^1.0.7",
     "@capacitor/camera": "^1.1.2",
     "@capacitor/cli": "^3.2.5",
