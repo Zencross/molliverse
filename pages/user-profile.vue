@@ -120,36 +120,80 @@
       <div class="flex flex-col items-center w-11/12 py-4">
         <!-- Heading -->
         <h1 class="w-full mb-4 text-2xl font-bold text-left">Rewards</h1>
+
         <!-- Buy Super Like -->
         <div
           class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
         >
-          <div class="flex justify-start w-full p-3">
+          <div class="flex justify-start w-full px-4 pt-5 pb-1">
             <img src="/img/swipe-superlike-btn.png" class="w-16 h-16" alt="" />
           </div>
+          <div class="flex items-center justify-between w-full px-4 pb-3">
+            <div class="font-bold">Super Likes x 10</div>
+            <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
+          </div>
+          <div class="flex items-center justify-start w-full px-4 pb-5">
+            <button class="flex items-center px-5 py-3 bg-black rounded-full">
+              <div class="mr-3 text-lg text-white">20</div>
+              <img src="/img/pop_icon.svg" alt="" />
+            </button>
+          </div>
         </div>
 
+        <!-- Buy Undo -->
         <div
           class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
         >
-          <div class="flex justify-start w-full p-3">
+          <div class="flex justify-start w-full px-4 pt-5 pb-1">
             <img src="/img/swipe-undo-btn.png" class="w-16 h-16" alt="" />
           </div>
-        </div>
-
-        <div
-          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
-        >
-          <div class="flex justify-start w-full p-3">
-            <img src="/img/swipe-like-btn.png" class="w-16 h-16" alt="" />
+          <div class="flex items-center justify-between w-full px-4 pb-3">
+            <div class="font-bold">Undo's x 10</div>
+            <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
+          </div>
+          <div class="flex items-center justify-start w-full px-4 pb-5">
+            <button class="flex items-center px-5 py-3 bg-black rounded-full">
+              <div class="mr-3 text-lg text-white">20</div>
+              <img src="/img/pop_icon.svg" alt="" />
+            </button>
           </div>
         </div>
 
+        <!-- Buy Swipe -->
         <div
           class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
         >
-          <div class="flex justify-start w-full p-3">
+          <div class="flex justify-start w-full px-4 pt-5 pb-1">
+            <img src="/img/swipe-like-btn.png" class="w-16 h-16" alt="" />
+          </div>
+          <div class="flex items-center justify-between w-full px-4 pb-3">
+            <div class="font-bold">Swipes x 10</div>
+            <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
+          </div>
+          <div class="flex items-center justify-start w-full px-4 pb-5">
+            <button class="flex items-center px-5 py-3 bg-black rounded-full">
+              <div class="mr-3 text-lg text-white">20</div>
+              <img src="/img/pop_icon.svg" alt="" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Buy See-Who-Liked-You -->
+        <div
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+        >
+          <div class="flex justify-start w-full px-4 pt-5 pb-1">
             <img src="/img/see-who-liked-you.png" class="w-16 h-16" alt="" />
+          </div>
+          <div class="flex items-center justify-between w-full px-4 pb-3">
+            <div class="font-bold">See who liked you x 2</div>
+            <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
+          </div>
+          <div class="flex items-center justify-start w-full px-4 pb-5">
+            <button class="flex items-center px-5 py-3 bg-black rounded-full">
+              <div class="mr-3 text-lg text-white">20</div>
+              <img src="/img/pop_icon.svg" alt="" />
+            </button>
           </div>
         </div>
       </div>
