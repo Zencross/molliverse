@@ -110,7 +110,9 @@
           Total<br />
           Earnings:
         </div>
-        <div class="text-4xl font-bold">100</div>
+        <div class="text-4xl font-bold">
+          {{ this.$store.state.popEarnings }}
+        </div>
         <div class="flex items-center">
           <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8 mr-1" />
           $POP
@@ -138,7 +140,10 @@
             <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
           </div>
           <div class="flex items-center justify-start w-full px-4 pb-5">
-            <button class="flex items-center px-5 py-3 bg-black rounded-full">
+            <button
+              class="flex items-center px-5 py-3 bg-black rounded-full"
+              @click="onClickBuySuperLike()"
+            >
               <div class="mr-3 text-lg text-white">20</div>
               <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
             </button>
@@ -157,7 +162,10 @@
             <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
           </div>
           <div class="flex items-center justify-start w-full px-4 pb-5">
-            <button class="flex items-center px-5 py-3 bg-black rounded-full">
+            <button
+              class="flex items-center px-5 py-3 bg-black rounded-full"
+              @click="onClickBuyUndo()"
+            >
               <div class="mr-3 text-lg text-white">20</div>
               <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
             </button>
@@ -176,7 +184,10 @@
             <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
           </div>
           <div class="flex items-center justify-start w-full px-4 pb-5">
-            <button class="flex items-center px-5 py-3 bg-black rounded-full">
+            <button
+              class="flex items-center px-5 py-3 bg-black rounded-full"
+              @click="onClickBuyLike()"
+            >
               <div class="mr-3 text-lg text-white">20</div>
               <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
             </button>
@@ -189,7 +200,7 @@
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
             <img
-              src="/img/see-who-liked-you-512w.png"
+              src="/img/swipe-reveal-btn-512w.png"
               class="w-16 h-16"
               alt=""
             />
@@ -199,7 +210,10 @@
             <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
           </div>
           <div class="flex items-center justify-start w-full px-4 pb-5">
-            <button class="flex items-center px-5 py-3 bg-black rounded-full">
+            <button
+              class="flex items-center px-5 py-3 bg-black rounded-full"
+              @click="onClickBuyReveal()"
+            >
               <div class="mr-3 text-lg text-white">20</div>
               <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
             </button>
@@ -329,6 +343,22 @@ export default {
     },
     onClickWalletTab() {
       this.activeTab = "Wallet";
+    },
+    onClickBuySuperLike() {
+      this.$router.push("/purchase-reward");
+      this.$store.commit("setRewardToBuy", "superlike");
+    },
+    onClickBuyUndo() {
+      this.$router.push("/purchase-reward");
+      this.$store.commit("setRewardToBuy", "undo");
+    },
+    onClickBuyLike() {
+      this.$router.push("/purchase-reward");
+      this.$store.commit("setRewardToBuy", "like");
+    },
+    onClickBuyReveal() {
+      this.$router.push("/purchase-reward");
+      this.$store.commit("setRewardToBuy", "reveal");
     }
   },
 

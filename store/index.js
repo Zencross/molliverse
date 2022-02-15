@@ -52,7 +52,9 @@ export const state = () => ({
   channels: [],
   messageChannelName: "",
   phoneNumber: "",
-  email: ""
+  email: "",
+  rewardToBuy: "",
+  popEarnings: 100
 });
 
 export const mutations = {
@@ -270,6 +272,14 @@ export const mutations = {
   setEmail(state, val) {
     state.email = val;
     console.log("VUEX: set email", state.email);
+  },
+  setRewardToBuy(state, val) {
+    state.rewardToBuy = val;
+    console.log("VUEX: set rewardToBuy", state.rewardToBuy);
+  },
+  setPopEarnings(state, val) {
+    state.popEarnings = val;
+    console.log("VUEX: set popEarnings", state.popEarnings);
   }
 };
 
