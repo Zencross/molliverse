@@ -8,43 +8,158 @@
       @clickLogo="onClickLogo"
     ></TopBar>
 
-    <div class="flex flex-col items-center justify-center w-full pt-8 pb-6">
-      <img
-        v-if="IconIsImage"
-        :src="userIcon"
-        alt="icon"
-        class="object-cover w-32 h-32 bg-gray-300 rounded-full"
-        @click="onClickAddMedia"
-      />
-      <video
-        v-else
-        autoplay
-        loop
-        playsinline
-        :src="userIcon"
-        alt="icon"
-        class="object-cover w-32 h-32 bg-gray-300 rounded-full"
-        @click="onClickAddMedia"
-      />
-      <div class="mt-3 text-2xl font-bold lato-font" @click="onClickName">
-        {{ userName + ", " + userAge }}
-      </div>
-      <!-- <div class="text-sm lato-font">
-        Are you French? Because Eiffel for you.
-      </div> -->
-    </div>
-
-    <!-- Controls -->
-    <div class="flex items-center w-full justify-evenly">
-      <!-- <div
+    <!-- New Profile Header -->
+    <div class="flex items-center w-full pt-8 pb-6 shadow-md justify-evenly">
+      <!-- Settings -->
+      <div
         class="flex flex-col items-center justify-center"
         @click="onClickSettings"
       >
-        <img src="/img/settings.svg" class="w-16 h-16" alt="" />
+        <img src="/img/setting-black.png" class="w-16 h-16" alt="" />
         <div class="mt-1 text-sm lato-font">
           Settings
         </div>
-      </div> -->
+      </div>
+
+      <!-- Icon -->
+      <div class="flex flex-col items-center justify-center">
+        <img
+          v-if="IconIsImage"
+          :src="userIcon"
+          alt="icon"
+          class="object-cover w-32 h-32 bg-gray-300 rounded-full"
+          @click="onClickAddMedia"
+        />
+        <video
+          v-else
+          autoplay
+          loop
+          playsinline
+          :src="userIcon"
+          alt="icon"
+          class="object-cover w-32 h-32 bg-gray-300 rounded-full"
+          @click="onClickAddMedia"
+        />
+        <div class="mt-3 text-2xl font-bold lato-font" @click="onClickName">
+          {{ userName + ", " + userAge }}
+        </div>
+        <div class="text-sm text-center lato-font">
+          Are you French? <br />
+          Because Eiffel for you.
+        </div>
+      </div>
+
+      <!-- Edit Info -->
+      <div
+        @click="onClickEditInfo"
+        class="flex flex-col items-center justify-center"
+      >
+        <img src="/img/edit-info-black.png" class="w-16 h-16" alt="" />
+        <div class="mt-1 text-sm lato-font">Edit Info</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div
+      class="flex items-center w-11/12 mx-4 mt-6 mb-6 bg-white border-t border-b border-black rounded-l-full rounded-r-full"
+    >
+      <div
+        class="w-1/3 py-2 text-center rounded-l-full rounded-r-full"
+        :class="[
+          activeTab == 'Spending'
+            ? 'bg-black text-white'
+            : 'bg-white text-black border-l border-black'
+        ]"
+        @click="onClickSpendingTab()"
+      >
+        Spending
+      </div>
+      <div
+        class="w-1/3 py-2 text-center rounded-l-full rounded-r-full"
+        :class="[
+          activeTab == 'NFT' ? 'bg-black text-white' : 'bg-white text-black'
+        ]"
+        @click="onClickNftTab()"
+      >
+        NFT
+      </div>
+      <div
+        class="w-1/3 py-2 text-center rounded-l-full rounded-r-full"
+        :class="[
+          activeTab == 'Wallet'
+            ? 'bg-black text-white'
+            : 'bg-white text-black border-r border-black'
+        ]"
+        @click="onClickWalletTab()"
+      >
+        Wallet
+      </div>
+    </div>
+
+    <!-- Tab Content -->
+    <div
+      v-if="activeTab == 'Spending'"
+      class="flex flex-col items-center w-full"
+    >
+      <!-- Total Earnings Bar -->
+      <div
+        id="total-earnings-bar"
+        class="flex items-center w-11/12 py-4 rounded-md justify-evenly"
+      >
+        <div class="text-xl font-thin">
+          Total<br />
+          Earnings:
+        </div>
+        <div class="text-4xl font-bold">100</div>
+        <div class="flex items-center">
+          <img src="/img/pop_icon.svg" alt="" class="mr-1" /> $POP
+        </div>
+      </div>
+
+      <!-- Rewards -->
+      <div class="flex flex-col items-center w-11/12 py-4">
+        <!-- Heading -->
+        <h1 class="w-full mb-4 text-2xl font-bold text-left">Rewards</h1>
+        <!-- Buy Super Like -->
+        <div
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+        >
+          <div class="flex justify-start w-full p-3">
+            <img src="/img/swipe-superlike-btn.png" class="w-16 h-16" alt="" />
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+        >
+          <div class="flex justify-start w-full p-3">
+            <img src="/img/swipe-undo-btn.png" class="w-16 h-16" alt="" />
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+        >
+          <div class="flex justify-start w-full p-3">
+            <img src="/img/swipe-like-btn.png" class="w-16 h-16" alt="" />
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+        >
+          <div class="flex justify-start w-full p-3">
+            <img src="/img/see-who-liked-you.png" class="w-16 h-16" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="activeTab == 'NFT'">NFT Tab</div>
+    <div v-if="activeTab == 'Wallet'">Wallet Tab</div>
+
+    <!-- Add Media Button -->
+    <!-- <div class="flex items-center w-full justify-evenly">
       <div
         class="flex flex-col items-center justify-center"
         @click="onClickAddMedia"
@@ -52,14 +167,7 @@
         <img src="/img/add-media.svg" class="w-20 h-20" alt="" />
         <div class="mt-1 text-sm lato-font">Add Media</div>
       </div>
-      <!-- <div
-        @click="onClickEditInfo"
-        class="flex flex-col items-center justify-center"
-      >
-        <img src="/img/edit-info.svg" class="w-16 h-16" alt="" />
-        <div class="mt-1 text-sm lato-font">Edit Info</div>
-      </div> -->
-    </div>
+    </div> -->
 
     <!-- Ads -->
     <!-- <div class="flex flex-col items-center justify-center w-full mt-4">
@@ -74,6 +182,7 @@
       </div>
     </div> -->
 
+    <!-- Logout Button -->
     <div class="flex flex-col items-center justify-center w-full my-4">
       <!-- <button
         class="w-11/12 p-4 mb-2 font-bold border rounded-lg text-brandPurple border-brandPurple lato-font feedback-btn"
@@ -98,7 +207,9 @@ import gql from "graphql-tag";
 export default {
   components: { TopBar },
   data() {
-    return {};
+    return {
+      activeTab: "Spending"
+    };
   },
   computed: {
     IconIsImage() {
@@ -128,7 +239,6 @@ export default {
 
       // //now calculate the age of the user
       // var age = Math.abs(year - 1970);
-
       return this.$store.state.user.age;
     }
   },
@@ -141,7 +251,7 @@ export default {
       this.$router.push("/edit-info");
     },
     onClickEditInfo() {
-      // this.$router.push("/edit-info");
+      this.$router.push("/edit-info");
     },
     onClickSettings() {
       this.$router.push("/settings");
@@ -157,8 +267,18 @@ export default {
       this.$router.push("/");
       //  TODO: call action that cleans user data & form data
       this.$store.dispatch("clearOnboardingFormStates");
+    },
+    onClickSpendingTab() {
+      this.activeTab = "Spending";
+    },
+    onClickNftTab() {
+      this.activeTab = "NFT";
+    },
+    onClickWalletTab() {
+      this.activeTab = "Wallet";
     }
   },
+
   async mounted() {
     /*if (this.$store.state.firstName) {
       try {
@@ -201,5 +321,9 @@ export default {
   border: 1px;
   border-style: solid;
   border-color: #89287c;
+}
+
+#total-earnings-bar {
+  background-image: linear-gradient(#ecffd4, #fbd2ee);
 }
 </style>
