@@ -112,7 +112,8 @@
         </div>
         <div class="text-4xl font-bold">100</div>
         <div class="flex items-center">
-          <img src="/img/pop_icon.svg" alt="" class="mr-1" /> $POP
+          <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8 mr-1" />
+          $POP
         </div>
       </div>
 
@@ -126,7 +127,11 @@
           class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
-            <img src="/img/swipe-superlike-btn.png" class="w-16 h-16" alt="" />
+            <img
+              src="/img/swipe-superlike-btn-512w.png"
+              class="w-16 h-16"
+              alt=""
+            />
           </div>
           <div class="flex items-center justify-between w-full px-4 pb-3">
             <div class="font-bold">Super Likes x 10</div>
@@ -135,7 +140,7 @@
           <div class="flex items-center justify-start w-full px-4 pb-5">
             <button class="flex items-center px-5 py-3 bg-black rounded-full">
               <div class="mr-3 text-lg text-white">20</div>
-              <img src="/img/pop_icon.svg" alt="" />
+              <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
             </button>
           </div>
         </div>
@@ -145,7 +150,7 @@
           class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
-            <img src="/img/swipe-undo-btn.png" class="w-16 h-16" alt="" />
+            <img src="/img/swipe-undo-btn-512w.png" class="w-16 h-16" alt="" />
           </div>
           <div class="flex items-center justify-between w-full px-4 pb-3">
             <div class="font-bold">Undo's x 10</div>
@@ -154,7 +159,7 @@
           <div class="flex items-center justify-start w-full px-4 pb-5">
             <button class="flex items-center px-5 py-3 bg-black rounded-full">
               <div class="mr-3 text-lg text-white">20</div>
-              <img src="/img/pop_icon.svg" alt="" />
+              <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
             </button>
           </div>
         </div>
@@ -164,7 +169,7 @@
           class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
-            <img src="/img/swipe-like-btn.png" class="w-16 h-16" alt="" />
+            <img src="/img/swipe-like-btn-512w.png" class="w-16 h-16" alt="" />
           </div>
           <div class="flex items-center justify-between w-full px-4 pb-3">
             <div class="font-bold">Swipes x 10</div>
@@ -173,7 +178,7 @@
           <div class="flex items-center justify-start w-full px-4 pb-5">
             <button class="flex items-center px-5 py-3 bg-black rounded-full">
               <div class="mr-3 text-lg text-white">20</div>
-              <img src="/img/pop_icon.svg" alt="" />
+              <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
             </button>
           </div>
         </div>
@@ -183,7 +188,11 @@
           class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
-            <img src="/img/see-who-liked-you.png" class="w-16 h-16" alt="" />
+            <img
+              src="/img/see-who-liked-you-512w.png"
+              class="w-16 h-16"
+              alt=""
+            />
           </div>
           <div class="flex items-center justify-between w-full px-4 pb-3">
             <div class="font-bold">See who liked you x 2</div>
@@ -192,7 +201,7 @@
           <div class="flex items-center justify-start w-full px-4 pb-5">
             <button class="flex items-center px-5 py-3 bg-black rounded-full">
               <div class="mr-3 text-lg text-white">20</div>
-              <img src="/img/pop_icon.svg" alt="" />
+              <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
             </button>
           </div>
         </div>
@@ -369,5 +378,11 @@ export default {
 
 #total-earnings-bar {
   background-image: linear-gradient(#ecffd4, #fbd2ee);
+}
+
+img {
+  /* image-rendering: auto; */
+  /* image-rendering: crisp-edges; */
+  /* image-rendering: pixelated; */
 }
 </style>
