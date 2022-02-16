@@ -1,5 +1,13 @@
 <template>
   <div>
+    <!-- Popup Overlay -->
+    <div
+      class="fixed inset-0 flex items-center justify-center h-screen overflow-hidden bg-black bg-opacity-50"
+      v-if="showInsufficientCoinPopup"
+    >
+      <InsufficientCoinPopup @back="closePopup" @goToWallet="goToWallet" />
+    </div>
+
     <TopBar
       person
       messager
@@ -124,6 +132,9 @@
         <!-- Heading -->
         <h1 class="w-full mb-4 text-2xl font-bold text-left">Rewards</h1>
 
+        <!-- TODO: Use v-for List Rendering with a Rewards Array -->
+        <!-- <div v-for="reward in rewards"></div> -->
+
         <!-- Buy Super Like -->
         <div
           class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
@@ -222,8 +233,8 @@
       </div>
     </div>
 
-    <div v-if="activeTab == 'NFT'">NFT Tab</div>
-    <div v-if="activeTab == 'Wallet'">Wallet Tab</div>
+    <div v-if="activeTab == 'NFT'" class="text-center">NFT Tab</div>
+    <div v-if="activeTab == 'Wallet'" class="text-center">Wallet Tab</div>
 
     <!-- Add Media Button -->
     <!-- <div class="flex items-center w-full justify-evenly">
@@ -270,12 +281,14 @@
 <script>
 import TopBar from "~/components/TopBar";
 import gql from "graphql-tag";
+import InsufficientCoinPopup from "~/components/InsufficientCoinPopup.vue";
 
 export default {
-  components: { TopBar },
+  components: { TopBar, InsufficientCoinPopup },
   data() {
     return {
-      activeTab: "Spending"
+      activeTab: "Spending",
+      showInsufficientCoinPopup: false
     };
   },
   computed: {
@@ -345,20 +358,57 @@ export default {
       this.activeTab = "Wallet";
     },
     onClickBuySuperLike() {
-      this.$router.push("/purchase-reward");
-      this.$store.commit("setRewardToBuy", "superlike");
+      // TODO: Need to define proper Reward Array and pass in Reward object that contains Reward Name / Price
+      // So that we can calculate the estimated balance after buying
+      if (this.$store.state.popEarnings <= 0) {
+        console.log("Insufficient Coin");
+        this.showInsufficientCoinPopup = true;
+      } else {
+        this.$router.push("/purchase-reward");
+        this.$store.commit("setRewardToBuy", "superlike");
+      }
     },
     onClickBuyUndo() {
-      this.$router.push("/purchase-reward");
-      this.$store.commit("setRewardToBuy", "undo");
+      // TODO: Need to define proper Reward Array and pass in Reward object that contains Reward Name / Price
+      // So that we can calculate the estimated balance after buying
+      if (this.$store.state.popEarnings <= 0) {
+        console.log("Insufficient Coin");
+        this.showInsufficientCoinPopup = true;
+      } else {
+        this.$router.push("/purchase-reward");
+        this.$store.commit("setRewardToBuy", "undo");
+      }
     },
     onClickBuyLike() {
-      this.$router.push("/purchase-reward");
-      this.$store.commit("setRewardToBuy", "like");
+      // TODO: Need to define proper Reward Array and pass in Reward object that contains Reward Name / Price
+      // So that we can calculate the estimated balance after buying
+      if (this.$store.state.popEarnings <= 0) {
+        console.log("Insufficient Coin");
+        this.showInsufficientCoinPopup = true;
+      } else {
+        this.$router.push("/purchase-reward");
+        this.$store.commit("setRewardToBuy", "like");
+      }
     },
     onClickBuyReveal() {
-      this.$router.push("/purchase-reward");
-      this.$store.commit("setRewardToBuy", "reveal");
+      // TODO: Need to define proper Reward Array and pass in Reward object that contains Reward Name / Price
+      // So that we can calculate the estimated balance after buying
+      if (this.$store.state.popEarnings <= 0) {
+        console.log("Insufficient Coin");
+        this.showInsufficientCoinPopup = true;
+      } else {
+        this.$router.push("/purchase-reward");
+        this.$store.commit("setRewardToBuy", "reveal");
+      }
+    },
+    closePopup() {
+      console.log("received $emit back, close pop up");
+      this.showInsufficientCoinPopup = false;
+    },
+    goToWallet() {
+      console.log("received $emit goToWallet");
+      this.showInsufficientCoinPopup = false;
+      this.activeTab = "Wallet";
     }
   },
 

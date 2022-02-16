@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="min-h-screen">
     <!-- Simple Top Bar -->
     <div
       class="flex items-center justify-between w-full py-4 bg-white shadow-md select-none disable-dbl-tap-zoom"
@@ -76,7 +76,10 @@
       id="sticky-buy-bar"
       class="fixed inset-x-0 bottom-0 flex justify-center w-full py-4 "
     >
-      <button class="w-10/12 py-4 text-white bg-black rounded-md">
+      <button
+        class="w-10/12 py-4 text-white bg-black rounded-md"
+        @click="onClickPurchaseButton"
+      >
         Purchase Reward
       </button>
     </div>
@@ -89,7 +92,8 @@ export default {
   data() {
     return {
       popEarnings: this.$store.state.popEarnings,
-      rewardToBuy: this.$store.state.rewardToBuy
+      rewardToBuy: this.$store.state.rewardToBuy,
+      showBuySuccessScreen: false
     };
   },
   computed: {
@@ -136,6 +140,18 @@ export default {
   methods: {
     onClickBackButton() {
       this.$router.push("/user-profile");
+    },
+    onClickPurchaseButton() {
+      if (this.popEarnings - this.rewardItemPrice >= 0) {
+        console.log("Buy Successful");
+        this.$router.push("/purchase-reward-successful");
+        this.$store.commit(
+          "setPopEarnings",
+          this.$store.state.popEarnings - this.rewardItemPrice
+        );
+      } else {
+        console.log("Insufficient coin");
+      }
     }
   },
   async mounted() {}
