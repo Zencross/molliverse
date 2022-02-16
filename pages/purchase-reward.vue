@@ -45,10 +45,7 @@
           <div class="px-3 py-1 text-xs bg-gray-400 rounded-2xl">App</div>
         </div>
         <div class="flex items-center justify-start w-full px-4 pb-5">
-          <button
-            class="flex items-center px-5 py-3 bg-black rounded-full"
-            @click="onClickBuyRewardButton()"
-          >
+          <button class="flex items-center px-5 py-3 bg-black rounded-full">
             <div class="mr-3 text-lg text-white">{{ rewardItemPrice }}</div>
             <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8" />
           </button>
