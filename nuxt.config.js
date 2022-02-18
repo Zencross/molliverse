@@ -21,7 +21,7 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: "Mollie",
+    title: "Molliverse",
     meta: [
       { charset: "utf-8" },
       {
