@@ -54,7 +54,21 @@ export const state = () => ({
   phoneNumber: "",
   email: "",
   rewardToBuy: "",
-  popEarnings: 100
+  popEarnings: 100,
+  secretPhases: [
+    { id: 1, value: "potato" },
+    { id: 2, value: "pulp" },
+    { id: 3, value: "jungle" },
+    { id: 4, value: "iron" },
+    { id: 5, value: "castle" },
+    { id: 6, value: "duck" },
+    { id: 7, value: "eyebrow" },
+    { id: 8, value: "fish" },
+    { id: 9, value: "inquiry" },
+    { id: 10, value: "demise" },
+    { id: 11, value: "trick" },
+    { id: 12, value: "social" }
+  ]
 });
 
 export const mutations = {

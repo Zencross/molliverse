@@ -234,7 +234,14 @@
     </div>
 
     <div v-if="activeTab == 'NFT'" class="text-center">NFT Tab</div>
-    <div v-if="activeTab == 'Wallet'" class="text-center">Wallet Tab</div>
+    <div v-if="activeTab == 'Wallet'" class="text-center">
+      <button
+        class="w-4/12 px-4 py-4 text-white bg-black rounded-lg"
+        @click="onClickWallet"
+      >
+        Go To Wallet
+      </button>
+    </div>
 
     <!-- Add Media Button -->
     <!-- <div class="flex items-center w-full justify-evenly">
@@ -414,6 +421,9 @@ export default {
       console.log("received $emit goToWallet");
       this.showInsufficientCoinPopup = false;
       this.activeTab = "Wallet";
+    },
+    onClickWallet() {
+      this.$router.push("/create-wallet");
     }
   },
 
