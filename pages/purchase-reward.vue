@@ -1,18 +1,7 @@
 <template>
   <div class="min-h-screen">
     <!-- Simple Top Bar -->
-    <div
-      class="flex items-center justify-between w-full py-4 bg-white shadow-md select-none disable-dbl-tap-zoom"
-    >
-      <img
-        class="w-6 h-6 ml-4 disable-dbl-tap-zoom"
-        src="/img/back-arrow-tilted.svg"
-        alt="close"
-        @click="onClickBackButton"
-      />
-      <h1 class="text-xl font-bold">Purchase a Reward</h1>
-      <div class="w-6 h-6"></div>
-    </div>
+    <SimpleTopBar :title="'Purchase a Reward'" :backLink="'/user-profile'" />
 
     <!-- Container -->
     <div class="flex flex-col items-center w-full">
@@ -69,7 +58,12 @@
       </div>
     </div>
 
-    <div
+    <!-- Bottom Sticky Bar -->
+    <SimpleBottomBar
+      :title="'Purchase Reward'"
+      @buttonClick="onClickPurchaseButton"
+    />
+    <!-- <div
       id="sticky-buy-bar"
       class="fixed inset-x-0 bottom-0 flex justify-center w-full py-4 "
     >
@@ -79,13 +73,15 @@
       >
         Purchase Reward
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import SimpleTopBar from "~/components/SimpleTopBar.vue";
+import SimpleBottomBar from "~/components/SimpleBottomBar.vue";
 export default {
-  components: {},
+  components: { SimpleTopBar, SimpleBottomBar },
   data() {
     return {
       popEarnings: this.$store.state.popEarnings,
@@ -135,9 +131,6 @@ export default {
     }
   },
   methods: {
-    onClickBackButton() {
-      this.$router.push("/user-profile");
-    },
     onClickPurchaseButton() {
       if (this.popEarnings - this.rewardItemPrice >= 0) {
         console.log("Buy Successful");
@@ -158,9 +151,5 @@ export default {
 <style>
 #total-earnings-bar {
   background-image: linear-gradient(#ecffd4, #fbd2ee);
-}
-
-#sticky-buy-bar {
-  box-shadow: 0 -4px 4px -2px rgb(0 0 0 / 0.1), 0 -2px 6px -1px rgb(0 0 0 / 0.1);
 }
 </style>

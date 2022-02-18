@@ -10,22 +10,15 @@
         saepe nulla ut enim illo?
       </p>
     </div>
-    <div
-      id="sticky-buy-bar"
-      class="fixed inset-x-0 bottom-0 flex justify-center w-full py-4 "
-    >
-      <button
-        class="w-10/12 py-4 text-white bg-black rounded-md"
-        @click="onClickButton"
-      >
-        Start swiping!
-      </button>
-    </div>
+
+    <SimpleBottomBar :title="'Start swiping'" @buttonClick="onClickButton" />
   </div>
 </template>
 
 <script>
+import SimpleBottomBar from "~/components/SimpleBottomBar.vue";
 export default {
+  components: { SimpleBottomBar },
   methods: {
     onClickButton() {
       this.$router.push("/user-profile");
