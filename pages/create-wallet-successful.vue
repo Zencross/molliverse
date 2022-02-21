@@ -21,7 +21,7 @@ export default {
   components: { SimpleBottomBar },
   methods: {
     onClickButton() {
-      this.$router.push("/user-profile");
+      this.$router.push("/wallet");
     }
   }
 };
