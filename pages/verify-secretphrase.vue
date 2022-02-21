@@ -1,34 +1,27 @@
 <template>
   <div class="min-h-screen">
-    <SimpleTopBar :title="'Create your Wallet'" :backLink="'/user-profile'" />
+    <SimpleTopBar :title="'Secret Phrase'" :backLink="'/user-profile'" />
     <p class="w-full p-5 mt-2 text-justify">
-      Don't risk losing your funds. Protect your wallet by saving your Secret
-      Phrase in a place you trust.
-      <span class="font-bold"
-        >It's the only way to recover your wallet if you get locked out of the
-        app or get a new device.</span
-      >
+      Please choose Secret Phrase in order and make sure your Secret Phrase was
+      correctly written. Once forgotten, it cannot be recovered.
     </p>
 
     <!-- Secret Phases -->
-    <ul
-      id="secretPhrases"
+    <!-- <ul
+      id="secretPhases"
       class="flex flex-col flex-wrap content-start w-full p-5 text-lg"
     >
       <li
         class="w-1/2 py-1"
-        v-for="secretPhase in secretPhrases"
+        v-for="secretPhase in secretPhases"
         :key="secretPhase.id"
       >
         {{ secretPhase.id }}. {{ secretPhase.value }}
       </li>
-    </ul>
+    </ul> -->
 
     <!-- Sticky Bottom Bar -->
-    <SimpleBottomBar
-      :title="'I have written them down!'"
-      @buttonClick="onClickButton"
-    />
+    <SimpleBottomBar :title="'Confirm'" @buttonClick="onClickButton" />
   </div>
 </template>
 
@@ -39,12 +32,12 @@ export default {
   components: { SimpleTopBar, SimpleBottomBar },
   data() {
     return {
-      secretPhrases: this.$store.state.secretPhrases
+      secretPhases: this.$store.state.secretPhases
     };
   },
   methods: {
     onClickButton() {
-      this.$router.push("/create-passcode");
+      // this.$router.push("/create-passcode");
     }
   },
   mounted() {}
@@ -52,7 +45,7 @@ export default {
 </script>
 
 <style>
-#secretPhrases {
+#secretPhases {
   height: 280px;
 }
 </style>
