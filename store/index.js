@@ -55,7 +55,7 @@ export const state = () => ({
   email: "",
   rewardToBuy: "",
   popEarnings: 100,
-  secretPhases: [
+  secretPhrases: [
     { id: 1, value: "potato" },
     { id: 2, value: "pulp" },
     { id: 3, value: "jungle" },
@@ -68,7 +68,8 @@ export const state = () => ({
     { id: 10, value: "demise" },
     { id: 11, value: "trick" },
     { id: 12, value: "social" }
-  ]
+  ],
+  completePasscode: []
 });
 
 export const mutations = {
@@ -294,6 +295,10 @@ export const mutations = {
   setPopEarnings(state, val) {
     state.popEarnings = val;
     console.log("VUEX: set popEarnings", state.popEarnings);
+  },
+  setCompletePasscode(state, val) {
+    state.completePasscode = val;
+    console.log("VUEX: set completePasscode", state.completePasscode);
   }
 };
 
