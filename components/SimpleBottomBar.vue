@@ -1,11 +1,16 @@
 <template>
   <div
     id="sticky-buy-bar"
-    class="fixed inset-x-0 bottom-0 flex justify-center w-full py-4 "
+    class="fixed inset-x-0 bottom-0 flex justify-center w-full py-4 bg-white"
   >
     <button
       class="w-10/12 py-4 text-white bg-black rounded-md"
       @click="onClickButton"
+      :class="[
+        validation == true && validationState != true
+          ? 'opacity-50'
+          : 'opacity-100'
+      ]"
     >
       {{ title }}
     </button>
@@ -14,7 +19,12 @@
 
 <script>
 export default {
-  props: { title: String, forwardLink: String },
+  props: {
+    title: String,
+    forwardLink: String,
+    validation: { type: Boolean, default: false },
+    validationState: Boolean
+  },
   data() {
     return {};
   },

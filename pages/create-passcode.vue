@@ -77,33 +77,46 @@ export default {
   },
   methods: {
     onInputPasscode(e) {
-      console.log(this.passcodeDigit1);
-      console.log(this.passcodeDigit2);
-      console.log(this.passcodeDigit3);
-      console.log(this.passcodeDigit4);
-      console.log(this.passcodeDigit5);
-      console.log(this.passcodeDigit6);
+      // Masking
+      // if (e.target._value) document.getElementById(e.target.id).value = "*";
+      // console.log("Masked input");
 
-      console.log("event", e);
+      // this.passcodeDigit1 = "*";
+
+      if (e.target.id == "passcode_1") {
+        console.log("passcodeDigit1: ", this.passcodeDigit1);
+      } else if (e.target.id == "passcode_2") {
+        console.log("passcodeDigit2: ", this.passcodeDigit2);
+      } else if (e.target.id == "passcode_3") {
+        console.log("passcodeDigit3: ", this.passcodeDigit3);
+      } else if (e.target.id == "passcode_4") {
+        console.log("passcodeDigit4: ", this.passcodeDigit4);
+      } else if (e.target.id == "passcode_5") {
+        console.log("passcodeDigit5: ", this.passcodeDigit5);
+      } else if (e.target.id == "passcode_6") {
+        console.log("passcodeDigit6: ", this.passcodeDigit6);
+      }
+
+      // console.log("event", e);
       var target = e.srcElement || e.target;
       var maxLength = parseInt(target.attributes["maxlength"].value, 10);
-      console.log("maxLength", maxLength);
+      // console.log("maxLength", maxLength);
       var myLength = target.value.length;
       if (myLength >= maxLength) {
-        console.log("myLength >= maxLength");
+        // console.log("myLength >= maxLength");
         var next = target;
         while ((next = next.nextElementSibling)) {
-          console.log("next object", typeof next);
+          // console.log("next object", typeof next);
           if (next == null) {
             break;
           }
           if (next.tagName.toLowerCase() === "input") {
             next.focus();
-            console.log("found next input");
+            // console.log("found next input");
             break;
           }
         }
-        console.log("Check passcode");
+
         if (
           this.passcodeDigit1 &&
           this.passcodeDigit2 &&
