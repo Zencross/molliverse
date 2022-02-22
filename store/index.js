@@ -54,7 +54,10 @@ export const state = () => ({
   phoneNumber: "",
   email: "",
   rewardToBuy: "",
-  popEarnings: 100,
+  popBalance: 120,
+  ethBalance: 22.5876,
+  usdtBalance: 120.1002,
+  avaxBalance: 32.3298,
   secretPhrases: [
     { id: 1, value: "potato" },
     { id: 2, value: "pulp" },
@@ -69,7 +72,8 @@ export const state = () => ({
     { id: 11, value: "trick" },
     { id: 12, value: "social" }
   ],
-  completePasscode: []
+  completePasscode: [],
+  tokenToSend: ""
 });
 
 export const mutations = {
@@ -292,13 +296,29 @@ export const mutations = {
     state.rewardToBuy = val;
     console.log("VUEX: set rewardToBuy", state.rewardToBuy);
   },
-  setPopEarnings(state, val) {
-    state.popEarnings = val;
-    console.log("VUEX: set popEarnings", state.popEarnings);
+  setPopBalance(state, val) {
+    state.popBalance = val;
+    console.log("VUEX: set popBalance", state.popBalance);
+  },
+  setEthBalance(state, val) {
+    state.ethBalance = val;
+    console.log("VUEX: set ethBalance", state.ethBalance);
+  },
+  setUsdtBalance(state, val) {
+    state.usdtBalance = val;
+    console.log("VUEX: set usdtBalance", state.usdtBalance);
+  },
+  setAvaxBalance(state, val) {
+    state.avaxBalance = val;
+    console.log("VUEX: set avaxBalance", state.avaxBalance);
   },
   setCompletePasscode(state, val) {
     state.completePasscode = val;
     console.log("VUEX: set completePasscode", state.completePasscode);
+  },
+  setTokenToSend(state, val) {
+    state.tokenToSend = val;
+    console.log("VUEX: set tokenToSend", state.tokenToSend);
   }
 };
 
