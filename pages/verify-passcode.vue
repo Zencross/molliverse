@@ -178,18 +178,6 @@ export default {
 }
 
 @keyframes shake {
-  /* 0% {
-    margin-left: 0rem;
-  }
-  25% {
-    margin-left: 0.25rem;
-  }
-  75% {
-    margin-left: -0.25rem;
-  }
-  100% {
-    margin-left: 0rem;
-  } */
   10%,
   90% {
     transform: translate3d(-1px, 0, 0);

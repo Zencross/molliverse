@@ -237,9 +237,15 @@
     <div v-if="activeTab == 'Wallet'" class="text-center">
       <button
         class="w-4/12 px-4 py-4 text-white bg-black rounded-lg"
-        @click="onClickWallet"
+        @click="onClickCreateWallet"
       >
-        Go To Wallet
+        Create Wallet
+      </button>
+      <button
+        class="w-4/12 px-4 py-4 text-white bg-black rounded-lg"
+        @click="onClickGoToWallet"
+      >
+        Go to Wallet
       </button>
     </div>
 
@@ -422,8 +428,11 @@ export default {
       this.showInsufficientCoinPopup = false;
       this.activeTab = "Wallet";
     },
-    onClickWallet() {
+    onClickCreateWallet() {
       this.$router.push("/create-wallet");
+    },
+    onClickGoToWallet() {
+      this.$router.push("/wallet");
     }
   },
 
