@@ -195,6 +195,9 @@ export default {
         this.showCopiedToast = false;
         // this.showReceiveModal = false;
       }, 800);
+      setTimeout(() => {
+        this.$router.push("/receive-funds-successful");
+      }, 2000);
     }
   }
 };
