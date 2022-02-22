@@ -47,6 +47,7 @@
         <div class="flex flex-col">
           <button
             class="flex items-center justify-center p-4 bg-white border-2 border-black rounded-full"
+            @click="onClickTransferButton"
           >
             <img
               src="/img/wallet-transfer-icon-w512.png"
@@ -306,6 +307,10 @@ export default {
       console.log("Send token ", token);
       this.$store.commit("setTokenToSend", token);
       this.$router.push("/send-funds");
+    },
+    // Transfer Funds
+    onClickTransferButton() {
+      this.$router.push("/transfer-funds");
     }
   }
 };

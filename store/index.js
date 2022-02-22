@@ -54,7 +54,8 @@ export const state = () => ({
   phoneNumber: "",
   email: "",
   rewardToBuy: "",
-  popBalance: 120,
+  popBalance: 500,
+  popSpendingBalance: 120,
   ethBalance: 22.5876,
   usdtBalance: 120.1002,
   avaxBalance: 32.3298,
@@ -299,6 +300,10 @@ export const mutations = {
   setPopBalance(state, val) {
     state.popBalance = val;
     console.log("VUEX: set popBalance", state.popBalance);
+  },
+  setPopSpendingBalance(state, val) {
+    state.popSpendingBalance = val;
+    console.log("VUEX: set popSpendingBalance", state.popSpendingBalance);
   },
   setEthBalance(state, val) {
     state.ethBalance = val;

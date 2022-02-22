@@ -14,7 +14,7 @@
           Total<br />
           Earnings:
         </div>
-        <div class="text-4xl font-bold">{{ popBalance }}</div>
+        <div class="text-4xl font-bold">{{ popSpendingBalance }}</div>
         <div class="flex items-center">
           <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8 mr-1" />
           $POP
@@ -50,7 +50,7 @@
 
         <div class="flex items-center">
           <div class="mr-2 text-4xl font-bold">
-            {{ popBalance - rewardItemPrice }}
+            {{ popSpendingBalance - rewardItemPrice }}
           </div>
           <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8 mr-1" />
           $POP
@@ -84,7 +84,7 @@ export default {
   components: { SimpleTopBar, SimpleBottomBar },
   data() {
     return {
-      popBalance: this.$store.state.popBalance,
+      popSpendingBalance: this.$store.state.popSpendingBalance,
       rewardToBuy: this.$store.state.rewardToBuy,
       showBuySuccessScreen: false
     };
@@ -132,12 +132,12 @@ export default {
   },
   methods: {
     onClickPurchaseButton() {
-      if (this.popBalance - this.rewardItemPrice >= 0) {
+      if (this.popSpendingBalance - this.rewardItemPrice >= 0) {
         console.log("Buy Successful");
         this.$router.push("/purchase-reward-successful");
         this.$store.commit(
-          "setPopBalance",
-          this.$store.state.popBalance - this.rewardItemPrice
+          "setPopSpendingBalance",
+          this.$store.state.popSpendingBalance - this.rewardItemPrice
         );
       } else {
         console.log("Insufficient coin");
