@@ -4,8 +4,28 @@
     <!-- Body -->
     <div class="flex flex-col items-center w-full h-screen bg-gray-100">
       
+      <!-- Switch -->
+      <div class="flex items-center w-11/12 px-4 my-4 bg-white border-2 border-black rounded-lg">
+          <div class="flex flex-col">
+              <div class="py-4">
+                  <span class="mr-4 text-sm">From:</span>
+                  <span class="text-lg font-bold">Wallet</span>
+              </div>
+              <div class="flex items-center w-full">
+                  <hr>
+                  <img src="/img/transfer-toggle-w512.png" class="w-12 h-12" alt="">
+              </div>
+              <div class="py-4">
+                  <span class="mr-4 text-sm">To:</span>
+                  <span class="text-lg font-bold">Spending</span>
+              </div>
+          </div>
+          <!-- <div class="flex items-center justify-center">
+              <img src="/img/transfer-toggle-w512.png" alt="">
+          </div> -->
+      </div>
 
-      <!-- To Address -->
+      <!-- Asset to transfer -->
       <div
         class="flex justify-between w-full px-4 py-4 bg-white shadow-sm item-center"
       >
@@ -17,7 +37,7 @@
         <img src="/img/scan-icon-512w.png" alt="" class="w-6 h-6 mr-1" />
       </div>
 
-      <!-- Send Amount -->
+      <!-- Transfer Amount -->
       <div
         class="flex justify-between w-full px-4 py-4 mt-1 bg-white shadow-sm item-center"
       >
