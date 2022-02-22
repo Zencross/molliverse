@@ -8,60 +8,20 @@
     <div class="w-full px-6 mt-20">Complete - show</div>
     <!-- Passcode widget -->
     <div class="flex w-full pl-6 mt-2" @keyup="onInputPasscode">
+      <!-- TODO:  Test Andriod compactabilty on webkit-text-security -->
       <input
+        v-for="(passcode, index) in verifyPasscodes"
+        :key="index"
         class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        :class="[verified == false ? 'error-animation' : '']"
-        type="tel"
+        :class="[verified==false ? 'error-animation' :'']"
+        style="-webkit-text-security:disc;"  
+        type="number"
+        pattern="\d*"
         maxlength="1"
         name="passcode"
         id="passcode_1"
-        v-model="passcodeDigit1"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        :class="[verified == false ? 'error-animation' : '']"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_2"
-        v-model="passcodeDigit2"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        :class="[verified == false ? 'error-animation' : '']"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_3"
-        v-model="passcodeDigit3"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        :class="[verified == false ? 'error-animation' : '']"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_4"
-        v-model="passcodeDigit4"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        :class="[verified == false ? 'error-animation' : '']"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_5"
-        v-model="passcodeDigit5"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        :class="[verified == false ? 'error-animation' : '']"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_6"
-        v-model="passcodeDigit6"
-      />
+        v-model="passcode.val"
+      ></input>
     </div>
   </div>
 </template>
@@ -72,64 +32,47 @@ export default {
   components: { SimpleTopBar },
   data() {
     return {
-      passcodeDigit1: null,
-      passcodeDigit2: null,
-      passcodeDigit3: null,
-      passcodeDigit4: null,
-      passcodeDigit5: null,
-      passcodeDigit6: null,
-      verifyPasscode: [],
+      verifyPasscodes: [
+        { val: "" },
+        { val: "" },
+        { val: "" },
+        { val: "" },
+        { val: "" },
+        { val: "" }
+      ],
       verified: null
     };
   },
   methods: {
     onInputPasscode(e) {
-      console.log(this.passcodeDigit1);
-      console.log(this.passcodeDigit2);
-      console.log(this.passcodeDigit3);
-      console.log(this.passcodeDigit4);
-      console.log(this.passcodeDigit5);
-      console.log(this.passcodeDigit6);
+      
+      console.log(`verifyPasscodes=${this.verifyPasscodes[0].val}${this.verifyPasscodes[1].val}${this.verifyPasscodes[2].val}${this.verifyPasscodes[3].val}${this.verifyPasscodes[4].val}${this.verifyPasscodes[5].val}`);      
 
-      console.log("event", e);
+      // console.log("event", e);
       var target = e.srcElement || e.target;
       var maxLength = parseInt(target.attributes["maxlength"].value, 10);
-      console.log("maxLength", maxLength);
+      // console.log("maxLength", maxLength);
       var myLength = target.value.length;
       if (myLength >= maxLength) {
-        console.log("myLength >= maxLength");
+        // console.log("myLength >= maxLength");
         var next = target;
         while ((next = next.nextElementSibling)) {
-          console.log("next object", typeof next);
+          // console.log("next object", typeof next);
           if (next == null) {
             break;
           }
           if (next.tagName.toLowerCase() === "input") {
             next.focus();
-            console.log("found next input");
+            // console.log("found next input");
             break;
           }
         }
-        console.log("Check passcode");
-        if (
-          this.passcodeDigit1 &&
-          this.passcodeDigit2 &&
-          this.passcodeDigit3 &&
-          this.passcodeDigit4 &&
-          this.passcodeDigit5 &&
-          this.passcodeDigit6
-        ) {
-          this.verifyPasscode = [
-            this.passcodeDigit1,
-            this.passcodeDigit2,
-            this.passcodeDigit3,
-            this.passcodeDigit4,
-            this.passcodeDigit5,
-            this.passcodeDigit6
-          ];
-          console.log("verifyPasscode array", this.verifyPasscode);
+       
+        // Run when passcode is completed
+        if (this.verifyPasscodes.every(passcode => passcode.val != "")) {
+          console.log("Passcode is completed");
           if (
-            JSON.stringify(this.verifyPasscode) ==
+            JSON.stringify(this.verifyPasscodes) ==
             JSON.stringify(this.$store.state.completePasscode)
           ) {
             console.log("Verified");
@@ -138,18 +81,22 @@ export default {
           } else {
             console.log("Wrong");
             this.verified = false;
-            this.passcodeDigit1 = null;
-            this.passcodeDigit2 = null;
-            this.passcodeDigit3 = null;
-            this.passcodeDigit4 = null;
-            this.passcodeDigit5 = null;
-            this.passcodeDigit6 = null;
+            this.verifyPasscodes=[
+              { val: "" },
+              { val: "" },
+              { val: "" },
+              { val: "" },
+              { val: "" },
+              { val: "" }
+            ];
             document.getElementById("passcode_1").focus();
             setTimeout(() => {
               this.verified = null;
             }, 500);
             // this.verified = null;
           }
+        } else {
+          // console.log("Passcode not yet completed");
         }
       }
       // Move to previous field if empty (user pressed backspace)
@@ -163,7 +110,7 @@ export default {
           }
         }
       }
-    }
+    },
   },
   mounted() {
     document.getElementById("passcode_1").focus();
