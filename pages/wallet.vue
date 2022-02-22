@@ -6,7 +6,7 @@
       class="flex flex-col items-center w-full h-screen"
     >
       <!-- Balance -->
-      <h1 class="mt-6 text-4xl font-bold">{{ usdtBalance }} USDT</h1>
+      <h1 class="mt-6 text-4xl font-bold">{{ usdtWalletBalance }} USDT</h1>
       <!-- Waller Address -->
       <div class="px-4 py-2 mt-4 bg-white border-2 border-black rounded-full">
         o2u3...r923
@@ -80,7 +80,7 @@
         >
           <img src="/img/pop_coin_512w.png" class="w-12 h-12" alt="pop" />
           <div class="flex items-center">
-            <div class="mr-2 text-lg">{{ popBalance }}</div>
+            <div class="mr-2 text-lg">{{ popWalletBalance }}</div>
             <div class="text-lg font-bold">$POP</div>
           </div>
         </div>
@@ -94,7 +94,7 @@
             alt="eth"
           />
           <div class="flex items-center">
-            <div class="mr-2 text-lg">{{ ethBalance }}</div>
+            <div class="mr-2 text-lg">{{ ethWalletBalance }}</div>
             <div class="text-lg font-bold">$ETH</div>
           </div>
         </div>
@@ -108,7 +108,7 @@
             alt="usdt"
           />
           <div class="flex items-center">
-            <div class="mr-2 text-lg">{{ usdtBalance }}</div>
+            <div class="mr-2 text-lg">{{ usdtWalletBalance }}</div>
             <div class="text-lg font-bold">$USDT</div>
           </div>
         </div>
@@ -122,7 +122,7 @@
             alt="avax"
           />
           <div class="flex items-center">
-            <div class="mr-2 text-lg">{{ avaxBalance }}</div>
+            <div class="mr-2 text-lg">{{ avaxWalletBalance }}</div>
             <div class="text-lg font-bold">$AVAX</div>
           </div>
         </div>
@@ -269,17 +269,17 @@ export default {
     };
   },
   computed: {
-    popBalance() {
-      return this.$store.state.popBalance;
+    popWalletBalance() {
+      return this.$store.state.popWalletBalance;
     },
-    ethBalance() {
-      return this.$store.state.ethBalance;
+    ethWalletBalance() {
+      return this.$store.state.ethWalletBalance;
     },
-    usdtBalance() {
-      return this.$store.state.usdtBalance;
+    usdtWalletBalance() {
+      return this.$store.state.usdtWalletBalance;
     },
-    avaxBalance() {
-      return this.$store.state.avaxBalance;
+    avaxWalletBalance() {
+      return this.$store.state.avaxWalletBalance;
     }
   },
   methods: {

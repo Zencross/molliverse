@@ -54,11 +54,14 @@ export const state = () => ({
   phoneNumber: "",
   email: "",
   rewardToBuy: "",
-  popBalance: 500,
-  popSpendingBalance: 120,
-  ethBalance: 22.5876,
-  usdtBalance: 120.1002,
-  avaxBalance: 32.3298,
+  popWalletBalance: 500,
+  popSpendingBalance: 100,
+  ethWalletBalance: 22.5876,
+  ethSpendingBalance: 0,
+  usdtWalletBalance: 120.1002,
+  usdtSpendingBalance: 0,
+  avaxWalletBalance: 32.3298,
+  avaxSpendingBalance: 0,
   secretPhrases: [
     { id: 1, value: "potato" },
     { id: 2, value: "pulp" },
@@ -297,25 +300,37 @@ export const mutations = {
     state.rewardToBuy = val;
     console.log("VUEX: set rewardToBuy", state.rewardToBuy);
   },
-  setPopBalance(state, val) {
-    state.popBalance = val;
-    console.log("VUEX: set popBalance", state.popBalance);
+  setPopWalletBalance(state, val) {
+    state.popWalletBalance = val;
+    console.log("VUEX: set popWalletBalance", state.popWalletBalance);
   },
   setPopSpendingBalance(state, val) {
     state.popSpendingBalance = val;
     console.log("VUEX: set popSpendingBalance", state.popSpendingBalance);
   },
-  setEthBalance(state, val) {
-    state.ethBalance = val;
-    console.log("VUEX: set ethBalance", state.ethBalance);
+  setEthWalletBalance(state, val) {
+    state.ethWalletBalance = val;
+    console.log("VUEX: set ethWalletBalance", state.ethWalletBalance);
   },
-  setUsdtBalance(state, val) {
-    state.usdtBalance = val;
-    console.log("VUEX: set usdtBalance", state.usdtBalance);
+  setEthSpendingBalance(state, val) {
+    state.ethSpendingBalance = val;
+    console.log("VUEX: set ethSpendingBalance", state.ethSpendingBalance);
   },
-  setAvaxBalance(state, val) {
-    state.avaxBalance = val;
-    console.log("VUEX: set avaxBalance", state.avaxBalance);
+  setUsdtWalletBalance(state, val) {
+    state.usdtWalletBalance = val;
+    console.log("VUEX: set usdtWalletBalance", state.usdtWalletBalance);
+  },
+  setUsdtSpendingBalance(state, val) {
+    state.usdtSpendingBalance = val;
+    console.log("VUEX: set usdtSpendingBalance", state.usdtSpendingBalance);
+  },
+  setAvaxWalletBalance(state, val) {
+    state.avaxWalletBalance = val;
+    console.log("VUEX: set avaxWalletBalance", state.avaxWalletBalance);
+  },
+  setAvaxSpendingBalance(state, val) {
+    state.avaxSpendingBalance = val;
+    console.log("VUEX: set avaxSpendingBalance", state.avaxSpendingBalance);
   },
   setCompletePasscode(state, val) {
     state.completePasscode = val;

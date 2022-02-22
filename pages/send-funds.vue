@@ -82,13 +82,13 @@ export default {
       if(this.tokenBalance > 0 && this.amountToSend <= this.tokenBalance){
           this.tokenBalance = this.tokenBalance - this.amountToSend;
           if(this.tokenToSend == "POP"){
-              this.$store.commit('setPopBalance', this.tokenBalance);
+              this.$store.commit('setPopWalletBalance', this.tokenBalance);
           }else if(this.tokenToSend == "ETH"){
-            this.$store.commit('setEthBalance', this.tokenBalance);
+            this.$store.commit('setEthWalletBalance', this.tokenBalance);
           }else if(this.tokenToSend == "USDT"){
-              this.$store.commit('setUsdtBalance', this.tokenBalance);
+              this.$store.commit('setUsdtWalletBalance', this.tokenBalance);
           }else if(this.tokenToSend == "AVAX"){
-              this.$store.commit('setAvaxBalance', this.tokenBalance);
+              this.$store.commit('setAvaxWalletBalance', this.tokenBalance);
           }
         this.amountToSend = 0;
         console.log("Sent");
@@ -104,16 +104,16 @@ export default {
   mounted() {
       switch (this.tokenToSend) {
         case "POP":
-          this.tokenBalance = this.$store.state.popBalance;
+          this.tokenBalance = this.$store.state.popWalletBalance;
           break;
         case "ETH":
-          this.tokenBalance = this.$store.state.ethBalance;
+          this.tokenBalance = this.$store.state.ethWalletBalance;
           break;
         case "USDT":
-          this.tokenBalance = this.$store.state.usdtBalance;
+          this.tokenBalance = this.$store.state.usdtWalletBalance;
           break;
         case "AVAX":
-          this.tokenBalance = this.$store.state.avaxBalance;
+          this.tokenBalance = this.$store.state.avaxWalletBalance;
           break;
         default:
           break;

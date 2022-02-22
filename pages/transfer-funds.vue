@@ -4,25 +4,44 @@
     <!-- Body -->
     <div class="flex flex-col items-center w-full h-screen bg-gray-100">
       
-      <!-- Switch -->
-      <div class="flex items-center w-11/12 px-4 my-4 bg-white border-2 border-black rounded-lg">
-          <div class="flex flex-col">
-              <div class="py-4">
+      <!-- From Wallet to Spending -->
+      <div v-if="transferDirection == 'wallet-to-spending'" class="flex items-center w-11/12 px-4 my-6 bg-white border-2 border-black rounded-2xl">
+          <div class="flex flex-col w-full">
+              <div class="flex items-center w-full py-4">
                   <span class="mr-4 text-sm">From:</span>
+                  <img src="/img/wallet-icon-512w.png" alt="wallet" class="w-6 h-6 mr-2">
                   <span class="text-lg font-bold">Wallet</span>
               </div>
               <div class="flex items-center w-full">
-                  <hr>
-                  <img src="/img/transfer-toggle-w512.png" class="w-12 h-12" alt="">
+                <hr class="w-full border-t-2">
+                <button class="w-10 h-10 ml-3" @click="toggleTransferDirection"><img src="/img/transfer-toggle-w512.png" class="" alt=""></button>
               </div>
-              <div class="py-4">
+              <div class="flex items-center w-full py-4">
                   <span class="mr-4 text-sm">To:</span>
+                  <img src="/img/spending-icon-512w.png" alt="wallet" class="w-6 h-6 mr-2">
                   <span class="text-lg font-bold">Spending</span>
               </div>
           </div>
-          <!-- <div class="flex items-center justify-center">
-              <img src="/img/transfer-toggle-w512.png" alt="">
-          </div> -->
+      </div>
+
+      <!-- From Spending to Wallet -->
+      <div v-if="transferDirection == 'spending-to-wallet'" class="flex items-center w-11/12 px-4 my-6 bg-white border-2 border-black rounded-2xl">
+          <div class="flex flex-col w-full">
+              <div class="flex items-center w-full py-4">
+                  <span class="mr-4 text-sm">From:</span>
+                  <img src="/img/spending-icon-512w.png" alt="wallet" class="w-6 h-6 mr-2">
+                  <span class="text-lg font-bold">Spending</span>
+              </div>
+              <div class="flex items-center w-full">
+                <hr class="w-full border-t-2">
+                <button class="w-10 h-10 ml-3" @click="toggleTransferDirection"><img src="/img/transfer-toggle-w512.png" class="" alt=""></button>
+              </div>
+              <div class="flex items-center w-full py-4">
+                  <span class="mr-4 text-sm">To:</span>
+                  <img src="/img/wallet-icon-512w.png" alt="wallet" class="w-6 h-6 mr-2">
+                  <span class="text-lg font-bold">Wallet</span>
+              </div>
+          </div>
       </div>
 
       <!-- Asset to transfer -->
@@ -30,11 +49,16 @@
         class="flex justify-between w-full px-4 py-4 bg-white shadow-sm item-center"
       >
         <div
-          class="flex items-center justify-center h-full text-sm font-hairline text-center"
+          class="flex items-center justify-center text-sm font-hairline text-center"
         >
           Asset
         </div>
-        <img src="/img/scan-icon-512w.png" alt="" class="w-6 h-6 mr-1" />
+        <div class="flex text-sm">
+          <div class="mr-4">{{ tokenToTransfer }}</div>
+          <div class="flex items-center justify-center" @click="showTokenSelector=true">
+            <img src="/img/expand-arrow-512w.png" alt="" class="w-3 h-3 mr-2" />
+          </div>
+        </div>
       </div>
 
       <!-- Transfer Amount -->
@@ -48,8 +72,6 @@
         </div>
         <div class="flex text-sm">
           <input type="number" class="px-1 mr-2 text-right bg-gray-100" v-model="amountToTransfer"></input>
-          <div class="mr-4">{{ tokenToTransfer }}</div>
-          <div class="italic all-token-text-color" @click="onClickTransferAllToken">All</div>
         </div>
       </div>
 
@@ -58,6 +80,77 @@
         <span>Balance: {{ tokenBalance }} {{ tokenToTransfer }}</span>
       </div>
     </div>
+
+    <!-- Token Selector Modal -->
+    <transition name="fade">
+      <div v-if="showTokenSelector">
+        <div
+          class="absolute top-0 bottom-0 left-0 right-0 z-20 w-full bg-black opacity-50"
+          @click="showTokenSelector = false"
+        ></div>
+
+        <div
+          class="fixed inset-x-0 bottom-0 z-30 w-full bg-white shadow-xl rounded-t-xl"
+        >
+          <!-- Title -->
+          <div class="pt-4 pb-2 font-semibold text-center text-black text">
+            Select token
+          </div>
+
+          <!-- Token List -->
+          <div class="flex flex-col items-center w-full mb-8">
+            <!-- POP -->
+            <div
+              class="flex items-center justify-between w-11/12 px-4 py-4 mt-2 bg-white border-2 border-black rounded-lg"
+              @click="onClickSelectPOP"
+            >
+              <img src="/img/pop_coin_512w.png" class="w-12 h-12" alt="pop" />
+              <div class="text-lg font-bold">$POP</div>
+            </div>
+
+            <!-- ETH -->
+            <div
+              class="flex items-center justify-between w-11/12 px-4 py-4 mt-4 bg-white border-2 border-black rounded-lg"
+              @click="onClickSelectETH"
+            >
+              <img
+                src="/img/wallet-eth-icon-w512.png"
+                class="w-12 h-12"
+                alt="eth"
+              />
+              <div class="text-lg font-bold">$ETH</div>
+            </div>
+
+            <!-- USDT -->
+            <div
+              class="flex items-center justify-between w-11/12 px-4 py-4 mt-4 bg-white border-2 border-black rounded-lg"
+              @click="onClickSelectUSDT"
+            >
+              <img
+                src="/img/wallet-usdt-icon-w512.png"
+                class="w-12 h-12"
+                alt="usdt"
+              />
+              <div class="text-lg font-bold">$USDT</div>
+            </div>
+
+            <!-- AVAX -->
+            <div
+              class="flex items-center justify-between w-11/12 px-4 py-4 mt-4 bg-white border-2 border-black rounded-lg"
+              @click="onClickSelectAVAX"
+            >
+              <img
+                src="/img/wallet-avax-icon-w512.png"
+                class="w-12 h-12"
+                alt="avax"
+              />
+              <div class="text-lg font-bold">$AVAX</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+
     <SimpleBottomBar
       :title="'Confirm Transfer'"
       @buttonClick=""
@@ -76,6 +169,8 @@ export default {
       tokenToTransfer: "POP",   //POP, ETH, USDT, AVAX
       tokenBalance: 0,
       amountToTransfer: 0,
+      transferDirection: "wallet-to-spending",
+      showTokenSelector: false
     };
   },
   computed: {
@@ -103,25 +198,79 @@ export default {
     },
     onClickTransferAllToken() {
         this.amountToTransfer = this.tokenBalance;
+    },
+    toggleTransferDirection() {
+        if(this.transferDirection == 'wallet-to-spending'){
+            this.transferDirection = 'spending-to-wallet'
+            this.updateTokenBalance();
+        }else {
+            this.transferDirection = 'wallet-to-spending'
+            this.updateTokenBalance();
+        }
+    },
+    onClickExpandArrow(){
+         showTokenSelector = true;
+    },
+    updateTokenBalance(){
+        if(this.transferDirection == 'wallet-to-spending'){
+          switch (this.tokenToTransfer) {
+            case "POP":
+            this.tokenBalance = this.$store.state.popWalletBalance;
+            break;
+            case "ETH":
+            this.tokenBalance = this.$store.state.ethWalletBalance;
+            break;
+            case "USDT":
+            this.tokenBalance = this.$store.state.usdtWalletBalance;
+            break;
+            case "AVAX":
+            this.tokenBalance = this.$store.state.avaxWalletBalance;
+            break;
+            default:
+            break;
+          }
+        }else if(this.transferDirection == 'spending-to-wallet'){
+          switch (this.tokenToTransfer) {
+            case "POP":
+            this.tokenBalance = this.$store.state.popSpendingBalance;
+            break;
+            case "ETH":
+            this.tokenBalance = this.$store.state.ethSpendingBalance;
+            break;
+            case "USDT":
+            this.tokenBalance = this.$store.state.usdtSpendingBalance;
+            break;
+            case "AVAX":
+            this.tokenBalance = this.$store.state.avaxSpendingBalance;
+            break;
+            default:
+            break;
+          }
+      }
+    },
+    onClickSelectPOP(){
+        this.tokenToTransfer ='POP';
+        this.showTokenSelector = false;
+        this.updateTokenBalance();
+    },
+    onClickSelectETH(){
+        this.tokenToTransfer ='ETH';
+        this.showTokenSelector=false;
+        this.updateTokenBalance();
+    },
+    onClickSelectUSDT(){
+        this.tokenToTransfer ='USDT';
+        this.showTokenSelector=false;
+        this.updateTokenBalance();
+    },
+    onClickSelectAVAX(){
+        this.tokenToTransfer ='AVAX';
+        this.showTokenSelector=false;
+        this.updateTokenBalance();
     }
   },
   mounted() {
-      switch (this.tokenToTransfer) {
-        case "POP":
-          this.tokenBalance = this.$store.state.popBalance;
-          break;
-        case "ETH":
-          this.tokenBalance = this.$store.state.ethBalance;
-          break;
-        case "USDT":
-          this.tokenBalance = this.$store.state.usdtBalance;
-          break;
-        case "AVAX":
-          this.tokenBalance = this.$store.state.avaxBalance;
-          break;
-        default:
-          break;
-      }
+      this.updateTokenBalance();
   }
 };
 </script>
