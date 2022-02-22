@@ -6,7 +6,7 @@
       class="flex flex-col items-center w-full h-screen"
     >
       <!-- Balance -->
-      <h1 class="mt-6 text-4xl font-bold">0 USDT</h1>
+      <h1 class="mt-6 text-4xl font-bold">{{ usdtBalance }} USDT</h1>
       <!-- Waller Address -->
       <div class="px-4 py-2 mt-4 bg-white border-2 border-black rounded-full">
         o2u3...r923
