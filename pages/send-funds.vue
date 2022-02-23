@@ -79,8 +79,8 @@ export default {
   },
   methods: {
     onClickConfirmTransfer() {
-      if(this.tokenBalance > 0 && this.amountToSend <= this.tokenBalance){
-          this.tokenBalance = this.tokenBalance - this.amountToSend;
+      if(this.tokenBalance > 0 && this.amountToSend > 0 && this.amountToSend <= this.tokenBalance){
+          this.tokenBalance = (parseFloat(this.tokenBalance) - parseFloat(this.amountToSend)).toFixed(4);
           if(this.tokenToSend == "POP"){
               this.$store.commit('setPopWalletBalance', this.tokenBalance);
           }else if(this.tokenToSend == "ETH"){
