@@ -153,7 +153,7 @@
 
     <SimpleBottomBar
       :title="'Confirm Transfer'"
-      @buttonClick=""
+      @buttonClick="onClickConfirmTransfer"
     />
   </div>
 </template>
@@ -178,26 +178,47 @@ export default {
   },
   methods: {
     onClickConfirmTransfer() {
-      if(this.tokenBalance > 0 && this.amountToTransfer <= this.tokenBalance){
-          this.tokenBalance = this.tokenBalance - this.amountToTransfer;
-          if(this.tokenToTransfer == "POP"){
-              this.$store.commit('setPopBalance', this.tokenBalance);
-          }else if(this.tokenToTransfer == "ETH"){
-            this.$store.commit('setEthBalance', this.tokenBalance);
-          }else if(this.tokenToTransfer == "USDT"){
-              this.$store.commit('setUsdtBalance', this.tokenBalance);
-          }else if(this.tokenToTransfer == "AVAX"){
-              this.$store.commit('setAvaxBalance', this.tokenBalance);
+      if(this.tokenBalance > 0 && this.amountToTransfer > 0 && this.amountToTransfer <= this.tokenBalance){
+
+        this.tokenBalance = (parseFloat(this.tokenBalance) - parseFloat(this.amountToTransfer)).toFixed(4);
+
+          if(this.transferDirection == 'wallet-to-spending'){
+            if(this.tokenToTransfer == "POP"){
+                this.$store.commit('setPopWalletBalance', (parseFloat(this.$store.state.popWalletBalance) - parseFloat(this.amountToTransfer)).toFixed(4));
+                this.$store.commit('setPopSpendingBalance', (parseFloat(this.$store.state.popSpendingBalance) + parseFloat(this.amountToTransfer)).toFixed(4));
+            }else if(this.tokenToTransfer == "ETH"){
+                this.$store.commit('setEthWalletBalance', (parseFloat(this.$store.state.ethWalletBalance) - parseFloat(this.amountToTransfer)).toFixed(4));
+                this.$store.commit('setEthSpendingBalance', (parseFloat(this.$store.state.ethSpendingBalance) + parseFloat(this.amountToTransfer)).toFixed(4));
+            }else if(this.tokenToTransfer == "USDT"){
+                this.$store.commit('setUsdtWalletBalance', (parseFloat(this.$store.state.usdtWalletBalance) - parseFloat(this.amountToTransfer)).toFixed(4));
+                this.$store.commit('setUsdtSpendingBalance', ( parseFloat(this.$store.state.usdtSpendingBalance) + parseFloat(this.amountToTransfer)).toFixed(4));
+            }else if(this.tokenToTransfer == "AVAX"){
+                this.$store.commit('setAvaxWalletBalance', (parseFloat(this.$store.state.avaxWalletBalance) - parseFloat(this.amountToTransfer)).toFixed(4));
+                this.$store.commit('setAvaxSpendingBalance', (parseFloat(this.$store.state.avaxSpendingBalance) + parseFloat(this.amountToTransfer)).toFixed(4));
+            }
+          }else if(this.transferDirection == 'spending-to-wallet'){
+            if(this.tokenToTransfer == "POP"){
+                this.$store.commit('setPopWalletBalance', (parseFloat(this.$store.state.popWalletBalance) + parseFloat(this.amountToTransfer)).toFixed(4));
+                this.$store.commit('setPopSpendingBalance', (parseFloat(this.$store.state.popSpendingBalance) - parseFloat(this.amountToTransfer)).toFixed(4));
+            }else if(this.tokenToTransfer == "ETH"){
+                this.$store.commit('setEthWalletBalance', (parseFloat(this.$store.state.ethWalletBalance) + parseFloat(this.amountToTransfer)).toFixed(4));
+                this.$store.commit('setEthSpendingBalance', (parseFloat(this.$store.state.ethSpendingBalance) - parseFloat(this.amountToTransfer)).toFixed(4));
+            }else if(this.tokenToTransfer == "USDT"){
+                this.$store.commit('setUsdtWalletBalance', (parseFloat(this.$store.state.usdtWalletBalance) + parseFloat(this.amountToTransfer)).toFixed(4));
+                this.$store.commit('setUsdtSpendingBalance', (parseFloat(this.$store.state.usdtSpendingBalance) - parseFloat(this.amountToTransfer)).toFixed(4));
+            }else if(this.tokenToTransfer == "AVAX"){
+                this.$store.commit('setAvaxWalletBalance', (parseFloat(this.$store.state.avaxWalletBalance) + parseFloat(this.amountToTransfer)).toFixed(4));
+                this.$store.commit('setAvaxSpendingBalance', (parseFloat(this.$store.state.avaxSpendingBalance) - parseFloat(this.amountToTransfer)).toFixed(4));
+            }
           }
-        this.amountToSend = 0;
+
+          
+        this.amountToTransfer = 0;
         console.log("Sent");
-        this.$router.push("/send-funds-successful");
+        this.$router.push("/transfer-funds-successful");
       }else{
           console.log("Insufficient balance");
       }
-    },
-    onClickTransferAllToken() {
-        this.amountToTransfer = this.tokenBalance;
     },
     toggleTransferDirection() {
         if(this.transferDirection == 'wallet-to-spending'){
@@ -207,9 +228,6 @@ export default {
             this.transferDirection = 'wallet-to-spending'
             this.updateTokenBalance();
         }
-    },
-    onClickExpandArrow(){
-         showTokenSelector = true;
     },
     updateTokenBalance(){
         if(this.transferDirection == 'wallet-to-spending'){

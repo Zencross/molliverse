@@ -132,12 +132,20 @@ export default {
   },
   methods: {
     onClickPurchaseButton() {
-      if (this.popSpendingBalance - this.rewardItemPrice >= 0) {
+      if (
+        (
+          parseFloat(this.popSpendingBalance) -
+          parseFloat(this.rewardItemPrice >= 0)
+        ).toFixed(4)
+      ) {
         console.log("Buy Successful");
         this.$router.push("/purchase-reward-successful");
         this.$store.commit(
           "setPopSpendingBalance",
-          this.$store.state.popSpendingBalance - this.rewardItemPrice
+          (
+            parseFloat(this.$store.state.popSpendingBalance) -
+            parseFloat(this.rewardItemPrice)
+          ).toFixed(4)
         );
       } else {
         console.log("Insufficient coin");
