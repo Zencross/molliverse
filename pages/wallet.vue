@@ -62,6 +62,7 @@
         <div class="flex flex-col">
           <button
             class="flex items-center justify-center p-4 bg-white border-2 border-black rounded-full"
+            @click="onClickTradeButton"
           >
             <img
               src="/img/wallet-trade-icon-w512.png"
@@ -311,6 +312,10 @@ export default {
     // Transfer Funds
     onClickTransferButton() {
       this.$router.push("/transfer-funds");
+    },
+    //  Trade Funds
+    onClickTradeButton() {
+      this.$router.push("/trade");
     }
   }
 };
