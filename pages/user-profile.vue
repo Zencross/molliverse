@@ -119,7 +119,7 @@
           Earnings:
         </div>
         <div class="text-4xl font-bold">
-          {{ this.$store.state.popEarnings }}
+          {{ this.$store.state.popSpendingBalance }}
         </div>
         <div class="flex items-center">
           <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8 mr-1" />
@@ -378,7 +378,7 @@ export default {
     onClickBuySuperLike() {
       // TODO: Need to define proper Reward Array and pass in Reward object that contains Reward Name / Price
       // So that we can calculate the estimated balance after buying
-      if (this.$store.state.popEarnings <= 0) {
+      if (this.$store.state.popSpendingBalance <= 0) {
         console.log("Insufficient Coin");
         this.showInsufficientCoinPopup = true;
       } else {
@@ -389,7 +389,7 @@ export default {
     onClickBuyUndo() {
       // TODO: Need to define proper Reward Array and pass in Reward object that contains Reward Name / Price
       // So that we can calculate the estimated balance after buying
-      if (this.$store.state.popEarnings <= 0) {
+      if (this.$store.state.popSpendingBalance <= 0) {
         console.log("Insufficient Coin");
         this.showInsufficientCoinPopup = true;
       } else {
@@ -400,7 +400,7 @@ export default {
     onClickBuyLike() {
       // TODO: Need to define proper Reward Array and pass in Reward object that contains Reward Name / Price
       // So that we can calculate the estimated balance after buying
-      if (this.$store.state.popEarnings <= 0) {
+      if (this.$store.state.popSpendingBalance <= 0) {
         console.log("Insufficient Coin");
         this.showInsufficientCoinPopup = true;
       } else {
@@ -411,7 +411,7 @@ export default {
     onClickBuyReveal() {
       // TODO: Need to define proper Reward Array and pass in Reward object that contains Reward Name / Price
       // So that we can calculate the estimated balance after buying
-      if (this.$store.state.popEarnings <= 0) {
+      if (this.$store.state.popSpendingBalance <= 0) {
         console.log("Insufficient Coin");
         this.showInsufficientCoinPopup = true;
       } else {

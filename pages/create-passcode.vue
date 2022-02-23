@@ -8,54 +8,19 @@
     <div class="w-full px-6 mt-20">Complete - show</div>
     <!-- Passcode widget -->
     <div class="flex w-full pl-6 mt-2" @keyup="onInputPasscode">
+      <!-- TODO:  Test Andriod compactabilty on webkit-text-security -->
       <input
+        v-for="(passcode, index) in passcodes"
+        :key="index"
         class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        type="tel"
+        style="-webkit-text-security:disc;"  
+        type="number"
+        pattern="\d*"
         maxlength="1"
         name="passcode"
         id="passcode_1"
-        v-model="passcodeDigit1"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_2"
-        v-model="passcodeDigit2"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_3"
-        v-model="passcodeDigit3"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_4"
-        v-model="passcodeDigit4"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_5"
-        v-model="passcodeDigit5"
-      />
-      <input
-        class="w-12 h-12 m-1 text-2xl text-center text-black bg-white rounded-md"
-        type="tel"
-        maxlength="1"
-        name="passcode"
-        id="passcode_6"
-        v-model="passcodeDigit6"
-      />
+        v-model="passcode.val"
+      ></input>
     </div>
   </div>
 </template>
@@ -66,36 +31,20 @@ export default {
   components: { SimpleTopBar },
   data() {
     return {
-      passcodeDigit1: null,
-      passcodeDigit2: null,
-      passcodeDigit3: null,
-      passcodeDigit4: null,
-      passcodeDigit5: null,
-      passcodeDigit6: null,
-      completePasscode: []
+      passcodes: [
+        { val: "" },
+        { val: "" },
+        { val: "" },
+        { val: "" },
+        { val: "" },
+        { val: "" }
+      ],
     };
   },
   methods: {
     onInputPasscode(e) {
-      // Masking
-      // if (e.target._value) document.getElementById(e.target.id).value = "*";
-      // console.log("Masked input");
-
-      // this.passcodeDigit1 = "*";
-
-      if (e.target.id == "passcode_1") {
-        console.log("passcodeDigit1: ", this.passcodeDigit1);
-      } else if (e.target.id == "passcode_2") {
-        console.log("passcodeDigit2: ", this.passcodeDigit2);
-      } else if (e.target.id == "passcode_3") {
-        console.log("passcodeDigit3: ", this.passcodeDigit3);
-      } else if (e.target.id == "passcode_4") {
-        console.log("passcodeDigit4: ", this.passcodeDigit4);
-      } else if (e.target.id == "passcode_5") {
-        console.log("passcodeDigit5: ", this.passcodeDigit5);
-      } else if (e.target.id == "passcode_6") {
-        console.log("passcodeDigit6: ", this.passcodeDigit6);
-      }
+      
+      console.log(`passcodes=${this.passcodes[0].val}${this.passcodes[1].val}${this.passcodes[2].val}${this.passcodes[3].val}${this.passcodes[4].val}${this.passcodes[5].val}`);      
 
       // console.log("event", e);
       var target = e.srcElement || e.target;
@@ -116,24 +65,14 @@ export default {
             break;
           }
         }
-
-        if (
-          this.passcodeDigit1 &&
-          this.passcodeDigit2 &&
-          this.passcodeDigit3 &&
-          this.passcodeDigit4 &&
-          this.passcodeDigit5 &&
-          this.passcodeDigit6
-        ) {
-          this.$store.commit("setCompletePasscode", [
-            this.passcodeDigit1,
-            this.passcodeDigit2,
-            this.passcodeDigit3,
-            this.passcodeDigit4,
-            this.passcodeDigit5,
-            this.passcodeDigit6
-          ]);
+       
+        // Run when passcode is completed
+        if (this.passcodes.every(passcode => passcode.val != "")) {
+          console.log("Passcode is completed");
+          this.$store.commit("setCompletePasscode", this.passcodes);
           this.$router.push("/verify-passcode");
+        } else {
+          // console.log("Passcode not yet completed");
         }
       }
       // Move to previous field if empty (user pressed backspace)
