@@ -138,6 +138,7 @@ export default {
           parseFloat(this.rewardItemPrice >= 0)
         ).toFixed(4)
       ) {
+        // Send item price to master wallet
         console.log("Buy Successful");
         this.$router.push("/purchase-reward-successful");
         this.$store.commit(
@@ -148,6 +149,7 @@ export default {
           ).toFixed(4)
         );
       } else {
+        // Not enough balance error
         console.log("Insufficient coin");
       }
     }

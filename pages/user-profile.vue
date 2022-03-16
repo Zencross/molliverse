@@ -295,18 +295,13 @@
 import TopBar from "~/components/TopBar"
 import gql from "graphql-tag"
 import InsufficientCoinPopup from "~/components/InsufficientCoinPopup.vue"
-import { SingletonWallet, TestnetConfig, WebsocketProvider } from "@avalabs/avalanche-wallet-sdk"
 
 export default {
   components: { TopBar, InsufficientCoinPopup },
   data() {
     return {
       activeTab: "Spending",
-      //privateKey: "PrivateKey-23Zqf7uScHNEoj5kuQfGkk8LSoUjM95LawSxFmgNCK6kFnWC7p",
-      privateKey: "PrivateKey-2Mwsyw84uFiNUMS9cvUS2MaTv7RJ4yi8vd15gv3jvD9YZkN8kY",
-      provider: null,
       showInsufficientCoinPopup: false,
-      wallet: null
     };
   },
   computed: {
@@ -339,6 +334,10 @@ export default {
       // var age = Math.abs(year - 1970);
       return this.$store.state.user.age;
     }
+  },
+  mounted() {
+    console.log('getSpendingWalletBalance')
+    this.$store.dispatch("getSpendingWalletBalance")
   },
   methods: {
     onClickPersonIcon() {},
@@ -434,30 +433,6 @@ export default {
     onClickGoToWallet() {
       this.$router.push("/wallet");
     }
-  },
-
-  async mounted() {
-    console.log('privateKey: ', this.privateKey)
-    this.wallet = SingletonWallet.fromPrivateKey(this.privateKey)
-    console.log('created wallet: ', this.wallet)
-
-    // Create a websocket provider from the network currently used by the SDK
-    this.provider = WebsocketProvider.fromActiveNetwork()
-
-    // To change provider network
-    this.provider.setNetwork(TestnetConfig) // connect to Fuji testnet
-    console.log('provider: ', this.provider)
-
-    // To track wallets and update their balances
-    this.provider.trackWallet(this.wallet)
-    console.log('tracking wallet: ', this.wallet)
-  },
-
-  beforeUnmount() {
-    // To stop tracking wallets
-    // Make sure to call this to avoid memory leaks
-    this.provider.removeWallet(this.wallet)
-    console.log('stopped tracking wallet: ', this.wallet)
   }
 };
 </script>

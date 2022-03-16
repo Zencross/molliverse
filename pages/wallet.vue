@@ -258,7 +258,8 @@
 </template>
 
 <script>
-import SimpleTopBar from "~/components/SimpleTopBar.vue";
+import SimpleTopBar from "~/components/SimpleTopBar.vue"
+
 export default {
   components: { SimpleTopBar },
   data() {
@@ -316,7 +317,7 @@ export default {
     //  Trade Funds
     onClickTradeButton() {
       this.$router.push("/trade");
-    }
+    },
   }
 };
 </script>

@@ -1,8 +1,12 @@
 import gql from "graphql-tag";
+import { addErc20TokenFromData, bnToAvaxC, getErc20Token, setNetwork, SingletonWallet, TestnetConfig, WebsocketProvider } from "@avalabs/avalanche-wallet-sdk"
 
-// export const getters = {
-//   getPhoneNumber: state => state.phoneNumber
-// };
+const popTokenAddress = '0xE79434E9491309B302a28E10009526385a84199B'
+const privateKey = 'PrivateKey-2Mwsyw84uFiNUMS9cvUS2MaTv7RJ4yi8vd15gv3jvD9YZkN8kY'
+const spendingWallet = SingletonWallet.fromPrivateKey(privateKey)
+console.log('created wallet: ', spendingWallet)
+console.log('EVM key: ', spendingWallet.getEvmPrivateKeyHex())
+console.log('AddressC: ', spendingWallet.getBaseAddress())
 
 export const state = () => ({
   user: null,
@@ -77,7 +81,7 @@ export const state = () => ({
     { id: 12, value: "social" }
   ],
   completePasscode: [],
-  tokenToSend: ""
+  tokenToSend: "",
 });
 
 export const mutations = {
@@ -682,7 +686,7 @@ export const actions = {
     }
   },
   clearOnboardingFormStates({ dispatch, commit, state }) {
-    //  Reset registration form state
+    // Reset registration form state
     commit("setUser", null);
     commit("setFirstName", "");
     commit("setBirthday", "");
@@ -694,14 +698,37 @@ export const actions = {
     commit("setUniversity", "");
     commit("resetPassions");
     commit("resetUserProfileMedia");
-  }
-  // setPhoneNumber(context, payload) {
-  //   context.commit("setPhoneNumber", { payload });
-  // }
-};
+  },
+  async getSpendingWalletBalance({ dispatch, commit, state }) {
+    try {
+      // Load the $POP token ERC20 contract
+      /*let tokenData = {
+        chainId: 43113,
+        address: '0xE79434E9491309B302a28E10009526385a84199B',
+        decimals: 18,
+        name: '$POP Token',
+        symbol: 'POP',
+      }
+      console.log('addErc20TokenFromData: ', addErc20TokenFromData)
+      const token = await addErc20TokenFromData(tokenData);*/
+      setNetwork(TestnetConfig)
+      const token = await getErc20Token('0xE79434E9491309B302a28E10009526385a84199B')
+      console.log('POP token: ', token)
+      //const bal1 = await token.balanceOf(spendingWallet.getEvmPrivateKeyHex())
+      //console.log('Bal1: ', bal1)
+      const bal = await token.balanceOf('0xbEBe9C984A33dEECe8278315FfB0ee03ac0290c5')
+      console.log('Balance: ', bnToAvaxC(bal))
+    } catch(e) {
+      console.log(e)
+    }
 
-// export const getters = {
-//   getPhoneNumber(state) {
-//     return state.phoneNumber;
-//   }
-// };
+    /*try {
+      const avaxBalances = await spendingWallet.getAvaxBalance()
+      console.log('avax balances ', avaxBalances)
+      const balances = await spendingWallet.getBalanceERC20([popTokenAddress])
+      console.log(balances)
+    } catch (e) {
+      console.error('Failed to get spending wallet balance: ', e)
+    }*/
+  }
+};
