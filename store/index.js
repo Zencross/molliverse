@@ -1,4 +1,5 @@
-import gql from "graphql-tag";
+import gql from "graphql-tag"
+import { BN } from "avalanche"
 import { addErc20TokenFromData, bnToAvaxC, getErc20Token, setNetwork, SingletonWallet, TestnetConfig, WebsocketProvider } from "@avalabs/avalanche-wallet-sdk"
 
 const popTokenAddress = '0xE79434E9491309B302a28E10009526385a84199B'
@@ -712,12 +713,59 @@ export const actions = {
       console.log('addErc20TokenFromData: ', addErc20TokenFromData)
       const token = await addErc20TokenFromData(tokenData);*/
       setNetwork(TestnetConfig)
-      const token = await getErc20Token('0xE79434E9491309B302a28E10009526385a84199B')
-      console.log('POP token: ', token)
+
+      // POP token test
+      //const token = await getErc20Token(popTokenAddress)
+      //console.log('POP token: ', token)
       //const bal1 = await token.balanceOf(spendingWallet.getEvmPrivateKeyHex())
       //console.log('Bal1: ', bal1)
-      const bal = await token.balanceOf('0xbEBe9C984A33dEECe8278315FfB0ee03ac0290c5')
-      console.log('Balance: ', bnToAvaxC(bal))
+      //const bal = await token.balanceOf('0xbEBe9C984A33dEECe8278315FfB0ee03ac0290c5')
+      //console.log('Balance: ', bnToAvaxC(bal))
+
+      // Wallet test
+      const mmWallet = SingletonWallet.fromEvmKey('84ef76a97736846b3eb75ebf14994c6b8d3288f4f51242db82446b683bf34b81')
+      //console.log('mmWallet: ', mmWallet)
+      console.log('mmWallet AVAX balance: ', await mmWallet.getAvaxBalance())
+      let balances = await mmWallet.getBalanceERC20([popTokenAddress])
+      console.log('mmWallet POP balance: ', balances[0].balanceParsed)
+
+      //console.log('spendingWallet: ', spendingWallet)
+      console.log('spendingWallet AVAX balance: ', await spendingWallet.getAvaxBalance())
+      balances = await spendingWallet.getBalanceERC20([popTokenAddress])
+      console.log('spendingWallet POP balance: ', balances[0].balanceParsed)
+
+      // Estimate gas
+      /*const gas = await mmWallet.estimateErc20Gas(
+        popTokenAddress,
+        spendingWallet.getBaseAddress(),
+        new BN(1000000)
+       )
+      console.log('estimated gas: ', gas)*/
+
+      // Transfer test
+      const txHash = await mmWallet.sendErc20(
+        spendingWallet.getBaseAddress(),
+        new BN(1000),
+        new BN(100),
+        1000,
+        popTokenAddress
+       )
+      console.log('txHash: ', txHash)
+
+      /*const txHash = await spendingWallet.sendErc20(
+        mmWallet.getBaseAddress(),
+        new BN(1000000),
+        new BN(gas),
+        100000,
+        popTokenAddress
+       )
+      console.log('txHash: ', txHash)*/
+
+      //const txHash = await mmWallet.sendAvaxX(spendingWallet.getBaseAddress(), new BN(1), "Test tx")
+      //console.log('txHash: ', txHash)
+
+      balances = await spendingWallet.getBalanceERC20([popTokenAddress])
+      console.log('spendingWallet POP balance after tx: ', balances[0].balanceParsed)
     } catch(e) {
       console.log(e)
     }
