@@ -14,7 +14,9 @@
           Total<br />
           Earnings:
         </div>
-        <div class="text-4xl font-bold">{{ popSpendingBalance }}</div>
+        <div class="text-4xl font-bold">
+          {{ popSpendingBalance.toFixed(4) }}
+        </div>
         <div class="flex items-center">
           <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8 mr-1" />
           $POP
@@ -24,7 +26,7 @@
       <!-- Buy Reward Window -->
       <h1 class="mb-2">You are about to purchase the following reward:</h1>
       <div
-        class="flex flex-col items-center w-11/12 mb-4 border-2 border-black rounded-md"
+        class="flex flex-col items-center w-11/12 mb-4 border-2 border-black rounded-md "
       >
         <div class="flex justify-start w-full px-4 pt-5 pb-1">
           <img :src="rewardIcon" class="w-16 h-16" alt="" />
@@ -50,7 +52,7 @@
 
         <div class="flex items-center">
           <div class="mr-2 text-4xl font-bold">
-            {{ popSpendingBalance - rewardItemPrice }}
+            {{ (popSpendingBalance - rewardItemPrice).toFixed(4) }}
           </div>
           <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8 mr-1" />
           $POP
@@ -84,12 +86,13 @@ export default {
   components: { SimpleTopBar, SimpleBottomBar },
   data() {
     return {
-      popSpendingBalance: this.$store.state.popSpendingBalance,
-      rewardToBuy: this.$store.state.rewardToBuy,
-      showBuySuccessScreen: false
+      showBuySuccessScreen: false,
     };
   },
   computed: {
+    popSpendingBalance() {
+      return this.$store.state.popSpendingBalance;
+    },
     rewardIcon() {
       return `/img/swipe-${this.$store.state.rewardToBuy}-btn-512w.png`;
     },
@@ -128,33 +131,28 @@ export default {
         default:
           break;
       }
-    }
+    },
+    rewardToBuy() {
+      return this.$store.state.rewardToBuy;
+    },
   },
   methods: {
     onClickPurchaseButton() {
-      if (
-        (
-          parseFloat(this.popSpendingBalance) -
-          parseFloat(this.rewardItemPrice >= 0)
-        ).toFixed(4)
-      ) {
+      if (this.popSpendingBalance - this.rewardItemPrice >= 0) {
         // Send item price to master wallet
         console.log("Buy Successful");
         this.$router.push("/purchase-reward-successful");
         this.$store.commit(
           "setPopSpendingBalance",
-          (
-            parseFloat(this.$store.state.popSpendingBalance) -
-            parseFloat(this.rewardItemPrice)
-          ).toFixed(4)
+          this.popSpendingBalance - this.rewardItemPrice
         );
       } else {
         // Not enough balance error
-        console.log("Insufficient coin");
+        console.log("Insufficient balance");
       }
-    }
+    },
   },
-  async mounted() {}
+  async mounted() {},
 };
 </script>
 

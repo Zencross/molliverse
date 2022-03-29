@@ -52,7 +52,7 @@ export default {
   components: { SimpleTopBar, SimpleBottomBar },
   data() {
     return {
-      tokenToSend: this.$store.state.tokenToSend,   //POP, ETH, USDT, AVAX
+      tokenToSend: this.$store.state.tokenToSend, //POP, ETH, USDT, AVAX
       tokenBalance: 0,
       amountToSend: 0,
     };
@@ -79,46 +79,50 @@ export default {
   },
   methods: {
     onClickConfirmTransfer() {
-      if(this.tokenBalance > 0 && this.amountToSend > 0 && this.amountToSend <= this.tokenBalance){
-          this.tokenBalance = (parseFloat(this.tokenBalance) - parseFloat(this.amountToSend)).toFixed(4);
-          if(this.tokenToSend == "POP"){
-              this.$store.commit('setPopWalletBalance', this.tokenBalance);
-          }else if(this.tokenToSend == "ETH"){
-            this.$store.commit('setEthWalletBalance', this.tokenBalance);
-          }else if(this.tokenToSend == "USDT"){
-              this.$store.commit('setUsdtWalletBalance', this.tokenBalance);
-          }else if(this.tokenToSend == "AVAX"){
-              this.$store.commit('setAvaxWalletBalance', this.tokenBalance);
-          }
+      if (
+        this.tokenBalance > 0 &&
+        this.amountToSend > 0 &&
+        this.amountToSend <= this.tokenBalance
+      ) {
+        this.tokenBalance = (this.tokenBalance - this.amountToSend).toFixed(4);
+        if (this.tokenToSend == "POP") {
+          this.$store.commit("setPopWalletBalance", this.tokenBalance);
+        } else if (this.tokenToSend == "ETH") {
+          this.$store.commit("setEthWalletBalance", this.tokenBalance);
+        } else if (this.tokenToSend == "USDT") {
+          this.$store.commit("setUsdtWalletBalance", this.tokenBalance);
+        } else if (this.tokenToSend == "AVAX") {
+          this.$store.commit("setAvaxWalletBalance", this.tokenBalance);
+        }
         this.amountToSend = 0;
         console.log("Sent");
         this.$router.push("/send-funds-successful");
-      }else{
-          console.log("Insufficient balance");
+      } else {
+        console.log("Insufficient balance");
       }
     },
     onClickSendAllToken() {
-        this.amountToSend = this.tokenBalance;
-    }
+      this.amountToSend = this.tokenBalance;
+    },
   },
   mounted() {
-      switch (this.tokenToSend) {
-        case "POP":
-          this.tokenBalance = this.$store.state.popWalletBalance;
-          break;
-        case "ETH":
-          this.tokenBalance = this.$store.state.ethWalletBalance;
-          break;
-        case "USDT":
-          this.tokenBalance = this.$store.state.usdtWalletBalance;
-          break;
-        case "AVAX":
-          this.tokenBalance = this.$store.state.avaxWalletBalance;
-          break;
-        default:
-          break;
-      }
-  }
+    switch (this.tokenToSend) {
+      case "POP":
+        this.tokenBalance = this.$store.state.popWalletBalance;
+        break;
+      case "ETH":
+        this.tokenBalance = this.$store.state.ethWalletBalance;
+        break;
+      case "USDT":
+        this.tokenBalance = this.$store.state.usdtWalletBalance;
+        break;
+      case "AVAX":
+        this.tokenBalance = this.$store.state.avaxWalletBalance;
+        break;
+      default:
+        break;
+    }
+  },
 };
 </script>
 

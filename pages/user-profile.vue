@@ -2,7 +2,7 @@
   <div>
     <!-- Popup Overlay -->
     <div
-      class="fixed inset-0 flex items-center justify-center h-screen overflow-hidden bg-black bg-opacity-50"
+      class="fixed inset-0 flex items-center justify-center h-screen overflow-hidden bg-black bg-opacity-50 "
       v-if="showInsufficientCoinPopup"
     >
       <InsufficientCoinPopup @back="closePopup" @goToWallet="goToWallet" />
@@ -24,9 +24,7 @@
         @click="onClickSettings"
       >
         <img src="/img/setting-black.png" class="w-16 h-16" alt="" />
-        <div class="mt-1 text-sm lato-font">
-          Settings
-        </div>
+        <div class="mt-1 text-sm lato-font">Settings</div>
       </div>
 
       <!-- Icon -->
@@ -69,14 +67,14 @@
 
     <!-- Tabs -->
     <div
-      class="flex items-center w-11/12 mx-4 mt-6 mb-6 bg-white border-t border-b border-black rounded-l-full rounded-r-full"
+      class="flex items-center w-11/12 mx-4 mt-6 mb-6 bg-white border-t border-b border-black rounded-l-full rounded-r-full "
     >
       <div
         class="w-1/3 py-2 text-center rounded-l-full rounded-r-full"
         :class="[
           activeTab == 'Spending'
             ? 'bg-black text-white'
-            : 'bg-white text-black border-l border-black'
+            : 'bg-white text-black border-l border-black',
         ]"
         @click="onClickSpendingTab()"
       >
@@ -85,7 +83,7 @@
       <div
         class="w-1/3 py-2 text-center rounded-l-full rounded-r-full"
         :class="[
-          activeTab == 'NFT' ? 'bg-black text-white' : 'bg-white text-black'
+          activeTab == 'NFT' ? 'bg-black text-white' : 'bg-white text-black',
         ]"
         @click="onClickNftTab()"
       >
@@ -96,7 +94,7 @@
         :class="[
           activeTab == 'Wallet'
             ? 'bg-black text-white'
-            : 'bg-white text-black border-r border-black'
+            : 'bg-white text-black border-r border-black',
         ]"
         @click="onClickWalletTab()"
       >
@@ -119,7 +117,7 @@
           Earnings:
         </div>
         <div class="text-4xl font-bold">
-          {{ this.$store.state.popSpendingBalance }}
+          {{ popSpendingBalance.toFixed(4) }}
         </div>
         <div class="flex items-center">
           <img src="/img/pop_coin_512w.png" alt="" class="w-8 h-8 mr-1" />
@@ -137,7 +135,7 @@
 
         <!-- Buy Super Like -->
         <div
-          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md "
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
             <img
@@ -163,7 +161,7 @@
 
         <!-- Buy Undo -->
         <div
-          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md "
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
             <img src="/img/swipe-undo-btn-512w.png" class="w-16 h-16" alt="" />
@@ -185,7 +183,7 @@
 
         <!-- Buy Swipe -->
         <div
-          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md "
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
             <img src="/img/swipe-like-btn-512w.png" class="w-16 h-16" alt="" />
@@ -207,7 +205,7 @@
 
         <!-- Buy See-Who-Liked-You -->
         <div
-          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md"
+          class="flex flex-col items-center w-full mb-4 border-2 border-black rounded-md "
         >
           <div class="flex justify-start w-full px-4 pt-5 pb-1">
             <img
@@ -281,7 +279,7 @@
         Give us feedback
       </button> -->
       <button
-        class="w-11/12 p-4 font-bold text-white border rounded-lg bg-brandPurple lato-font"
+        class="w-11/12 p-4 font-bold text-white border rounded-lg  bg-brandPurple lato-font"
         @click="onClickLogout"
       >
         <!-- Get Mollie Premium -->
@@ -292,9 +290,9 @@
 </template>
 
 <script>
-import TopBar from "~/components/TopBar"
-import gql from "graphql-tag"
-import InsufficientCoinPopup from "~/components/InsufficientCoinPopup.vue"
+import TopBar from "~/components/TopBar";
+import gql from "graphql-tag";
+import InsufficientCoinPopup from "~/components/InsufficientCoinPopup.vue";
 
 export default {
   components: { TopBar, InsufficientCoinPopup },
@@ -308,6 +306,9 @@ export default {
     IconIsImage() {
       if (this.$store.state.user.media[0].type === "IMAGE") return true;
       else return false;
+    },
+    popSpendingBalance() {
+      return this.$store.state.popSpendingBalance;
     },
     userIcon() {
       return this.$store.state.user.media[0].url;
@@ -333,11 +334,11 @@ export default {
       // //now calculate the age of the user
       // var age = Math.abs(year - 1970);
       return this.$store.state.user.age;
-    }
+    },
   },
   mounted() {
-    console.log('getSpendingWalletBalance')
-    this.$store.dispatch("getSpendingWalletBalance")
+    console.log("getSpendingWalletBalance");
+    this.$store.dispatch("getSpendingWalletBalance");
   },
   methods: {
     onClickPersonIcon() {},
@@ -432,8 +433,8 @@ export default {
     },
     onClickGoToWallet() {
       this.$router.push("/wallet");
-    }
-  }
+    },
+  },
 };
 </script>
 
